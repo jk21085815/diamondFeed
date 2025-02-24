@@ -17,28 +17,43 @@ const setThisSportData = async(eventlist,SportName) => {
             function delay(ms) {
                 return new Promise(resolve => setTimeout(resolve, ms));
             }
-            async function fetchBookDataFunc(marketId) {
-                let fetchMarketData = await fetch(` http://18.171.69.133:6008/sports/books/${marketId}`,{
+            async function fetchMOBook(marketId) {
+                let fetchMarketData = await fetch(` http://13.42.165.216:8443/api/betfair/${marketId}`,{
                     method: 'GET',
                     headers: {
                         'Content-type': 'application/json',
                     }
                 })
                 let fetchMarketDatajson = await fetchMarketData.json()
-                return fetchMarketDatajson
+                return fetchMarketDatajson.result[0]
+            }
+            async function fetchBMBook(eventId) {
+                let fetchMarketData = await fetch(` https://odds.datafeed365.com/api/active-bm/${eventId}`,{
+                    method: 'GET',
+                    headers: {
+                        'Content-type': 'application/json',
+                    }
+                })
+                let fetchMarketDatajson = await fetchMarketData.json()
+                return fetchMarketDatajson.data
+            }
+            async function fetchFancyBook(eventId) {
+                let fetchMarketData = await fetch(` hthttps://odds.datafeed365.com/api/fancy-list/${eventId}`,{
+                    method: 'GET',
+                    headers: {
+                        'Content-type': 'application/json',
+                    }
+                })
+                let fetchMarketDatajson = await fetchMarketData.json()
+                return fetchMarketDatajson.data
             }
             for(let k = 0;k<eventlist.length;k++){
                 console.log(k,new Date(),'kkk')
-                let isLiveStatus = false
                 let matchOddsArr = [];
                 let matchOddsArr2 = [];
                 let bookMakerMarketArr = [];
                 let bookMakerMarketArr2 = [];
                 let fanctMarketArr = [];
-                let liveMatchCheckMarket;
-                let liveMatchCheckMarket2;
-                let liveMatchCheckMarket3;
-                let liveMatchCheckMarket4;
                 eventlist[k].openDate = eventlist[k].event.openDate
                 eventlist[k].providerName = eventlist[k].competition.provider
                 eventlist[k].sportId = eventlist[k].eventType.id
@@ -49,48 +64,142 @@ const setThisSportData = async(eventlist,SportName) => {
                 eventlist[k].eventName = eventlist[k].event.name
                 eventlist[k].country = eventlist[k].event.countryCode
                 eventlist[k].venue = eventlist[k].event.venue
+                eventlist[k].status = 'UPCOMING'
                 delete eventlist[k]['eventType']
                 delete eventlist[k]['competition']
                 delete eventlist[k]['event']
-                delete eventlist[k]['metadata']
-                liveMatchCheckMarket = eventlist[k].catalogues.find(item => item.marketName.trim() == 'Match Odds' && item.status !== "CLOSED")
-                liveMatchCheckMarket2 = eventlist[k].catalogues.find(item => item.marketName.trim() == 'Bookmaker' && item.status !== "CLOSED")
-                if(!liveMatchCheckMarket2 || eventlist[k].sportId == "500"){
-                    liveMatchCheckMarket2 = eventlist[k].catalogues.find(item => item.marketName.trim() == "Bookmaker 0 Commission" && item.status !== "CLOSED")
-                    if(!liveMatchCheckMarket2 && eventlist[k].sportId == "500"){
-                        liveMatchCheckMarket3 = eventlist[k].catalogues.find(item => item.bettingType == "BOOKMAKER" && item.status !== "CLOSED")
-                    }
-                }
-                liveMatchCheckMarket4 = eventlist[k].catalogues.find(item => item.marketType == 'TOURNAMENT_WINNER' && item.status !== "CLOSED")
-                if(liveMatchCheckMarket3){
-                    if((liveMatchCheckMarket3.inPlay == true && liveMatchCheckMarket3.status == 'OPEN')){
-                        isLiveStatus = true
-                    }
-                }
-                else if(liveMatchCheckMarket4){
-                    if((liveMatchCheckMarket4.inPlay == true && liveMatchCheckMarket4.status == 'OPEN')){
-                        isLiveStatus = true
-                    }
-                }
-                else if(liveMatchCheckMarket && liveMatchCheckMarket2){
-                    if((liveMatchCheckMarket.inPlay == true && liveMatchCheckMarket.status !== 'CLOSED') || (liveMatchCheckMarket2.inPlay == true && liveMatchCheckMarket2.status !== 'CLOSED')){
-                        isLiveStatus = true
-                    }
-                }else if(liveMatchCheckMarket && !liveMatchCheckMarket2){
-                    if(liveMatchCheckMarket.inPlay == true && liveMatchCheckMarket.status !== 'CLOSED'){
-                        isLiveStatus = true
-                    }
-                }else if(!liveMatchCheckMarket && liveMatchCheckMarket2){
-                    if(liveMatchCheckMarket2.inPlay == true && liveMatchCheckMarket2.status !== 'CLOSED'){
-                        isLiveStatus = true
-                    }
-                }
-                eventlist[k].status = isLiveStatus?'IN_PLAY':'UPCOMING'
+                // delete eventlist[k]['description']
+                delete eventlist[k]['marketStartTime']
+                delete eventlist[k]['totalMatched']
+                // delete eventlist[k]['marketName']
+                // delete eventlist[k]['runners']
                 thisSportEventId.push(eventlist[k].eventId)
-    
+                let matchodddata = await fetchMOBook(eventlist[k].marketId)
+                let bookmakerdata = await fetchBMBook(eventlist[k].eventId)
+                let fancydata = await fetchFancyBook(eventlist[k].eventId)
+                let fancyMarketIdArray = Object.keys(fancydata)
+                delete eventlist[k]['marketId']
+                if(matchodddata){
+                    let tempRunner = []
+                    let tempObj = {
+                        "marketId": matchodddata.marketId,
+                        "marketTime": matchodddata.lastMatchTime,
+                        "marketType": eventlist[k].description.marketType,
+                        "bettingType": eventlist[k].description.bettingType,
+                        "marketName": eventlist[k].marketName,
+                        "provider": "DIAMOND",
+                        "status": matchodddata.status
+                    }
+                    for(let c = 0;c<matchodddata.runners.length;c++){
+                        let runner = eventlist[k].runners.find(item => item.selectionId == matchodddata.runners.selectionId)
+                        let tempObjrunner = 
+                        {
+                            "status": matchodddata.runners[c].status,
+                            "metadata": runner.metadata,
+                            "runnerName": runner.runnerName,
+                            "runnerId": matchodddata.runners[c].selectionId,
+                            "layPrices": matchodddata.runners[c].ex.availableToLay,
+                            "backPrices": matchodddata.runners[c].ex.availableToBack
+                        }
+                        tempRunner.push(tempObjrunner)
+                    }
+                    tempObj.runners = tempRunner
+                    matchOddsArr = [tempObj]
+                }
+                for(let a = 0; a<bookmakerdata.length; a++){
+                    let tempRunner = []
+                    let marketName = ""
+                    let marketType = ""
+                    let bettingType = ""
+                    let tempObj = {
+                        "marketId": bookmakerdata[a].bookmaker_id,
+                        "marketTime": new Date(),
+                        "bettingType": "BOOKMAKER",
+                        "provider": "DIAMOND",
+                        "status": bookmakerdata[a].data.status
+                    }
+                    if(bookmakerdata[a].data.type == "MATCH_ODDS"){
+                        marketName = "Bookmaker"
+                        marketType = "BOOKMAKER"
+                        bettingType = "BOOKMAKER"
+                    }else if(bookmakerdata[a].data.type == "MINI_BOOKMAKER"){
+                        marketName = "Bookmaker 0 Commission"
+                        marketType = "BOOKMAKER"
+                        bettingType = "BOOKMAKER"
+                    }else if(bookmakerdata[a].data.type == "TO_WIN_THE_TOSS"){
+                        marketName = "To Win The Toss"
+                        marketType = "BOOKMAKER"
+                        bettingType = "BOOKMAKER"
+                    }
+                    tempObj.marketName = marketName
+                    tempObj.marketType = marketType
+                    tempObj.bettingType = bettingType
+
+                    let bookmakerrunner = JSON.parse(bookmakerdata[a].runners)
+                    for(let c = 0;c<bookmakerrunner.length;c++){
+                        let runner = bookmakerrunner[c]
+                        let tempObjrunner = 
+                        {
+                            "status": runner.status,
+                            "metadata": "",
+                            "runnerName": runner.name,
+                            "runnerId": runner.selection_id,
+                            "layPrices": [{
+                                "price":runner.lay_price,
+                                "size":runner.lay_volume
+                            }],
+                            "backPrices": [{
+                                "price":runner.back_price,
+                                "size":runner.back_volume
+                            }]
+                        }
+                        tempRunner.push(tempObjrunner)
+                    }
+                    tempObj.runners = tempRunner
+                    bookMakerMarketArr2.push(tempObj)
+                    if(["OPEN","SUSPENDED"].includes(tempObj.status)){
+                        bookMakerMarketArr.push(tempObj)
+                    }
+                }
+                for(let b = 0; b<fancyMarketIdArray.length; b++){
+                    let tempRunner = []
+                    let tempObjfancy = fancydata[fancyMarketIdArray[b]]
+                    tempObjfancy = JSON.parse(tempObjfancy)
+                    let tempObj = {
+                        "marketId": tempObjfancy.id,
+                        "marketTime": new Date(),
+                        "bettingType": "BOOKMAKER",
+                        "provider": "DIAMOND",
+                        "marketName": tempObjfancy.name,
+                        "bettingType": "LINE",
+                        "marketType": "FANCY",
+                        "category": "FANCY"
+                    }
+                    let bookmakerrunner = JSON.parse(tempObjfancy.runners)
+                    for(let c = 0;c<bookmakerrunner.length;c++){
+                        let runner = bookmakerrunner[c]
+                        let tempObjrunner = 
+                        {
+                            "status": runner.status,
+                            "metadata": "",
+                            "runnerName": runner.name,
+                            "runnerId": runner.selection_id,
+                            "layPrices": [{
+                                "price":runner.lay_price,
+                                "size":runner.lay_volume
+                            }],
+                            "backPrices": [{
+                                "price":runner.back_price,
+                                "size":runner.back_volume
+                            }]
+                        }
+                        tempRunner.push(tempObjrunner)
+                    }
+                    tempObj.runners = tempRunner
+                    fanctMarketArr.push(tempObj)
+
+                }
                 for(let l = 0;l<eventlist[k].catalogues.length;l++){
-                    
-                    
                     let fetchMarketDatajson;
                     try{
                         fetchMarketDatajson = await fetchBookDataFunc(eventlist[k].catalogues[l].marketId)
@@ -307,11 +416,11 @@ const setThisSportData = async(eventlist,SportName) => {
                     OnlyMOBMMarketIdsArr.push(OnlyMOBMMarketIds[j].marketId)
                 }
                 // console.log(OnlyMOBMMarketIdsArr,"OnlyMOBMMarketIdsArrOnlyMOBMMarketIdsArrINThisSportttttttt")
-                await client.set(`${eventlist[k].eventId}_MOBMMarketArr_shark`,JSON.stringify(MOBMMarketArr),'EX',7 * 24 * 60 * 60)
-                await client.set(`${eventlist[k].eventId}_OnlyMOBMMarketIdsArr_shark`,JSON.stringify(OnlyMOBMMarketIdsArr),'EX',7 * 24 * 60 * 60)
-                await client.set(`${eventlist[k].eventId}_sharEventData`,JSON.stringify(eventlist[k]),'EX',7 * 24 * 60 * 60)
+                await client.set(`${eventlist[k].eventId}_MOBMMarketArr_shark_diamond`,JSON.stringify(MOBMMarketArr),'EX',7 * 24 * 60 * 60)
+                await client.set(`${eventlist[k].eventId}_OnlyMOBMMarketIdsArr_shark_diamond`,JSON.stringify(OnlyMOBMMarketIdsArr),'EX',7 * 24 * 60 * 60)
+                await client.set(`${eventlist[k].eventId}_sharEventData_diamond`,JSON.stringify(eventlist[k]),'EX',7 * 24 * 60 * 60)
             }
-            await client.set(`crone_getEventIds_${SportName}`,JSON.stringify(thisSportEventId))
+            await client.set(`crone_getEventIds_${SportName}_diamond`,JSON.stringify(thisSportEventId))
             console.log(starttime,new Date(),(Date.now()-(starttime.getTime()))/1000,`Set ${SportName} Sport Cron  Ended.....`)
         }
         await seteventdataFunc()

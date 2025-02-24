@@ -12,7 +12,7 @@ const setFinalResultFunc = async(sportName) => {
     let starttime = new Date();
     console.log(starttime,`Set Final ${sportName} Result Cron Started.....`)
     try{
-        let eventlist = await client.get(`crone_getEvent_list_${sportName}`)
+        let eventlist = await client.get(`crone_getEvent_list_${sportName}_diamond`)
         eventlist = JSON.parse(eventlist)
         await SetThisSportData(eventlist,sportName)
         console.log(starttime,new Date(),(Date.now()-(starttime.getTime()))/1000,`Set Final ${sportName} Result Cron Ended.....`)
