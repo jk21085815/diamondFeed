@@ -1,0 +1,5 @@
+node_modules/
+*.cache
+public/assets/css/
+*.css
+config.env

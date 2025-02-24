@@ -1,0 +1,44 @@
+{
+  "name": "backend",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "watch:js": "parcel watch ./public/js/index.js --out-dir ./public/js --out-file bundle.js",
+    "build:js": "parcel build ./public/js/index.js --out-dir ./public/js --out-file bundle.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "bcrypt": "^5.1.0",
+    "body-parser": "^1.20.2",
+    "cluster": "^0.7.7",
+    "compression": "^1.7.4",
+    "cookie-parser": "^1.4.6",
+    "cors": "^2.8.5",
+    "crypto": "^1.0.1",
+    "decimal.js": "^10.4.3",
+    "dotenv": "^16.0.3",
+    "ejs": "^3.1.10",
+    "express": "^4.18.2",
+    "express-fileupload": "^1.4.0",
+    "fs": "^0.0.1-security",
+    "helmet": "^6.1.5",
+    "ioredis": "^5.3.2",
+    "mongodb": "^5.5.0",
+    "mongoose": "^7.6.7",
+    "morgan": "^1.10.0",
+    "node-cron": "^3.0.2",
+    "node-fetch": "^2.6.7",
+    "parcel-bundler": "^1.12.5",
+    "path": "^0.12.7",
+    "puppeteer": "^20.4.0",
+    "redis": "^4.6.12",
+    "request": "^2.88.2",
+    "request-ip": "^3.3.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.1"
+  }
+}
