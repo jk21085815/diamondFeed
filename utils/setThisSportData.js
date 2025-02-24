@@ -163,6 +163,7 @@ const setThisSportData = async(eventlist,SportName) => {
                 }
                 for(let b = 0; b<fancyMarketIdArray.length; b++){
                     let tempRunner = []
+                    let category = ""
                     let tempObjfancy = fancydata[fancyMarketIdArray[b]]
                     tempObjfancy = JSON.parse(tempObjfancy)
                     let tempObj = {
@@ -172,9 +173,20 @@ const setThisSportData = async(eventlist,SportName) => {
                         "provider": "DIAMOND",
                         "marketName": tempObjfancy.name,
                         "bettingType": "LINE",
-                        "marketType": "FANCY",
-                        "category": "FANCY"
+                        "marketType": "FANCY"
                     }
+                    if(tempObjfancy.type_code == 10){
+                        category = "OVERS"
+                    }else if(tempObjfancy.type_code == 20){
+                        category = "BATSMAN"
+                    }else if(tempObjfancy.type_code == 2){
+                        category = "SINGLE_OVER"
+                    }else if(tempObjfancy.type_code == 28){
+                        category = "ODD_EVEN"
+                    }else if(tempObjfancy.type_code == 6){
+                        category = "BALL_BY_BALL"
+                    }
+                    tempObj.category = category
                     let bookmakerrunner = JSON.parse(tempObjfancy.runners)
                     for(let c = 0;c<bookmakerrunner.length;c++){
                         let runner = bookmakerrunner[c]
