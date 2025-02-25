@@ -42,13 +42,14 @@ const getEventList = async(sportId,sportName) => {
                     let compIdUpcoming = []
                     let fetchEventList = await fetch(`http://13.42.165.216/betfair/get_latest_event_list/${sportId}`,{
                         method:'GET',
-                        // headers:{
-                            // 'Content-type' : 'application/text'
-                        // }
+                        headers:{
+                            'Content-type' : 'application/json'
+                        }
                     })
-                    fetchEventList = await fetchEventList.json()
-                    // fetchEventList = await JSON.parse(fetchEventList)
                     console.log(fetchEventList,'fetchEventListfetchEventList')
+                    fetchEventList = await fetchEventList.json()
+                    console.log(fetchEventList,'fetchEventListfetchEventList')
+                    // fetchEventList = await JSON.parse(fetchEventList)
                     for(let j = 0;j<fetchEventList.length;j++){
                         let isTestMatch = false
                         let isElection = false
