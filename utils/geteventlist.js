@@ -93,7 +93,7 @@ const getEventList = async(sportId,sportName) => {
                             }
                         }else if(isElection){
                             eventlist.push(eventdata)
-                        }else if(eventdata.event.name.trim() == eventdata.event.competition.name.trim()){
+                        }else if(eventdata.event.name.trim() == eventdata.competition.name.trim()){
                             let fetchMarketData;
                             try{
                                 fetchMarketData = await fetchEventDataFunc(eventdata.event.id)
