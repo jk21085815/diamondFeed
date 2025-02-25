@@ -404,6 +404,82 @@ exports.marketData = catchAsync(async(req, res, next) => {
         data:fetchMarketData
     })
 })
+exports.marketData = catchAsync(async(req, res, next) => {
+    let fetchMarketData
+    try{
+        fetchMarketData = await fetch(` http://18.171.69.133:6008/sports/markets/${req.body.marketId}`,{
+            method: 'GET',
+            headers: {
+                'Content-type': 'application/json',
+            }
+        })
+        // console.log(new Date(),i,eventIds[i],'iiiiiiiii')
+        fetchMarketData = await fetchMarketData.json()
+    }catch(err){
+        console.log(err)
+    }
+    res.status(200).json({
+        status:'success',
+        data:fetchMarketData
+    })
+})
+exports.cricketextramarketlist = catchAsync(async(req, res, next) => {
+    let fetchMarketData
+    try{
+        fetchMarketData = await fetch(` http://13.42.165.216/betfair/cricket_extra_market_list/${req.body.eventId}`,{
+            method: 'GET',
+            headers: {
+                'Content-type': 'application/json',
+            }
+        })
+        // console.log(new Date(),i,eventIds[i],'iiiiiiiii')
+        fetchMarketData = await fetchMarketData.json()
+    }catch(err){
+        console.log(err)
+    }
+    res.status(200).json({
+        status:'success',
+        data:fetchMarketData
+    })
+})
+exports.tournamentwinner = catchAsync(async(req, res, next) => {
+    let fetchMarketData
+    try{
+        fetchMarketData = await fetch(` http://13.42.165.216/betfair/tournament_winner/${req.body.eventId}`,{
+            method: 'GET',
+            headers: {
+                'Content-type': 'application/json',
+            }
+        })
+        // console.log(new Date(),i,eventIds[i],'iiiiiiiii')
+        fetchMarketData = await fetchMarketData.json()
+    }catch(err){
+        console.log(err)
+    }
+    res.status(200).json({
+        status:'success',
+        data:fetchMarketData
+    })
+})
+exports.underover = catchAsync(async(req, res, next) => {
+    let fetchMarketData
+    try{
+        fetchMarketData = await fetch(` http://13.42.165.216/betfair/under_over_goal_market_list/${req.body.eventId}`,{
+            method: 'GET',
+            headers: {
+                'Content-type': 'application/json',
+            }
+        })
+        // console.log(new Date(),i,eventIds[i],'iiiiiiiii')
+        fetchMarketData = await fetchMarketData.json()
+    }catch(err){
+        console.log(err)
+    }
+    res.status(200).json({
+        status:'success',
+        data:fetchMarketData
+    })
+})
 
 // exports.thatperticularMatch = catchAsync(async(req, res, next) => {
 //     try{

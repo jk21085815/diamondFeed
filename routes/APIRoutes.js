@@ -13,6 +13,9 @@ router.get('/thatperticularMatch', authController.isProtected, APIController.tha
 router.post('/eventData', APIController.eventData)
 router.post('/bookdata', APIController.bookdata)
 router.post('/martketdata', APIController.marketData)
+router.post('/cricketextramarketlist', APIController.cricketextramarketlist)
+router.post('/tournamentwinner', APIController.tournamentwinner)
+router.post('/underover', APIController.underover)
 
 
 
