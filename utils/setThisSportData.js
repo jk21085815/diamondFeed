@@ -90,7 +90,7 @@ const setThisSportData = async(eventlist,SportName) => {
                         "status": matchodddata.status
                     }
                     for(let c = 0;c<matchodddata.runners.length;c++){
-                        let runner = eventlist[k].runners.find(item => item.selectionId == matchodddata.runners.selectionId)
+                        let runner = eventlist[k].runners.find(item => item.selectionId == matchodddata.runners[c].selectionId)
                         let tempObjrunner = 
                         {
                             "status": matchodddata.runners[c].status,
