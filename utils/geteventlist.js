@@ -57,7 +57,7 @@ const getEventList = async(sportId,sportName) => {
                         let isTestMatch = false
                         let isElection = false
                         let eventdata = parsedata[j]
-                        console.log(eventdata,'eventdataaaaaaaaaa')
+                        // console.log(eventdata,'eventdataaaaaaaaaa')
                         if(eventdata.competition.name.toLowerCase().indexOf("test") !== -1 || eventdata.competition.name.toLowerCase().indexOf("ranji trophy") !== -1 || eventdata.competition.name.toLowerCase().indexOf("west indies championship") !== -1){
                             isTestMatch = true
                             console.log(eventdata.competition.name,'competetion name')
