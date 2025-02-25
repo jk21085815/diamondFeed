@@ -35,7 +35,7 @@ const getEventList = async(sportId,sportName) => {
         return dateToCheck >= fiveDaysAgo && dateToCheck <= currentDate;
     }
     // cron.schedule('00 */6 * * *', async() => {
-    cron.schedule('33 * * * *', async() => {
+    cron.schedule('35 * * * *', async() => {
             console.log(`Set ${sportName} CompId Cron Started.....111111111111111111111111111111111111111111111111`)
             try{
                 async function geteventListBySportId () {
@@ -53,11 +53,12 @@ const getEventList = async(sportId,sportName) => {
                     // console.log(fetchEventList,'fetchEventListfetchEventList')
                     fetchEventList = await fetchEventList.text()
                     let parsedata = JSON.parse(fetchEventList)
+                    console.log(parsedata,'parsedataaaaaaaaaaaaa')
                     for(let j = 0;j<parsedata.length;j++){
                         let isTestMatch = false
                         let isElection = false
                         let eventdata = parsedata[j]
-                        console.log(eventdata,'eventdataaaaaaaaaa')
+                        // console.log(eventdata,'eventdataaaaaaaaaa')
                         if(eventdata.competition.name.toLowerCase().indexOf("test") !== -1 || eventdata.competition.name.toLowerCase().indexOf("ranji trophy") !== -1 || eventdata.competition.name.toLowerCase().indexOf("west indies championship") !== -1){
                             isTestMatch = true
                             console.log(eventdata.competition.name,'competetion name')
@@ -123,7 +124,7 @@ const getEventList = async(sportId,sportName) => {
                     }
                     client.set(`crone_getEvent_list_${sportName}_diamond`,JSON.stringify(eventlist))  
                     console.log(`Set ${sportName} CompititionId Cron Ended...`) 
-                    await setFinalResult(sportName)
+                    // await setFinalResult(sportName)
                 } 
                 geteventListBySportId()
             }catch(error){
