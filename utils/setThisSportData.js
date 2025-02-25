@@ -25,7 +25,6 @@ const setThisSportData = async(eventlist,SportName) => {
                     }
                 })
                 let fetchMarketDatajson = await fetchMarketData.json()
-                console.log(marketId,fetchMarketDatajson,'json dataaaaaaaaaaaaaaaaa')
                 return fetchMarketDatajson.result[0]
             }
             async function fetchBMBook(eventId=27996014) {
@@ -36,8 +35,6 @@ const setThisSportData = async(eventlist,SportName) => {
                     }
                 })
                 let fetchMarketDatajson = await fetchMarketData.json()
-                console.log(eventId,fetchMarketDatajson,'json dataaaaaaaaaaaaaaaaa')
-
                 return fetchMarketDatajson.data
             }
             async function fetchFancyBook(eventId=27996014) {
@@ -48,8 +45,6 @@ const setThisSportData = async(eventlist,SportName) => {
                     }
                 })
                 let fetchMarketDatajson = await fetchMarketData.json()
-                console.log(eventId,fetchMarketDatajson,'json dataaaaaaaaaaaaaaaaa')
-
                 return fetchMarketDatajson.data
             }
             for(let k = 0;k<eventlist.length;k++){
@@ -77,7 +72,7 @@ const setThisSportData = async(eventlist,SportName) => {
                 delete eventlist[k]['totalMatched']
                 thisSportEventId.push(eventlist[k].eventId)
                 // console.log(eventlist[k],'eventlist[kkkkkkkkkkkkkkk')
-                // let matchodddata = await fetchMOBook(eventlist[k].marketId)
+                let matchodddata = await fetchMOBook(eventlist[k].marketId)
                 let bookmakerdata = await fetchBMBook(eventlist[k].eventId)
                 let fancydata = await fetchFancyBook(eventlist[k].eventId)
                 let fancyMarketIdArray = Object.keys(fancydata)
