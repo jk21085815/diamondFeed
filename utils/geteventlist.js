@@ -35,7 +35,7 @@ const getEventList = async(sportId,sportName) => {
         return dateToCheck >= fiveDaysAgo && dateToCheck <= currentDate;
     }
     // cron.schedule('00 */6 * * *', async() => {
-    cron.schedule('40 * * * *', async() => {
+    cron.schedule('46 * * * *', async() => {
             console.log(`Set ${sportName} CompId Cron Started.....111111111111111111111111111111111111111111111111`)
             try{
                 async function geteventListBySportId () {
@@ -59,7 +59,7 @@ const getEventList = async(sportId,sportName) => {
                         let isElection = false
                         let eventdata = parsedata[j]
                         // console.log(eventdata,'eventdataaaaaaaaaa')
-                        if(eventdata.competition.name.toLowerCase().indexOf("test") !== -1 || eventdata.competition.name.toLowerCase().indexOf("ranji trophy") !== -1 || eventdata.competition.name.toLowerCase().indexOf("west indies championship") !== -1){
+                        if(eventdata.competition && (eventdata.competition.name.toLowerCase().indexOf("test") !== -1 || eventdata.competition.name.toLowerCase().indexOf("ranji trophy") !== -1 || eventdata.competition.name.toLowerCase().indexOf("west indies championship") !== -1)){
                             isTestMatch = true
                             console.log(eventdata.competition.name,'competetion name')
                         }else{
@@ -94,7 +94,7 @@ const getEventList = async(sportId,sportName) => {
                             }
                         }else if(isElection){
                             eventlist.push(eventdata)
-                        }else if(eventdata.event.name.trim() == eventdata.competition.name.trim()){
+                        }else if(eventdata.competition && (eventdata.event.name.trim() == eventdata.competition.name.trim())){
                             let fetchMarketData;
                             try{
                                 fetchMarketData = await fetchEventDataFunc(eventdata.event.id)
