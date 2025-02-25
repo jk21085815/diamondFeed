@@ -56,15 +56,18 @@ const getEventList = async(sportId,sportName) => {
                     // fetchEventList = await JSON.parse(fetchEventList)
                     const $ = cheerio.load(fetchEventList);
     
-                    // Example: Extract the page title and meta description
-                    const title = $('title').text();
-                    const description = $('meta[name="description"]').attr('content');
-                    
-                    // Build a JSON object with the extracted data
-                    const jsonData = {
-                    title,
-                    description
-                    };
+                     // Example: Extract data from a table
+                    const jsonData = [];
+                    $('table tr').each((i, row) => {
+                    const rowData = {};
+                    // Assuming each row has two cells: a key and a value
+                    const cells = $(row).find('td');
+                    if (cells.length >= 2) {
+                        rowData.key = $(cells[0]).text().trim();
+                        rowData.value = $(cells[1]).text().trim();
+                        jsonData.push(rowData);
+                    }
+                    });
                     
                     console.log('Extracted JSON:', jsonData);
                     // for(let j = 0;j<fetchEventList.length;j++){
