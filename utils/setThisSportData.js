@@ -108,110 +108,114 @@ const setThisSportData = async(eventlist,SportName) => {
                     matchOddsArr = [tempObj]
                     matchOddsArr2 = [tempObj]
                 }
-                for(let a = 0; a<bookmakerdata.length; a++){
-                    let tempRunner = []
-                    let marketName = ""
-                    let marketType = ""
-                    let bettingType = ""
-                    let tempObj = {
-                        "marketId": bookmakerdata[a].bookmaker_id,
-                        "marketTime": new Date(),
-                        "bettingType": "BOOKMAKER",
-                        "provider": "DIAMOND",
-                        "status": bookmakerdata[a].data.status
+                if(bookmakerdata){
+                    for(let a = 0; a<bookmakerdata.length; a++){
+                        let tempRunner = []
+                        let marketName = ""
+                        let marketType = ""
+                        let bettingType = ""
+                        let tempObj = {
+                            "marketId": bookmakerdata[a].bookmaker_id,
+                            "marketTime": new Date(),
+                            "bettingType": "BOOKMAKER",
+                            "provider": "DIAMOND",
+                            "status": bookmakerdata[a].data.status
+                        }
+                        if(bookmakerdata[a].data.type == "MATCH_ODDS"){
+                            marketName = "Bookmaker"
+                            marketType = "BOOKMAKER"
+                            bettingType = "BOOKMAKER"
+                        }else if(bookmakerdata[a].data.type == "MINI_BOOKMAKER"){
+                            marketName = "Bookmaker 0 Commission"
+                            marketType = "BOOKMAKER"
+                            bettingType = "BOOKMAKER"
+                        }else if(bookmakerdata[a].data.type == "TO_WIN_THE_TOSS"){
+                            marketName = "To Win The Toss"
+                            marketType = "BOOKMAKER"
+                            bettingType = "BOOKMAKER"
+                        }
+                        tempObj.marketName = marketName
+                        tempObj.marketType = marketType
+                        tempObj.bettingType = bettingType
+    
+                        let bookmakerrunner = JSON.parse(bookmakerdata[a].runners)
+                        for(let c = 0;c<bookmakerrunner.length;c++){
+                            let runner = bookmakerrunner[c]
+                            let tempObjrunner = 
+                            {
+                                "status": runner.status,
+                                "metadata": "",
+                                "runnerName": runner.name,
+                                "runnerId": runner.selection_id,
+                                "layPrices": [{
+                                    "price":runner.lay_price,
+                                    "size":runner.lay_volume
+                                }],
+                                "backPrices": [{
+                                    "price":runner.back_price,
+                                    "size":runner.back_volume
+                                }]
+                            }
+                            tempRunner.push(tempObjrunner)
+                        }
+                        tempObj.runners = tempRunner
+                        bookMakerMarketArr2.push(tempObj)
+                        if(["OPEN","SUSPENDED"].includes(tempObj.status)){
+                            bookMakerMarketArr.push(tempObj)
+                        }
                     }
-                    if(bookmakerdata[a].data.type == "MATCH_ODDS"){
-                        marketName = "Bookmaker"
-                        marketType = "BOOKMAKER"
-                        bettingType = "BOOKMAKER"
-                    }else if(bookmakerdata[a].data.type == "MINI_BOOKMAKER"){
-                        marketName = "Bookmaker 0 Commission"
-                        marketType = "BOOKMAKER"
-                        bettingType = "BOOKMAKER"
-                    }else if(bookmakerdata[a].data.type == "TO_WIN_THE_TOSS"){
-                        marketName = "To Win The Toss"
-                        marketType = "BOOKMAKER"
-                        bettingType = "BOOKMAKER"
-                    }
-                    tempObj.marketName = marketName
-                    tempObj.marketType = marketType
-                    tempObj.bettingType = bettingType
-
-                    let bookmakerrunner = JSON.parse(bookmakerdata[a].runners)
-                    for(let c = 0;c<bookmakerrunner.length;c++){
-                        let runner = bookmakerrunner[c]
+                }
+                if(Object.keys(fancyMarketIdArray).length > 0){
+                    for(let b = 0; b<fancyMarketIdArray.length; b++){
+                        let tempRunner = []
+                        let category = ""
+                        let tempObjfancy = fancydata[fancyMarketIdArray[b]]
+                        tempObjfancy = JSON.parse(tempObjfancy)
+                        let tempObj = {
+                            "marketId": tempObjfancy.id,
+                            "marketTime": new Date(),
+                            "bettingType": "BOOKMAKER",
+                            "provider": "DIAMOND",
+                            "marketName": tempObjfancy.name,
+                            "bettingType": "LINE",
+                            "marketType": "FANCY",
+                            "noValue": tempObjfancy.l1,
+                            "noRate": tempObjfancy.ls1,
+                            "yesValue": tempObjfancy.b1,
+                            "yesRate": tempObjfancy.bs1,
+                        }
+                        if(tempObjfancy.type_code == 10){
+                            category = "OVERS"
+                        }else if(tempObjfancy.type_code == 20){
+                            category = "BATSMAN"
+                        }else if(tempObjfancy.type_code == 2){
+                            category = "SINGLE_OVER"
+                        }else if(tempObjfancy.type_code == 28){
+                            category = "ODD_EVEN"
+                        }else if(tempObjfancy.type_code == 6){
+                            category = "BALL_BY_BALL"
+                        }
+                        tempObj.category = category
                         let tempObjrunner = 
                         {
-                            "status": runner.status,
+                            "status": tempObjfancy.status1,
                             "metadata": "",
-                            "runnerName": runner.name,
-                            "runnerId": runner.selection_id,
+                            "runnerName": tempObjfancy.name,
+                            "runnerId": tempObjfancy.id,
                             "layPrices": [{
-                                "price":runner.lay_price,
-                                "size":runner.lay_volume
+                                "price":tempObjfancy.l1,
+                                "size":tempObjfancy.ls1
                             }],
                             "backPrices": [{
-                                "price":runner.back_price,
-                                "size":runner.back_volume
+                                "price":tempObjfancy.b1,
+                                "size":tempObjfancy.bs1
                             }]
                         }
                         tempRunner.push(tempObjrunner)
+                        tempObj.runners = tempRunner
+                        fanctMarketArr.push(tempObj)
+    
                     }
-                    tempObj.runners = tempRunner
-                    bookMakerMarketArr2.push(tempObj)
-                    if(["OPEN","SUSPENDED"].includes(tempObj.status)){
-                        bookMakerMarketArr.push(tempObj)
-                    }
-                }
-                for(let b = 0; b<fancyMarketIdArray.length; b++){
-                    let tempRunner = []
-                    let category = ""
-                    let tempObjfancy = fancydata[fancyMarketIdArray[b]]
-                    tempObjfancy = JSON.parse(tempObjfancy)
-                    let tempObj = {
-                        "marketId": tempObjfancy.id,
-                        "marketTime": new Date(),
-                        "bettingType": "BOOKMAKER",
-                        "provider": "DIAMOND",
-                        "marketName": tempObjfancy.name,
-                        "bettingType": "LINE",
-                        "marketType": "FANCY",
-                        "noValue": tempObjfancy.l1,
-                        "noRate": tempObjfancy.ls1,
-                        "yesValue": tempObjfancy.b1,
-                        "yesRate": tempObjfancy.bs1,
-                    }
-                    if(tempObjfancy.type_code == 10){
-                        category = "OVERS"
-                    }else if(tempObjfancy.type_code == 20){
-                        category = "BATSMAN"
-                    }else if(tempObjfancy.type_code == 2){
-                        category = "SINGLE_OVER"
-                    }else if(tempObjfancy.type_code == 28){
-                        category = "ODD_EVEN"
-                    }else if(tempObjfancy.type_code == 6){
-                        category = "BALL_BY_BALL"
-                    }
-                    tempObj.category = category
-                    let tempObjrunner = 
-                    {
-                        "status": tempObjfancy.status1,
-                        "metadata": "",
-                        "runnerName": tempObjfancy.name,
-                        "runnerId": tempObjfancy.id,
-                        "layPrices": [{
-                            "price":tempObjfancy.l1,
-                            "size":tempObjfancy.ls1
-                        }],
-                        "backPrices": [{
-                            "price":tempObjfancy.b1,
-                            "size":tempObjfancy.bs1
-                        }]
-                    }
-                    tempRunner.push(tempObjrunner)
-                    tempObj.runners = tempRunner
-                    fanctMarketArr.push(tempObj)
-
                 }
                 delete eventlist[k]['marketName']
                 delete eventlist[k]['runners']
