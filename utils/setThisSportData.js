@@ -68,11 +68,8 @@ const setThisSportData = async(eventlist,SportName) => {
                 delete eventlist[k]['eventType']
                 delete eventlist[k]['competition']
                 delete eventlist[k]['event']
-                // delete eventlist[k]['description']
                 delete eventlist[k]['marketStartTime']
                 delete eventlist[k]['totalMatched']
-                // delete eventlist[k]['marketName']
-                // delete eventlist[k]['runners']
                 thisSportEventId.push(eventlist[k].eventId)
                 let matchodddata = await fetchMOBook(eventlist[k].marketId)
                 let bookmakerdata = await fetchBMBook(eventlist[k].eventId)
@@ -105,6 +102,7 @@ const setThisSportData = async(eventlist,SportName) => {
                     }
                     tempObj.runners = tempRunner
                     matchOddsArr = [tempObj]
+                    matchOddsArr2 = [tempObj]
                 }
                 for(let a = 0; a<bookmakerdata.length; a++){
                     let tempRunner = []
@@ -173,7 +171,11 @@ const setThisSportData = async(eventlist,SportName) => {
                         "provider": "DIAMOND",
                         "marketName": tempObjfancy.name,
                         "bettingType": "LINE",
-                        "marketType": "FANCY"
+                        "marketType": "FANCY",
+                        "noValue": tempObjfancy.l1,
+                        "noRate": tempObjfancy.ls1,
+                        "yesValue": tempObjfancy.b1,
+                        "yesRate": tempObjfancy.bs1,
                     }
                     if(tempObjfancy.type_code == 10){
                         category = "OVERS"
@@ -187,236 +189,34 @@ const setThisSportData = async(eventlist,SportName) => {
                         category = "BALL_BY_BALL"
                     }
                     tempObj.category = category
-                    let bookmakerrunner = JSON.parse(tempObjfancy.runners)
-                    for(let c = 0;c<bookmakerrunner.length;c++){
-                        let runner = bookmakerrunner[c]
-                        let tempObjrunner = 
-                        {
-                            "status": runner.status,
-                            "metadata": "",
-                            "runnerName": runner.name,
-                            "runnerId": runner.selection_id,
-                            "layPrices": [{
-                                "price":runner.lay_price,
-                                "size":runner.lay_volume
-                            }],
-                            "backPrices": [{
-                                "price":runner.back_price,
-                                "size":runner.back_volume
-                            }]
-                        }
-                        tempRunner.push(tempObjrunner)
+                    let tempObjrunner = 
+                    {
+                        "status": tempObjfancy.status1,
+                        "metadata": "",
+                        "runnerName": tempObjfancy.name,
+                        "runnerId": tempObjfancy.id,
+                        "layPrices": [{
+                            "price":tempObjfancy.l1,
+                            "size":tempObjfancy.ls1
+                        }],
+                        "backPrices": [{
+                            "price":tempObjfancy.b1,
+                            "size":tempObjfancy.bs1
+                        }]
                     }
+                    tempRunner.push(tempObjrunner)
                     tempObj.runners = tempRunner
                     fanctMarketArr.push(tempObj)
 
                 }
-                for(let l = 0;l<eventlist[k].catalogues.length;l++){
-                    let fetchMarketDatajson;
-                    try{
-                        fetchMarketDatajson = await fetchBookDataFunc(eventlist[k].catalogues[l].marketId)
-                    }catch(error){
-                        await delay(1000 * 10)
-                        fetchMarketDatajson = await fetchBookDataFunc(eventlist[k].catalogues[l].marketId)
-                    }
-                    if(fetchMarketDatajson[eventlist[k].catalogues[l].marketId]){
-                        if(!["CLOSED"].includes(fetchMarketDatajson[eventlist[k].catalogues[l].marketId].status)){
-                            if(eventlist[k].catalogues[l].bettingType == "LINE" && fetchMarketDatajson[eventlist[k].catalogues[l].marketId].status !== "INACTIVE"){
-                                if(fetchMarketDatajson[eventlist[k].catalogues[l].marketId].sportingEvent == true && eventlist[k].catalogues[l].status !== "CLOSED"){
-                                    eventlist[k].catalogues[l].status = "BALL_RUNNING"
-                                }
-                                if(false){
-                                    for(let i = 0;i<eventlist[k].catalogues[l].runners.length;i++){
-                                        let runner = fetchMarketDatajson[eventlist[k].catalogues[l].marketId].runners.find(item => item.selectionId == eventlist[k].catalogues[l].runners[i].id)
-                                        if(fetchMarketDatajson[eventlist[k].catalogues[l].marketId].sportingEvent == true && eventlist[k].catalogues[l].status !== "CLOSED"){
-                                            eventlist[k].catalogues[l].status = "BALL_RUNNING"
-                                        }
-                                        if(runner){
-                                            if(i == 0){
-                                                if(runner.lay.length > 0){
-                                                    eventlist[k].catalogues[l].noValue = runner.lay[0].line
-                                                    eventlist[k].catalogues[l].noRate = runner.lay[0].price
-                                                }else{
-                                                    eventlist[k].catalogues[l].noValue = "0"
-                                                    eventlist[k].catalogues[l].noRate = "0"
-                                                }
-                                                if(runner.back.length > 0){
-                                                    eventlist[k].catalogues[l].yesValue = runner.back[0].line
-                                                    eventlist[k].catalogues[l].yesRate = runner.back[0].price
-                                                }else{
-                                                    eventlist[k].catalogues[l].yesValue = "0"
-                                                    eventlist[k].catalogues[l].yesRate = "0"
-                                                }
-                                                
-                                            }
-                                            runner.runnerName = eventlist[k].catalogues[l].runners[i].name
-                                            runner.runnerId = runner.selectionId
-                                            runner.layPrices = runner.lay
-                                            runner.backPrices = runner.back
-                                            delete runner.back
-                                            delete runner.lay
-                                            delete runner.selectionId
-                                            eventlist[k].catalogues[l].runners[i] = runner
-                                        }else{
-                                            if(i = 0){
-                                                eventlist[k].catalogues[l].noValue = "0"
-                                                eventlist[k].catalogues[l].noRate = "0"
-                                                eventlist[k].catalogues[l].yesValue = "0"
-                                                eventlist[k].catalogues[l].yesRate = "0"
-                                            }
-                                            eventlist[k].catalogues[l].runners[i].runnerName = eventlist[k].catalogues[l].runners[i].name
-                                            eventlist[k].catalogues[l].runners[i].runnerId = eventlist[k].catalogues[l].runners[i].id
-                                            eventlist[k].catalogues[l].runners[i].layPrices = []
-                                            eventlist[k].catalogues[l].runners[i].backPrices = []
-                                            delete eventlist[k].catalogues[l].runners[i].name
-                                            delete eventlist[k].catalogues[l].runners[i].id
-                                        }
-                                    }
-                                    eventlist[k].catalogues[l].category = eventlist[k].catalogues[l].marketType
-                                    eventlist[k].catalogues[l].marketType = "FANCY"
-                                    fanctMarketArr.push(eventlist[k].catalogues[l])
-
-                                }else{
-                                    for(let i = 0;i<eventlist[k].catalogues[l].runners.length;i++){
-                                        let runner = fetchMarketDatajson[eventlist[k].catalogues[l].marketId].runners.find(item => (item.selectionId == eventlist[k].catalogues[l].runners[i].id && item.status == "ACTIVE"))
-                                        if(runner){
-                                            if(runner.lay.length > 0){
-                                                eventlist[k].catalogues[l].noValue = runner.lay[0].line
-                                                eventlist[k].catalogues[l].noRate = runner.lay[0].price
-                                            }else{
-                                                eventlist[k].catalogues[l].noValue = "0"
-                                                eventlist[k].catalogues[l].noRate = "0"
-                                            }
-                                            if(runner.back.length > 0){
-                                                eventlist[k].catalogues[l].yesValue = runner.back[0].line
-                                                eventlist[k].catalogues[l].yesRate = runner.back[0].price
-                                            }else{
-                                                eventlist[k].catalogues[l].yesValue = "0"
-                                                eventlist[k].catalogues[l].yesRate = "0"
-                                            }
-                                            
-                                            delete eventlist[k].catalogues[l].runners
-                                            eventlist[k].catalogues[l].category = eventlist[k].catalogues[l].marketType
-                                            eventlist[k].catalogues[l].marketType = "FANCY"
-                                            fanctMarketArr.push(eventlist[k].catalogues[l])
-                                            break
-                                        }else{
-                                            eventlist[k].catalogues[l].noValue = "0"
-                                            eventlist[k].catalogues[l].noRate = "0"
-                                            eventlist[k].catalogues[l].yesValue = "0"
-                                            eventlist[k].catalogues[l].yesRate = "0"
-                                            delete eventlist[k].catalogues[l].runners
-                                            eventlist[k].catalogues[l].category = eventlist[k].catalogues[l].marketType
-                                            eventlist[k].catalogues[l].marketType = "FANCY"
-                                            fanctMarketArr.push(eventlist[k].catalogues[l])
-                                            break
-                                        }
-                                    }
-                                }
-                               
-                                    
-                            }else{
-                                for(let i = 0;i<eventlist[k].catalogues[l].runners.length;i++){
-                                    let runner = fetchMarketDatajson[eventlist[k].catalogues[l].marketId].runners.find(item => item.selectionId == eventlist[k].catalogues[l].runners[i].id)
-                                    if(fetchMarketDatajson[eventlist[k].catalogues[l].marketId].sportingEvent == true && eventlist[k].catalogues[l].status !== "CLOSED"){
-                                        eventlist[k].catalogues[l].status = "BALL_RUNNING"
-                                    }
-                                    if(runner){
-                                        runner.runnerName = eventlist[k].catalogues[l].runners[i].name
-                                        runner.runnerId = runner.selectionId
-                                        runner.layPrices = runner.lay
-                                        runner.backPrices = runner.back
-                                        delete runner.back
-                                        delete runner.lay
-                                        delete runner.selectionId
-                                        eventlist[k].catalogues[l].runners[i] = runner
-                                    }else{
-                                        eventlist[k].catalogues[l].runners[i].runnerName = eventlist[k].catalogues[l].runners[i].name
-                                        eventlist[k].catalogues[l].runners[i].runnerId = eventlist[k].catalogues[l].runners[i].id
-                                        eventlist[k].catalogues[l].runners[i].layPrices = []
-                                        eventlist[k].catalogues[l].runners[i].backPrices = []
-                                        // delete eventlist[k].catalogues[l].runners[i].metadata
-                                        delete eventlist[k].catalogues[l].runners[i].name
-                                        delete eventlist[k].catalogues[l].runners[i].id
-                                    }
-                                }
-                                // console.log(eventlist[k].catalogues[l].runners,'eventlist[k].catalogues[l].runners')
-                                if(eventlist[k].catalogues[l].bettingType == "ODDS"){
-                                    matchOddsArr2.push(eventlist[k].catalogues[l])
-                                    if(["OPEN","SUSPENDED"].includes(fetchMarketDatajson[eventlist[k].catalogues[l].marketId].status)){
-                                        matchOddsArr.push(eventlist[k].catalogues[l])
-                                    }
-                                }else if(eventlist[k].catalogues[l].bettingType == "BOOKMAKER"){
-                                    bookMakerMarketArr2.push(eventlist[k].catalogues[l])
-                                    if(["OPEN","SUSPENDED"].includes(fetchMarketDatajson[eventlist[k].catalogues[l].marketId].status)){
-                                        bookMakerMarketArr.push(eventlist[k].catalogues[l])
-                                    }
-                                }
-                            }
-                        }
-                    }else{
-                        if(!["CLOSED"].includes(eventlist[k].catalogues[l].status)){
-                            if(eventlist[k].catalogues[l].bettingType == "LINE" && eventlist[k].catalogues[l].status !== "INACTIVE"){
-                                if(false){
-                                    for(let i = 0;i<eventlist[k].catalogues[l].runners.length;i++){
-                                        if(i == 0){
-                                            eventlist[k].catalogues[l].noValue = "0"
-                                            eventlist[k].catalogues[l].noRate = "0"
-                                            eventlist[k].catalogues[l].yesValue = "0"
-                                            eventlist[k].catalogues[l].yesRate = "0"
-                                        }
-                                        eventlist[k].catalogues[l].runners[i].runnerName = eventlist[k].catalogues[l].runners[i].name
-                                        eventlist[k].catalogues[l].runners[i].runnerId = eventlist[k].catalogues[l].runners[i].id
-                                        eventlist[k].catalogues[l].runners[i].layPrices = []
-                                        eventlist[k].catalogues[l].runners[i].backPrices = []
-                                        delete eventlist[k].catalogues[l].runners[i].name
-                                        delete eventlist[k].catalogues[l].runners[i].id
-                                    }
-                                    eventlist[k].catalogues[l].category = eventlist[k].catalogues[l].marketType
-                                    eventlist[k].catalogues[l].marketType = "FANCY"
-                                    fanctMarketArr.push(eventlist[k].catalogues[l])
-                                }else{
-                                    eventlist[k].catalogues[l].noValue = "0"
-                                    eventlist[k].catalogues[l].noRate = "0"
-                                    eventlist[k].catalogues[l].yesValue = "0"
-                                    eventlist[k].catalogues[l].yesRate = "0"
-                                    delete eventlist[k].catalogues[l].runners
-                                    eventlist[k].catalogues[l].category = eventlist[k].catalogues[l].marketType
-                                    eventlist[k].catalogues[l].marketType = "FANCY"
-                                    fanctMarketArr.push(eventlist[k].catalogues[l])
-                                }
-                                
-                            }else{
-                                for(let i = 0;i<eventlist[k].catalogues[l].runners.length;i++){
-                                    eventlist[k].catalogues[l].runners[i].runnerName = eventlist[k].catalogues[l].runners[i].name
-                                    eventlist[k].catalogues[l].runners[i].runnerId = eventlist[k].catalogues[l].runners[i].id
-                                    eventlist[k].catalogues[l].runners[i].layPrices = []
-                                    eventlist[k].catalogues[l].runners[i].backPrices = []
-                                    delete eventlist[k].catalogues[l].runners[i].name
-                                    delete eventlist[k].catalogues[l].runners[i].id
-                                }
-                                if(eventlist[k].catalogues[l].bettingType == "ODDS"){
-                                    matchOddsArr2.push(eventlist[k].catalogues[l])
-                                    if(["OPEN","SUSPENDED"].includes(eventlist[k].catalogues[l].status)){
-                                        matchOddsArr.push(eventlist[k].catalogues[l])
-                                    }
-                                }else if(eventlist[k].catalogues[l].bettingType == "BOOKMAKER"){
-                                    bookMakerMarketArr2.push(eventlist[k].catalogues[l])
-                                    if(["OPEN","SUSPENDED"].includes(eventlist[k].catalogues[l].status)){
-                                        bookMakerMarketArr.push(eventlist[k].catalogues[l])
-                                    }
-                                }
-                            }
-                        }
-                    }
-                    
-                }
+                delete eventlist[k]['marketName']
+                delete eventlist[k]['runners']
+                delete eventlist[k]['description']
                 eventlist[k].markets = {
                     matchOdds: matchOddsArr,
                     bookmakers: bookMakerMarketArr,
                     fancyMarkets: fanctMarketArr
                 }
-                delete eventlist[k]['catalogues']
                 let OnlyMOBMMarketIdsArr = [];
                 let MOBMMarketArr = [];
                 let MOBMMarketDetailsArr = matchOddsArr2.concat(bookMakerMarketArr2)
@@ -428,8 +228,8 @@ const setThisSportData = async(eventlist,SportName) => {
                     OnlyMOBMMarketIdsArr.push(OnlyMOBMMarketIds[j].marketId)
                 }
                 // console.log(OnlyMOBMMarketIdsArr,"OnlyMOBMMarketIdsArrOnlyMOBMMarketIdsArrINThisSportttttttt")
-                await client.set(`${eventlist[k].eventId}_MOBMMarketArr_shark_diamond`,JSON.stringify(MOBMMarketArr),'EX',7 * 24 * 60 * 60)
-                await client.set(`${eventlist[k].eventId}_OnlyMOBMMarketIdsArr_shark_diamond`,JSON.stringify(OnlyMOBMMarketIdsArr),'EX',7 * 24 * 60 * 60)
+                await client.set(`${eventlist[k].eventId}_MOBMMarketArr_diamond`,JSON.stringify(MOBMMarketArr),'EX',7 * 24 * 60 * 60)
+                await client.set(`${eventlist[k].eventId}_OnlyMOBMMarketIdsArr_diamond`,JSON.stringify(OnlyMOBMMarketIdsArr),'EX',7 * 24 * 60 * 60)
                 await client.set(`${eventlist[k].eventId}_sharEventData_diamond`,JSON.stringify(eventlist[k]),'EX',7 * 24 * 60 * 60)
             }
             await client.set(`crone_getEventIds_${SportName}_diamond`,JSON.stringify(thisSportEventId))
