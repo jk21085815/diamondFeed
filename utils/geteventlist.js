@@ -46,9 +46,12 @@ const getEventList = async(sportId,sportName) => {
                             'Content-type' : 'application/json'
                         }
                     })
-                    console.log(fetchEventList,'fetchEventListfetchEventList')
-                    fetchEventList = await fetchEventList.json()
-                    console.log(fetchEventList,'fetchEventListfetchEventList')
+                    const contentType = fetchEventList.headers.get('content-type');
+                    console.log('Content-Type:', contentType);
+
+                    // console.log(fetchEventList,'fetchEventListfetchEventList')
+                    // fetchEventList = await fetchEventList.json()
+                    // console.log(fetchEventList,'fetchEventListfetchEventList2222222222')
                     // fetchEventList = await JSON.parse(fetchEventList)
                     for(let j = 0;j<fetchEventList.length;j++){
                         let isTestMatch = false
