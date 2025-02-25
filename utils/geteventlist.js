@@ -47,7 +47,7 @@ const getEventList = async(sportId,sportName) => {
                         // }
                     })
                     fetchEventList = await fetchEventList.text()
-                    fetchEventList = JSON.parse(fetchEventList)
+                    // fetchEventList = JSON.parse(fetchEventList)
                     console.log(fetchEventList,'fetchEventListfetchEventList')
                     for(let j = 0;j<fetchEventList.length;j++){
                         let isTestMatch = false
