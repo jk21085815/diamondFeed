@@ -133,7 +133,7 @@ const updateFancyDetailsFunc = async (marketIdsArr, eventId) => {
                                 try{
                                     await delay(1000 * 10)
                                     fetchMarketData2 = await fetch(`http://18.171.69.133:6008/sports/markets/${market.marketId}`, {
-                                        method: 'GET',
+                                        method: 'GET',  
                                         headers: { 'Content-type': 'application/text' }
                                     });
                                 }catch(error){
