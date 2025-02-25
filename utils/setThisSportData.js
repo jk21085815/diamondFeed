@@ -25,6 +25,7 @@ const setThisSportData = async(eventlist,SportName) => {
                     }
                 })
                 let fetchMarketDatajson = await fetchMarketData.json()
+                console.log(fetchMarketDatajson,"fetchMarketDatajsonfetchMarketDatajson")
                 return fetchMarketDatajson[marketId]
             }
             async function fetchBMBook(eventId) {
