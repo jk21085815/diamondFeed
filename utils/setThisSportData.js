@@ -109,32 +109,23 @@ const setThisSportData = async(eventlist,SportName) => {
                 if(bookmakerdata){
                     for(let a = 0; a<bookmakerdata.length; a++){
                         let tempRunner = []
-                        let marketName = ""
-                        let marketType = ""
-                        let bettingType = ""
+                        let marketName
                         let tempObj = {
                             "marketId": bookmakerdata[a].bookmaker_id,
                             "marketTime": new Date(),
                             "bettingType": "BOOKMAKER",
+                            "marketType": "BOOKMAKER",
                             "provider": "DIAMOND",
                             "status": bookmakerdata[a].data.status
                         }
                         if(bookmakerdata[a].data.type == "MATCH_ODDS"){
                             marketName = "Bookmaker"
-                            marketType = "BOOKMAKER"
-                            bettingType = "BOOKMAKER"
                         }else if(bookmakerdata[a].data.type == "MINI_BOOKMAKER"){
                             marketName = "Bookmaker 0 Commission"
-                            marketType = "BOOKMAKER"
-                            bettingType = "BOOKMAKER"
                         }else if(bookmakerdata[a].data.type == "TO_WIN_THE_TOSS"){
                             marketName = "To Win The Toss"
-                            marketType = "BOOKMAKER"
-                            bettingType = "BOOKMAKER"
                         }
-                        tempObj.marketName = marketName
-                        tempObj.marketType = marketType
-                        tempObj.bettingType = bettingType
+                        tempObj["marketName"] = marketName
     
                         let bookmakerrunner = JSON.parse(bookmakerdata[a].data.runners)
                         for(let c = 0;c<bookmakerrunner.length;c++){
@@ -202,11 +193,11 @@ const setThisSportData = async(eventlist,SportName) => {
                             "runnerId": tempObjfancy.id,
                             "layPrices": [{
                                 "price":tempObjfancy.l1,
-                                "size":tempObjfancy.ls1
+                                "line":tempObjfancy.ls1
                             }],
                             "backPrices": [{
                                 "price":tempObjfancy.b1,
-                                "size":tempObjfancy.bs1
+                                "line":tempObjfancy.bs1
                             }]
                         }
                         tempRunner.push(tempObjrunner)
