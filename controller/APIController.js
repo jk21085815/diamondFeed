@@ -433,7 +433,9 @@ exports.cricketextramarketlist = catchAsync(async(req, res, next) => {
             }
         })
         // console.log(new Date(),i,eventIds[i],'iiiiiiiii')
+        console.log(fetchMarketData,'fetcvhMarketdataaaaaaa')
         fetchMarketData = await fetchMarketData.json()
+        console.log(fetchMarketData,'fetcvhMarketdataaaaaaa22222222')
     }catch(err){
         console.log(err)
     }
@@ -452,7 +454,9 @@ exports.tournamentwinner = catchAsync(async(req, res, next) => {
             }
         })
         // console.log(new Date(),i,eventIds[i],'iiiiiiiii')
+        console.log(fetchMarketData,'fetcvhMarketdataaaaaaa')
         fetchMarketData = await fetchMarketData.json()
+        console.log(fetchMarketData,'fetcvhMarketdataaaaaaa22222222')
     }catch(err){
         console.log(err)
     }
@@ -471,7 +475,9 @@ exports.underover = catchAsync(async(req, res, next) => {
             }
         })
         // console.log(new Date(),i,eventIds[i],'iiiiiiiii')
+        console.log(fetchMarketData,'fetcvhMarketdataaaaaaa')
         fetchMarketData = await fetchMarketData.json()
+        console.log(fetchMarketData,'fetcvhMarketdataaaaaaa222222222')
     }catch(err){
         console.log(err)
     }
