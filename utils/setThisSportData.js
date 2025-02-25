@@ -139,7 +139,7 @@ const setThisSportData = async(eventlist,SportName) => {
                         tempObj.marketType = marketType
                         tempObj.bettingType = bettingType
     
-                        let bookmakerrunner = JSON.parse(bookmakerdata[a].runners)
+                        let bookmakerrunner = JSON.parse(bookmakerdata[a].data.runners)
                         for(let c = 0;c<bookmakerrunner.length;c++){
                             let runner = bookmakerrunner[c]
                             let tempObjrunner = 
