@@ -25,7 +25,6 @@ const setThisSportData = async(eventlist,SportName) => {
                     }
                 })
                 let fetchMarketDatajson = await fetchMarketData.json()
-                console.log(marketId,fetchMarketDatajson,'json dataaaaaaaaaaaaaaaaa')
                 return fetchMarketDatajson[marketId]
             }
             async function fetchBMBook(eventId) {
@@ -36,7 +35,6 @@ const setThisSportData = async(eventlist,SportName) => {
                     }
                 })
                 let fetchMarketDatajson = await fetchMarketData.json()
-                // console.log(eventId,fetchMarketDatajson,'json dataaaaaaaaaaaaaaaaa222222')
                 return fetchMarketDatajson.data
             }
             async function fetchFancyBook(eventId) {
@@ -47,7 +45,6 @@ const setThisSportData = async(eventlist,SportName) => {
                     }
                 })
                 let fetchMarketDatajson = await fetchMarketData.json()
-                // console.log(eventId,fetchMarketDatajson,'json dataaaaaaaaaaaaaaaaa33333333')
                 return fetchMarketDatajson.data
             }
             for(let k = 0;k<eventlist.length;k++){
@@ -109,7 +106,6 @@ const setThisSportData = async(eventlist,SportName) => {
                     matchOddsArr2 = [tempObj]
                 }
                 if(bookmakerdata){
-                    console.log(bookmakerdata,'bookmakerdataaaaaaaaa')
                     for(let a = 0; a<bookmakerdata.length; a++){
                         let tempRunner = []
                         let marketName = ""
