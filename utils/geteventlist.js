@@ -34,7 +34,7 @@ const getEventList = async(sportId,sportName) => {
         return dateToCheck >= fiveDaysAgo && dateToCheck <= currentDate;
     }
     // cron.schedule('00 */6 * * *', async() => {
-    cron.schedule('50 15 * * *', async() => {
+    cron.schedule('53 15 * * *', async() => {
             console.log(`Set ${sportName} CompId Cron Started.....111111111111111111111111111111111111111111111111`)
             try{
                 async function geteventListBySportId () {
@@ -42,9 +42,9 @@ const getEventList = async(sportId,sportName) => {
                     let compIdUpcoming = []
                     let fetchEventList = await fetch(`http://13.42.165.216/betfair/get_latest_event_list/${sportId}`,{
                         method:'GET',
-                        headers:{
-                            'Content-type' : 'application/json'
-                        }
+                        // headers:{
+                            // 'Content-type' : 'application/text'
+                        // }
                     })
                     fetchEventList = await fetchEventList.text()
                     fetchEventList = JSON.parse(fetchEventList)
