@@ -28,7 +28,7 @@ const setThisSportData = async(eventlist,SportName) => {
                 console.log(marketId,fetchMarketDatajson,'json dataaaaaaaaaaaaaaaaa')
                 return fetchMarketDatajson[marketId]
             }
-            async function fetchBMBook(eventId=27996014) {
+            async function fetchBMBook(eventId) {
                 let fetchMarketData = await fetch(` https://odds.datafeed365.com/api/active-bm/${eventId}`,{
                     method: 'GET',
                     headers: {
@@ -36,9 +36,10 @@ const setThisSportData = async(eventlist,SportName) => {
                     }
                 })
                 let fetchMarketDatajson = await fetchMarketData.json()
+                console.log(eventId,fetchMarketDatajson,'json dataaaaaaaaaaaaaaaaa222222')
                 return fetchMarketDatajson.data
             }
-            async function fetchFancyBook(eventId=27996014) {
+            async function fetchFancyBook(eventId) {
                 let fetchMarketData = await fetch(` hthttps://odds.datafeed365.com/api/fancy-list/${eventId}`,{
                     method: 'GET',
                     headers: {
@@ -46,6 +47,7 @@ const setThisSportData = async(eventlist,SportName) => {
                     }
                 })
                 let fetchMarketDatajson = await fetchMarketData.json()
+                console.log(eventId,fetchMarketDatajson,'json dataaaaaaaaaaaaaaaaa33333333')
                 return fetchMarketDatajson.data
             }
             for(let k = 0;k<eventlist.length;k++){
