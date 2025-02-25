@@ -35,7 +35,7 @@ const getEventList = async(sportId,sportName) => {
         return dateToCheck >= fiveDaysAgo && dateToCheck <= currentDate;
     }
     // cron.schedule('00 */6 * * *', async() => {
-    cron.schedule('*/30 * * * * *', async() => {
+    cron.schedule('28 * * * *', async() => {
             console.log(`Set ${sportName} CompId Cron Started.....111111111111111111111111111111111111111111111111`)
             try{
                 async function geteventListBySportId () {
@@ -53,78 +53,77 @@ const getEventList = async(sportId,sportName) => {
                     // console.log(fetchEventList,'fetchEventListfetchEventList')
                     fetchEventList = await fetchEventList.text()
                     let parsedata = JSON.parse(fetchEventList)
-                    console.log(parsedata,'parsedataparsedata')
-                    // for(let j = 0;j<fetchEventList.length;j++){
-                    //     let isTestMatch = false
-                    //     let isElection = false
-                    //     let eventdata = fetchEventList[j]
-                    //     console.log(eventdata,'eventdataaaaaaaaaa')
-                    //     if(eventdata.competition.name.toLowerCase().indexOf("test") !== -1 || eventdata.competition.name.toLowerCase().indexOf("ranji trophy") !== -1 || eventdata.competition.name.toLowerCase().indexOf("west indies championship") !== -1){
-                    //         isTestMatch = true
-                    //         console.log(eventdata.competition.name,'competetion name')
-                    //     }else{
-                    //         if(eventdata.eventType.id == 500){
-                    //             isElection = true
-                    //         }
-                    //     }
-                    //     let isUpcomingComp = false
-                    //     if(isTestMatch){
-                    //         if(isDateWithinLast5Days(eventdata.event.openDate)){
-                    //             let fetchMarketData;
-                    //             try{
-                    //                 fetchMarketData = await fetchEventDataFunc(eventdata.event.id)
-                    //             }catch(error){
-                    //                 await delay(1000 * 30)
-                    //                 fetchMarketData = await fetchEventDataFunc(eventdata.event.id)
-                    //             }
-                    //             await delay(1000)
-                    //             let matchodds = fetchMarketData.catalogues.find(item => item.marketName.trim() == "Match Odds")
-                    //             if(matchodds && (matchodds.status !== 'CLOSED')){
-                    //                 eventlist.push(eventdata)
-                    //             }
-                    //             // else{
-                    //             //     let bookmaker = fetchMarketData.catalogues.find(item => item.marketName.trim() == "Bookmaker")
-                    //             //     if(!bookmaker){
-                    //             //         bookmaker = fetchMarketData.catalogues.find(item => item.marketName.trim() == "Bookmaker 0 Commission")
-                    //             //     }
-                    //             //     if(bookmaker && (bookmaker.status !== 'CLOSED')){
-                    //             //         eventlist.push(eventdata.event.id)
-                    //             //     }
-                    //             // }
-                    //         }
-                    //     }else if(isElection){
-                    //         eventlist.push(eventdata)
-                    //     }else if(eventdata.event.name.trim() == eventdata.event.competition.name.trim()){
-                    //         let fetchMarketData;
-                    //         try{
-                    //             fetchMarketData = await fetchEventDataFunc(eventdata.event.id)
-                    //         }catch(error){
-                    //             await delay(1000 * 30)
-                    //             fetchMarketData = await fetchEventDataFunc(eventdata.event.id)
-                    //         }
-                    //         await delay(1000)
-                    //         let winner = fetchMarketData.catalogues.find(item => item.marketType == "TOURNAMENT_WINNER")
-                    //         if(winner && (winner.status !== 'CLOSED')){
-                    //             eventlist.push(eventdata)
-                    //         }
-                    //     }
-                    //     else if(isUpcomingEvent(eventdata.event.openDate)){
-                    //         eventlist.push(eventdata)
-                    //         if(["7","4339"].includes(eventdata.eventType.id) && isUpcomingComp == false){
-                    //             isUpcomingComp = true
-                    //         }
-                    //     }
-                    //     if(isUpcomingComp){
-                    //         compIdUpcoming.push(compIds[i])
-                    //     }
+                    for(let j = 0;j<parsedata.length;j++){
+                        let isTestMatch = false
+                        let isElection = false
+                        let eventdata = parsedata[j]
+                        console.log(eventdata,'eventdataaaaaaaaaa')
+                        if(eventdata.competition.name.toLowerCase().indexOf("test") !== -1 || eventdata.competition.name.toLowerCase().indexOf("ranji trophy") !== -1 || eventdata.competition.name.toLowerCase().indexOf("west indies championship") !== -1){
+                            isTestMatch = true
+                            console.log(eventdata.competition.name,'competetion name')
+                        }else{
+                            if(eventdata.eventType.id == 500){
+                                isElection = true
+                            }
+                        }
+                        let isUpcomingComp = false
+                        if(isTestMatch){
+                            if(isDateWithinLast5Days(eventdata.event.openDate)){
+                                let fetchMarketData;
+                                try{
+                                    fetchMarketData = await fetchEventDataFunc(eventdata.event.id)
+                                }catch(error){
+                                    await delay(1000 * 30)
+                                    fetchMarketData = await fetchEventDataFunc(eventdata.event.id)
+                                }
+                                await delay(1000)
+                                let matchodds = fetchMarketData.catalogues.find(item => item.marketName.trim() == "Match Odds")
+                                if(matchodds && (matchodds.status !== 'CLOSED')){
+                                    eventlist.push(eventdata)
+                                }
+                                // else{
+                                //     let bookmaker = fetchMarketData.catalogues.find(item => item.marketName.trim() == "Bookmaker")
+                                //     if(!bookmaker){
+                                //         bookmaker = fetchMarketData.catalogues.find(item => item.marketName.trim() == "Bookmaker 0 Commission")
+                                //     }
+                                //     if(bookmaker && (bookmaker.status !== 'CLOSED')){
+                                //         eventlist.push(eventdata.event.id)
+                                //     }
+                                // }
+                            }
+                        }else if(isElection){
+                            eventlist.push(eventdata)
+                        }else if(eventdata.event.name.trim() == eventdata.event.competition.name.trim()){
+                            let fetchMarketData;
+                            try{
+                                fetchMarketData = await fetchEventDataFunc(eventdata.event.id)
+                            }catch(error){
+                                await delay(1000 * 30)
+                                fetchMarketData = await fetchEventDataFunc(eventdata.event.id)
+                            }
+                            await delay(1000)
+                            let winner = fetchMarketData.catalogues.find(item => item.marketType == "TOURNAMENT_WINNER")
+                            if(winner && (winner.status !== 'CLOSED')){
+                                eventlist.push(eventdata)
+                            }
+                        }
+                        else if(isUpcomingEvent(eventdata.event.openDate)){
+                            eventlist.push(eventdata)
+                            if(["7","4339"].includes(eventdata.eventType.id) && isUpcomingComp == false){
+                                isUpcomingComp = true
+                            }
+                        }
+                        if(isUpcomingComp){
+                            compIdUpcoming.push(compIds[i])
+                        }
 
-                    // }
-                    // if(sportName == "GreyHound" || sportName == "HorseRacing"){
-                    //     client.set(`crone_getCompIds_HRGH_Upcoming_${sportName}_diamond`,JSON.stringify(compIdUpcoming))
-                    // }
-                    // client.set(`crone_getEvent_list_${sportName}_diamond`,JSON.stringify(eventlist))  
-                    // console.log(`Set ${sportName} CompititionId Cron Ended...`) 
-                    // await setFinalResult(sportName)
+                    }
+                    if(sportName == "GreyHound" || sportName == "HorseRacing"){
+                        client.set(`crone_getCompIds_HRGH_Upcoming_${sportName}_diamond`,JSON.stringify(compIdUpcoming))
+                    }
+                    client.set(`crone_getEvent_list_${sportName}_diamond`,JSON.stringify(eventlist))  
+                    console.log(`Set ${sportName} CompititionId Cron Ended...`) 
+                    await setFinalResult(sportName)
                 } 
                 geteventListBySportId()
             }catch(error){
