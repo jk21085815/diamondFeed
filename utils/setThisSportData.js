@@ -40,7 +40,7 @@ const setThisSportData = async(eventlist,SportName) => {
                 return fetchMarketDatajson.data
             }
             async function fetchFancyBook(eventId) {
-                let fetchMarketData = await fetch(` hthttps://odds.datafeed365.com/api/fancy-list/${eventId}`,{
+                let fetchMarketData = await fetch(` https://odds.datafeed365.com/api/fancy-list/${eventId}`,{
                     method: 'GET',
                     headers: {
                         'Content-type': 'application/json',
