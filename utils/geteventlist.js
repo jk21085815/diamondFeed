@@ -34,7 +34,7 @@ const getEventList = async(sportId,sportName) => {
         return dateToCheck >= fiveDaysAgo && dateToCheck <= currentDate;
     }
     // cron.schedule('00 */6 * * *', async() => {
-    cron.schedule('45 15 * * *', async() => {
+    cron.schedule('46 15 * * *', async() => {
             console.log(`Set ${sportName} CompId Cron Started.....111111111111111111111111111111111111111111111111`)
             try{
                 async function geteventListBySportId () {
@@ -46,7 +46,11 @@ const getEventList = async(sportId,sportName) => {
                             'Content-type' : 'application/json'
                         }
                     })
+                    console.log(fetchEventList,'fetchEventListfetchEventList')
                     fetchEventList = await fetchEventList.text()
+                    console.log(fetchEventList,'fetchEventListfetchEventList')
+                    fetchEventList = await fetchEventList.json()
+                    console.log(fetchEventList,'fetchEventListfetchEventList')
                     for(let j = 0;j<fetchEventList.length;j++){
                         let isTestMatch = false
                         let isElection = false
