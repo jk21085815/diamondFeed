@@ -25,8 +25,8 @@ const setThisSportData = async(eventlist,SportName) => {
                     }
                 })
                 let fetchMarketDatajson = await fetchMarketData.json()
-                console.log(fetchMarketDatajson,"fetchMarketDatajsonfetchMarketDatajson")
-                return fetchMarketDatajson[marketId]
+                console.log(fetchMarketDatajson[0],"fetchMarketDatajsonfetchMarketDatajson")
+                return fetchMarketDatajson[0]
             }
             async function fetchBMBook(eventId) {
                 let fetchMarketData = await fetch(` https://odds.datafeed365.com/api/active-bm/${eventId}`,{
