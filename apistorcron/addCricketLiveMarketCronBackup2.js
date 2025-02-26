@@ -71,7 +71,9 @@ client.on('connect', () => {
                             MOBMMarketArr = JSON.parse(MOBMMarketArr)
                             OnlyMOBMMarketIdsArr = await client.get(`${eventIds[i]}_OnlyMOMarketIdsArr_diamond`)
                             OnlyMOBMMarketIdsArr = JSON.parse(OnlyMOBMMarketIdsArr)
-                            
+                            if(eventData.eventId == "34058805"){
+                                console.log(OnlyMOBMMarketIdsArr,'OnlyMOBMMarketIdsArrOnlyMOBMMarketIdsArr')
+                            }
                             if(OnlyMOBMMarketIdsArr.length !== 0){
                                 let count = Math.ceil(OnlyMOBMMarketIdsArr.length/chunkSize)
                                 // console.log(OnlyMOBMMarketIdsArr.length,count,'counttttttttt')
@@ -87,6 +89,9 @@ client.on('connect', () => {
                                         fetchMarketDatachunk = await fetchEventDataFunc(marketchunks)
                                     }
                                     fetchMarketData2 = fetchMarketData2.concat(fetchMarketDatachunk)
+                                }
+                                if(eventData.eventId == "34058805"){
+                                    console.log(fetchMarketData2,'fetchMarketData2fetchMarketData2')
                                 }
                                 let openMarkets = fetchMarketData2.filter(item => ["OPEN","SUSPENDED"].includes(item.status))
                                 for(let i = 0;i<openMarkets.length;i++){
