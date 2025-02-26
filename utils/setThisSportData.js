@@ -131,8 +131,9 @@ const setThisSportData = async(eventlist,SportName) => {
     
                         let bookmakerrunner = JSON.parse(bookmakerdata[a].data.runners)
                         console.log(bookmakerrunner,"bookmakerrunnerbookmakerrunner")
-                        for(let c = 0;c<bookmakerrunner.length;c++){
-                            let runner = bookmakerrunner[c]
+                        let runnerIds = Object.keys(bookmakerrunner)
+                        for(let c = 0;c<runnerIds.length;c++){
+                            let runner = bookmakerrunner[runnerIds[c]]
                             let tempObjrunner = 
                             {
                                 "status": runner.status,
