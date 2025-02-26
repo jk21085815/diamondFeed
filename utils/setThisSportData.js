@@ -107,6 +107,7 @@ const setThisSportData = async(eventlist,SportName) => {
                     matchOddsArr2 = [tempObj]
                 }
                 if(bookmakerdata){
+                    bookmakerdata = bookmakerdata.data
                     for(let a = 0; a<bookmakerdata.length; a++){
                         let tempRunner = []
                         let marketName
