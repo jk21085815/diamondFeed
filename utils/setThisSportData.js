@@ -223,6 +223,8 @@ const setThisSportData = async(eventlist,SportName) => {
                             category = "ODD_EVEN"
                         }else if(tempObjfancy.type_code == 6){
                             category = "BALL_BY_BALL"
+                        }else{
+                            category = "OTHER"
                         }
                         tempObj.category = category
                         let tempObjrunner = 

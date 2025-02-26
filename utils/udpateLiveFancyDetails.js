@@ -62,6 +62,8 @@ const updateFancyDetailsFunc = async (eventId,fencydata) => {
                                 category = "ODD_EVEN"
                             }else if(market.type_code == 6){
                                 category = "BALL_BY_BALL"
+                            }else{
+                                category = "OTHER"
                             }
                             tempObj.category = category
                             let tempObjrunner = 
