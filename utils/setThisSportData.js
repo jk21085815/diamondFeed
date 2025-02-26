@@ -25,7 +25,7 @@ const setThisSportData = async(eventlist,SportName) => {
                     }
                 })
                 let fetchMarketDatajson = await fetchMarketData.json()
-                return fetchMarketDatajson[0]
+                return fetchMarketDatajson
             }
             async function fetchBMBook(eventId) {
                 let fetchMarketData = await fetch(` https://odds.datafeed365.com/api/active-bm/${eventId}`,{
@@ -78,32 +78,36 @@ const setThisSportData = async(eventlist,SportName) => {
                 let fancyMarketIdArray = Object.keys(fancydata)
                 delete eventlist[k]['marketId']
                 if(matchodddata){
-                    let tempRunner = []
-                    let tempObj = {
-                        "marketId": matchodddata.marketId,
-                        "marketTime": matchodddata.lastMatchTime,
-                        "marketType": eventlist[k].description.marketType,
-                        "bettingType": eventlist[k].description.bettingType,
-                        "marketName": eventlist[k].marketName,
-                        "provider": "DIAMOND",
-                        "status": matchodddata.status
-                    }
-                    for(let c = 0;c<matchodddata.runners.length;c++){
-                        let runner = eventlist[k].runners.find(item => item.selectionId == matchodddata.runners[c].selectionId)
-                        let tempObjrunner = 
-                        {
-                            "status": matchodddata.runners[c].status,
-                            "metadata": runner.metadata,
-                            "runnerName": runner.runnerName,
-                            "runnerId": matchodddata.runners[c].selectionId,
-                            "layPrices": matchodddata.runners[c].ex.availableToLay,
-                            "backPrices": matchodddata.runners[c].ex.availableToBack
+                    for(let d = 0;d<matchodddata.length;d++){
+                        let tempRunner = []
+                        let tempObj = {
+                            "marketId": matchodddata[d].marketId,
+                            "marketTime": matchodddata[d].lastMatchTime,
+                            "marketType": eventlist[k].description.marketType,
+                            "bettingType": eventlist[k].description.bettingType,
+                            "marketName": eventlist[k].marketName,
+                            "provider": "DIAMOND",
+                            "status": matchodddata[d].status
                         }
-                        tempRunner.push(tempObjrunner)
+                        for(let c = 0;c<matchodddata[d].runners.length;c++){
+                            let runner = eventlist[k].runners.find(item => item.selectionId == matchodddata[d].runners[c].selectionId)
+                            let tempObjrunner = 
+                            {
+                                "status": matchodddata[d].runners[c].status,
+                                "metadata": runner.metadata,
+                                "runnerName": runner.runnerName,
+                                "runnerId": matchodddata[d].runners[c].selectionId,
+                                "layPrices": matchodddata[d].runners[c].ex.availableToLay,
+                                "backPrices": matchodddata[d].runners[c].ex.availableToBack
+                            }
+                            tempRunner.push(tempObjrunner)
+                        }
+                        tempObj.runners = tempRunner
+                        matchOddsArr2.push(tempObj)
+                        if(["OPEN","SUSPENDED"].includes(tempObj.status)){
+                            matchOddsArr.push(tempObj)
+                        }
                     }
-                    tempObj.runners = tempRunner
-                    matchOddsArr = [tempObj]
-                    matchOddsArr2 = [tempObj]
                 }
                 if(bookmakerdata){
                     for(let a = 0; a<bookmakerdata.length; a++){
