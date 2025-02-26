@@ -119,10 +119,9 @@ const setThisSportData = async(eventlist,SportName) => {
                             matchOddsArr.push(tempObj)
                         }
                     }
-                    
                 }
                 if(["7","4339"].includes(eventlist[k].sportId)){
-                    delete eventlist[k]["catalogues"]
+                    delete eventlist[k]['catalogues']
                 }
                 if(bookmakerdata){
                     for(let a = 0; a<bookmakerdata.length; a++){
