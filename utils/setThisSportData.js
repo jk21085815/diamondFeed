@@ -87,8 +87,8 @@ const setThisSportData = async(eventlist,SportName) => {
                 let fancydata = await fetchFancyBook(eventlist[k].eventId)
                 let fancyMarketIdArray = Object.keys(fancydata)
                 delete eventlist[k]['marketId']
-                if(matchodddata){
-                    for(let d = 0;d<matchodddata.length;d++){
+                for(let d = 0;d<matchodddata.length;d++){
+                    if(matchodddata[d]){
                         let thatcatalog = eventlist[k].catalogues.find(item => item.marketId == matchodddata[d].marketId)
                         console.log(thatcatalog)
                         let tempRunner = []
@@ -120,6 +120,7 @@ const setThisSportData = async(eventlist,SportName) => {
                             matchOddsArr.push(tempObj)
                         }
                     }
+                    
                 }
                 if(bookmakerdata){
                     for(let a = 0; a<bookmakerdata.length; a++){
