@@ -100,7 +100,7 @@ client.on('connect', () => {
                                 liveMatchCheckMarket = fetchMarketData2.find(item => item.status !== "CLOSED")
                             }
                             if(liveMatchCheckMarket){
-                                if(liveMatchCheckMarket.inPlay == true && liveMatchCheckMarket.status !== 'CLOSED'){
+                                if(liveMatchCheckMarket.inplay == true && liveMatchCheckMarket.status !== 'CLOSED'){
                                     if(!CricketLiveEventIds.includes(eventIds[i])){
                                         newEventAdded = true
                                         newEventIdsArray.push(eventIds[i])

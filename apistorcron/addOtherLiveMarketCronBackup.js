@@ -111,7 +111,7 @@ client.on('connect', () => {
                                 }
                                 if(!issportHRGH){
                                     if(liveMatchCheckMarket){
-                                        if(liveMatchCheckMarket.inPlay == true && liveMatchCheckMarket.status !== 'CLOSED'){
+                                        if(liveMatchCheckMarket.inplay == true && liveMatchCheckMarket.status !== 'CLOSED'){
                                             if(!liveEventIds.includes(eventIds[i])){
                                                 newEventAdded = true
                                                 newEventIdsArray.push(eventIds[i])
