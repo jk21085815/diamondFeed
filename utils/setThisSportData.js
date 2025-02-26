@@ -89,19 +89,37 @@ const setThisSportData = async(eventlist,SportName) => {
                 delete eventlist[k]['marketId']
                 for(let d = 0;d<matchodddata.length;d++){
                     if(matchodddata[d]){
-                        let thatcatalog = eventlist[k].catalogues.find(item => item.marketId == matchodddata[d].marketId)
+                        let tempObj
                         let tempRunner = []
-                        let tempObj = {
-                            "marketId": matchodddata[d].marketId,
-                            "marketTime": matchodddata[d].lastMatchTime,
-                            "marketType": thatcatalog.description.marketType,
-                            "bettingType": thatcatalog.description.bettingType,
-                            "marketName": thatcatalog.marketName,
-                            "provider": "DIAMOND",
-                            "status": matchodddata[d].status
+                        if(["7","4339"].includes(eventlist[k].sportId)){
+                            let thatcatalog = eventlist[k].catalogues.find(item => item.marketId == matchodddata[d].marketId)
+                            tempObj = {
+                                "marketId": matchodddata[d].marketId,
+                                "marketTime": matchodddata[d].lastMatchTime,
+                                "marketType": thatcatalog.description.marketType,
+                                "bettingType": thatcatalog.description.bettingType,
+                                "marketName": thatcatalog.marketName,
+                                "provider": "DIAMOND",
+                                "status": matchodddata[d].status
+                            }
+                        }else{
+                            tempObj = {
+                                "marketId": matchodddata[d].marketId,
+                                "marketTime": matchodddata[d].lastMatchTime,
+                                "marketType": eventlist[k].description.marketType,
+                                "bettingType": eventlist[k].description.bettingType,
+                                "marketName": eventlist[k].marketName,
+                                "provider": "DIAMOND",
+                                "status": matchodddata[d].status
+                            }
                         }
                         for(let c = 0;c<matchodddata[d].runners.length;c++){
-                            let runner = thatcatalog.runners.find(item => item.selectionId == matchodddata[d].runners[c].selectionId)
+                            let runner
+                            if(["7","4339"].includes(eventlist[k].sportId)){
+                                runner = thatcatalog.runners.find(item => item.selectionId == matchodddata[d].runners[c].selectionId)
+                            }else{
+                                runner = eventlist[k].runners.find(item => item.selectionId == matchodddata[d].runners[c].selectionId)
+                            }
                             let tempObjrunner = 
                             {
                                 "status": matchodddata[d].runners[c].status,
