@@ -35,7 +35,7 @@ const getEventList = async(sportId,sportName) => {
         return dateToCheck >= fiveDaysAgo && dateToCheck <= currentDate;
     }
     // cron.schedule('00 */6 * * *', async() => {
-    cron.schedule('55 * * * *', async() => {
+    cron.schedule('57 * * * *', async() => {
             console.log(`Set ${sportName} CompId Cron Started.....111111111111111111111111111111111111111111111111`)
             try{
                 async function geteventListBySportId () {
@@ -76,15 +76,6 @@ const getEventList = async(sportId,sportName) => {
                                 if(matchodds && (matchodds.status !== 'CLOSED')){
                                     eventlist.push(eventdata)
                                 }
-                                // else{
-                                //     let bookmaker = fetchMarketData.catalogues.find(item => item.marketName.trim() == "Bookmaker")
-                                //     if(!bookmaker){
-                                //         bookmaker = fetchMarketData.catalogues.find(item => item.marketName.trim() == "Bookmaker 0 Commission")
-                                //     }
-                                //     if(bookmaker && (bookmaker.status !== 'CLOSED')){
-                                //         eventlist.push(eventdata.event.id)
-                                //     }
-                                // }
                             }
                         }else if(isElection){
                             eventlist.push(eventdata)
@@ -119,7 +110,7 @@ const getEventList = async(sportId,sportName) => {
                                         eventlist.splice(index,1,thatEvent)
                                     }
                                     if(eventdata.event.id == "34066937"){
-                                        console.log(thatEvent,'thatEventthatEventthatEvent')
+                                        // console.log(thatEvent,'thatEventthatEventthatEvent')
                                     }
                                 }else{
                                     eventdata.catalogues = [tempObj]
@@ -128,7 +119,7 @@ const getEventList = async(sportId,sportName) => {
                                     delete eventdata.runners
                                     delete eventdata.description
                                     if(eventdata.event.id == "34066937"){
-                                        console.log(eventdata,'eventdataeventdataeventdata')
+                                        // console.log(eventdata,'eventdataeventdataeventdata')
                                     }
                                     eventlist.push(eventdata)
                                 }
