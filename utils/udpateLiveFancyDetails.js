@@ -17,7 +17,6 @@ const updateFancyDetailsFunc = async (eventId,fencydata) => {
             for (const key in response) {
                 if (response.hasOwnProperty(key)) {
                     const market = JSON.parse(response[key]);
-                    console.log(market,'markettttttttttt')
                     if (market && market.is_active == 1) {
                         market.status = market.status1
                         let marketData = await client.get(`${key}_diamond`);
