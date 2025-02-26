@@ -124,6 +124,8 @@ const setThisSportData = async(eventlist,SportName) => {
                             marketName = "Bookmaker 0 Commission"
                         }else if(bookmakerdata[a].data.type == "TO_WIN_THE_TOSS"){
                             marketName = "To Win The Toss"
+                        }else{
+                            marketName = "Other Bookmaker"
                         }
                         tempObj["marketName"] = marketName
     
