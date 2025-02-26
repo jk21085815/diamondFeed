@@ -35,7 +35,7 @@ const getEventList = async(sportId,sportName) => {
         return dateToCheck >= fiveDaysAgo && dateToCheck <= currentDate;
     }
     // cron.schedule('00 */6 * * *', async() => {
-    cron.schedule('27 * * * *', async() => {
+    cron.schedule('30 * * * *', async() => {
             console.log(`Set ${sportName} CompId Cron Started.....111111111111111111111111111111111111111111111111`)
             try{
                 async function geteventListBySportId () {
@@ -118,13 +118,18 @@ const getEventList = async(sportId,sportName) => {
                                     if(index !== -1){
                                         eventlist.splice(index,1,thatEvent)
                                     }
-                                    eventlist.push(eventdata)
+                                    if(eventdata.event.id == "34066937"){
+                                        console.log(thatEvent,'thatEventthatEventthatEvent')
+                                    }
                                 }else{
                                     eventdata.catalogues = [tempObj]
                                     delete eventdata.marketId
                                     delete eventdata.marketName
                                     delete eventdata.runenrs
                                     delete eventdata.description
+                                    if(eventdata.event.id == "34066937"){
+                                        console.log(eventdata,'eventdataeventdataeventdata')
+                                    }
                                     eventlist.push(eventdata)
                                 }
                             }else{
