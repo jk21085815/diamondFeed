@@ -41,7 +41,7 @@ client.on('connect', () => {
                     return new Promise(resolve => setTimeout(resolve, ms));
                 }
                 async function fetchEventDataFunc(marketIds) {
-                    let fetchMarketData = await fetch(` https://odds.datafeed365.com/api/active-bm/${marketIds}`,{
+                    let fetchMarketData = await fetch(` http://13.42.165.216:8443/api/betfair/${marketIds}`,{
                         method: 'GET',
                         headers: {
                             'Content-type': 'application/json',
