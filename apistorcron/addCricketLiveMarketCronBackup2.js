@@ -56,8 +56,6 @@ client.on('connect', () => {
                         let MOBMMarketArr = []
                         let isLiveStatus = false
                         let liveMatchCheckMarket
-                        let liveMatchCheckMarket2;
-                        let liveMatchCheckMarket4;
                         let eventData
                         let fetchMarketData2 = []
                         let OnlyMOBMmARKETOpenArr = []
@@ -69,9 +67,9 @@ client.on('connect', () => {
                             if(eventData.competitionName == "Test Matches"){
                                 isTest = true
                             }
-                            MOBMMarketArr = await client.get(`${eventIds[i]}_MOBMMarketArr_shark`)
+                            MOBMMarketArr = await client.get(`${eventIds[i]}_MOBMMarketArr_diamond`)
                             MOBMMarketArr = JSON.parse(MOBMMarketArr)
-                            OnlyMOBMMarketIdsArr = await client.get(`${eventIds[i]}_OnlyMOBMMarketIdsArr_shark`)
+                            OnlyMOBMMarketIdsArr = await client.get(`${eventIds[i]}_OnlyMOMarketIdsArr_diamond`)
                             OnlyMOBMMarketIdsArr = JSON.parse(OnlyMOBMMarketIdsArr)
                             
                             if(OnlyMOBMMarketIdsArr.length !== 0){
@@ -90,42 +88,14 @@ client.on('connect', () => {
                                     }
                                     fetchMarketData2 = fetchMarketData2.concat(fetchMarketDatachunk)
                                 }
-                                let openMarkets = fetchMarketData2.filter(item => ["OPEN","SUSPENDED"].includes(item.catalogue.status))
+                                let openMarkets = fetchMarketData2.filter(item => ["OPEN","SUSPENDED"].includes(item.status))
                                 for(let i = 0;i<openMarkets.length;i++){
-                                    OnlyMOBMmARKETOpenArr.push(openMarkets[i].catalogue.marketId)
+                                    OnlyMOBMmARKETOpenArr.push(openMarkets[i].marketId)
                                 }
-                                liveMatchCheckMarket = fetchMarketData2.find(item => item.catalogue.marketName.trim() == 'Match Odds' && item.catalogue.status !== "CLOSED")
-                                liveMatchCheckMarket2 = fetchMarketData2.find(item => item.catalogue.marketName.trim() == 'Bookmaker' && item.catalogue.status !== "CLOSED")
-                                if(!liveMatchCheckMarket2){
-                                    liveMatchCheckMarket2 = fetchMarketData2.find(item => item.catalogue.marketName.trim() == "Bookmaker 0 Commission" && item.catalogue.status !== "CLOSED")
-                                }
-                                liveMatchCheckMarket4 = fetchMarketData2.find(item => item.catalogue.marketType == 'TOURNAMENT_WINNER' && item.catalogue.status !== "CLOSED")
-                                if(liveMatchCheckMarket){
-                                    liveMatchCheckMarket = liveMatchCheckMarket.catalogue
-                                }
-                                if(liveMatchCheckMarket2){
-                                    liveMatchCheckMarket2 = liveMatchCheckMarket2.catalogue
-                                }
-                                if(liveMatchCheckMarket4){
-                                    liveMatchCheckMarket4 = liveMatchCheckMarket4.catalogue
-                                }
-                                if(eventIds[i] == "-10795760"){
-                                    // console.log(eventIds[i],liveMatchCheckMarket,liveMatchCheckMarket2,OnlyMOBMMarketIdsArr,"OnlyMOBMMarketIdsArrOnlyMOBMMarketIdsArr")
-                                }
+                                liveMatchCheckMarket = fetchMarketData2.find(item => item.status !== "CLOSED")
                             }
-                            if(liveMatchCheckMarket4){
-                                if((liveMatchCheckMarket4.inPlay == true && liveMatchCheckMarket4.status == 'OPEN') || forcefullyLiveEvents.includes(eventIds[i])){
-                                    if(!CricketLiveEventIds.includes(eventIds[i])){
-                                        newEventAdded = true
-                                        newEventIdsArray.push(eventIds[i])
-                                    }
-                                    liveEventInCricket.push(eventIds[i])
-                                    isLiveStatus = true
-                                    marketIdsArr = marketIdsArr.concat(MOBMMarketArr)
-                                }
-                            }
-                            else if(liveMatchCheckMarket && liveMatchCheckMarket2){
-                                if((liveMatchCheckMarket.inPlay == true && liveMatchCheckMarket.status !== 'CLOSED') || (liveMatchCheckMarket2.inPlay == true &&liveMatchCheckMarket2.status !== 'CLOSED') || forcefullyLiveEvents.includes(eventIds[i])){
+                            if(liveMatchCheckMarket){
+                                if(liveMatchCheckMarket.inPlay == true && liveMatchCheckMarket.status !== 'CLOSED'){
                                     if(!CricketLiveEventIds.includes(eventIds[i])){
                                         newEventAdded = true
                                         newEventIdsArray.push(eventIds[i])
@@ -135,66 +105,6 @@ client.on('connect', () => {
                                     marketIdsArr = marketIdsArr.concat(MOBMMarketArr)
                                 }else{
                                     if(liveMatchCheckMarket.status !== 'CLOSED'){
-                                        if(isTest){
-                                            if(new Date(eventData.openDate).getTime() + (1000 * 60 * 60 * 24 * 5) >= Date.now()){
-                                                if(!CricketLiveEventIds.includes(eventIds[i])){
-                                                    newEventAdded = true
-                                                    newEventIdsArray.push(eventIds[i])
-                                                }
-                                                liveEventInCricket.push(eventIds[i])
-                                            }
-                                        }else{
-                                            if(new Date(eventData.openDate).getTime() - (1000 * 60 * 60 * 2) <= Date.now()){
-                                                if(!CricketLiveEventIds.includes(eventIds[i])){
-                                                    newEventAdded = true
-                                                    newEventIdsArray.push(eventIds[i])
-                                                }
-                                                liveEventInCricket.push(eventIds[i])
-                                            }
-                                        }
-                                    }
-                                }
-                            }else if(liveMatchCheckMarket && !liveMatchCheckMarket2){
-                                if((liveMatchCheckMarket.inPlay == true && liveMatchCheckMarket.status !== 'CLOSED')  || forcefullyLiveEvents.includes(eventIds[i])){
-                                    if(!CricketLiveEventIds.includes(eventIds[i])){
-                                        newEventAdded = true
-                                        newEventIdsArray.push(eventIds[i])
-                                    }
-                                    liveEventInCricket.push(eventIds[i])
-                                    isLiveStatus = true
-                                    marketIdsArr = marketIdsArr.concat(MOBMMarketArr)
-                                }else{
-                                    if(liveMatchCheckMarket.status !== 'CLOSED'){
-                                        if(isTest){
-                                            if(new Date(eventData.openDate).getTime() + (1000 * 60 * 60 * 24 * 5) >= Date.now()){
-                                                if(!CricketLiveEventIds.includes(eventIds[i])){
-                                                    newEventAdded = true
-                                                    newEventIdsArray.push(eventIds[i])
-                                                }
-                                                liveEventInCricket.push(eventIds[i])
-                                            }
-                                        }else{
-                                            if(new Date(eventData.openDate).getTime() - (1000 * 60 * 60 * 2) <= Date.now()){
-                                                if(!CricketLiveEventIds.includes(eventIds[i])){
-                                                    newEventAdded = true
-                                                    newEventIdsArray.push(eventIds[i])
-                                                }
-                                                liveEventInCricket.push(eventIds[i])
-                                            }
-                                        }
-                                    }
-                                }
-                            }else if(!liveMatchCheckMarket && liveMatchCheckMarket2){
-                                if((liveMatchCheckMarket2.inPlay == true && liveMatchCheckMarket2.status !== 'CLOSED')  || forcefullyLiveEvents.includes(eventIds[i])){
-                                    if(!CricketLiveEventIds.includes(eventIds[i])){
-                                        newEventAdded = true
-                                        newEventIdsArray.push(eventIds[i])
-                                    }
-                                    liveEventInCricket.push(eventIds[i])
-                                    isLiveStatus = true
-                                    marketIdsArr = marketIdsArr.concat(MOBMMarketArr)
-                                }else{
-                                    if(liveMatchCheckMarket2.status !== 'CLOSED'){
                                         if(isTest){
                                             if(new Date(eventData.openDate).getTime() + (1000 * 60 * 60 * 24 * 5) >= Date.now()){
                                                 if(!CricketLiveEventIds.includes(eventIds[i])){
@@ -217,104 +127,102 @@ client.on('connect', () => {
                             }
                             let eventStatus = isLiveStatus?'IN_PLAY':'UPCOMING'
                             eventData.status = eventStatus
-                            let matchOddsArr = []
-                            let bookMakerMarketArr = []
-                            if(OnlyMOBMMarketIdsArr.length !== 0){
-                                for(let k = 0;k<fetchMarketData2.length;k++){
-                                    if([ "OPEN","SUSPENDED"].includes(fetchMarketData2[k].catalogue.status.trim())){
-                                        let marketData = await client.get(`${fetchMarketData2[k].catalogue.marketId}_shark`);
-                                        marketData = marketData ? JSON.parse(marketData) : null;
-                                        if (marketData && marketData.status){
-                                            fetchMarketData2[k].catalogue.runners = marketData.runners
-                                        }else{
-                                            let fetchMarketDataBookData
-                                            try{
-                                                fetchMarketDataBookData = await fetch(` http://18.171.69.133:6008/sports/books/${fetchMarketData2[k].catalogue.marketId}`,{
-                                                    method: 'GET',
-                                                    headers: {
-                                                        'Content-type': 'application/text',
-                                                    }
-                                                })
-                                                // await delay(500)
-                                            }catch(error){
-                                                await delay(1000 * 10)
-                                                fetchMarketDataBookData = await fetch(` http://18.171.69.133:6008/sports/books/${fetchMarketData2[k].catalogue.marketId}`,{
-                                                    method: 'GET',
-                                                    headers: {
-                                                        'Content-type': 'application/text',
-                                                    }
-                                                })
-                                            }
-                                            let fetchBookDatajson = await fetchMarketDataBookData.json()
-                                            let bookdata = fetchBookDatajson[fetchMarketData2[k].catalogue.marketId]
-                                            if(bookdata){
-                                                for(let j = 0;j<fetchMarketData2[k].catalogue.runners.length;j++){
-                                                    runner = bookdata.runners.find(item => item.selectionId == fetchMarketData2[k].catalogue.runners[j].id)
-                                                    if(runner){
-                                                        runner.metadata = fetchMarketData2[k].catalogue.runners[j].metadata
-                                                        runner.runnerName = fetchMarketData2[k].catalogue.runners[j].name
-                                                        runner.runnerId = runner.selectionId
-                                                        runner.layPrices = runner.lay
-                                                        runner.backPrices = runner.back
-                                                        delete runner.back
-                                                        delete runner.lay
-                                                        delete runner.selectionId
-                                                        fetchMarketData2[k].catalogue.runners[j] = runner
-                                                    }else{
-                                                        fetchMarketData2[k].catalogue.runners[j].runnerName = fetchMarketData2[k].catalogue.runners[j].name
-                                                        fetchMarketData2[k].catalogue.runners[j].runnerId = fetchMarketData2[k].catalogue.runners[j].id
-                                                        fetchMarketData2[k].catalogue.runners[j].layPrices = []
-                                                        fetchMarketData2[k].catalogue.runners[j].backPrices = []
-                                                        delete fetchMarketData2[k].catalogue.runners[j].name
-                                                        delete fetchMarketData2[k].catalogue.runners[j].id
-                                                    }
-                                                }
-                                            }else{
+                            // let matchOddsArr = []
+                            // let bookMakerMarketArr = []
+                            // if(OnlyMOBMMarketIdsArr.length !== 0){
+                            //     for(let k = 0;k<fetchMarketData2.length;k++){
+                            //         if([ "OPEN","SUSPENDED"].includes(fetchMarketData2[k].catalogue.status.trim())){
+                            //             let marketData = await client.get(`${fetchMarketData2[k].catalogue.marketId}_diamond`);
+                            //             marketData = marketData ? JSON.parse(marketData) : null;
+                            //             if (marketData && marketData.status){
+                            //                 fetchMarketData2[k].catalogue.runners = marketData.runners
+                            //             }else{
+                            //                 let fetchMarketDataBookData
+                            //                 try{
+                            //                     fetchMarketDataBookData = await fetch(` http://18.171.69.133:6008/sports/books/${fetchMarketData2[k].catalogue.marketId}`,{
+                            //                         method: 'GET',
+                            //                         headers: {
+                            //                             'Content-type': 'application/text',
+                            //                         }
+                            //                     })
+                            //                     // await delay(500)
+                            //                 }catch(error){
+                            //                     await delay(1000 * 10)
+                            //                     fetchMarketDataBookData = await fetch(` http://18.171.69.133:6008/sports/books/${fetchMarketData2[k].catalogue.marketId}`,{
+                            //                         method: 'GET',
+                            //                         headers: {
+                            //                             'Content-type': 'application/text',
+                            //                         }
+                            //                     })
+                            //                 }
+                            //                 let fetchBookDatajson = await fetchMarketDataBookData.json()
+                            //                 let bookdata = fetchBookDatajson[fetchMarketData2[k].catalogue.marketId]
+                            //                 if(bookdata){
+                            //                     for(let j = 0;j<fetchMarketData2[k].catalogue.runners.length;j++){
+                            //                         runner = bookdata.runners.find(item => item.selectionId == fetchMarketData2[k].catalogue.runners[j].id)
+                            //                         if(runner){
+                            //                             runner.metadata = fetchMarketData2[k].catalogue.runners[j].metadata
+                            //                             runner.runnerName = fetchMarketData2[k].catalogue.runners[j].name
+                            //                             runner.runnerId = runner.selectionId
+                            //                             runner.layPrices = runner.lay
+                            //                             runner.backPrices = runner.back
+                            //                             delete runner.back
+                            //                             delete runner.lay
+                            //                             delete runner.selectionId
+                            //                             fetchMarketData2[k].catalogue.runners[j] = runner
+                            //                         }else{
+                            //                             fetchMarketData2[k].catalogue.runners[j].runnerName = fetchMarketData2[k].catalogue.runners[j].name
+                            //                             fetchMarketData2[k].catalogue.runners[j].runnerId = fetchMarketData2[k].catalogue.runners[j].id
+                            //                             fetchMarketData2[k].catalogue.runners[j].layPrices = []
+                            //                             fetchMarketData2[k].catalogue.runners[j].backPrices = []
+                            //                             delete fetchMarketData2[k].catalogue.runners[j].name
+                            //                             delete fetchMarketData2[k].catalogue.runners[j].id
+                            //                         }
+                            //                     }
+                            //                 }else{
     
-                                                for(let j = 0;j<fetchMarketData2[k].catalogue.runners.length;j++){
-                                                    fetchMarketData2[k].catalogue.runners[j].runnerName = fetchMarketData2[k].catalogue.runners[j].name
-                                                    fetchMarketData2[k].catalogue.runners[j].runnerId = fetchMarketData2[k].catalogue.runners[j].id
-                                                    fetchMarketData2[k].catalogue.runners[j].layPrices = []
-                                                    fetchMarketData2[k].catalogue.runners[j].backPrices = []
-                                                    delete fetchMarketData2[k].catalogue.runners[j].name
-                                                    delete fetchMarketData2[k].catalogue.runners[j].id
-                                                }
-                                            }
-                                        }
-                                        if(fetchMarketData2[k].catalogue.bettingType == "ODDS"){
-                                            matchOddsArr.push(fetchMarketData2[k].catalogue)
-                                        }else if(fetchMarketData2[k].catalogue.bettingType == "BOOKMAKER"){
-                                            bookMakerMarketArr.push(fetchMarketData2[k].catalogue)
-                                        }
-                                    }
-                                }
-                                eventData.markets.matchOdds = matchOddsArr;
-                                eventData.markets.bookmakers = bookMakerMarketArr;
-                                let pushstatus = false 
-                                let thatMO = eventData.markets.matchOdds.find(item => item.marketType== 'MATCH_ODDS')
-                                if(thatMO){
-                                    if(['OPEN','SUSPENDED'].includes(thatMO.status)){
-                                    pushstatus = true
-                                    }
-                                }else{
-                                    let winner = eventData.markets.matchOdds.find(item => item.marketType == "TOURNAMENT_WINNER")
-                                    if((eventData.markets.bookmakers.concat(eventData.markets.fancyMarkets).length !== 0 || winner) && !["7","4339"].includes(eventData.sportId)){
-                                        pushstatus = true
-                                    }else if(["7","4339"].includes(eventData.sportId)){
-                                        pushstatus = true
-                                    }
-                                }
-                                if(pushstatus){
-                                    showEvent.push(eventIds[i])
-                                }
-                            }
-                            if(eventIds[i] == "-10795760"){
-                                // console.log(isLiveStatus,eventData.status,'eventdatataaaaaaaaaaaa')
-                            }
+                            //                     for(let j = 0;j<fetchMarketData2[k].catalogue.runners.length;j++){
+                            //                         fetchMarketData2[k].catalogue.runners[j].runnerName = fetchMarketData2[k].catalogue.runners[j].name
+                            //                         fetchMarketData2[k].catalogue.runners[j].runnerId = fetchMarketData2[k].catalogue.runners[j].id
+                            //                         fetchMarketData2[k].catalogue.runners[j].layPrices = []
+                            //                         fetchMarketData2[k].catalogue.runners[j].backPrices = []
+                            //                         delete fetchMarketData2[k].catalogue.runners[j].name
+                            //                         delete fetchMarketData2[k].catalogue.runners[j].id
+                            //                     }
+                            //                 }
+                            //             }
+                            //             if(fetchMarketData2[k].catalogue.bettingType == "ODDS"){
+                            //                 matchOddsArr.push(fetchMarketData2[k].catalogue)
+                            //             }else if(fetchMarketData2[k].catalogue.bettingType == "BOOKMAKER"){
+                            //                 bookMakerMarketArr.push(fetchMarketData2[k].catalogue)
+                            //             }
+                            //         }
+                            //     }
+                            //     eventData.markets.matchOdds = matchOddsArr;
+                            //     eventData.markets.bookmakers = bookMakerMarketArr;
+                            //     let pushstatus = false 
+                            //     let thatMO = eventData.markets.matchOdds.find(item => item.marketType== 'MATCH_ODDS')
+                            //     if(thatMO){
+                            //         if(['OPEN','SUSPENDED'].includes(thatMO.status)){
+                            //         pushstatus = true
+                            //         }
+                            //     }else{
+                            //         let winner = eventData.markets.matchOdds.find(item => item.marketType == "TOURNAMENT_WINNER")
+                            //         if((eventData.markets.bookmakers.concat(eventData.markets.fancyMarkets).length !== 0 || winner) && !["7","4339"].includes(eventData.sportId)){
+                            //             pushstatus = true
+                            //         }else if(["7","4339"].includes(eventData.sportId)){
+                            //             pushstatus = true
+                            //         }
+                            //     }
+                            //     if(pushstatus){
+                            //         showEvent.push(eventIds[i])
+                            //     }
+                            // }
+                            showEvent.push(eventIds[i])
                             await client.set(`${eventIds[i]}_diamondEventData`,JSON.stringify(eventData))
                         }else{
                             showEvent.push(eventIds[i])
-                            setNewEventDetails([eventIds[i]])
+                            // setNewEventDetails([eventIds[i]])
                         }
                         for(let i = 0;i<OnlyMOBMmARKETOpenArr.length;i++){
                             if(!marketIdsArr.includes(OnlyMOBMmARKETOpenArr[i])){
@@ -325,17 +233,14 @@ client.on('connect', () => {
                         showEvent.push(eventIds[i])
                         console.log("Error:",error)
                     }
-                    if(eventIds[i] == "34048060"){
-                        // setNewEventDetails([eventIds[i]])
-                    }
                 }       
                 if(newEventAdded){
-                    await setNewLiveEvent(newEventIdsArray)
+                    // await setNewLiveEvent(newEventIdsArray)
                 }
                 // console.log(liveEventInCricket,'liveEventInCricketliveEventInCricket')
-                await client.set('crone_CricketliveEventIds_UPD',JSON.stringify(liveEventInCricket));
-                await client.set('crone_getEventIds_Cricket_UPD',JSON.stringify(showEvent));
-                await client.set('crone_CricketliveMarketIds_UPD',JSON.stringify(marketIdsArr));
+                await client.set('crone_CricketliveEventIds_diamond_UPD',JSON.stringify(liveEventInCricket));
+                await client.set('crone_getEventIds_Cricket_diamond_UPD',JSON.stringify(showEvent));
+                await client.set('crone_CricketliveMarketIds_diamond_UPD',JSON.stringify(marketIdsArr));
                 addcricketlivemarketcronFunc()
             }catch(error){
                 addcricketlivemarketcronFunc()

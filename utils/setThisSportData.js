@@ -255,17 +255,23 @@ const setThisSportData = async(eventlist,SportName) => {
                 }
                 let OnlyMOBMMarketIdsArr = [];
                 let MOBMMarketArr = [];
+                let OnlyMOMarketIdArr = []
                 let MOBMMarketDetailsArr = matchOddsArr2.concat(bookMakerMarketArr2)
                 let OnlyMOBMMarketIds = MOBMMarketDetailsArr.filter(item => ((item.bettingType == "BOOKMAKER" || item.marketType == "MATCH_ODDS" || item.marketType == "COMPLETED_MATCH" || item.marketType == "TIED_MATCH" || item.marketType == "WINNING_ODDS" || item.marketType == "TOURNAMENT_WINNER"  || item.marketName.trim().toLowerCase().startsWith('over/under') && ["OPEN","SUSPENDED"].includes(item.status))))
+                let OnlyMOMarketId = MOBMMarketDetailsArr.filter(item => (item.marketType == "MATCH_ODDS"))
                 for(let j = 0;j<MOBMMarketDetailsArr.length;j++){
                     MOBMMarketArr.push(MOBMMarketDetailsArr[j].marketId)
                 }
                 for(let j = 0;j<OnlyMOBMMarketIds.length;j++){
                     OnlyMOBMMarketIdsArr.push(OnlyMOBMMarketIds[j].marketId)
                 }
+                for(let j = 0;j<OnlyMOMarketId.length;j++){
+                    OnlyMOMarketIdArr.push(OnlyMOMarketId[j].marketId)
+                }
                 // console.log(OnlyMOBMMarketIdsArr,"OnlyMOBMMarketIdsArrOnlyMOBMMarketIdsArrINThisSportttttttt")
                 await client.set(`${eventlist[k].eventId}_MOBMMarketArr_diamond`,JSON.stringify(MOBMMarketArr),'EX',7 * 24 * 60 * 60)
                 await client.set(`${eventlist[k].eventId}_OnlyMOBMMarketIdsArr_diamond`,JSON.stringify(OnlyMOBMMarketIdsArr),'EX',7 * 24 * 60 * 60)
+                await client.set(`${eventlist[k].eventId}_OnlyMOMarketIdsArr_diamond`,JSON.stringify(OnlyMOMarketIdArr),'EX',7 * 24 * 60 * 60)
                 await client.set(`${eventlist[k].eventId}_diamondEventData`,JSON.stringify(eventlist[k]),'EX',7 * 24 * 60 * 60)
             }
             await client.set(`crone_getEventIds_${SportName}_diamond`,JSON.stringify(thisSportEventId))
