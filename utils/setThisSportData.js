@@ -90,12 +90,13 @@ const setThisSportData = async(eventlist,SportName) => {
                 if(matchodddata){
                     for(let d = 0;d<matchodddata.length;d++){
                         let thatcatalog = eventlist[k].catalogues.find(item => item.marketId == matchodddata[d].marketId)
+                        console.log(thatcatalog)
                         let tempRunner = []
                         let tempObj = {
                             "marketId": matchodddata[d].marketId,
                             "marketTime": matchodddata[d].lastMatchTime,
-                            "marketType": thatcatalog.marketType,
-                            "bettingType": thatcatalog.bettingType,
+                            "marketType": thatcatalog.description.marketType,
+                            "bettingType": thatcatalog.description.bettingType,
                             "marketName": eventlist[k].marketName,
                             "provider": "DIAMOND",
                             "status": matchodddata[d].status
