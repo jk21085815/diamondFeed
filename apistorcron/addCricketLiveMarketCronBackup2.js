@@ -72,7 +72,7 @@ client.on('connect', () => {
                             OnlyMOBMMarketIdsArr = await client.get(`${eventIds[i]}_OnlyMOMarketIdsArr_diamond`)
                             OnlyMOBMMarketIdsArr = JSON.parse(OnlyMOBMMarketIdsArr)
                             if(eventData.eventId == "34058805" || true){
-                                console.log(OnlyMOBMMarketIdsArr,'OnlyMOBMMarketIdsArrOnlyMOBMMarketIdsArr')
+                                // console.log(OnlyMOBMMarketIdsArr,'OnlyMOBMMarketIdsArrOnlyMOBMMarketIdsArr')
                             }
                             if(OnlyMOBMMarketIdsArr.length !== 0){
                                 let count = Math.ceil(OnlyMOBMMarketIdsArr.length/chunkSize)
@@ -91,7 +91,7 @@ client.on('connect', () => {
                                     fetchMarketData2 = fetchMarketData2.concat(fetchMarketDatachunk)
                                 }
                                 if(eventData.eventId == "34058805" || true){
-                                    console.log(fetchMarketData2,'fetchMarketData2fetchMarketData2')
+                                    // console.log(fetchMarketData2,'fetchMarketData2fetchMarketData2')
                                 }
                                 let openMarkets = fetchMarketData2.filter(item => ["OPEN","SUSPENDED"].includes(item.status))
                                 for(let i = 0;i<openMarkets.length;i++){
@@ -131,6 +131,7 @@ client.on('connect', () => {
                                 }
                             }
                             let eventStatus = isLiveStatus?'IN_PLAY':'UPCOMING'
+                            console.log(eventStatus,eventIds[i],'statussssssssssssssss')
                             eventData.status = eventStatus
                             // let matchOddsArr = []
                             // let bookMakerMarketArr = []
