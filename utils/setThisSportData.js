@@ -90,9 +90,10 @@ const setThisSportData = async(eventlist,SportName) => {
                 for(let d = 0;d<matchodddata.length;d++){
                     if(matchodddata[d]){
                         let tempObj
+                        let thatcatalog
                         let tempRunner = []
                         if(["7","4339"].includes(eventlist[k].sportId)){
-                            let thatcatalog = eventlist[k].catalogues.find(item => item.marketId == matchodddata[d].marketId)
+                            thatcatalog = eventlist[k].catalogues.find(item => item.marketId == matchodddata[d].marketId)
                             tempObj = {
                                 "marketId": matchodddata[d].marketId,
                                 "marketTime": matchodddata[d].lastMatchTime,
