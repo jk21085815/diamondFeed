@@ -205,7 +205,7 @@ client.on('connect', () => {
 
 
                         let eventStatus = isLiveStatus == true?'IN_PLAY':'UPCOMING'
-                        let eventData = await client.get(`${eventIds[i]}_sharEventData`)
+                        let eventData = await client.get(`${eventIds[i]}_diamondEventData`)
                         if(eventData){
                             eventData = JSON.parse(eventData)
                             let allmarketids = eventData.markets.matchOdds.concat(eventData.markets.bookmakers,eventData.markets.fancyMarkets)
@@ -229,23 +229,23 @@ client.on('connect', () => {
                             let openbookMakerMarket = eventData.markets.bookmakers.filter(item => !closemarketIds.includes(item.marketId))
                             eventData.markets.matchOdds = openmatchoddsMarket;
                             eventData.markets.bookmakers = openbookMakerMarket;
-                            await client.set(`${eventIds[i]}_sharEventData`,JSON.stringify(eventData))
+                            await client.set(`${eventIds[i]}_diamondEventData`,JSON.stringify(eventData))
                         }
                     }else{
-                        let eventData = await client.get(`${eventIds[i]}_sharEventData`)
+                        let eventData = await client.get(`${eventIds[i]}_diamondEventData`)
                         if(eventData){
                             eventData = JSON.parse(eventData)
                             let liveMatchCheckMarket = fetchMarketData.catalogues.filter(item => ["OPEN","SUSPENDED"].includes(item.status))
                             if(liveMatchCheckMarket.length > 0){
                                 OtherSportLiveEventIds.push(eventIds[i])
                                 eventData.markets.matchOdds = liveMatchCheckMarket
-                                await client.set(`${eventIds[i]}_sharEventData`,JSON.stringify(eventData))
+                                await client.set(`${eventIds[i]}_diamondEventData`,JSON.stringify(eventData))
                                 for(let k = 0;k<liveMatchCheckMarket.length;k++){
                                     OtherSportLiveMarketIds.push(liveMatchCheckMarket[k].marketId)
                                 }
                             }else{
                                 eventData.markets.matchOdds = liveMatchCheckMarket
-                                await client.set(`${eventIds[i]}_sharEventData`,JSON.stringify(eventData))
+                                await client.set(`${eventIds[i]}_diamondEventData`,JSON.stringify(eventData))
                             }
                         }
                     }

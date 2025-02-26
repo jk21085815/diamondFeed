@@ -90,10 +90,10 @@ const updateFancyDetailsFunc = async(marketIdsArr,eventId,jj,countLenth,isNewLiv
         
         if(fancyArr.length > 0){
             await client.set(`${eventId}_shark`,JSON.stringify(fancyArr),'EX',24 * 60 * 60)
-            let eventData = await client.get(`${eventId}_sharEventData`)
+            let eventData = await client.get(`${eventId}_diamondEventData`)
             eventData = JSON.parse(eventData)
             eventData.markets.fancyMarkets = fancyArr
-            await client.set(`${eventId}_sharEventData`,JSON.stringify(eventData),'EX',24 * 60 * 60)
+            await client.set(`${eventId}_diamondEventData`,JSON.stringify(eventData),'EX',24 * 60 * 60)
         }
         if(jj == countLenth -1){
             let isNewLiveEventAdded = await client.get('isNewLiveEventAdded')

@@ -126,7 +126,7 @@ const setNewAddedEvents = async(eventIds) => {
                     }
                 }
             }
-            let eventData = await client.get(`${eventIds[k]}_sharEventData`)
+            let eventData = await client.get(`${eventIds[k]}_diamondEventData`)
             eventData = JSON.parse(eventData)
             // eventData.status = isLiveStatus?'IN_PLAY':'UPCOMING'
             eventData.openDate = fetchMarketEventData.event.openDate
@@ -146,7 +146,7 @@ const setNewAddedEvents = async(eventIds) => {
             
             await client.set(`${eventIds[k]}_MOBMMarketArr_shark`,JSON.stringify(MOBMMarketArr),'EX',7 * 24 * 60 * 60)
             await client.set(`${eventIds[k]}_OnlyMOBMMarketIdsArr_shark`,JSON.stringify(OnlyMOBMMarketIdsArr),'EX',7 * 24 * 60 * 60)
-            await client.set(`${eventIds[k]}_sharEventData`,JSON.stringify(eventData),'EX',24 * 60 * 60)
+            await client.set(`${eventIds[k]}_diamondEventData`,JSON.stringify(eventData),'EX',24 * 60 * 60)
         }
         console.log(eventIds,starttime,new Date(),(Date.now()-(starttime.getTime()))/1000,`Set New Live Added Event Cron  Ended.....`)
         

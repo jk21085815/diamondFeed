@@ -22,7 +22,7 @@ module.exports = () => {
                 let newEventIdsArray = []
                 let showEvent = []
                 let eventIds = await client.get('crone_getEventIds_Cricket');
-                let CricketLiveEventIds = await client.get('crone_CricketliveEventIds_UPD');
+                let CricketLiveEventIds = await client.get('crone_CricketliveEventIds_diamond_UPD');
                 if(CricketLiveEventIds){
                     CricketLiveEventIds = JSON.parse(CricketLiveEventIds)
                 }else{
@@ -46,7 +46,7 @@ module.exports = () => {
                     let OnlyMOBMMarketIdsArr = []
                     let eventODDSBMMarketIdsArr
                     let isTest = false
-                    eventData = await client.get(`${eventIds[i]}_sharEventData`)
+                    eventData = await client.get(`${eventIds[i]}_diamondEventData`)
                     let eventODDSBMMarketIds = await client.get(`${eventIds[i]}_MOBMMarketArr_shark`)
                     if(eventData){
                         eventData = JSON.parse(eventData)
@@ -303,7 +303,7 @@ module.exports = () => {
                                 if(pushstatus){
                                     showEvent.push(eventIds[i])
                                 }
-                                await client.set(`${eventIds[i]}_sharEventData`,JSON.stringify(eventData))
+                                await client.set(`${eventIds[i]}_diamondEventData`,JSON.stringify(eventData))
                             }
                         }else{
                             showEvent.push(eventIds[i])
@@ -322,7 +322,7 @@ module.exports = () => {
                 if(newEventAdded){
                     await setNewLiveEvent(newEventIdsArray)
                 }
-                await client.set('crone_CricketliveEventIds_UPD',JSON.stringify(liveEventInCricket));
+                await client.set('crone_CricketliveEventIds_diamond_UPD',JSON.stringify(liveEventInCricket));
                 await client.set('crone_getEventIds_Cricket_UPD',JSON.stringify(showEvent));
                 await client.set('crone_CricketliveMarketIds_UPD',JSON.stringify(marketIdsArr));
             }catch(error){

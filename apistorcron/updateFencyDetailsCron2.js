@@ -16,11 +16,8 @@ client.on('connect', () => {
         try {
           setInterval(async () => {
             try {
-              let cricketEventIds = await client.get('crone_CricketliveEventIds_UPD');
+              let cricketEventIds = await client.get('crone_CricketliveEventIds_diamond_UPD');
               cricketEventIds = JSON.parse(cricketEventIds);
-              let otherEventIds = await client.get(`crone_getEventIds_Election`)
-              otherEventIds = JSON.parse(otherEventIds)
-              cricketEventIds = cricketEventIds.concat(otherEventIds)
               if (!Array.isArray(cricketEventIds) || cricketEventIds.length === 0) {
                 // console.log('No event IDs found.');
                 return;

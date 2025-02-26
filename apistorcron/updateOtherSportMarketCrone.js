@@ -61,13 +61,13 @@ module.exports = () => {
                                 }
                                 let closeinActiveMarketIds = CricketClosedMarketIds.concat(CricketInactiveMarketIds)
                                 // let closeinActiveMarketIds = CricketClosedMarketIds
-                                let eventData = await client.get(`${otherSportEventIds[i]}_sharEventData`)
+                                let eventData = await client.get(`${otherSportEventIds[i]}_diamondEventData`)
                                 eventData = JSON.parse(eventData)
                                 let openmatchoddsMarket = eventData.markets.matchOdds.filter(item => !closeinActiveMarketIds.includes(item.marketId))
                                 let openbookMakerMarket = eventData.markets.bookmakers.filter(item => !closeinActiveMarketIds.includes(item.marketId))
                                 eventData.markets.matchOdds = openmatchoddsMarket;
                                 eventData.markets.bookmakers = openbookMakerMarket;
-                                await client.set(`${otherSportEventIds[i]}_sharEventData`,JSON.stringify(eventData))
+                                await client.set(`${otherSportEventIds[i]}_diamondEventData`,JSON.stringify(eventData))
                                 // if(!isLiveStatus){
                                 //     await client.set(`${otherSportEventIds[i]}_shark`,JSON.stringify(eventData.markets.fancyMarkets))
                                 // }

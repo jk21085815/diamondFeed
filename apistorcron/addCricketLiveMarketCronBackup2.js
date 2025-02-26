@@ -131,7 +131,6 @@ client.on('connect', () => {
                                 }
                             }
                             let eventStatus = isLiveStatus?'IN_PLAY':'UPCOMING'
-                            console.log(eventStatus,eventIds[i],'statussssssssssssssss')
                             eventData.status = eventStatus
                             // let matchOddsArr = []
                             // let bookMakerMarketArr = []

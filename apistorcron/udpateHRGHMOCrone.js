@@ -52,7 +52,7 @@ module.exports = () => {
                     if(fetchMarketData && fetchMarketData.catalogues){
                         let liveMatchCheckMarket = fetchMarketData.catalogues.filter(item => ["OPEN","SUSPENDED"].includes(item.status))
                         // console.log(liveMatchCheckMarket,eventIds[i],'liveMatchCheckMarket')
-                        let eventData = await client.get(`${eventIds[i]}_sharEventData`)
+                        let eventData = await client.get(`${eventIds[i]}_diamondEventData`)
                         let eventstatus = false
                         if(eventData){
                             eventData = JSON.parse(eventData)
@@ -63,7 +63,7 @@ module.exports = () => {
                         if(eventData && eventstatus){
                             if(liveMatchCheckMarket.length > 0){
                                 eventData.markets.matchOdds = liveMatchCheckMarket
-                                await client.set(`${eventIds[i]}_sharEventData`,JSON.stringify(eventData))
+                                await client.set(`${eventIds[i]}_diamondEventData`,JSON.stringify(eventData))
                                 // let othersportLiveEventIDs = await client.get('crone_OtherSportLiveEventIds_UPD');
                                 // othersportLiveEventIDs = JSON.parse(othersportLiveEventIDs)
                                 // if(!othersportLiveEventIDs.find(item => item == eventIds[i])){
@@ -73,7 +73,7 @@ module.exports = () => {
                             }else{
                                 HRGHClosedEventIds.push(eventIds[i])
                                 eventData.markets.matchOdds = liveMatchCheckMarket
-                                await client.set(`${eventIds[i]}_sharEventData`,JSON.stringify(eventData))
+                                await client.set(`${eventIds[i]}_diamondEventData`,JSON.stringify(eventData))
                             }
                         }else{
                             setNewEventDetails([eventIds[i]])

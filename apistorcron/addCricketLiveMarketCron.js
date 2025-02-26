@@ -25,7 +25,7 @@ client.on('connect', () => {
                 let newEventAdded = false
                 let newEventIdsArray = []
                 let eventIds = await client.get('crone_getEventIds_Cricket');
-                let CricketLiveEventIds = await client.get('crone_CricketliveEventIds_UPD');
+                let CricketLiveEventIds = await client.get('crone_CricketliveEventIds_diamond_UPD');
                 CricketLiveEventIds = JSON.parse(CricketLiveEventIds)
                 eventIds = JSON.parse(eventIds)
                 await client.set('crone_CricketClosedEventIds',JSON.stringify([]))
@@ -184,7 +184,7 @@ client.on('connect', () => {
                     // Update Market Show Or Not Show Other than LINE Market
                     
                     let eventStatus = isLiveStatus == true?'IN_PLAY':'UPCOMING'
-                    let eventData = await client.get(`${eventIds[i]}_sharEventData`)
+                    let eventData = await client.get(`${eventIds[i]}_diamondEventData`)
                     eventData = JSON.parse(eventData)
                     eventData.status = eventStatus
                     let mobmmarkets = fetchMarketData.catalogues.filter(item => item.bettingType !== "LINE")
@@ -206,7 +206,7 @@ client.on('connect', () => {
                     if(!isLiveStatus){
                         await client.set(`${eventIds[i]}_shark`,JSON.stringify(eventData.markets.fancyMarkets))
                     }
-                    await client.set(`${eventIds[i]}_sharEventData`,JSON.stringify(eventData))
+                    await client.set(`${eventIds[i]}_diamondEventData`,JSON.stringify(eventData))
                 }       
                 if(newEventAdded){
                     await client.set('isNewLiveEventAdded',JSON.stringify(true))
@@ -215,7 +215,7 @@ client.on('connect', () => {
                     await setNewAddedEvent(newEventIdsArray)
                 }
                     
-                await client.set('crone_CricketliveEventIds_UPD',JSON.stringify(liveEventInCricket));
+                await client.set('crone_CricketliveEventIds_diamond_UPD',JSON.stringify(liveEventInCricket));
                 await client.set('crone_getEventIds_Cricket_UPD',JSON.stringify(eventIds));
                 await client.set('crone_CricketliveMarketIds_UPD',JSON.stringify(marketIdsArr));
                 if(await client.get('crone_CricketClosedEventIds')){

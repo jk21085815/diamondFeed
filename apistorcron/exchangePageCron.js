@@ -39,8 +39,8 @@ module.exports = () => {
                 // console.log(eventIds.length,'eventIdsttttttttttt in exchange page Lengthhhh')
                 for(let i = 0;i<eventIds.length;i++){
                     // console.log(i,'exchange page iiiiiiiiii')
-                    if(await client.get(`${eventIds[i]}_sharEventData`)){
-                        let eventData = await client.get(`${eventIds[i]}_sharEventData`)
+                    if(await client.get(`${eventIds[i]}_diamondEventData`)){
+                        let eventData = await client.get(`${eventIds[i]}_diamondEventData`)
                         eventData = JSON.parse(eventData)
                         if(eventData.markets.matchOdds != null && eventData.markets.matchOdds[0]){
                             let index = eventData.markets.matchOdds.findIndex(item => item.marketName.trim() == "Match Odds")
@@ -49,7 +49,7 @@ module.exports = () => {
                                 if(matchodddetails){
                                     matchodddetails = JSON.parse(matchodddetails)
                                     eventData.markets.matchOdds[index] = matchodddetails
-                                    // await client.set(`${eventIds[i]}_sharEventData`,JSON.stringify(eventData))
+                                    // await client.set(`${eventIds[i]}_diamondEventData`,JSON.stringify(eventData))
                                 }
                             }
                             eventData.matchOddStatus = true

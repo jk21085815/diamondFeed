@@ -299,7 +299,7 @@ const setNewThisEventData = async(eventIds) => {
                 }
                 await client.set(`${fetchMarketEventData.eventId}_MOBMMarketArr_shark`,JSON.stringify(MOBMMarketArr),'EX',7 * 24 * 60 * 60)
                 await client.set(`${fetchMarketEventData.eventId}_OnlyMOBMMarketIdsArr_shark`,JSON.stringify(OnlyMOBMMarketIdsArr),'EX',7 * 24 * 60 * 60)
-                await client.set(`${fetchMarketEventData.eventId}_sharEventData`,JSON.stringify(fetchMarketEventData),'EX',24 * 60 * 60)
+                await client.set(`${fetchMarketEventData.eventId}_diamondEventData`,JSON.stringify(fetchMarketEventData),'EX',24 * 60 * 60)
             }
             console.log(starttime,new Date(),(Date.now()-(starttime.getTime()))/1000,`Set New Event Data Cron Ended.....`)
         
