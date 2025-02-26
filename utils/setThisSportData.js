@@ -266,7 +266,7 @@ const setThisSportData = async(eventlist,SportName) => {
                 // console.log(OnlyMOBMMarketIdsArr,"OnlyMOBMMarketIdsArrOnlyMOBMMarketIdsArrINThisSportttttttt")
                 await client.set(`${eventlist[k].eventId}_MOBMMarketArr_diamond`,JSON.stringify(MOBMMarketArr),'EX',7 * 24 * 60 * 60)
                 await client.set(`${eventlist[k].eventId}_OnlyMOBMMarketIdsArr_diamond`,JSON.stringify(OnlyMOBMMarketIdsArr),'EX',7 * 24 * 60 * 60)
-                await client.set(`${eventlist[k].eventId}_sharEventData_diamond`,JSON.stringify(eventlist[k]),'EX',7 * 24 * 60 * 60)
+                await client.set(`${eventlist[k].eventId}_diamondEventData`,JSON.stringify(eventlist[k]),'EX',7 * 24 * 60 * 60)
             }
             await client.set(`crone_getEventIds_${SportName}_diamond`,JSON.stringify(thisSportEventId))
             console.log(starttime,new Date(),(Date.now()-(starttime.getTime()))/1000,`Set ${SportName} Sport Cron  Ended.....`)

@@ -59,20 +59,14 @@ client.on('connect', () => {
                         let fetchMarketData2
                         let issportHRGH = false
                         let OnlyMOBMmARKETOpenArr = [];
-                        let OnlyMOBMMarketIdsArr = []
                         let eventODDSBMMarketIdsArr
-                        eventData = await client.get(`${eventIds[i]}_sharEventData_diamond`)
+                        eventData = await client.get(`${eventIds[i]}_diamondEventData`)
                         if(eventData){
                             eventData = JSON.parse(eventData)
                             if(["7","4339"].includes(eventData.sportId)){
                                 issportHRGH = true
                             }
-                            MOBMMarketArr = await client.get(`${eventIds[i]}_MOBMMarketArr_diamond`)
-                            MOBMMarketArr = JSON.parse(MOBMMarketArr)
-                            OnlyMOBMMarketIdsArr = await client.get(`${eventIds[i]}_OnlyMOBMMarketIdsArr_diamond`)
-                            OnlyMOBMMarketIdsArr = JSON.parse(OnlyMOBMMarketIdsArr)
-                            if(OnlyMOBMMarketIdsArr.length !== 0 && !issportHRGH){
-                                eventODDSBMMarketIdsArr = OnlyMOBMMarketIdsArr.join(",")
+                            if(!issportHRGH){
                                 try{
                                     fetchMarketData2 = await fetch(` http://13.42.165.216:8443/api/betfair${eventODDSBMMarketIdsArr}`,{
                                         method: 'GET',
@@ -291,7 +285,7 @@ client.on('connect', () => {
                                         // console.log(isLiveStatus,eventData.status,OnlyMOBMMarketIdsArr,matchOddsArr.concat(bookMakerMarketArr),'eventData')
                                     }
                                 }
-                                await client.set(`${eventIds[i]}_sharEventData_diamond`,JSON.stringify(eventData))
+                                await client.set(`${eventIds[i]}_diamondEventData`,JSON.stringify(eventData))
                             }else{
                                 let liveMatchCheckMarket = []
                                 let fetchMarketData4
@@ -399,14 +393,14 @@ client.on('connect', () => {
                                     OtherSportLiveEventIds.push(eventIds[i])
                                     eventData.markets.matchOdds = liveMatchCheckMarket
                                     eventData.status == "IN_PLAY"
-                                    await client.set(`${eventIds[i]}_sharEventData_diamond`,JSON.stringify(eventData))
+                                    await client.set(`${eventIds[i]}_diamondEventData`,JSON.stringify(eventData))
                                     for(let k = 0;k<liveMatchCheckMarket.length;k++){
                                         OtherSportLiveMarketIds.push(liveMatchCheckMarket[k].marketId)
                                     }
                                 }else{
                                     eventData.markets.matchOdds = liveMatchCheckMarket
                                     eventData.status == "UPCOMING"
-                                    await client.set(`${eventIds[i]}_sharEventData_diamond`,JSON.stringify(eventData))
+                                    await client.set(`${eventIds[i]}_diamondEventData`,JSON.stringify(eventData))
                                 }
                                 showEvent.push(eventIds[i])
                             }
