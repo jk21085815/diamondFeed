@@ -25,7 +25,6 @@ const setThisSportData = async(eventlist,SportName) => {
                     }
                 })
                 let fetchMarketDatajson = await fetchMarketData.json()
-                console.log(fetchMarketDatajson[0],"fetchMarketDatajsonfetchMarketDatajson")
                 return fetchMarketDatajson[0]
             }
             async function fetchBMBook(eventId) {
@@ -36,6 +35,7 @@ const setThisSportData = async(eventlist,SportName) => {
                     }
                 })
                 let fetchMarketDatajson = await fetchMarketData.json()
+                console.log(fetchMarketDatajson,"fetchMarketDatajsonfetchMarketDatajson")
                 return fetchMarketDatajson.data
             }
             async function fetchFancyBook(eventId) {
