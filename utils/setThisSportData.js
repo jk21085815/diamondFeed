@@ -89,19 +89,19 @@ const setThisSportData = async(eventlist,SportName) => {
                 delete eventlist[k]['marketId']
                 if(matchodddata){
                     for(let d = 0;d<matchodddata.length;d++){
-                        console.log(matchodddata[d],"matchodddata[d]matchodddata[d]")
+                        let thatcatalog = eventlist[k].catalogues.find(item => item.marketId == matchodddata[d].marketId)
                         let tempRunner = []
                         let tempObj = {
                             "marketId": matchodddata[d].marketId,
                             "marketTime": matchodddata[d].lastMatchTime,
-                            "marketType": eventlist[k].description.marketType,
-                            "bettingType": eventlist[k].description.bettingType,
+                            "marketType": thatcatalog.marketType,
+                            "bettingType": thatcatalog.bettingType,
                             "marketName": eventlist[k].marketName,
                             "provider": "DIAMOND",
                             "status": matchodddata[d].status
                         }
                         for(let c = 0;c<matchodddata[d].runners.length;c++){
-                            let runner = eventlist[k].runners.find(item => item.selectionId == matchodddata[d].runners[c].selectionId)
+                            let runner = thatcatalog.runners.find(item => item.selectionId == matchodddata[d].runners[c].selectionId)
                             let tempObjrunner = 
                             {
                                 "status": matchodddata[d].runners[c].status,
