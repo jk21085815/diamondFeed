@@ -16,6 +16,7 @@ router.post('/martketdata', APIController.marketData)
 router.post('/cricketextramarketlist', APIController.cricketextramarketlist)
 router.post('/tournamentwinner', APIController.tournamentwinner)
 router.post('/underover', APIController.underover)
+router.post('/addmarket', APIController.addmarket)
 
 
 

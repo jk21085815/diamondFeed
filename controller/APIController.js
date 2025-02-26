@@ -478,6 +478,24 @@ exports.underover = catchAsync(async(req, res, next) => {
         data:fetchMarketData
     })
 })
+exports.addmarket = catchAsync(async(req, res, next) => {
+    let fetchMarketData
+    try{
+        fetchMarketData = await fetch(` http://13.42.165.216/betfair/add/${req.body.marketId}`,{
+            method: 'GET',
+            headers: {
+                'Content-type': 'application/json',
+            }
+        })
+        fetchMarketData = await fetchMarketData.json()
+    }catch(err){
+        console.log(err)
+    }
+    res.status(200).json({
+        status:'success',
+        data:fetchMarketData
+    })
+})
 
 // exports.thatperticularMatch = catchAsync(async(req, res, next) => {
 //     try{
