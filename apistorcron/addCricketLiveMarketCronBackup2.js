@@ -71,7 +71,7 @@ client.on('connect', () => {
                             MOBMMarketArr = JSON.parse(MOBMMarketArr)
                             OnlyMOBMMarketIdsArr = await client.get(`${eventIds[i]}_OnlyMOMarketIdsArr_diamond`)
                             OnlyMOBMMarketIdsArr = JSON.parse(OnlyMOBMMarketIdsArr)
-                            if(eventData.eventId == "34058805"){
+                            if(eventData.eventId == "34058805" || true){
                                 console.log(OnlyMOBMMarketIdsArr,'OnlyMOBMMarketIdsArrOnlyMOBMMarketIdsArr')
                             }
                             if(OnlyMOBMMarketIdsArr.length !== 0){
@@ -90,7 +90,7 @@ client.on('connect', () => {
                                     }
                                     fetchMarketData2 = fetchMarketData2.concat(fetchMarketDatachunk)
                                 }
-                                if(eventData.eventId == "34058805"){
+                                if(eventData.eventId == "34058805" || true){
                                     console.log(fetchMarketData2,'fetchMarketData2fetchMarketData2')
                                 }
                                 let openMarkets = fetchMarketData2.filter(item => ["OPEN","SUSPENDED"].includes(item.status))
