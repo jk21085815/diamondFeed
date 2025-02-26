@@ -17,8 +17,8 @@ const setThisSportData = async(eventlist,SportName) => {
             function delay(ms) {
                 return new Promise(resolve => setTimeout(resolve, ms));
             }
-            async function fetchMOBook(marketId) {
-                let fetchMarketData = await fetch(` http://13.42.165.216:8443/api/betfair/${marketId}`,{
+            async function fetchMOBook(marketIds) {
+                let fetchMarketData = await fetch(` http://13.42.165.216:8443/api/betfair/${marketIds}`,{
                     method: 'GET',
                     headers: {
                         'Content-type': 'application/json',
@@ -72,13 +72,24 @@ const setThisSportData = async(eventlist,SportName) => {
                 delete eventlist[k]['totalMatched']
                 thisSportEventId.push(eventlist[k].eventId)
                 // console.log(eventlist[k],'eventlist[kkkkkkkkkkkkkkk')
-                let matchodddata = await fetchMOBook(eventlist[k].marketId)
+                let marketIds = []
+                if(["7","4339"].includes(eventlist[k].sportId)){
+                    eventlist[k].catalogues.forEach(item => {
+                        marketIds.push(item.marketId)
+                    })
+                    marketIds = marketIds.join(",")
+                }else{
+                    marketIds = [eventlist[k].marketId]
+                    marketIds = marketIds.join(",")
+                }
+                let matchodddata = await fetchMOBook(marketIds)
                 let bookmakerdata = await fetchBMBook(eventlist[k].eventId)
                 let fancydata = await fetchFancyBook(eventlist[k].eventId)
                 let fancyMarketIdArray = Object.keys(fancydata)
                 delete eventlist[k]['marketId']
                 if(matchodddata){
                     for(let d = 0;d<matchodddata.length;d++){
+                        console.log(matchodddata[d],"matchodddata[d]matchodddata[d]")
                         let tempRunner = []
                         let tempObj = {
                             "marketId": matchodddata[d].marketId,
