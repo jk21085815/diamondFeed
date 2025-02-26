@@ -35,7 +35,6 @@ const setThisSportData = async(eventlist,SportName) => {
                     }
                 })
                 let fetchMarketDatajson = await fetchMarketData.json()
-                console.log(fetchMarketDatajson,"fetchMarketDatajsonfetchMarketDatajson")
                 return fetchMarketDatajson.data
             }
             async function fetchFancyBook(eventId) {
@@ -107,8 +106,8 @@ const setThisSportData = async(eventlist,SportName) => {
                     matchOddsArr2 = [tempObj]
                 }
                 if(bookmakerdata){
-                    bookmakerdata = bookmakerdata.data
                     for(let a = 0; a<bookmakerdata.length; a++){
+                        console.log(bookmakerdata,'bookmakerdataaaaaaaaaa')
                         let tempRunner = []
                         let marketName
                         let tempObj = {
