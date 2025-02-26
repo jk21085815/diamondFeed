@@ -97,7 +97,7 @@ const setThisSportData = async(eventlist,SportName) => {
                             "marketTime": matchodddata[d].lastMatchTime,
                             "marketType": thatcatalog.description.marketType,
                             "bettingType": thatcatalog.description.bettingType,
-                            "marketName": eventlist[k].marketName,
+                            "marketName": thatcatalog.marketName,
                             "provider": "DIAMOND",
                             "status": matchodddata[d].status
                         }
