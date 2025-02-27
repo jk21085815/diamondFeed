@@ -71,15 +71,10 @@ client.on('connect', () => {
                             MOBMMarketArr = JSON.parse(MOBMMarketArr)
                             OnlyMOBMMarketIdsArr = await client.get(`${eventIds[i]}_OnlyMOMarketIdsArr_diamond`)
                             OnlyMOBMMarketIdsArr = JSON.parse(OnlyMOBMMarketIdsArr)
-                            if(eventData.eventId == "34058805" || true){
-                                // console.log(OnlyMOBMMarketIdsArr,'OnlyMOBMMarketIdsArrOnlyMOBMMarketIdsArr')
-                            }
                             if(OnlyMOBMMarketIdsArr.length !== 0){
                                 let count = Math.ceil(OnlyMOBMMarketIdsArr.length/chunkSize)
-                                // console.log(OnlyMOBMMarketIdsArr.length,count,'counttttttttt')
                                 for(let k = 0;k<count;k++){
                                     let marketchunks = OnlyMOBMMarketIdsArr.slice((k*chunkSize),(chunkSize * (1+k)))
-                                    // console.log((k*chunkSize),(chunkSize * (1+k)),'chunkkkkkkkkkkkk')
                                     marketchunks = marketchunks.join(',')
                                     let fetchMarketDatachunk
                                     try{
@@ -89,9 +84,6 @@ client.on('connect', () => {
                                         fetchMarketDatachunk = await fetchEventDataFunc(marketchunks)
                                     }
                                     fetchMarketData2 = fetchMarketData2.concat(fetchMarketDatachunk)
-                                }
-                                if(eventData.eventId == "34058805" || true){
-                                    // console.log(fetchMarketData2,'fetchMarketData2fetchMarketData2')
                                 }
                                 let openMarkets = fetchMarketData2.filter(item => ["OPEN","SUSPENDED"].includes(item.status))
                                 for(let i = 0;i<openMarkets.length;i++){
@@ -132,98 +124,18 @@ client.on('connect', () => {
                             }
                             let eventStatus = isLiveStatus?'IN_PLAY':'UPCOMING'
                             eventData.status = eventStatus
-                            // let matchOddsArr = []
-                            // let bookMakerMarketArr = []
-                            // if(OnlyMOBMMarketIdsArr.length !== 0){
-                            //     for(let k = 0;k<fetchMarketData2.length;k++){
-                            //         if([ "OPEN","SUSPENDED"].includes(fetchMarketData2[k].catalogue.status.trim())){
-                            //             let marketData = await client.get(`${fetchMarketData2[k].catalogue.marketId}_diamond`);
-                            //             marketData = marketData ? JSON.parse(marketData) : null;
-                            //             if (marketData && marketData.status){
-                            //                 fetchMarketData2[k].catalogue.runners = marketData.runners
-                            //             }else{
-                            //                 let fetchMarketDataBookData
-                            //                 try{
-                            //                     fetchMarketDataBookData = await fetch(` http://18.171.69.133:6008/sports/books/${fetchMarketData2[k].catalogue.marketId}`,{
-                            //                         method: 'GET',
-                            //                         headers: {
-                            //                             'Content-type': 'application/text',
-                            //                         }
-                            //                     })
-                            //                     // await delay(500)
-                            //                 }catch(error){
-                            //                     await delay(1000 * 10)
-                            //                     fetchMarketDataBookData = await fetch(` http://18.171.69.133:6008/sports/books/${fetchMarketData2[k].catalogue.marketId}`,{
-                            //                         method: 'GET',
-                            //                         headers: {
-                            //                             'Content-type': 'application/text',
-                            //                         }
-                            //                     })
-                            //                 }
-                            //                 let fetchBookDatajson = await fetchMarketDataBookData.json()
-                            //                 let bookdata = fetchBookDatajson[fetchMarketData2[k].catalogue.marketId]
-                            //                 if(bookdata){
-                            //                     for(let j = 0;j<fetchMarketData2[k].catalogue.runners.length;j++){
-                            //                         runner = bookdata.runners.find(item => item.selectionId == fetchMarketData2[k].catalogue.runners[j].id)
-                            //                         if(runner){
-                            //                             runner.metadata = fetchMarketData2[k].catalogue.runners[j].metadata
-                            //                             runner.runnerName = fetchMarketData2[k].catalogue.runners[j].name
-                            //                             runner.runnerId = runner.selectionId
-                            //                             runner.layPrices = runner.lay
-                            //                             runner.backPrices = runner.back
-                            //                             delete runner.back
-                            //                             delete runner.lay
-                            //                             delete runner.selectionId
-                            //                             fetchMarketData2[k].catalogue.runners[j] = runner
-                            //                         }else{
-                            //                             fetchMarketData2[k].catalogue.runners[j].runnerName = fetchMarketData2[k].catalogue.runners[j].name
-                            //                             fetchMarketData2[k].catalogue.runners[j].runnerId = fetchMarketData2[k].catalogue.runners[j].id
-                            //                             fetchMarketData2[k].catalogue.runners[j].layPrices = []
-                            //                             fetchMarketData2[k].catalogue.runners[j].backPrices = []
-                            //                             delete fetchMarketData2[k].catalogue.runners[j].name
-                            //                             delete fetchMarketData2[k].catalogue.runners[j].id
-                            //                         }
-                            //                     }
-                            //                 }else{
-    
-                            //                     for(let j = 0;j<fetchMarketData2[k].catalogue.runners.length;j++){
-                            //                         fetchMarketData2[k].catalogue.runners[j].runnerName = fetchMarketData2[k].catalogue.runners[j].name
-                            //                         fetchMarketData2[k].catalogue.runners[j].runnerId = fetchMarketData2[k].catalogue.runners[j].id
-                            //                         fetchMarketData2[k].catalogue.runners[j].layPrices = []
-                            //                         fetchMarketData2[k].catalogue.runners[j].backPrices = []
-                            //                         delete fetchMarketData2[k].catalogue.runners[j].name
-                            //                         delete fetchMarketData2[k].catalogue.runners[j].id
-                            //                     }
-                            //                 }
-                            //             }
-                            //             if(fetchMarketData2[k].catalogue.bettingType == "ODDS"){
-                            //                 matchOddsArr.push(fetchMarketData2[k].catalogue)
-                            //             }else if(fetchMarketData2[k].catalogue.bettingType == "BOOKMAKER"){
-                            //                 bookMakerMarketArr.push(fetchMarketData2[k].catalogue)
-                            //             }
-                            //         }
-                            //     }
-                            //     eventData.markets.matchOdds = matchOddsArr;
-                            //     eventData.markets.bookmakers = bookMakerMarketArr;
-                            //     let pushstatus = false 
-                            //     let thatMO = eventData.markets.matchOdds.find(item => item.marketType== 'MATCH_ODDS')
-                            //     if(thatMO){
-                            //         if(['OPEN','SUSPENDED'].includes(thatMO.status)){
-                            //         pushstatus = true
-                            //         }
-                            //     }else{
-                            //         let winner = eventData.markets.matchOdds.find(item => item.marketType == "TOURNAMENT_WINNER")
-                            //         if((eventData.markets.bookmakers.concat(eventData.markets.fancyMarkets).length !== 0 || winner) && !["7","4339"].includes(eventData.sportId)){
-                            //             pushstatus = true
-                            //         }else if(["7","4339"].includes(eventData.sportId)){
-                            //             pushstatus = true
-                            //         }
-                            //     }
-                            //     if(pushstatus){
-                            //         showEvent.push(eventIds[i])
-                            //     }
-                            // }
-                            showEvent.push(eventIds[i])
+                            if(OnlyMOBMMarketIdsArr.length !== 0){
+                                let pushstatus = false 
+                                let thatMO = liveMatchCheckMarket
+                                if(thatMO){
+                                    if(['OPEN','SUSPENDED'].includes(thatMO.status)){
+                                        pushstatus = true
+                                    }
+                                }
+                                if(pushstatus){
+                                    showEvent.push(eventIds[i])
+                                }
+                            }
                             await client.set(`${eventIds[i]}_diamondEventData`,JSON.stringify(eventData))
                         }else{
                             showEvent.push(eventIds[i])
