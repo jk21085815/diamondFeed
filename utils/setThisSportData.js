@@ -38,7 +38,7 @@ const setThisSportData = async(eventlist,SportName) => {
                 return fetchMarketDatajson.data
             }
             async function fetchFancyBook(eventId) {
-                let fetchMarketData = await fetch(` https://odds.datafeed365.com/api/fancy-list/${eventId}`,{
+                let fetchMarketData = await fetch(` https://odds.datafeed365.com/api/active-fancy/${eventId}`,{
                     method: 'GET',
                     headers: {
                         'Content-type': 'application/json',
@@ -229,7 +229,7 @@ const setThisSportData = async(eventlist,SportName) => {
                         tempObj.category = category
                         let tempObjrunner = 
                         {
-                            "status": tempObjfancy.is_active == 1?"OPEN":"CLOSED",
+                            "status": tempObjfancy.status1,
                             "metadata": "",
                             "runnerName": tempObjfancy.name,
                             "runnerId": tempObjfancy.id,
