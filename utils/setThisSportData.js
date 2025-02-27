@@ -206,7 +206,7 @@ const setThisSportData = async(eventlist,SportName) => {
                             "marketName": tempObjfancy.name,
                             "bettingType": "LINE",
                             "marketType": "FANCY",
-                            "status": tempObjfancy.status1,
+                            "status": tempObjfancy.is_active == 1?"OPEN":"CLOSED",
                             "noValue": tempObjfancy.l1,
                             "noRate": tempObjfancy.ls1,
                             "yesValue": tempObjfancy.b1,
@@ -229,7 +229,7 @@ const setThisSportData = async(eventlist,SportName) => {
                         tempObj.category = category
                         let tempObjrunner = 
                         {
-                            "status": tempObjfancy.status1,
+                            "status": tempObjfancy.is_active == 1?"OPEN":"CLOSED",
                             "metadata": "",
                             "runnerName": tempObjfancy.name,
                             "runnerId": tempObjfancy.id,

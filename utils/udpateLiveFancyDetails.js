@@ -17,19 +17,18 @@ const updateFancyDetailsFunc = async (eventId,fencydata) => {
             for (const key in response) {
                 if (response.hasOwnProperty(key)) {
                     const market = JSON.parse(response[key]);
-                    if (market && market.is_active == 1) {
-                        market.status = market.status1
+                    if (market) {
                         let marketData = await client.get(`${key}_diamond`);
                         marketData = marketData ? JSON.parse(marketData) : null;
                         if (marketData && marketData.status1) {
-                            marketData.status = market.status1;
+                            marketData.status = market.is_active == 1?"OPEN":"CLOSED";
                             marketData.inPlay = market.in_play;
                             marketData.noValue = market.l1;
                             marketData.noRate = market.ls1;
                             marketData.yesValue = market.b1;
                             marketData.yesRate = market.bs1;
                             let runner = marketData.runners[0]
-                            runner.status = market.status1
+                            runner.status = market.is_active == 1?"OPEN":"CLOSED"
                             runner.layPrices[0].price = market.l1
                             runner.layPrices[0].line = market.ls1
                             runner.backPrices[0].price = market.b1
@@ -45,7 +44,7 @@ const updateFancyDetailsFunc = async (eventId,fencydata) => {
                                 "marketName": market.name,
                                 "bettingType": "LINE",
                                 "marketType": "FANCY",
-                                "status": market.status1,
+                                "status": market.is_active == 1?"OPEN":"CLOSED",
                                 "noValue": market.l1,
                                 "noRate": market.ls1,
                                 "yesValue": market.b1,
@@ -68,7 +67,7 @@ const updateFancyDetailsFunc = async (eventId,fencydata) => {
                             tempObj.category = category
                             let tempObjrunner = 
                             {
-                                "status": market.status1,
+                                "status": market.is_active == 1?"OPEN":"CLOSED",
                                 "metadata": "",
                                 "runnerName": market.name,
                                 "runnerId": market.id,
