@@ -53,7 +53,7 @@ const updateFancyDetailsFunc = async (eventId,fencydata) => {
                             }
                             if(market.type_code == 10){
                                 category = "OVERS"
-                            }else if(market.type_code == 20){
+                            }else if(market.type_code == 34){
                                 category = "BATSMAN"
                             }else if(market.type_code == 2){
                                 category = "SINGLE_OVER"
