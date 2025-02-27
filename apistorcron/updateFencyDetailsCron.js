@@ -12,7 +12,7 @@ client.on('connect', () => {
 
 
 module.exports = () => {
-    cron.schedule('*/10 * * * *', async() => {
+    cron.schedule('*/15 * * * *', async() => {
         try{
                     let cricketEventIdsLive
                     cricketEventIdsLive = await client.get('crone_CricketliveEventIds_diamond_UPD'); 
@@ -26,7 +26,6 @@ module.exports = () => {
                     }
                     if(cricketEventIds){
                         for(let i = 0;i<cricketEventIds.length;i++){
-                            let marketIdsArr = [];
                             let fetchMarketData
                             try{
                                 fetchMarketData = await fetch(` https://odds.datafeed365.com/api/active-fancy/${cricketEventIds[i]}`,{
