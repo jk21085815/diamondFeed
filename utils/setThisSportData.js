@@ -176,17 +176,17 @@ const setThisSportData = async(eventlist,SportName) => {
                                     "provider": "DIAMOND",
                                     "status": matchodddata[e].status
                                 }
-                                for(let c = 0;c<matchodddata[d].runners.length;c++){
+                                for(let c = 0;c<matchodddata[e].runners.length;c++){
                                     let runner
-                                    runner = matchoddmarketdata[d].runners.find(item => item.selectionId == matchodddata[d].runners[c].selectionId)
+                                    runner = matchoddmarketdata[d].runners.find(item => item.selectionId == matchodddata[e].runners[c].selectionId)
                                     let tempObjrunner = 
                                     {
-                                        "status": matchodddata[d].runners[c].status,
+                                        "status": matchodddata[e].runners[c].status,
                                         "metadata": runner.metadata,
                                         "runnerName": runner.runnerName,
-                                        "runnerId": matchodddata[d].runners[c].selectionId,
-                                        "layPrices": matchodddata[d].runners[c].ex.availableToLay,
-                                        "backPrices": matchodddata[d].runners[c].ex.availableToBack
+                                        "runnerId": matchodddata[e].runners[c].selectionId,
+                                        "layPrices": matchodddata[e].runners[c].ex.availableToLay,
+                                        "backPrices": matchodddata[e].runners[c].ex.availableToBack
                                     }
                                     tempRunner.push(tempObjrunner)
                                 }
@@ -217,17 +217,17 @@ const setThisSportData = async(eventlist,SportName) => {
                                     "provider": "DIAMOND",
                                     "status": matchodddata[e].status
                                 }
-                                for(let c = 0;c<matchodddata[d].runners.length;c++){
+                                for(let c = 0;c<matchodddata[e].runners.length;c++){
                                     let runner
-                                    runner = matchoddmarketdata[d].runners.find(item => item.selectionId == matchodddata[d].runners[c].selectionId)
+                                    runner = matchoddmarketdata[d].runners.find(item => item.selectionId == matchodddata[e].runners[c].selectionId)
                                     let tempObjrunner = 
                                     {
-                                        "status": matchodddata[d].runners[c].status,
+                                        "status": matchodddata[e].runners[c].status,
                                         "metadata": runner.metadata,
                                         "runnerName": runner.runnerName,
-                                        "runnerId": matchodddata[d].runners[c].selectionId,
-                                        "layPrices": matchodddata[d].runners[c].ex.availableToLay,
-                                        "backPrices": matchodddata[d].runners[c].ex.availableToBack
+                                        "runnerId": matchodddata[e].runners[c].selectionId,
+                                        "layPrices": matchodddata[e].runners[c].ex.availableToLay,
+                                        "backPrices": matchodddata[e].runners[c].ex.availableToBack
                                     }
                                     tempRunner.push(tempObjrunner)
                                 }
