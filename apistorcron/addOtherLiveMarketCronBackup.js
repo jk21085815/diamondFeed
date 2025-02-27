@@ -308,11 +308,6 @@ client.on('connect', () => {
                                         }
                                         fetchMarketData3 = await fetchMarketData3.json()
                                         liveMatchCheckMarket = fetchMarketData3.filter(item => (item && ["OPEN","SUSPENDED"].includes(item.status)))
-                                        let liveMatchCheckMarket2 = []
-                                        for(let j = 0;j<liveMatchCheckMarket.length;j++){
-                                            liveMatchCheckMarket2.push(liveMatchCheckMarket[j].catalogue)
-                                        }
-                                        liveMatchCheckMarket = liveMatchCheckMarket2
                                     }
                                     if(liveMatchCheckMarket.length > 0){
                                         try{

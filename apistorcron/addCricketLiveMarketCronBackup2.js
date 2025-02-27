@@ -158,6 +158,7 @@ client.on('connect', () => {
                                     let bookmakerdata = await fetchBMBook(eventIds[i])
                                     for(let d = 0;d<matchoddmarketdata.length;d++){
                                         let matchodddata = await fetchMOBook(matchoddmarketdata[d].marketId)
+                                        console.log(matchodddata,'matchodddataaaaaaaaaaaaaaa')
                                         for(let e = 0;e<matchodddata.length;e++){
                                             if(matchodddata[e]){
                                                 let tempObj
