@@ -160,7 +160,7 @@ const setThisSportData = async(eventlist,SportName) => {
                     }
                 }
                 if(eventlist[k].sportId == 4){
-                    let matchoddmarketdata = await fetchOtherMOMarketData(eventId)
+                    let matchoddmarketdata = await fetchOtherMOMarketData(eventlist[k].eventId)
                     for(let d = 0;d<matchoddmarketdata.length;d++){
                         let matchodddata = await fetchMOBook(matchoddmarketdata[d].marketId)
                         for(let e = 0;e<matchodddata.length;e++){
@@ -201,7 +201,7 @@ const setThisSportData = async(eventlist,SportName) => {
 
                 }
                 if(eventlist[k].sportId == 1){
-                    let matchoddmarketdata = await fetchUOMarketData(eventId)
+                    let matchoddmarketdata = await fetchUOMarketData(eventlist[k].eventId)
                     for(let d = 0;d<matchoddmarketdata.length;d++){
                         let matchodddata = await fetchMOBook(matchoddmarketdata[d].marketId)
                         for(let e = 0;e<matchodddata.length;e++){
