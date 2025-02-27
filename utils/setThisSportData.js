@@ -199,6 +199,7 @@ const setThisSportData = async(eventlist,SportName) => {
                         let category = ""
                         let tempObjfancy = fancydata[fancyMarketIdArray[b]]
                         tempObjfancy = JSON.parse(tempObjfancy)
+                        console.log(tempObjfancy,"tempObjfancytempObjfancytempObjfancy")
                         let tempObj = {
                             "marketId": tempObjfancy.id,
                             "marketTime": new Date(),
