@@ -34,6 +34,8 @@ const updateFancyDetailsFunc = async (eventId,fencydata) => {
                             runner.backPrices[0].price = market.b1
                             runner.backPrices[0].line = market.bs1
                             await client.set(`${marketData.marketId}_diamond`, JSON.stringify(marketData), 'EX', 24 * 60 * 60);
+                            fancyArr.push(marketData)
+
                         }else{
                             let tempRunner = []
                             let category = ""
