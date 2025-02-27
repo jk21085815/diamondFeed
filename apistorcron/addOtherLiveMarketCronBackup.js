@@ -53,7 +53,8 @@ client.on('connect', () => {
                             'Content-type': 'application/json',
                         }
                     })
-                    return fetchMarketData
+                    let fetchMarketDatajson = await fetchMarketData.json()
+                    return fetchMarketDatajson
                 }
                 async function fetchOtherMOMarketData(eventId) {
                     let fetchMarketData = await fetch(`http://13.42.165.216/betfair/cricket_extra_market_list/${eventId}`,{
