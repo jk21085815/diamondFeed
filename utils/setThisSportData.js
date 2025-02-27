@@ -18,7 +18,27 @@ const setThisSportData = async(eventlist,SportName) => {
                 return new Promise(resolve => setTimeout(resolve, ms));
             }
             async function fetchMOBook(marketIds) {
-                let fetchMarketData = await fetch(` http://13.42.165.216:8443/api/betfair/${marketIds}`,{
+                let fetchMarketData = await fetch(`http://13.42.165.216:8443/api/betfair/${marketIds}`,{
+                    method: 'GET',
+                    headers: {
+                        'Content-type': 'application/json',
+                    }
+                })
+                let fetchMarketDatajson = await fetchMarketData.json()
+                return fetchMarketDatajson
+            }
+            async function fetchOtherMOMarketData(eventId) {
+                let fetchMarketData = await fetch(`http://13.42.165.216/betfair/cricket_extra_market_list/${eventId}`,{
+                    method: 'GET',
+                    headers: {
+                        'Content-type': 'application/json',
+                    }
+                })
+                let fetchMarketDatajson = await fetchMarketData.json()
+                return fetchMarketDatajson
+            }
+            async function fetchOtherUOMarketData(eventId) {
+                let fetchMarketData = await fetch(`http://13.42.165.216/betfair/under_over_goal_market_list/${eventId}`,{
                     method: 'GET',
                     headers: {
                         'Content-type': 'application/json',
@@ -28,7 +48,7 @@ const setThisSportData = async(eventlist,SportName) => {
                 return fetchMarketDatajson
             }
             async function fetchBMBook(eventId) {
-                let fetchMarketData = await fetch(` https://odds.datafeed365.com/api/active-bm/${eventId}`,{
+                let fetchMarketData = await fetch(`https://odds.datafeed365.com/api/active-bm/${eventId}`,{
                     method: 'GET',
                     headers: {
                         'Content-type': 'application/json',
@@ -38,7 +58,7 @@ const setThisSportData = async(eventlist,SportName) => {
                 return fetchMarketDatajson.data
             }
             async function fetchFancyBook(eventId) {
-                let fetchMarketData = await fetch(` https://odds.datafeed365.com/api/active-fancy/${eventId}`,{
+                let fetchMarketData = await fetch(`https://odds.datafeed365.com/api/active-fancy/${eventId}`,{
                     method: 'GET',
                     headers: {
                         'Content-type': 'application/json',
@@ -138,6 +158,88 @@ const setThisSportData = async(eventlist,SportName) => {
                             matchOddsArr.push(tempObj)
                         }
                     }
+                }
+                if(eventlist[k].sportId == 4){
+                    let matchoddmarketdata = await fetchOtherMOMarketData(eventId)
+                    for(let d = 0;d<matchoddmarketdata.length;d++){
+                        let matchodddata = await fetchMOBook(matchoddmarketdata[d].marketId)
+                        for(let e = 0;e<matchodddata.length;e++){
+                            if(matchodddata[e] && matchoddmarketdata[d].marketName !== "Match Odds"){
+                                let tempObj
+                                let tempRunner = []
+                                tempObj = {
+                                    "marketId": matchodddata[e].marketId,
+                                    "marketTime": matchodddata[e].lastMatchTime,
+                                    "marketType": matchoddmarketdata[d].description.marketType,
+                                    "bettingType": matchoddmarketdata[d].description.bettingType,
+                                    "marketName": matchoddmarketdata[d].marketName,
+                                    "provider": "DIAMOND",
+                                    "status": matchodddata[e].status
+                                }
+                                for(let c = 0;c<matchodddata[d].runners.length;c++){
+                                    let runner
+                                    runner = matchoddmarketdata[d].runners.find(item => item.selectionId == matchodddata[d].runners[c].selectionId)
+                                    let tempObjrunner = 
+                                    {
+                                        "status": matchodddata[d].runners[c].status,
+                                        "metadata": runner.metadata,
+                                        "runnerName": runner.runnerName,
+                                        "runnerId": matchodddata[d].runners[c].selectionId,
+                                        "layPrices": matchodddata[d].runners[c].ex.availableToLay,
+                                        "backPrices": matchodddata[d].runners[c].ex.availableToBack
+                                    }
+                                    tempRunner.push(tempObjrunner)
+                                }
+                                tempObj.runners = tempRunner
+                                matchOddsArr2.push(tempObj)
+                                if(["OPEN","SUSPENDED"].includes(tempObj.status)){
+                                    matchOddsArr.push(tempObj)
+                                }
+                            }
+                        }
+                    }
+
+                }
+                if(eventlist[k].sportId == 1){
+                    let matchoddmarketdata = await fetchOtherUOMarketData(eventId)
+                    for(let d = 0;d<matchoddmarketdata.length;d++){
+                        let matchodddata = await fetchMOBook(matchoddmarketdata[d].marketId)
+                        for(let e = 0;e<matchodddata.length;e++){
+                            if(matchodddata[e] && matchoddmarketdata[d].marketName !== "Match Odds"){
+                                let tempObj
+                                let tempRunner = []
+                                tempObj = {
+                                    "marketId": matchodddata[e].marketId,
+                                    "marketTime": matchodddata[e].lastMatchTime,
+                                    "marketType": matchoddmarketdata[d].description.marketType,
+                                    "bettingType": matchoddmarketdata[d].description.bettingType,
+                                    "marketName": matchoddmarketdata[d].marketName,
+                                    "provider": "DIAMOND",
+                                    "status": matchodddata[e].status
+                                }
+                                for(let c = 0;c<matchodddata[d].runners.length;c++){
+                                    let runner
+                                    runner = matchoddmarketdata[d].runners.find(item => item.selectionId == matchodddata[d].runners[c].selectionId)
+                                    let tempObjrunner = 
+                                    {
+                                        "status": matchodddata[d].runners[c].status,
+                                        "metadata": runner.metadata,
+                                        "runnerName": runner.runnerName,
+                                        "runnerId": matchodddata[d].runners[c].selectionId,
+                                        "layPrices": matchodddata[d].runners[c].ex.availableToLay,
+                                        "backPrices": matchodddata[d].runners[c].ex.availableToBack
+                                    }
+                                    tempRunner.push(tempObjrunner)
+                                }
+                                tempObj.runners = tempRunner
+                                matchOddsArr2.push(tempObj)
+                                if(["OPEN","SUSPENDED"].includes(tempObj.status)){
+                                    matchOddsArr.push(tempObj)
+                                }
+                            }
+                        }
+                    }
+
                 }
                 if(["7","4339"].includes(eventlist[k].sportId)){
                     delete eventlist[k]['catalogues']
