@@ -121,11 +121,6 @@ client.on('connect', () => {
                                         fetchMarketData2 = await fetchMOBook(MOMarketId)
                                     }
                                     
-                                    const contentType = fetchMarketData2.headers.get("content-type");
-                                    if (!contentType || !contentType.includes("application/json")) {
-                                        throw new Error("Non-JSON response received");
-                                    }
-                                    fetchMarketData2 = await fetchMarketData2.json()
                                     let openMarkets = fetchMarketData2.filter(item => (item && ["OPEN","SUSPENDED"].includes(item.status)))
                                     for(let i = 0;i<openMarkets.length;i++){
                                         OnlyMOBMmARKETOpenArr.push(openMarkets[i].marketId)
