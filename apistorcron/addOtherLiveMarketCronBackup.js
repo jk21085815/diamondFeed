@@ -292,7 +292,6 @@ client.on('connect', () => {
                                     await client.set(`${eventIds[i]}_diamondEventData`,JSON.stringify(eventData))
                                 }else{
                                     let liveMatchCheckMarket = []
-                                    let fetchMarketData4
                                     let fetchMarketData3
                                     if(MOBMMarketArr.length !== 0){
                                         let momarketIds = MOBMMarketArr.join(",")
@@ -302,37 +301,26 @@ client.on('connect', () => {
                                             await delay(1000 * 10)
                                             fetchMarketData3 = await fetchMOBook(momarketIds)
                                         }
-                                        const contentType = fetchMarketData3.headers.get("content-type");
-                                        if (!contentType || !contentType.includes("application/json")) {
-                                            console.log(fetchMarketData3,"fetchMarketData3fetchMarketData3")
-                                            throw new Error("Non-JSON response received");
-                                        }
                                         fetchMarketData3 = await fetchMarketData3.json()
                                         liveMatchCheckMarket = fetchMarketData3.filter(item => (item && ["OPEN","SUSPENDED"].includes(item.status)))
                                     }
                                     if(liveMatchCheckMarket.length > 0){
-                                        try{
-                                            fetchMarketData4 = await fetch(` http://18.171.69.133:6008/sports/books/${eventODDSBMMarketIdsArr}`,{
-                                                method: 'GET',
-                                                headers: {
-                                                    'Content-type': 'application/json',
+                                        for(let a = 0;a<liveMatchCheckMarket.length;a++){
+                                            let thismarketdetail = await client.get(`${liveMatchCheckMarket[a].marketId}_diamond`)
+                                            if(thismarketdetail){
+                                                thismarketdetail = JSON.parse(thismarketdetail)
+                                                thismarketdetail.status = liveMatchCheckMarket[a].status
+                                                thismarketdetail.marketTime = liveMatchCheckMarket[a].lastMatchTime
+                                                for(let c = 0;c<liveMatchCheckMarket[a].runners.length;c++){
+                                                    let thisrunner = thismarketdetail.runners.find(item => item.runnerId == liveMatchCheckMarket[a].runners[c].selectionId)
+                                                    thisrunner.status = liveMatchCheckMarket[a].runners[c].status
+                                                    thisrunner.layPrices = liveMatchCheckMarket[a].runners[c].ex.availableToLay,
+                                                    thisrunner.backPrices = liveMatchCheckMarket[a].runners[c].ex.availableToBack
                                                 }
-                                            })
-        
-                                        }catch(error){
-                                            await delay(1000 * 10)
-                                            fetchMarketData4 = await fetch(` http://18.171.69.133:6008/sports/books/${eventODDSBMMarketIdsArr}`,{
-                                                method: 'GET',
-                                                headers: {
-                                                    'Content-type': 'application/json',
-                                                }
-                                            })
+                                                matchOddsArr2.push(thismarketdetail)
+                                            }
+
                                         }
-                                        const contentType2 = fetchMarketData4.headers.get("content-type");
-                                        if (!contentType2 || !contentType2.includes("application/json")) {
-                                            throw new Error("Non-JSON response received");
-                                        }
-                                        fetchMarketData4 = await fetchMarketData4.json()
                                         eventData.markets.matchOdds = liveMatchCheckMarket
                                         eventData.status == "IN_PLAY"
                                         await client.set(`${eventIds[i]}_diamondEventData`,JSON.stringify(eventData))
