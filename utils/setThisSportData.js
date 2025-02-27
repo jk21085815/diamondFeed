@@ -37,7 +37,7 @@ const setThisSportData = async(eventlist,SportName) => {
                 let fetchMarketDatajson = await fetchMarketData.json()
                 return fetchMarketDatajson
             }
-            async function fetchOtherUOMarketData(eventId) {
+            async function fetchUOMarketData(eventId) {
                 let fetchMarketData = await fetch(`http://13.42.165.216/betfair/under_over_goal_market_list/${eventId}`,{
                     method: 'GET',
                     headers: {
@@ -201,7 +201,7 @@ const setThisSportData = async(eventlist,SportName) => {
 
                 }
                 if(eventlist[k].sportId == 1){
-                    let matchoddmarketdata = await fetchOtherUOMarketData(eventId)
+                    let matchoddmarketdata = await fetchUOMarketData(eventId)
                     for(let d = 0;d<matchoddmarketdata.length;d++){
                         let matchodddata = await fetchMOBook(matchoddmarketdata[d].marketId)
                         for(let e = 0;e<matchodddata.length;e++){
