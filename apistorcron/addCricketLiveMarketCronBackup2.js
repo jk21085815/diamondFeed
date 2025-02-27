@@ -50,9 +50,31 @@ client.on('connect', () => {
                     fetchMarketData = await fetchMarketData.json()
                     return fetchMarketData
                 }
+                async function fetchOtherMOMarketData(eventId) {
+                    let fetchMarketData = await fetch(`http://13.42.165.216/betfair/cricket_extra_market_list/${eventId}`,{
+                        method: 'GET',
+                        headers: {
+                            'Content-type': 'application/json',
+                        }
+                    })
+                    let fetchMarketDatajson = await fetchMarketData.json()
+                    return fetchMarketDatajson
+                }
+                async function fetchBMBook(eventId) {
+                    let fetchMarketData = await fetch(`https://odds.datafeed365.com/api/active-bm/${eventId}`,{
+                        method: 'GET',
+                        headers: {
+                            'Content-type': 'application/json',
+                        }
+                    })
+                    let fetchMarketDatajson = await fetchMarketData.json()
+                    return fetchMarketDatajson.data
+                }
                 for(let i = 0;i<eventIds.length;i++){
                     try{
                         // console.log(new Date(),i,eventIds[i],'Add Cricket eventIds and Market iiiiiiiii')
+                        let matchOddMarketArr = []
+                        let bookmakersMarketArr = []
                         let MOBMMarketArr = []
                         let isLiveStatus = false
                         let liveMatchCheckMarket
@@ -133,9 +155,100 @@ client.on('connect', () => {
                                     }
                                 }
                                 if(pushstatus){
+                                    let matchoddmarketdata = await fetchOtherMOMarketData(eventIds[i])
+                                    let bookmakerdata = await fetchBMBook(eventIds[i])
+                                    for(let d = 0;d<matchoddmarketdata.length;d++){
+                                        let matchodddata = await fetchMOBook(matchoddmarketdata[d].marketId)
+                                        for(let e = 0;e<matchodddata.length;e++){
+                                            if(matchodddata[e]){
+                                                let tempObj
+                                                let tempRunner = []
+                                                tempObj = {
+                                                    "marketId": matchodddata[e].marketId,
+                                                    "marketTime": matchodddata[e].lastMatchTime,
+                                                    "marketType": matchoddmarketdata[d].description.marketType,
+                                                    "bettingType": matchoddmarketdata[d].description.bettingType,
+                                                    "marketName": matchoddmarketdata[d].marketName,
+                                                    "provider": "DIAMOND",
+                                                    "status": matchodddata[e].status
+                                                }
+                                                for(let c = 0;c<matchodddata[e].runners.length;c++){
+                                                    let runner
+                                                    runner = matchoddmarketdata[d].runners.find(item => item.selectionId == matchodddata[e].runners[c].selectionId)
+                                                    let tempObjrunner = 
+                                                    {
+                                                        "status": matchodddata[e].runners[c].status,
+                                                        "metadata": runner.metadata,
+                                                        "runnerName": runner.runnerName,
+                                                        "runnerId": matchodddata[e].runners[c].selectionId,
+                                                        "layPrices": matchodddata[e].runners[c].ex.availableToLay,
+                                                        "backPrices": matchodddata[e].runners[c].ex.availableToBack
+                                                    }
+                                                    tempRunner.push(tempObjrunner)
+                                                }
+                                                tempObj.runners = tempRunner
+                                                if(["OPEN","SUSPENDED"].includes(tempObj.status)){
+                                                    matchOddMarketArr.push(tempObj)
+                                                }
+                                            }
+                                        }
+                                    }
+                                    if(bookmakerdata){
+                                        for(let a = 0; a<bookmakerdata.length; a++){
+                                            let tempRunner = []
+                                            let marketName
+                                            let tempObj = {
+                                                "marketId": bookmakerdata[a].bookmaker_id,
+                                                "marketTime": new Date(),
+                                                "bettingType": "BOOKMAKER",
+                                                "marketType": "BOOKMAKER",
+                                                "provider": "DIAMOND",
+                                                "status": bookmakerdata[a].data.status
+                                            }
+                                            if(bookmakerdata[a].data.type == "MATCH_ODDS"){
+                                                marketName = "Bookmaker"
+                                            }else if(bookmakerdata[a].data.type == "MINI_BOOKMAKER"){
+                                                marketName = "Bookmaker 0 Commission"
+                                            }else if(bookmakerdata[a].data.type == "TO_WIN_THE_TOSS"){
+                                                marketName = "To Win The Toss"
+                                            }else{
+                                                marketName = "Other Bookmaker"
+                                            }
+                                            tempObj["marketName"] = marketName
+                        
+                                            let bookmakerrunner = JSON.parse(bookmakerdata[a].data.runners)
+                                            let runnerIds = Object.keys(bookmakerrunner)
+                                            for(let c = 0;c<runnerIds.length;c++){
+                                                let runner = bookmakerrunner[runnerIds[c]]
+                                                let tempObjrunner = 
+                                                {
+                                                    "status": runner.status,
+                                                    "metadata": "",
+                                                    "runnerName": runner.name,
+                                                    "runnerId": runner.selection_id,
+                                                    "layPrices": [{
+                                                        "price":runner.lay_price,
+                                                        "size":runner.lay_volume
+                                                    }],
+                                                    "backPrices": [{
+                                                        "price":runner.back_price,
+                                                        "size":runner.back_volume
+                                                    }]
+                                                }
+                                                tempRunner.push(tempObjrunner)
+                                            }
+                                            tempObj.runners = tempRunner
+                                            if(["OPEN","SUSPENDED"].includes(tempObj.status)){
+                                                bookmakersMarketArr.push(tempObj)
+                                            }
+                                        }
+                                    }
+                                    eventData.markets.matchOdds = matchOddMarketArr
+                                    eventData.markets.bookmakers = bookmakersMarketArr
                                     showEvent.push(eventIds[i])
                                 }
                             }
+
                             await client.set(`${eventIds[i]}_diamondEventData`,JSON.stringify(eventData))
                         }else{
                             showEvent.push(eventIds[i])

@@ -157,6 +157,8 @@ const setThisSportData = async(eventlist,SportName) => {
                         if(["OPEN","SUSPENDED"].includes(tempObj.status)){
                             matchOddsArr.push(tempObj)
                         }
+                        await client.set(`${tempObj.marketId}_diamond`, JSON.stringify(tempObj), 'EX', 24 * 60 * 60);
+
                     }
                 }
                 if(eventlist[k].sportId == 4){
@@ -195,6 +197,8 @@ const setThisSportData = async(eventlist,SportName) => {
                                 if(["OPEN","SUSPENDED"].includes(tempObj.status)){
                                     matchOddsArr.push(tempObj)
                                 }
+                                await client.set(`${tempObj.marketId}_diamond`, JSON.stringify(tempObj), 'EX', 24 * 60 * 60);
+
                             }
                         }
                     }
@@ -236,6 +240,8 @@ const setThisSportData = async(eventlist,SportName) => {
                                 if(["OPEN","SUSPENDED"].includes(tempObj.status)){
                                     matchOddsArr.push(tempObj)
                                 }
+                                await client.set(`${tempObj.marketId}_diamond`, JSON.stringify(tempObj), 'EX', 24 * 60 * 60);
+
                             }
                         }
                     }
@@ -293,6 +299,8 @@ const setThisSportData = async(eventlist,SportName) => {
                         if(["OPEN","SUSPENDED"].includes(tempObj.status)){
                             bookMakerMarketArr.push(tempObj)
                         }
+                        await client.set(`${tempObj.marketId}_diamond`, JSON.stringify(tempObj), 'EX', 24 * 60 * 60);
+
                     }
                 }
                 if(Object.keys(fancyMarketIdArray).length > 0){
@@ -301,7 +309,6 @@ const setThisSportData = async(eventlist,SportName) => {
                         let category = ""
                         let tempObjfancy = fancydata[fancyMarketIdArray[b]]
                         tempObjfancy = JSON.parse(tempObjfancy)
-                        console.log(tempObjfancy,'tempObjfancytempObjfancy')
                         let tempObj = {
                             "marketId": tempObjfancy.id,
                             "marketTime": new Date(),
