@@ -53,9 +53,9 @@ const updateFancyDetailsFunc = async (eventId,fencydata) => {
                                 "yesRate": market.bs1,
                                 "inPlay": market.in_play
                             }
-                            if(market.type_code == 10){
+                            if([4,10,12].includes(market.type_code)){
                                 category = "OVERS"
-                            }else if(market.type_code == 34){
+                            }else if([28,42,20,18,34,22,36].includes(market.type_code)){
                                 category = "BATSMAN"
                             }else if(market.type_code == 2){
                                 category = "SINGLE_OVER"
@@ -106,7 +106,7 @@ const updateFancyDetailsFunc = async (eventId,fencydata) => {
             eventData = JSON.parse(eventData);
             eventData.markets.fancyMarkets = fancyArr;
             if(eventId == "34072195"){
-                console.log(fancyArr,'fancyArrrrrrrrr')
+                // console.log(fancyArr,'fancyArrrrrrrrr')
             }
             await client.set(`${eventId}_diamondEventData`, JSON.stringify(eventData), 'EX', 24 * 60 * 60);
             const api1ResponseTime = Date.now() - startTime;
