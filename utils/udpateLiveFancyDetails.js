@@ -20,7 +20,6 @@ const updateFancyDetailsFunc = async (eventId,fencydata) => {
                     if (market) {
                         let marketData = await client.get(`${key}_diamond`);
                         marketData = marketData ? JSON.parse(marketData) : null;
-                        console.log(marketData,'marketDataaaaaaaaaaaaaaaaaaaa')
                         if (marketData) {
                             marketData.status = market.is_active == 1?"OPEN":"CLOSED";
                             marketData.inPlay = market.in_play;
@@ -104,6 +103,9 @@ const updateFancyDetailsFunc = async (eventId,fencydata) => {
             let eventData = await client.get(`${eventId}_diamondEventData`);
             eventData = JSON.parse(eventData);
             eventData.markets.fancyMarkets = fancyArr;
+            if(eventId == "34072195"){
+                console.log(fancyArr,'fancyArrrrrrrrr')
+            }
             await client.set(`${eventId}_diamondEventData`, JSON.stringify(eventData), 'EX', 24 * 60 * 60);
             const api1ResponseTime = Date.now() - startTime;
         fs.appendFile('../../response_time_log2.txt', `Total Time: ${api1ResponseTime}ms\n`, (err) => {
