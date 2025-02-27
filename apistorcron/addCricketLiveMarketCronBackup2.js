@@ -40,14 +40,13 @@ client.on('connect', () => {
                 function delay(ms) {
                     return new Promise(resolve => setTimeout(resolve, ms));
                 }
-                async function fetchEventDataFunc(marketIds) {
+                async function fetchMOBook(marketIds) {
                     let fetchMarketData = await fetch(` http://13.42.165.216:8443/api/betfair/${marketIds}`,{
                         method: 'GET',
                         headers: {
                             'Content-type': 'application/json',
                         }
                     })
-                    fetchMarketData = await fetchMarketData.json()
                     return fetchMarketData
                 }
                 async function fetchOtherMOMarketData(eventId) {
@@ -100,10 +99,10 @@ client.on('connect', () => {
                                     marketchunks = marketchunks.join(',')
                                     let fetchMarketDatachunk
                                     try{
-                                        fetchMarketDatachunk = await fetchEventDataFunc(marketchunks)
+                                        fetchMarketDatachunk = await fetchMOBook(marketchunks)
                                     }catch(error){
                                         await delay(1000 * 30)
-                                        fetchMarketDatachunk = await fetchEventDataFunc(marketchunks)
+                                        fetchMarketDatachunk = await fetchMOBook(marketchunks)
                                     }
                                     fetchMarketData2 = fetchMarketData2.concat(fetchMarketDatachunk)
                                 }
