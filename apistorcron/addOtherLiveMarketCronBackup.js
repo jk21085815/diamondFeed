@@ -296,7 +296,6 @@ client.on('connect', () => {
                                             await delay(1000 * 10)
                                             fetchMarketData3 = await fetchMOBook(momarketIds)
                                         }
-                                        fetchMarketData3 = await fetchMarketData3.json()
                                         liveMatchCheckMarket = fetchMarketData3.filter(item => (item && ["OPEN","SUSPENDED"].includes(item.status)))
                                     }
                                     if(liveMatchCheckMarket.length > 0){
