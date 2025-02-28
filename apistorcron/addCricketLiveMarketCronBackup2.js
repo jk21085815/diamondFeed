@@ -21,7 +21,7 @@ client.on('connect', () => {
             try{
                 let chunkSize = 30
                 let marketIdsArrMO = [];
-                let marketIdsArrBM = [];
+                // let marketIdsArrBM = [];
                 let liveEventInCricket = [];
                 let newEventAdded = false
                 let newEventIdsArray = []
@@ -247,9 +247,9 @@ client.on('connect', () => {
                                             tempObj.runners = tempRunner
                                             if(["OPEN","SUSPENDED"].includes(tempObj.status)){
                                                 bookmakersMarketArr.push(tempObj)
-                                                if(!marketIdsArrBM.includes(tempObj.marketId)){
-                                                    marketIdsArrBM.push(tempObj.marketId)
-                                                }
+                                                // if(!marketIdsArrBM.includes(tempObj.marketId)){
+                                                //     marketIdsArrBM.push(tempObj.marketId)
+                                                // }
                                             }
                                         }
                                     }
@@ -281,7 +281,7 @@ client.on('connect', () => {
                 await client.set('crone_CricketliveEventIds_diamond_UPD',JSON.stringify(liveEventInCricket));
                 await client.set('crone_getEventIds_Cricket_diamond_UPD',JSON.stringify(showEvent));
                 await client.set('crone_CricketliveMarketIds_MO_diamond_UPD',JSON.stringify(marketIdsArrMO));
-                await client.set('crone_CricketliveMarketIds_BM_diamond_UPD',JSON.stringify(marketIdsArrBM));
+                // await client.set('crone_CricketliveMarketIds_BM_diamond_UPD',JSON.stringify(marketIdsArrBM));
                 addcricketlivemarketcronFunc()
             }catch(error){
                 addcricketlivemarketcronFunc()

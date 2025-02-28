@@ -19,7 +19,7 @@ client.on('connect', () => {
         const addotherlivemarketcronFunc = async() => {
             try{
                 let OtherSportLiveMarketIdsMO = [];
-                let OtherSportLiveMarketIdsBM = [];
+                // let OtherSportLiveMarketIdsBM = [];
                 let OtherSportLiveEventIds = [];
                 let newEventIdsArray = []
                 let showEvent = []
@@ -241,9 +241,9 @@ client.on('connect', () => {
                                                 tempObj.runners = tempRunner
                                                 if(["OPEN","SUSPENDED"].includes(tempObj.status)){
                                                     bookmakersMarketArr.push(tempObj)
-                                                    if(!OtherSportLiveMarketIdsBM.includes(tempObj.marketId)){
-                                                        OtherSportLiveMarketIdsBM.push(tempObj.marketId)
-                                                    }
+                                                    // if(!OtherSportLiveMarketIdsBM.includes(tempObj.marketId)){
+                                                    //     OtherSportLiveMarketIdsBM.push(tempObj.marketId)
+                                                    // }
                                                 }
                                             }
                                         }
@@ -365,7 +365,7 @@ client.on('connect', () => {
                     // setNewLiveEvent(newEventIdsArray)
                 }
                 await client.set('crone_liveMarketIds_MO_diamond_UPD',JSON.stringify(OtherSportLiveMarketIdsMO));
-                await client.set('crone_liveMarketIds_BM_diamond_UPD',JSON.stringify(OtherSportLiveMarketIdsBM));
+                // await client.set('crone_liveMarketIds_BM_diamond_UPD',JSON.stringify(OtherSportLiveMarketIdsBM));
                 await client.set('crone_OtherSportLiveEventIds_diamond_UPD',JSON.stringify(OtherSportLiveEventIds));
                 await client.set('crone_TennisLiveEventIds_diamond_UPD',JSON.stringify(tennisLiveEventIds));
                 await client.set(`crone_getEventIds_OtherSport_diamond_UPD`,JSON.stringify(showEvent))

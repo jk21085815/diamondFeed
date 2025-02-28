@@ -15,25 +15,25 @@ module.exports = () => {
         try{
             let cricketLiveMarkerIds
             let liveMarketIds
-            cricketLiveMarkerIds = await client.get('crone_CricketliveMarketIds_diamond_UPD');
+            cricketLiveMarkerIds = await client.get('crone_CricketliveMarketIds_MO_diamond_UPD');
             if(!cricketLiveMarkerIds){
-                cricketLiveMarkerIds = await client.get('crone_CricketliveMarketIds_diamond'); 
+                cricketLiveMarkerIds = await client.get('crone_CricketliveMarketIds_MO_diamond'); 
             }
             cricketLiveMarkerIds = JSON.parse(cricketLiveMarkerIds)
-            liveMarketIds = await client.get('crone_liveMarketIds_diamond_UPD'); 
+            liveMarketIds = await client.get('crone_liveMarketIds_diamond_MO_UPD'); 
             if(!liveMarketIds){
-                liveMarketIds = await client.get('crone_liveMarketIds_diamond'); 
+                liveMarketIds = await client.get('crone_liveMarketIds_MO_diamond'); 
             }
             liveMarketIds = JSON.parse(liveMarketIds)
             liveMarketIds = liveMarketIds.concat(cricketLiveMarkerIds)
             // console.log(liveMarketIds.find(item => item == "1.237726377"),"1.2377263771.2377263771.2377263771.2377263771.2377263771.2377263771.2377263771.2377263771.2377263771.2377263771.2377263771.2377263771.2377263771.2377263771.237726377")
-            let resultlength = 150
+            let resultlength = 200
             let count = Math.ceil((liveMarketIds.length)/resultlength)
-            await client.set('marketidCounts',JSON.stringify(count))
+            await client.set('marketidCounts_MO',JSON.stringify(count))
             for(let k = 0;k<count;k++){
                 let marketids = liveMarketIds.slice((k*resultlength),(resultlength * (1+k)))
                 marketids = marketids.join(',')
-                await client.set(`marketidkcount${k}`,JSON.stringify(marketids))
+                await client.set(`marketidkcount_MO_${k}`,JSON.stringify(marketids))
             }
             
         }catch(error){
