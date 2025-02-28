@@ -20,7 +20,8 @@ client.on('connect', () => {
             let starttime = new Date();
             try{
                 let chunkSize = 30
-                let marketIdsArr = [];
+                let marketIdsArrMO = [];
+                let marketIdsArrBM = [];
                 let liveEventInCricket = [];
                 let newEventAdded = false
                 let newEventIdsArray = []
@@ -121,7 +122,7 @@ client.on('connect', () => {
                                     }
                                     liveEventInCricket.push(eventIds[i])
                                     isLiveStatus = true
-                                    marketIdsArr = marketIdsArr.concat(MOBMMarketArr)
+                                    // marketIdsArr = marketIdsArr.concat(MOBMMarketArr)
                                 }else{
                                     if(liveMatchCheckMarket.status !== 'CLOSED'){
                                         if(isTest){
@@ -189,8 +190,8 @@ client.on('connect', () => {
                                                 tempObj.runners = tempRunner
                                                 if(["OPEN","SUSPENDED"].includes(tempObj.status)){
                                                     matchOddMarketArr.push(tempObj)
-                                                    if(!marketIdsArr.includes(tempObj.marketId)){
-                                                        marketIdsArr.push(tempObj.marketId)
+                                                    if(!marketIdsArrMO.includes(tempObj.marketId)){
+                                                        marketIdsArrMO.push(tempObj.marketId)
                                                     }
                                                 }
                                             }
@@ -243,6 +244,9 @@ client.on('connect', () => {
                                             tempObj.runners = tempRunner
                                             if(["OPEN","SUSPENDED"].includes(tempObj.status)){
                                                 bookmakersMarketArr.push(tempObj)
+                                                if(!marketIdsArrBM.includes(tempObj.marketId)){
+                                                    marketIdsArrBM.push(tempObj.marketId)
+                                                }
                                             }
                                         }
                                     }
@@ -273,7 +277,8 @@ client.on('connect', () => {
                 // console.log(liveEventInCricket,'liveEventInCricketliveEventInCricket')
                 await client.set('crone_CricketliveEventIds_diamond_UPD',JSON.stringify(liveEventInCricket));
                 await client.set('crone_getEventIds_Cricket_diamond_UPD',JSON.stringify(showEvent));
-                await client.set('crone_CricketliveMarketIds_diamond_UPD',JSON.stringify(marketIdsArr));
+                await client.set('crone_CricketliveMarketIds_MO_diamond_UPD',JSON.stringify(marketIdsArrMO));
+                await client.set('crone_CricketliveMarketIds_BM_diamond_UPD',JSON.stringify(marketIdsArrBM));
                 addcricketlivemarketcronFunc()
             }catch(error){
                 addcricketlivemarketcronFunc()

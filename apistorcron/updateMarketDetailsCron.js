@@ -15,14 +15,14 @@ module.exports = () => {
         try{
             let cricketLiveMarkerIds
             let liveMarketIds
-            cricketLiveMarkerIds = await client.get('crone_CricketliveMarketIds_UPD');
+            cricketLiveMarkerIds = await client.get('crone_CricketliveMarketIds_diamond_UPD');
             if(!cricketLiveMarkerIds){
-                cricketLiveMarkerIds = await client.get('crone_CricketliveMarketIds'); 
+                cricketLiveMarkerIds = await client.get('crone_CricketliveMarketIds_diamond'); 
             }
             cricketLiveMarkerIds = JSON.parse(cricketLiveMarkerIds)
-            liveMarketIds = await client.get('crone_liveMarketIds_UPD'); 
+            liveMarketIds = await client.get('crone_liveMarketIds_diamond_UPD'); 
             if(!liveMarketIds){
-                liveMarketIds = await client.get('crone_liveMarketIds'); 
+                liveMarketIds = await client.get('crone_liveMarketIds_diamond'); 
             }
             liveMarketIds = JSON.parse(liveMarketIds)
             liveMarketIds = liveMarketIds.concat(cricketLiveMarkerIds)
