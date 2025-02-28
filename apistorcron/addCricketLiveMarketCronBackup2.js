@@ -107,10 +107,10 @@ client.on('connect', () => {
                                     }
                                     fetchMarketData2 = fetchMarketData2.concat(fetchMarketDatachunk)
                                 }
-                                let openMarkets = fetchMarketData2.filter(item => ["OPEN","SUSPENDED"].includes(item.status))
-                                for(let i = 0;i<openMarkets.length;i++){
-                                    OnlyMOBMmARKETOpenArr.push(openMarkets[i].marketId)
-                                }
+                                // let openMarkets = fetchMarketData2.filter(item => ["OPEN","SUSPENDED"].includes(item.status))
+                                // for(let i = 0;i<openMarkets.length;i++){
+                                //     OnlyMOBMmARKETOpenArr.push(openMarkets[i].marketId)
+                                // }
                                 liveMatchCheckMarket = fetchMarketData2.find(item => item.status !== "CLOSED")
                             }
                             if(liveMatchCheckMarket){
@@ -189,6 +189,9 @@ client.on('connect', () => {
                                                 tempObj.runners = tempRunner
                                                 if(["OPEN","SUSPENDED"].includes(tempObj.status)){
                                                     matchOddMarketArr.push(tempObj)
+                                                    if(!marketIdsArr.includes(tempObj.marketId)){
+                                                        marketIdsArr.push(tempObj.marketId)
+                                                    }
                                                 }
                                             }
                                         }
@@ -254,11 +257,11 @@ client.on('connect', () => {
                             showEvent.push(eventIds[i])
                             // setNewEventDetails([eventIds[i]])
                         }
-                        for(let i = 0;i<OnlyMOBMmARKETOpenArr.length;i++){
-                            if(!marketIdsArr.includes(OnlyMOBMmARKETOpenArr[i])){
-                                marketIdsArr.push(OnlyMOBMmARKETOpenArr[i])
-                            }
-                        }
+                        // for(let i = 0;i<OnlyMOBMmARKETOpenArr.length;i++){
+                        //     if(!marketIdsArr.includes(OnlyMOBMmARKETOpenArr[i])){
+                        //         marketIdsArr.push(OnlyMOBMmARKETOpenArr[i])
+                        //     }
+                        // }
                     }catch(error){
                         showEvent.push(eventIds[i])
                         console.log("Error:",error)

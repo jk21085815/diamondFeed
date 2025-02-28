@@ -121,10 +121,10 @@ client.on('connect', () => {
                                         fetchMarketData2 = await fetchMOBook(MOMarketId)
                                     }
                                     
-                                    let openMarkets = fetchMarketData2.filter(item => (item && ["OPEN","SUSPENDED"].includes(item.status)))
-                                    for(let i = 0;i<openMarkets.length;i++){
-                                        OnlyMOBMmARKETOpenArr.push(openMarkets[i].marketId)
-                                    }
+                                    // let openMarkets = fetchMarketData2.filter(item => (item && ["OPEN","SUSPENDED"].includes(item.status)))
+                                    // for(let i = 0;i<openMarkets.length;i++){
+                                    //     OnlyMOBMmARKETOpenArr.push(openMarkets[i].marketId)
+                                    // }
                                     liveMatchCheckMarket = fetchMarketData2.find(item => item.status !== "CLOSED")
                                 }
                                 if(!issportHRGH){
@@ -186,6 +186,9 @@ client.on('connect', () => {
                                                     tempObj.runners = tempRunner
                                                     if(["OPEN","SUSPENDED"].includes(tempObj.status)){
                                                         matchOddMarketArr.push(tempObj)
+                                                        if(!OtherSportLiveMarketIds.includes(tempObj.marketId)){
+                                                            OtherSportLiveMarketIds.push(tempObj.marketId)
+                                                        }
                                                     }
                                                 }
                                             }
@@ -237,6 +240,9 @@ client.on('connect', () => {
                                                 tempObj.runners = tempRunner
                                                 if(["OPEN","SUSPENDED"].includes(tempObj.status)){
                                                     bookmakersMarketArr.push(tempObj)
+                                                    if(!OtherSportLiveMarketIds.includes(tempObj.marketId)){
+                                                        OtherSportLiveMarketIds.push(tempObj.marketId)
+                                                    }
                                                 }
                                             }
                                         }
@@ -274,6 +280,9 @@ client.on('connect', () => {
                                                         tempObj.runners = tempRunner
                                                         if(["OPEN","SUSPENDED"].includes(tempObj.status)){
                                                             matchOddMarketArr.push(tempObj)
+                                                            if(!OtherSportLiveMarketIds.includes(tempObj.marketId)){
+                                                                OtherSportLiveMarketIds.push(tempObj.marketId)
+                                                            }
                                                         }
                                                     }
                                                 }
@@ -312,6 +321,9 @@ client.on('connect', () => {
                                                     thisrunner.backPrices = liveMatchCheckMarket[a].runners[c].ex.availableToBack
                                                 }
                                                 matchOddsArr2.push(thismarketdetail)
+                                                if(!OtherSportLiveMarketIds.includes(thismarketdetail.marketId)){
+                                                    OtherSportLiveMarketIds.push(thismarketdetail.marketId)
+                                                }
                                             }
 
                                         }
@@ -319,9 +331,9 @@ client.on('connect', () => {
                                         eventData.status == "IN_PLAY"
                                         await client.set(`${eventIds[i]}_diamondEventData`,JSON.stringify(eventData))
                                         OtherSportLiveEventIds.push(eventIds[i])
-                                        for(let k = 0;k<liveMatchCheckMarket.length;k++){
-                                            OtherSportLiveMarketIds.push(liveMatchCheckMarket[k].marketId)
-                                        }
+                                        // for(let k = 0;k<liveMatchCheckMarket.length;k++){
+                                        //     OtherSportLiveMarketIds.push(liveMatchCheckMarket[k].marketId)
+                                        // }
                                     }else{
                                         eventData.markets.matchOdds = liveMatchCheckMarket
                                         eventData.status == "UPCOMING"
@@ -337,11 +349,11 @@ client.on('connect', () => {
                             showEvent.push(eventIds[i])
                             // setNewEventDetails([eventIds[i]])
                         }
-                        for(let i = 0;i<OnlyMOBMmARKETOpenArr.length;i++){
-                            if(!OtherSportLiveMarketIds.includes(OnlyMOBMmARKETOpenArr[i])){
-                                OtherSportLiveMarketIds.push(OnlyMOBMmARKETOpenArr[i])
-                            }
-                        }
+                        // for(let i = 0;i<OnlyMOBMmARKETOpenArr.length;i++){
+                        //     if(!OtherSportLiveMarketIds.includes(OnlyMOBMmARKETOpenArr[i])){
+                        //         OtherSportLiveMarketIds.push(OnlyMOBMmARKETOpenArr[i])
+                        //     }
+                        // }
                     }catch(error){
                         showEvent.push(eventIds[i])
                         console.log("Error",error)
