@@ -109,6 +109,7 @@ const setThisSportData = async(eventlist,SportName) => {
                 delete eventlist[k]['marketId']
                 for(let d = 0;d<matchodddata.length;d++){
                     if(matchodddata[d]){
+                        console.log(matchodddata[d],"matchodddata[d]matchodddata[d]")
                         let tempObj
                         let thatcatalog
                         let tempRunner = []
