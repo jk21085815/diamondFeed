@@ -150,6 +150,7 @@ client.on('connect', () => {
                             if(OnlyMOBMMarketIdsArr.length !== 0){
                                 let pushstatus = false 
                                 let thatMO = liveMatchCheckMarket
+                                console.log(liveMatchCheckMarket,'liveMatchCheckMarketliveMatchCheckMarket')
                                 if(thatMO){
                                     if(['OPEN','SUSPENDED'].includes(thatMO.status)){
                                         pushstatus = true
