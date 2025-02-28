@@ -87,7 +87,6 @@ client.on('connect', () => {
                         let OnlyMOBMMarketIdsArr = []
                         // let isTest = false
                         eventData = await client.get(`${eventIds[i]}_sharEventData`)
-                        console.log(eventData,'eventDataaaaaaaaa')
                         if(eventData){
                             eventData = JSON.parse(eventData)
                             // if(eventData.competitionName == "Test Matches"){
@@ -163,6 +162,7 @@ client.on('connect', () => {
                                 if(pushstatus || true){
                                     // let matchoddmarketdata = await fetchOtherMOMarketData(eventIds[i])
                                     let bookmakerdata = await fetchBMBook(eventIds[i])
+                                    console.log(bookmakerdata,'bookmakerdataaaaaaaaaaa')
                                     // for(let d = 0;d<matchoddmarketdata.length;d++){
                                     //     let matchodddata = await fetchMOBook(matchoddmarketdata[d].marketId)
                                     //     for(let e = 0;e<matchodddata.length;e++){
