@@ -203,7 +203,7 @@ client.on('connect', () => {
                                     // }
                                     if(bookmakerdata){
                                         for(let a = 0; a<bookmakerdata.length; a++){
-                                            if(bookmakerdata[a]){
+                                            if(Object.keys(bookmakerdata[a].data).length !== 0){
                                                 let tempRunner = []
                                                 let marketName
                                                 let tempObj = {
@@ -225,7 +225,7 @@ client.on('connect', () => {
                                                 }
                                                 tempObj["marketName"] = marketName
                             
-                                                console.log(bookmakerdata[a],bookmakerdata[a].data.runners,"bookmakerrunnerbookmakerrunner")
+                                                // console.log(bookmakerdata[a],bookmakerdata[a].data.runners,"bookmakerrunnerbookmakerrunner")
                                                 let bookmakerrunner = JSON.parse(bookmakerdata[a].data.runners)
                                                 let runnerIds = Object.keys(bookmakerrunner)
                                                 for(let c = 0;c<runnerIds.length;c++){
