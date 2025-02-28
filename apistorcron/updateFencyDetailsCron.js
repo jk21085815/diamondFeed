@@ -20,7 +20,7 @@ module.exports = () => {
                     let cricketEventIdsAll = await client.get('crone_getEventIds_Cricket_diamond'); 
                     cricketEventIdsAll = JSON.parse(cricketEventIdsAll)
                     let cricketEventIds = cricketEventIdsAll.filter(item => !cricketEventIdsLive.includes(item))
-                    console.log(cricketEventIds.length,'cricketEvent Idsssssss')
+                    // console.log(cricketEventIds.length,'cricketEvent Idsssssss')
                     function delay(ms) {
                         return new Promise(resolve => setTimeout(resolve, ms));
                     }
