@@ -34,13 +34,8 @@ const updateLiveMarketDetails = async(marketIds) => {
                     }
                 }
                 await client.set(`${fetchMarketDatajson[i].marketId}_diamond`,JSON.stringify(marketdata),'EX',24 * 60 * 60)
-                if(marketdata.bettingType == "ODDS"){
-                    await client.set(`/topic/diamond_match_odds_update/${fetchMarketDatajson[i].marketId}`,JSON.stringify(marketdata));
-                    Publishclient.publish(`/topic/diamond_match_odds_update/${fetchMarketDatajson[i].marketId}`,JSON.stringify(marketdata));
-                }else if(marketdata.bettingType == "BOOKMAKER"){
-                    await client.set(`/topic/diamond_bm_update/${fetchMarketDatajson[i].marketId}`,JSON.stringify(marketdata));
-                    Publishclient.publish(`/topic/diamond_bm_update/${fetchMarketDatajson[i].marketId}`,JSON.stringify(marketdata));
-                }
+                await client.set(`/topic/diamond_match_odds_update/${fetchMarketDatajson[i].marketId}`,JSON.stringify(marketdata));
+                Publishclient.publish(`/topic/diamond_match_odds_update/${fetchMarketDatajson[i].marketId}`,JSON.stringify(marketdata));
             }
         }
     }catch(error){

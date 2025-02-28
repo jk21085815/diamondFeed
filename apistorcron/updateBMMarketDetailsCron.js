@@ -1,4 +1,5 @@
 const cron = require('node-cron');
+const updateBMMarketDetails = require('../utils/updateBMLiveMarketDetails')
 const redis = require('redis');
 const client = redis.createClient({url:process.env.redisurl});
 client.connect()
@@ -11,34 +12,43 @@ client.on('connect', () => {
 
 
 module.exports = () => {
-    cron.schedule('*/5 * * * * *', async() => {
+    cron.schedule('*/0.5 * * * * *', async() => {
         try{
-            let cricketLiveMarkerIds
-            let liveMarketIds
-            cricketLiveMarkerIds = await client.get('crone_CricketliveMarketIds_BM_diamond_UPD');
-            if(!cricketLiveMarkerIds){
-                cricketLiveMarkerIds = await client.get('crone_CricketliveMarketIds_BM_diamond'); 
+            let cricketEventIdsLive
+            cricketEventIdsLive = await client.get('crone_CricketliveEventIds_diamond_UPD'); 
+            cricketEventIdsLive = JSON.parse(cricketEventIdsLive)
+            otherEventIdsLive = await client.get('crone_OtherSportLiveEventIds_diamond_UPD'); 
+            otherEventIdsLive = JSON.parse(otherEventIdsLive)
+            let eventIds = cricketEventIdsLive.concat(otherEventIdsLive)
+            // console.log(eventIds.length,'eventIds Idsssssss')
+            function delay(ms) {
+                return new Promise(resolve => setTimeout(resolve, ms));
             }
-            cricketLiveMarkerIds = JSON.parse(cricketLiveMarkerIds)
-            liveMarketIds = await client.get('crone_liveMarketIds_diamond_BM_UPD'); 
-            if(!liveMarketIds){
-                liveMarketIds = await client.get('crone_liveMarketIds_BM_diamond'); 
+            async function fetchBMBook(eventId) {
+                let fetchMarketData = await fetch(`https://odds.datafeed365.com/api/active-bm/${eventId}`,{
+                    method: 'GET',
+                    headers: {
+                        'Content-type': 'application/json',
+                    }
+                })
+                let fetchMarketDatajson = await fetchMarketData.json()
+                return fetchMarketDatajson.data
             }
-            liveMarketIds = JSON.parse(liveMarketIds)
-            liveMarketIds = liveMarketIds.concat(cricketLiveMarkerIds)
-            // console.log(liveMarketIds.find(item => item == "1.237726377"),"1.2377263771.2377263771.2377263771.2377263771.2377263771.2377263771.2377263771.2377263771.2377263771.2377263771.2377263771.2377263771.2377263771.2377263771.237726377")
-            let resultlength = 200
-            let count = Math.ceil((liveMarketIds.length)/resultlength)
-            await client.set('marketidCounts_MO',JSON.stringify(count))
-            for(let k = 0;k<count;k++){
-                let marketids = liveMarketIds.slice((k*resultlength),(resultlength * (1+k)))
-                marketids = marketids.join(',')
-                await client.set(`marketidkcount_MO${k}`,JSON.stringify(marketids))
+            if(eventIds){
+                for(let i = 0;i<eventIds.length;i++){
+                    let fetchMarketData
+                    try{
+                        fetchMarketData = await fetchBMBook(eventIds[i])
+                        await delay(1000);
+                    }catch(error){
+                        await delay(1000 * 10)
+                        fetchMarketData = await fetchBMBook(eventIds[i])
+                    }
+                    updateBMMarketDetails(fetchMarketData)
+                }
             }
-            
         }catch(error){
-            console.log(error,'Errorrr udpaetMarketDetailsCrone')
+            console.log(error,'Errorrr updateFenctDetailsCrone')
         }
     })
 }
-

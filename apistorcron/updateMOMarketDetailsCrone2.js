@@ -1,5 +1,5 @@
 const cron = require('node-cron');
-const updateMarketDetails = require('../utils/updateLiveMarketDetails')
+const updateMOMarketDetails = require('../utils/updateMOLiveMarketDetails')
 const redis = require('redis');
 const client = redis.createClient({url:process.env.redisurl});
 client.connect()
@@ -17,7 +17,7 @@ const updateSetinterval = async() => {
         for(let k = 0;k<count;k++){
             let marketIds = await client.get(`marketidkcount_MO_${k}`)
             marketIds = JSON.parse(marketIds)
-            updateMarketDetails(marketIds)
+            updateMOMarketDetails(marketIds)
         }
     },505)
 }
