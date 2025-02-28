@@ -87,6 +87,7 @@ client.on('connect', () => {
                         let OnlyMOBMMarketIdsArr = []
                         // let isTest = false
                         eventData = await client.get(`${eventIds[i]}_sharEventData`)
+                        console.log(eventData,'eventDataaaaaaaaa')
                         if(eventData){
                             eventData = JSON.parse(eventData)
                             // if(eventData.competitionName == "Test Matches"){
