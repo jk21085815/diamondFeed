@@ -372,6 +372,7 @@ const setThisSportData = async(eventlist,SportName) => {
                 let MOBMMarketDetailsArr = matchOddsArr2.concat(bookMakerMarketArr2)
                 let OnlyMOBMMarketIds = MOBMMarketDetailsArr.filter(item => ((item.bettingType == "BOOKMAKER" || item.marketType == "MATCH_ODDS" || item.marketType == "COMPLETED_MATCH" || item.marketType == "TIED_MATCH" || item.marketType == "WINNING_ODDS" || item.marketType == "TOURNAMENT_WINNER"  || item.marketName.trim().toLowerCase().startsWith('over/under') && ["OPEN","SUSPENDED"].includes(item.status))))
                 let OnlyMOMarketId = MOBMMarketDetailsArr.filter(item => (item.marketType == "MATCH_ODDS"))
+                console.log(OnlyMOMarketId,"OnlyMOMarketIdOnlyMOMarketId")
                 for(let j = 0;j<MOBMMarketDetailsArr.length;j++){
                     MOBMMarketArr.push(MOBMMarketDetailsArr[j].marketId)
                 }
