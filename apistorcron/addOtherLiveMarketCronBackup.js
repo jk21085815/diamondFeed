@@ -298,8 +298,11 @@ client.on('connect', () => {
                             
                                             // }
                                             // eventData.markets.matchOdds = matchOddMarketArr
-                                            eventData.markets.bookmakers = bookmakersMarketArr
-                                            showEvent.push(eventIds[i])
+                                        }
+                                        eventData.markets.bookmakers = bookmakersMarketArr
+                                        showEvent.push(eventIds[i])
+                                        if(eventData.status == "IN_PLAY"){
+                                            OtherSportLiveMarketIdsMO.push(eventIds[i])
                                         }
                                                     
                                     }
