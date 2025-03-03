@@ -23,19 +23,21 @@ const updateLiveMarketDetails = async(marketIds) => {
         for(let i = 0;i<fetchMarketDatajson.length;i++){
             if(["OPEN","SUSPENDED"].includes(fetchMarketDatajson[i].status.trim())){
                 let marketdata = await client.get(`${fetchMarketDatajson[i].marketId}_diamond`)
-                marketdata = JSON.parse(marketdata)
-                marketdata.status = fetchMarketDatajson[i].status
-                for(let j = 0;j<fetchMarketDatajson[i].runners.length;j++){
-                    runner = marketdata.runners.find(item => (item && item.runnerId && item.runnerId == fetchMarketDatajson[i].runners[j].selectionId))
-                    if(runner){
-                        runner.layPrices = fetchMarketDatajson[i].runners[j].ex.availableToLay
-                        runner.backPrices = fetchMarketDatajson[i].runners[j].ex.availableToBack
-                        runner.status = fetchMarketDatajson[i].runners[j].status
+                if(marketdata){
+                    marketdata = JSON.parse(marketdata)
+                    marketdata.status = fetchMarketDatajson[i].status
+                    for(let j = 0;j<fetchMarketDatajson[i].runners.length;j++){
+                        runner = marketdata.runners.find(item => (item && item.runnerId && item.runnerId == fetchMarketDatajson[i].runners[j].selectionId))
+                        if(runner){
+                            runner.layPrices = fetchMarketDatajson[i].runners[j].ex.availableToLay
+                            runner.backPrices = fetchMarketDatajson[i].runners[j].ex.availableToBack
+                            runner.status = fetchMarketDatajson[i].runners[j].status
+                        }
                     }
+                    await client.set(`${fetchMarketDatajson[i].marketId}_diamond`,JSON.stringify(marketdata),'EX',24 * 60 * 60)
+                    await client.set(`/topic/diamond_match_odds_update/${fetchMarketDatajson[i].marketId}`,JSON.stringify(marketdata));
+                    Publishclient.publish(`/topic/diamond_match_odds_update/${fetchMarketDatajson[i].marketId}`,JSON.stringify(marketdata));
                 }
-                await client.set(`${fetchMarketDatajson[i].marketId}_diamond`,JSON.stringify(marketdata),'EX',24 * 60 * 60)
-                await client.set(`/topic/diamond_match_odds_update/${fetchMarketDatajson[i].marketId}`,JSON.stringify(marketdata));
-                Publishclient.publish(`/topic/diamond_match_odds_update/${fetchMarketDatajson[i].marketId}`,JSON.stringify(marketdata));
             }
         }
     }catch(error){
