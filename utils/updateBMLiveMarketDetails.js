@@ -15,7 +15,6 @@ const updateLiveMarketDetails = async(bookmakerdata) => {
             let marketdata = await client.get(`${bookmakerdata[a].bookmaker_id}_diamond`)
             if(marketdata){
                 marketdata = JSON.parse(marketdata)
-                console.log(marketdata,'marketdataaaaaaaaaaaaa')
                 marketdata.status = bookmakerdata[a].data.status
                 let bookmakerrunner = JSON.parse(bookmakerdata[a].data.runners)
                 let runnerIds = Object.keys(bookmakerrunner)
@@ -24,8 +23,8 @@ const updateLiveMarketDetails = async(bookmakerdata) => {
                     let thisrunner = marketdata.runners.find(item => item.runnerId == runner.selection_id)
                     thisrunner.layPrices[0].price = runner.lay_price
                     thisrunner.layPrices[0].size = runner.lay_volume
-                    thisrunner.lay_volume[0].price = runner.back_price
-                    thisrunner.lay_volume[0].size = runner.back_volume
+                    thisrunner.backPrices[0].price = runner.back_price
+                    thisrunner.backPrices[0].size = runner.back_volume
                 }
                 await client.set(`${marketdata.marketId}_diamond`, JSON.stringify(marketdata), 'EX', 24 * 60 * 60);
                 await client.set(`/topic/diamond_bm_update/${marketdata.marketId}`,JSON.stringify(marketdata));
