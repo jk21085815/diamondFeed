@@ -15,6 +15,7 @@ const updateLiveMarketDetails = async(bookmakerdata) => {
             let marketdata = await client.get(`${bookmakerdata[a].bookmaker_id}_diamond`)
             if(marketdata){
                 marketdata = JSON.parse(marketdata)
+                console.log(marketdata,'marketdataaaaaaaaaaaaa')
                 marketdata.status = bookmakerdata[a].data.status
                 let bookmakerrunner = JSON.parse(bookmakerdata[a].data.runners)
                 let runnerIds = Object.keys(bookmakerrunner)
