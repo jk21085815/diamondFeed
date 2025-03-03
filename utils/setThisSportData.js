@@ -252,6 +252,7 @@ const setThisSportData = async(eventlist,SportName) => {
                 if(["7","4339"].includes(eventlist[k].sportId)){
                     delete eventlist[k]['catalogues']
                 }
+                console.log('hereeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee')
                 if(bookmakerdata){
                     for(let a = 0; a<bookmakerdata.length; a++){
                         let tempRunner = []
