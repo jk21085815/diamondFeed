@@ -261,9 +261,9 @@ client.on('connect', () => {
                                     // eventData.markets.matchOdds = matchOddMarketArr
                                     eventData.markets.bookmakers = bookmakersMarketArr
                                     showEvent.push(eventIds[i])
-                                    // if(eventData.status == "IN_PLAY"){
-                                    // }
-                                    liveEventInCricket.push(eventIds[i])
+                                    if(eventData.status == "IN_PLAY"){
+                                        liveEventInCricket.push(eventIds[i])
+                                    }
                                 }
                             // }
 
