@@ -44,6 +44,7 @@ module.exports = () => {
                         await delay(1000 * 10)
                         fetchMarketData = await fetchBMBook(eventIds[i])
                     }
+                    console.log(fetchMarketData,"fetchMarketDatafetchMarketData")
                     updateBMMarketDetails(fetchMarketData)
                 }
             }
