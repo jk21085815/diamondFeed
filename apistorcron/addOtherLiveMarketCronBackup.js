@@ -246,6 +246,8 @@ client.on('connect', () => {
                                                     tempObj.runners = tempRunner
                                                     if(["OPEN","SUSPENDED"].includes(tempObj.status)){
                                                         bookmakersMarketArr.push(tempObj)
+                                                        await client.set(`${tempObj.marketId}_diamond`, JSON.stringify(tempObj), 'EX', 24 * 60 * 60);
+
                                                         // if(!OtherSportLiveMarketIdsBM.includes(tempObj.marketId)){
                                                         //     OtherSportLiveMarketIdsBM.push(tempObj.marketId)
                                                         // }
