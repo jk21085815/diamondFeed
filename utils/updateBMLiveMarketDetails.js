@@ -13,7 +13,7 @@ const updateLiveMarketDetails = async(bookmakerdata) => {
     try{
         for(let a = 0; a<bookmakerdata.length; a++){
             let marketdata = await client.get(`${bookmakerdata[a].bookmaker_id}_diamond`)
-            if(bookmakerdata[a].bookmaker_id){
+            if(bookmakerdata[a].bookmaker_id == "105449"){
                 console.log(marketdata,'marketdataaaaaaaaaaaaaaa')
             }
             if(marketdata){
