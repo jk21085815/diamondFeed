@@ -201,6 +201,7 @@ client.on('connect', () => {
                                     //         }
                                     //     }
                                     // }
+                                    console.log(bookmakerdata,'bookmakerdataaaaaaaaaaaaa')
                                     if(bookmakerdata){
                                         for(let a = 0; a<bookmakerdata.length; a++){
                                             if(Object.keys(bookmakerdata[a].data).length !== 0){
@@ -250,6 +251,7 @@ client.on('connect', () => {
                                                 tempObj.runners = tempRunner
                                                 if(["OPEN","SUSPENDED"].includes(tempObj.status)){
                                                     bookmakersMarketArr.push(tempObj)
+                                                    console.log(tempObj,"tempObjtempObjtempObjtempObjtempObj")
                                                     await client.set(`${tempObj.marketId}_diamond`, JSON.stringify(tempObj), 'EX', 24 * 60 * 60);
                                                     // if(!marketIdsArrBM.includes(tempObj.marketId)){
                                                     //     marketIdsArrBM.push(tempObj.marketId)
