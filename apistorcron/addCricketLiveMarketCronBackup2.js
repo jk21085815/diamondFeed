@@ -201,9 +201,6 @@ client.on('connect', () => {
                                     //         }
                                     //     }
                                     // }
-                                    if(eventIds[i] == "34077672"){
-                                        console.log(bookmakerdata,'bookmakersdtaaaaaaaaaaaaaa')
-                                    }
                                     if(bookmakerdata){
                                         for(let a = 0; a<bookmakerdata.length; a++){
                                             if(Object.keys(bookmakerdata[a].data).length !== 0){
@@ -264,9 +261,9 @@ client.on('connect', () => {
                                     // eventData.markets.matchOdds = matchOddMarketArr
                                     eventData.markets.bookmakers = bookmakersMarketArr
                                     showEvent.push(eventIds[i])
-                                    if(eventData.status == "IN_PLAY"){
-                                        liveEventInCricket.push(eventIds[i])
-                                    }
+                                    // if(eventData.status == "IN_PLAY"){
+                                    // }
+                                    liveEventInCricket.push(eventIds[i])
                                 }
                             // }
 
