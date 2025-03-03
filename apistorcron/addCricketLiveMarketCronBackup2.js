@@ -201,6 +201,9 @@ client.on('connect', () => {
                                     //         }
                                     //     }
                                     // }
+                                    if(eventIds[i] == "34077672"){
+                                        console.log(bookmakerdata,'bookmakersdtaaaaaaaaaaaaaa')
+                                    }
                                     if(bookmakerdata){
                                         for(let a = 0; a<bookmakerdata.length; a++){
                                             if(Object.keys(bookmakerdata[a].data).length !== 0){
