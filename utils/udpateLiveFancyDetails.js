@@ -31,22 +31,27 @@ const updateFancyDetailsFunc = async (eventId,fencydata) => {
                                 let runner1 = marketData.runners[0]
                                 let runner2 = marketData.runners[1]
                                 let runner3 = marketData.runners[2]
-                                console.log(runner1,runner2,runner3,'runnerrrrrrrrrrrrrr')
-                                runner1.status = market.status1
-                                runner1.layPrices[0].price = market.l1
-                                runner1.layPrices[0].line = market.ls1
-                                runner1.backPrices[0].price = market.b1
-                                runner1.backPrices[0].line = market.bs1
-                                runner2.status = market.status2
-                                runner2.layPrices[0].price = market.l2
-                                runner2.layPrices[0].line = market.ls2
-                                runner2.backPrices[0].price = market.b2
-                                runner2.backPrices[0].line = market.bs2
-                                runner3.status = market.status3
-                                runner3.layPrices[0].price = market.l3
-                                runner3.layPrices[0].line = market.ls3
-                                runner3.backPrices[0].price = market.b3
-                                runner3.backPrices[0].line = market.bs3
+                                if(runner1){
+                                    runner1.status = market.status1
+                                    runner1.layPrices[0].price = market.l1
+                                    runner1.layPrices[0].line = market.ls1
+                                    runner1.backPrices[0].price = market.b1
+                                    runner1.backPrices[0].line = market.bs1
+                                }
+                                if(runner2){
+                                    runner2.status = market.status2
+                                    runner2.layPrices[0].price = market.l2
+                                    runner2.layPrices[0].line = market.ls2
+                                    runner2.backPrices[0].price = market.b2
+                                    runner2.backPrices[0].line = market.bs2
+                                }
+                                if(runner3){
+                                    runner3.status = market.status3
+                                    runner3.layPrices[0].price = market.l3
+                                    runner3.layPrices[0].line = market.ls3
+                                    runner3.backPrices[0].price = market.b3
+                                    runner3.backPrices[0].line = market.bs3
+                                }
                                 await client.set(`${marketData.marketId}_diamond`, JSON.stringify(marketData), 'EX', 24 * 60 * 60);
                                 fancyArr.push(marketData)
     
