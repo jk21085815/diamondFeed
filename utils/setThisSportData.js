@@ -352,12 +352,12 @@ const setThisSportData = async(eventlist,SportName) => {
                             category = "OTHER"
                         }
                         tempObj.category = category
-                        let tempObjrunner = 
+                        let tempObjrunner1 = 
                         {
                             "status": tempObjfancy.status1,
                             "metadata": "",
                             "runnerName": tempObjfancy.name,
-                            "runnerId": tempObjfancy.id,
+                            "runnerId": tempObjfancy.id + '1',
                             "layPrices": [{
                                 "price":tempObjfancy.l1,
                                 "line":tempObjfancy.ls1
@@ -367,7 +367,39 @@ const setThisSportData = async(eventlist,SportName) => {
                                 "line":tempObjfancy.bs1
                             }]
                         }
-                        tempRunner.push(tempObjrunner)
+                        let tempObjrunner2 = 
+                        {
+                            "status": tempObjfancy.status2,
+                            "metadata": "",
+                            "runnerName": tempObjfancy.name,
+                            "runnerId": tempObjfancy.id + '2',
+                            "layPrices": [{
+                                "price":tempObjfancy.l2,
+                                "line":tempObjfancy.ls2
+                            }],
+                            "backPrices": [{
+                                "price":tempObjfancy.b2,
+                                "line":tempObjfancy.bs2
+                            }]
+                        }
+                        let tempObjrunner3 = 
+                        {
+                            "status": tempObjfancy.status3,
+                            "metadata": "",
+                            "runnerName": tempObjfancy.name,
+                            "runnerId": tempObjfancy.id + '3',
+                            "layPrices": [{
+                                "price":tempObjfancy.l3,
+                                "line":tempObjfancy.ls3
+                            }],
+                            "backPrices": [{
+                                "price":tempObjfancy.b3,
+                                "line":tempObjfancy.bs3
+                            }]
+                        }
+                        tempRunner.push(tempObjrunner1)
+                        tempRunner.push(tempObjrunner2)
+                        tempRunner.push(tempObjrunner3)
                         tempObj.runners = tempRunner
                         fanctMarketArr.push(tempObj)
     
