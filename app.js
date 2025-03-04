@@ -44,8 +44,8 @@ app.use(express.urlencoded({ extended: true, limit: '50mb' }));
 app.use(cookieParser());
 
 seteventList()
-// updateMOLiveMarketDetails() 
-// updateMOLiveMarketDetails2()
+updateMOLiveMarketDetails() 
+updateMOLiveMarketDetails2()
 updateBMLiveMarketDetails()
 addLiveMarketCron()
 addOtherSportLiveMarketCron()

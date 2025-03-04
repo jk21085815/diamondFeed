@@ -25,7 +25,6 @@ const setThisSportData = async(eventlist,SportName) => {
                     }
                 })
                 let fetchMarketDatajson = await fetchMarketData.json()
-                console.log(fetchMarketDatajson,"fetchMarketDatajsonfetchMarketDatajson")
                 return fetchMarketDatajson
             }
             async function fetchOtherMOMarketData(eventId) {
@@ -110,7 +109,6 @@ const setThisSportData = async(eventlist,SportName) => {
                 delete eventlist[k]['marketId']
                 for(let d = 0;d<matchodddata.length;d++){
                     if(matchodddata[d]){
-                        console.log(matchodddata[d],"matchodddata[d]matchodddata[d]")
                         let tempObj
                         let thatcatalog
                         let tempRunner = []
@@ -417,7 +415,7 @@ const setThisSportData = async(eventlist,SportName) => {
                 let MOBMMarketArr = [];
                 let OnlyMOMarketIdArr = []
                 let MOBMMarketDetailsArr = matchOddsArr2.concat(bookMakerMarketArr2)
-                let OnlyMOBMMarketIds = MOBMMarketDetailsArr.filter(item => ((item.bettingType == "BOOKMAKER" || item.marketType == "MATCH_ODDS" || item.marketType == "COMPLETED_MATCH" || item.marketType == "TIED_MATCH" || item.marketType == "WINNING_ODDS" || item.marketType == "TOURNAMENT_WINNER"  || item.marketName.trim().toLowerCase().startsWith('over/under') && ["OPEN","SUSPENDED"].includes(item.status))))
+                let OnlyMOBMMarketIds = MOBMMarketDetailsArr.filter(item => ((item.bettingType == "BOOKMAKER" || item.marketType == "MATCH_ODDS" || item.marketType == "COMPLETED_MATCH" || item.marketType == "TIED_MATCH" || item.marketType == "WINNING_ODDS" || item.marketType == "WIN" || item.marketType == "TOURNAMENT_WINNER"  || item.marketName.trim().toLowerCase().startsWith('over/under') && ["OPEN","SUSPENDED","BALL_RUNNING"].includes(item.status))))
                 let OnlyMOMarketId = MOBMMarketDetailsArr.filter(item => (item.marketType == "MATCH_ODDS"))
                 console.log(OnlyMOMarketId,"OnlyMOMarketIdOnlyMOMarketId")
                 for(let j = 0;j<MOBMMarketDetailsArr.length;j++){
