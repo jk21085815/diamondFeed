@@ -20,7 +20,7 @@ const updateFancyDetailsFunc = async (eventId,fencydata) => {
                     if (market) {
                         let marketData = await client.get(`${key}_diamond`);
                         marketData = marketData ? JSON.parse(marketData) : null;
-                        if (marketData) {
+                        if (marketData && false) {
                             marketData.status = market.status1;
                             marketData.inPlay = market.in_play;
                             marketData.noValue = market.l1;
@@ -84,7 +84,7 @@ const updateFancyDetailsFunc = async (eventId,fencydata) => {
                                 "status": market.status1,
                                 "metadata": "",
                                 "runnerName": market.name,
-                                "runnerId": market.id,
+                                "runnerId": market.id + "1",
                                 "layPrices": [{
                                     "price":market.l1,
                                     "line":market.ls1
@@ -99,7 +99,7 @@ const updateFancyDetailsFunc = async (eventId,fencydata) => {
                                 "status": market.status2,
                                 "metadata": "",
                                 "runnerName": market.name,
-                                "runnerId": market.id + "1",
+                                "runnerId": market.id + "2",
                                 "layPrices": [{
                                     "price":market.l2,
                                     "line":market.ls2
