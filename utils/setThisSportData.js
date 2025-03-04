@@ -156,7 +156,7 @@ const setThisSportData = async(eventlist,SportName) => {
                         }
                         tempObj.runners = tempRunner
                         matchOddsArr2.push(tempObj)
-                        if(["OPEN","SUSPENDED"].includes(tempObj.status)){
+                        if(["OPEN","SUSPENDED","BALL_RUNNING"].includes(tempObj.status)){
                             matchOddsArr.push(tempObj)
                         }
                         await client.set(`${tempObj.marketId}_diamond`, JSON.stringify(tempObj), 'EX', 24 * 60 * 60);
@@ -196,7 +196,7 @@ const setThisSportData = async(eventlist,SportName) => {
                                 }
                                 tempObj.runners = tempRunner
                                 matchOddsArr2.push(tempObj)
-                                if(["OPEN","SUSPENDED"].includes(tempObj.status)){
+                                if(["OPEN","SUSPENDED","BALL_RUNNING"].includes(tempObj.status)){
                                     matchOddsArr.push(tempObj)
                                 }
                                 await client.set(`${tempObj.marketId}_diamond`, JSON.stringify(tempObj), 'EX', 24 * 60 * 60);
@@ -239,7 +239,7 @@ const setThisSportData = async(eventlist,SportName) => {
                                 }
                                 tempObj.runners = tempRunner
                                 matchOddsArr2.push(tempObj)
-                                if(["OPEN","SUSPENDED"].includes(tempObj.status)){
+                                if(["OPEN","SUSPENDED","BALL_RUNNING"].includes(tempObj.status)){
                                     matchOddsArr.push(tempObj)
                                 }
                                 await client.set(`${tempObj.marketId}_diamond`, JSON.stringify(tempObj), 'EX', 24 * 60 * 60);
@@ -298,7 +298,7 @@ const setThisSportData = async(eventlist,SportName) => {
                         }
                         tempObj.runners = tempRunner
                         bookMakerMarketArr2.push(tempObj)
-                        if(["OPEN","SUSPENDED"].includes(tempObj.status)){
+                        if(["OPEN","SUSPENDED","BALL_RUNNING"].includes(tempObj.status)){
                             bookMakerMarketArr.push(tempObj)
                         }
                         await client.set(`${tempObj.marketId}_diamond`, JSON.stringify(tempObj), 'EX', 24 * 60 * 60);

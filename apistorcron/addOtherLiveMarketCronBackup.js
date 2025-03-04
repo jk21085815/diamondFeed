@@ -189,7 +189,7 @@ client.on('connect', () => {
                                         //                 tempRunner.push(tempObjrunner)
                                         //             }
                                         //             tempObj.runners = tempRunner
-                                        //             if(["OPEN","SUSPENDED"].includes(tempObj.status)){
+                                        //             if(["OPEN","SUSPENDED","BALL_RUNNING"].includes(tempObj.status)){
                                         //                 matchOddMarketArr.push(tempObj)
                                         //                 if(!OtherSportLiveMarketIdsMO.includes(tempObj.marketId)){
                                         //                     OtherSportLiveMarketIdsMO.push(tempObj.marketId)
@@ -244,7 +244,7 @@ client.on('connect', () => {
                                                         tempRunner.push(tempObjrunner)
                                                     }
                                                     tempObj.runners = tempRunner
-                                                    if(["OPEN","SUSPENDED"].includes(tempObj.status)){
+                                                    if(["OPEN","SUSPENDED","BALL_RUNNING"].includes(tempObj.status)){
                                                         bookmakersMarketArr.push(tempObj)
                                                         await client.set(`${tempObj.marketId}_diamond`, JSON.stringify(tempObj), 'EX', 24 * 60 * 60);
 
@@ -286,7 +286,7 @@ client.on('connect', () => {
                                             //                     tempRunner.push(tempObjrunner)
                                             //                 }
                                             //                 tempObj.runners = tempRunner
-                                            //                 if(["OPEN","SUSPENDED"].includes(tempObj.status)){
+                                            //                 if(["OPEN","SUSPENDED","BALL_RUNNING"].includes(tempObj.status)){
                                             //                     matchOddMarketArr.push(tempObj)
                                             //                     if(!OtherSportLiveMarketIdsMO.includes(tempObj.marketId)){
                                             //                         OtherSportLiveMarketIdsMO.push(tempObj.marketId)
