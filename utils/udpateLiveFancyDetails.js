@@ -31,6 +31,7 @@ const updateFancyDetailsFunc = async (eventId,fencydata) => {
                                 let runner1 = marketData.runners[0]
                                 let runner2 = marketData.runners[1]
                                 let runner3 = marketData.runners[2]
+                                console.log(runner1,runner2,runner3,'runnerrrrrrrrrrrrrr')
                                 runner1.status = market.status1
                                 runner1.layPrices[0].price = market.l1
                                 runner1.layPrices[0].line = market.ls1
