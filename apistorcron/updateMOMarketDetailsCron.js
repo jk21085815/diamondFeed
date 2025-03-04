@@ -20,7 +20,7 @@ module.exports = () => {
                 cricketLiveMarkerIds = await client.get('crone_CricketliveMarketIds_MO_diamond'); 
             }
             cricketLiveMarkerIds = JSON.parse(cricketLiveMarkerIds)
-            liveMarketIds = await client.get('crone_liveMarketIds_diamond_MO_UPD'); 
+            liveMarketIds = await client.get('crone_liveMarketIds_MO_diamond_UPD'); 
             if(!liveMarketIds){
                 liveMarketIds = await client.get('crone_liveMarketIds_MO_diamond'); 
             }
