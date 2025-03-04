@@ -318,7 +318,7 @@ const setThisSportData = async(eventlist,SportName) => {
                             "marketName": tempObjfancy.name,
                             "bettingType": "LINE",
                             "marketType": "FANCY",
-                            "status": tempObjfancy.is_active == 1?"OPEN":"CLOSED",
+                            "status": tempObjfancy.status1,
                             "noValue": tempObjfancy.l1,
                             "noRate": tempObjfancy.ls1,
                             "yesValue": tempObjfancy.b1,
