@@ -24,7 +24,7 @@ const updateLiveMarketDetails = async(marketIds) => {
             if(["OPEN","SUSPENDED","BALL_RUNNING"].includes(fetchMarketDatajson[i].status.trim())){
                 let marketdata = await client.get(`${fetchMarketDatajson[i].marketId}_diamond`)
                 if(fetchMarketDatajson[i].marketId == "1.240213061"){
-                    console.log(marketdata,'marketdataaaaaaaaaaa')
+                    // console.log(marketdata,'marketdataaaaaaaaaaa')
                 }
                 if(marketdata){
                     try{
@@ -36,6 +36,7 @@ const updateLiveMarketDetails = async(marketIds) => {
                                 runner.layPrices = fetchMarketDatajson[i].runners[j].ex.availableToLay
                                 runner.backPrices = fetchMarketDatajson[i].runners[j].ex.availableToBack
                                 runner.status = fetchMarketDatajson[i].runners[j].status
+                                console.log(runner,'runnerrrrrrrrrrrrrrr')
                             }
                         }
                         await client.set(`${fetchMarketDatajson[i].marketId}_diamond`,JSON.stringify(marketdata),'EX',24 * 60 * 60)
