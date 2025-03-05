@@ -150,6 +150,7 @@ client.on('connect', () => {
                                 eventData.status = eventStatus
                                 let pushstatus = false 
                                 let thatMO = liveMatchCheckMarket
+                                console.log(thatMO,'thatMOoooooooooooooooo')
                                 if(thatMO){
                                     if(['OPEN','SUSPENDED','BALL_RUNNING'].includes(thatMO.status)){
                                         pushstatus = true
