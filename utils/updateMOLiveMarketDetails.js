@@ -36,7 +36,7 @@ const updateLiveMarketDetails = async(marketIds) => {
                                 runner.layPrices = fetchMarketDatajson[i].runners[j].ex.availableToLay
                                 runner.backPrices = fetchMarketDatajson[i].runners[j].ex.availableToBack
                                 runner.status = fetchMarketDatajson[i].runners[j].status
-                                console.log(runner,'runnerrrrrrrrrrrrrrr')
+                                // console.log(runner,'runnerrrrrrrrrrrrrrr')
                             }
                         }
                         await client.set(`${fetchMarketDatajson[i].marketId}_diamond`,JSON.stringify(marketdata),'EX',24 * 60 * 60)
