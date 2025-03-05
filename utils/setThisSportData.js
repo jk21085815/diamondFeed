@@ -107,6 +107,9 @@ const setThisSportData = async(eventlist,SportName) => {
                 let fancydata = await fetchFancyBook(eventlist[k].eventId)
                 let fancyMarketIdArray = Object.keys(fancydata)
                 delete eventlist[k]['marketId']
+                if(["1"].includes(eventlist[k].sportId)){
+                    console.log(matchodddata,'matchodddataaaaaaaaaaaaaaaaaa')
+                }
                 for(let d = 0;d<matchodddata.length;d++){
                     if(matchodddata[d]){
                         let tempObj
@@ -417,7 +420,9 @@ const setThisSportData = async(eventlist,SportName) => {
                 let MOBMMarketDetailsArr = matchOddsArr2.concat(bookMakerMarketArr2)
                 let OnlyMOBMMarketIds = MOBMMarketDetailsArr.filter(item => ((item.bettingType == "BOOKMAKER" || item.marketType == "MATCH_ODDS" || item.marketType == "COMPLETED_MATCH" || item.marketType == "TIED_MATCH" || item.marketType == "WINNING_ODDS" || item.marketType == "WIN" || item.marketType == "TOURNAMENT_WINNER"  || item.marketName.trim().toLowerCase().startsWith('over/under') && ["OPEN","SUSPENDED","BALL_RUNNING"].includes(item.status))))
                 let OnlyMOMarketId = MOBMMarketDetailsArr.filter(item => (item.marketType == "MATCH_ODDS"))
-                console.log(OnlyMOMarketId,"OnlyMOMarketIdOnlyMOMarketId")
+                if(["1"].includes(eventlist[k].sportId)){
+                    console.log(OnlyMOMarketId,"OnlyMOMarketIdOnlyMOMarketId")
+                }
                 for(let j = 0;j<MOBMMarketDetailsArr.length;j++){
                     MOBMMarketArr.push(MOBMMarketDetailsArr[j].marketId)
                 }
