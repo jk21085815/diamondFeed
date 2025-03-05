@@ -115,7 +115,7 @@ client.on('connect', () => {
                             MOBMMarketArr = JSON.parse(MOBMMarketArr)
                             OnlyMOMarketIdsArr = await client.get(`${eventIds[i]}_OnlyMOMarketIdsArr_diamond`)
                             OnlyMOMarketIdsArr = JSON.parse(OnlyMOMarketIdsArr)
-                            // console.log(eventData.eventId,OnlyMOMarketIdsArr,"OnlyMOMarketIdsArrOnlyMOMarketIdsArr")
+                            console.log(eventData.eventId,OnlyMOMarketIdsArr,"OnlyMOMarketIdsArrOnlyMOMarketIdsArr")
                             if(OnlyMOMarketIdsArr.length !== 0 && !issportHRGH){
                                 let MOMarketId = OnlyMOMarketIdsArr.join(",")
                                 try{
