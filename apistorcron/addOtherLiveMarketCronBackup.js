@@ -96,7 +96,7 @@ client.on('connect', () => {
                         let matchOddMarketArr = []
                         let bookmakersMarketArr = []
                         let OtherMOMarketArr = []
-                        console.log(new Date(),i,eventIds[i],'Add Other eventIds and Market iiiiiiiii')
+                        // console.log(new Date(),i,eventIds[i],'Add Other eventIds and Market iiiiiiiii')
                         let liveMatchCheckMarket
                         let isLiveStatus = false
                         let eventData
@@ -115,7 +115,7 @@ client.on('connect', () => {
                             OtherMOMarketArr = JSON.parse(OtherMOMarketArr)
                             OnlyMOMarketIdsArr = await client.get(`${eventIds[i]}_OnlyMOMarketIdsArr_diamond`)
                             OnlyMOMarketIdsArr = JSON.parse(OnlyMOMarketIdsArr)
-                            console.log(eventData.eventId,OnlyMOMarketIdsArr,"OnlyMOMarketIdsArrOnlyMOMarketIdsArr")
+                            // console.log(eventData.eventId,OnlyMOMarketIdsArr,"OnlyMOMarketIdsArrOnlyMOMarketIdsArr")
                             if(OnlyMOMarketIdsArr.length !== 0 && !issportHRGH){
                                 let MOMarketId = OnlyMOMarketIdsArr.join(",")
                                 try{
