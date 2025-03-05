@@ -194,6 +194,7 @@ client.on('connect', () => {
                                                     if(!marketIdsArrMO.includes(tempObj.marketId)){
                                                         marketIdsArrMO.push(tempObj.marketId)
                                                     }
+                                                    await client.set(`${tempObj.marketId}_diamond`, JSON.stringify(tempObj), 'EX', 24 * 60 * 60);
                                                 }
                                             }
                                         }

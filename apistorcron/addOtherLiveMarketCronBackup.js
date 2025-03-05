@@ -194,6 +194,8 @@ client.on('connect', () => {
                                                         if(!OtherSportLiveMarketIdsMO.includes(tempObj.marketId)){
                                                             OtherSportLiveMarketIdsMO.push(tempObj.marketId)
                                                         }
+                                                        await client.set(`${tempObj.marketId}_diamond`, JSON.stringify(tempObj), 'EX', 24 * 60 * 60);
+
                                                     }
                                                 }
                                             }
@@ -292,6 +294,8 @@ client.on('connect', () => {
                                                             if(!OtherSportLiveMarketIdsMO.includes(tempObj.marketId)){
                                                                 OtherSportLiveMarketIdsMO.push(tempObj.marketId)
                                                             }
+                                                            await client.set(`${tempObj.marketId}_diamond`, JSON.stringify(tempObj), 'EX', 24 * 60 * 60);
+
                                                         }
                                                     }
                                                 }
