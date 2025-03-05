@@ -12,8 +12,8 @@ client.on('connect', () => {
 
 module.exports = () => {
         try{
-            // getEventListFunc('4','Cricket')
-            // getEventListFunc('1','Soccer')
+            getEventListFunc('4','Cricket')
+            getEventListFunc('1','Soccer')
             getEventListFunc('2','Tennis')
             getEventListFunc('4339','GreyHound')
             getEventListFunc('7','HorseRacing')

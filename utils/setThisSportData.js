@@ -72,7 +72,6 @@ const setThisSportData = async(eventlist,SportName) => {
                 let matchOddsArr = [];
                 let matchOddsArr2 = [];
                 let bookMakerMarketArr = [];
-                let bookMakerMarketArr2 = [];
                 let fanctMarketArr = [];
                 eventlist[k].openDate = eventlist[k].event.openDate
                 eventlist[k].providerName = eventlist[k].competition?eventlist[k].competition.provider:""
@@ -107,9 +106,6 @@ const setThisSportData = async(eventlist,SportName) => {
                 let fancydata = await fetchFancyBook(eventlist[k].eventId)
                 let fancyMarketIdArray = Object.keys(fancydata)
                 delete eventlist[k]['marketId']
-                if(["1"].includes(eventlist[k].sportId)){
-                    console.log(matchodddata,'matchodddataaaaaaaaaaaaaaaaaa')
-                }
                 for(let d = 0;d<matchodddata.length;d++){
                     if(matchodddata[d]){
                         let tempObj
@@ -298,10 +294,6 @@ const setThisSportData = async(eventlist,SportName) => {
                             tempRunner.push(tempObjrunner)
                         }
                         tempObj.runners = tempRunner
-                        bookMakerMarketArr2.push(tempObj)
-                        if(["OPEN","SUSPENDED","BALL_RUNNING"].includes(tempObj.status)){
-                            bookMakerMarketArr.push(tempObj)
-                        }
                         await client.set(`${tempObj.marketId}_diamond`, JSON.stringify(tempObj), 'EX', 24 * 60 * 60);
 
                     }
@@ -414,27 +406,19 @@ const setThisSportData = async(eventlist,SportName) => {
                     bookmakers: bookMakerMarketArr,
                     fancyMarkets: fanctMarketArr
                 }
-                let OnlyMOBMMarketIdsArr = [];
-                let MOBMMarketArr = [];
+                let OnlyOtherMOMarketIdsArr = [];
                 let OnlyMOMarketIdArr = []
-                let MOBMMarketDetailsArr = matchOddsArr2.concat(bookMakerMarketArr2)
-                let OnlyMOBMMarketIds = MOBMMarketDetailsArr.filter(item => ((item.bettingType == "BOOKMAKER" || item.marketType == "MATCH_ODDS" || item.marketType == "COMPLETED_MATCH" || item.marketType == "TIED_MATCH" || item.marketType == "WINNING_ODDS" || item.marketType == "WIN" || item.marketType == "TOURNAMENT_WINNER"  || item.marketName.trim().toLowerCase().startsWith('over/under') && ["OPEN","SUSPENDED","BALL_RUNNING"].includes(item.status))))
-                let OnlyMOMarketId = MOBMMarketDetailsArr.filter(item => (item.marketType == "MATCH_ODDS"))
-                if(["1"].includes(eventlist[k].sportId)){
-                    console.log(OnlyMOMarketId,"OnlyMOMarketIdOnlyMOMarketId")
-                }
-                for(let j = 0;j<MOBMMarketDetailsArr.length;j++){
-                    MOBMMarketArr.push(MOBMMarketDetailsArr[j].marketId)
-                }
-                for(let j = 0;j<OnlyMOBMMarketIds.length;j++){
-                    OnlyMOBMMarketIdsArr.push(OnlyMOBMMarketIds[j].marketId)
+                let MOMarketDetailsArr = matchOddsArr2
+                let OnlyOtherMOMarketDetails = MOMarketDetailsArr.filter(item => ((item.marketType == "COMPLETED_MATCH" || item.marketType == "TIED_MATCH" || item.marketType == "WINNING_ODDS" || item.marketType == "WIN" || item.marketType == "TOURNAMENT_WINNER"  || item.marketName.trim().toLowerCase().startsWith('over/under') && ["OPEN","SUSPENDED","BALL_RUNNING"].includes(item.status))))
+                let OnlyMOMarketId = MOMarketDetailsArr.filter(item => (item.marketType == "MATCH_ODDS"))
+                console.log(OnlyMOMarketId,"OnlyMOMarketIdOnlyMOMarketId")
+                for(let j = 0;j<OnlyOtherMOMarketDetails.length;j++){
+                    OnlyOtherMOMarketIdsArr.push(OnlyOtherMOMarketDetails[j].marketId)
                 }
                 for(let j = 0;j<OnlyMOMarketId.length;j++){
                     OnlyMOMarketIdArr.push(OnlyMOMarketId[j].marketId)
                 }
-                // console.log(OnlyMOBMMarketIdsArr,"OnlyMOBMMarketIdsArrOnlyMOBMMarketIdsArrINThisSportttttttt")
-                await client.set(`${eventlist[k].eventId}_MOBMMarketArr_diamond`,JSON.stringify(MOBMMarketArr),'EX',7 * 24 * 60 * 60)
-                await client.set(`${eventlist[k].eventId}_OnlyMOBMMarketIdsArr_diamond`,JSON.stringify(OnlyMOBMMarketIdsArr),'EX',7 * 24 * 60 * 60)
+                await client.set(`${eventlist[k].eventId}_OnlyOtherMOMarketIdsArr_diamond`,JSON.stringify(OnlyOtherMOMarketIdsArr),'EX',7 * 24 * 60 * 60)
                 await client.set(`${eventlist[k].eventId}_OnlyMOMarketIdsArr_diamond`,JSON.stringify(OnlyMOMarketIdArr),'EX',7 * 24 * 60 * 60)
                 await client.set(`${eventlist[k].eventId}_diamondEventData`,JSON.stringify(eventlist[k]),'EX',7 * 24 * 60 * 60)
             }

@@ -76,7 +76,7 @@ client.on('connect', () => {
                         // console.log(new Date(),i,eventIds[i],'Add Cricket eventIds and Market iiiiiiiii')
                         let matchOddMarketArr = []
                         let bookmakersMarketArr = []
-                        let MOBMMarketArr = []
+                        let OtherMOMarketArr = []
                         let isLiveStatus = false
                         let liveMatchCheckMarket
                         let eventData
@@ -90,8 +90,8 @@ client.on('connect', () => {
                             if(eventData.competitionName == "Test Matches"){
                                 isTest = true
                             }
-                            MOBMMarketArr = await client.get(`${eventIds[i]}_MOBMMarketArr_diamond`)
-                            MOBMMarketArr = JSON.parse(MOBMMarketArr)
+                            OtherMOMarketArr = await client.get(`${eventIds[i]}_OnlyOtherMOMarketIdsArr_diamond`)
+                            OtherMOMarketArr = JSON.parse(OtherMOMarketArr)
                             OnlyMOBMMarketIdsArr = await client.get(`${eventIds[i]}_OnlyMOMarketIdsArr_diamond`)
                             OnlyMOBMMarketIdsArr = JSON.parse(OnlyMOBMMarketIdsArr)
                             // console.log(OnlyMOBMMarketIdsArr,"OnlyMOBMMarketIdsArr")
@@ -123,7 +123,6 @@ client.on('connect', () => {
                                     }
                                     liveEventInCricket.push(eventIds[i])
                                     isLiveStatus = true
-                                    // marketIdsArr = marketIdsArr.concat(MOBMMarketArr)
                                 }else{
                                     if(liveMatchCheckMarket.status !== 'CLOSED'){
                                         if(isTest){
