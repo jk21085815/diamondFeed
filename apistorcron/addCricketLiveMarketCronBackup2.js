@@ -114,6 +114,7 @@ client.on('connect', () => {
                                 //     OnlyMOBMmARKETOpenArr.push(openMarkets[i].marketId)
                                 // }
                                 liveMatchCheckMarket = fetchMarketData2.find(item => (item.status !== "CLOSED" && item.marketType == "MATCH_ODDS"))
+                                console.log(liveMatchCheckMarket,'liveMatchCheckMarkettttttttttt')
                             }
                             if(liveMatchCheckMarket){
                                 if(liveMatchCheckMarket.inplay == true && liveMatchCheckMarket.status !== 'CLOSED'){
