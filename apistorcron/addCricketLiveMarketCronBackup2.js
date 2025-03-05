@@ -37,7 +37,7 @@ client.on('connect', () => {
                     CricketLiveEventIds = []
                 }
                 eventIds = JSON.parse(eventIds)
-                console.log(eventIds.length,'cricketEventIdssssssss')
+                // console.log(eventIds.length,'cricketEventIdssssssss')
                 function delay(ms) {
                     return new Promise(resolve => setTimeout(resolve, ms));
                 }
@@ -94,7 +94,7 @@ client.on('connect', () => {
                             MOBMMarketArr = JSON.parse(MOBMMarketArr)
                             OnlyMOBMMarketIdsArr = await client.get(`${eventIds[i]}_OnlyMOMarketIdsArr_diamond`)
                             OnlyMOBMMarketIdsArr = JSON.parse(OnlyMOBMMarketIdsArr)
-                            console.log(OnlyMOBMMarketIdsArr,"OnlyMOBMMarketIdsArr")
+                            // console.log(OnlyMOBMMarketIdsArr,"OnlyMOBMMarketIdsArr")
                             if(OnlyMOBMMarketIdsArr.length !== 0){
                                 let count = Math.ceil(OnlyMOBMMarketIdsArr.length/chunkSize)
                                 for(let k = 0;k<count;k++){
@@ -113,8 +113,7 @@ client.on('connect', () => {
                                 // for(let i = 0;i<openMarkets.length;i++){
                                 //     OnlyMOBMmARKETOpenArr.push(openMarkets[i].marketId)
                                 // }
-                                liveMatchCheckMarket = fetchMarketData2.find(item => (item.status !== "CLOSED" && item.marketType == "MATCH_ODDS"))
-                                console.log(liveMatchCheckMarket,'liveMatchCheckMarkettttttttttt')
+                                liveMatchCheckMarket = fetchMarketData2.find(item => (item.status !== "CLOSED"))
                             }
                             if(liveMatchCheckMarket){
                                 if(liveMatchCheckMarket.inplay == true && liveMatchCheckMarket.status !== 'CLOSED'){

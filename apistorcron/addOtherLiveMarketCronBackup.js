@@ -130,7 +130,7 @@ client.on('connect', () => {
                                     // for(let i = 0;i<openMarkets.length;i++){
                                     //     OnlyMOBMmARKETOpenArr.push(openMarkets[i].marketId)
                                     // }
-                                    liveMatchCheckMarket = fetchMarketData2.find(item => (item.status !== "CLOSED"  && item.marketType == "MATCH_ODDS"))
+                                    liveMatchCheckMarket = fetchMarketData2.find(item => (item.status !== "CLOSED"))
                                 }
                                 if(!issportHRGH){
                                     if(liveMatchCheckMarket){
