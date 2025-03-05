@@ -146,7 +146,7 @@ client.on('connect', () => {
                                         // OtherSportLiveMarketIds = OtherSportLiveMarketIds.concat(MOBMMarketArr)
                                     }
                                 }else{
-                                    console.log(fetchMarketData2,'fetchMarketData2fetchMarketData2')
+                                    // console.log(fetchMarketData2,'fetchMarketData2fetchMarketData2')
                                 }
                                 let eventStatus = isLiveStatus?'IN_PLAY':'UPCOMING'
                                 eventData.status = eventStatus
@@ -160,7 +160,7 @@ client.on('connect', () => {
                                 }
                                 if(pushstatus){
                                     let matchoddmarketdata = await fetchOtherMOMarketData(eventIds[i])
-                                    // console.log(matchoddmarketdata,'matchodddataaaaaaaaaaaa')
+                                    console.log(matchoddmarketdata,'matchodddataaaaaaaaaaaa')
                                     let bookmakerdata = await fetchBMBook(eventIds[i])
                                     for(let d = 0;d<matchoddmarketdata.length;d++){
                                         let matchodddata = await fetchMOBook(matchoddmarketdata[d].marketId)
