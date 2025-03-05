@@ -47,7 +47,7 @@ client.on('connect', () => {
                 }else{
                     liveEventIds = []
                 }
-                console.log(eventIds.length,'otherSportEventIdssssssss')
+                // console.log(eventIds.length,'otherSportEventIdssssssss')
                 function delay(ms) {
                     return new Promise(resolve => setTimeout(resolve, ms));
                 }
@@ -109,6 +109,7 @@ client.on('connect', () => {
                         eventData = await client.get(`${eventIds[i]}_diamondEventData`)
                         if(eventData){
                             eventData = JSON.parse(eventData)
+                            console.log(eventData.eventId,eventODDSBMMarketIds,'eventidddddddddddddddddd')
                             if(eventODDSBMMarketIds){
                                 if(["7","4339"].includes(eventData.sportId)){
                                     issportHRGH = true
