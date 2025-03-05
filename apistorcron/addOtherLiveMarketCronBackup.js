@@ -150,7 +150,7 @@ client.on('connect', () => {
                                 eventData.status = eventStatus
                                 let pushstatus = false 
                                 let thatMO = liveMatchCheckMarket
-                                console.log(thatMO,'thatMOoooooooooooooooo')
+                                console.log(thatMO.status,'thatMOoooooooooooooooo')
                                 if(thatMO){
                                     if(['OPEN','SUSPENDED','BALL_RUNNING'].includes(thatMO.status)){
                                         pushstatus = true
@@ -158,6 +158,7 @@ client.on('connect', () => {
                                 }
                                 if(pushstatus){
                                     let matchoddmarketdata = await fetchOtherMOMarketData(eventIds[i])
+                                    console.log(matchoddmarketdata,'matchodddataaaaaaaaaaaa')
                                     let bookmakerdata = await fetchBMBook(eventIds[i])
                                     for(let d = 0;d<matchoddmarketdata.length;d++){
                                         let matchodddata = await fetchMOBook(matchoddmarketdata[d].marketId)
