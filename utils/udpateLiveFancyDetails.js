@@ -44,6 +44,8 @@ const updateFancyDetailsFunc = async (eventId,fencydata) => {
                                     runner2.layPrices[0].line = market.ls2
                                     runner2.backPrices[0].price = market.b2
                                     runner2.backPrices[0].line = market.bs2
+                                }else{
+                                    console.log(eventId,market.marketId,'marketid with no runnerrrrrr111111')
                                 }
                                 if(runner3){
                                     runner3.status = market.status3
@@ -51,6 +53,8 @@ const updateFancyDetailsFunc = async (eventId,fencydata) => {
                                     runner3.layPrices[0].line = market.ls3
                                     runner3.backPrices[0].price = market.b3
                                     runner3.backPrices[0].line = market.bs3
+                                }else{
+                                    console.log(eventId,market.marketId,'marketid with no runnerrrrrr22222222222')
                                 }
                                 await client.set(`${marketData.marketId}_diamond`, JSON.stringify(marketData), 'EX', 24 * 60 * 60);
                                 fancyArr.push(marketData)
