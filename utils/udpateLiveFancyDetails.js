@@ -22,7 +22,7 @@ const updateFancyDetailsFunc = async (eventId,fencydata) => {
                         marketData = marketData ? JSON.parse(marketData) : null;
                         try{
                             if (marketData) {
-                                marketData.status = market.status1;
+                                marketData.status = ["ACTIVE","SUSPENDED","BALL_RUNNING"].includes(market.status1)?"OPEN":"CLOSED";
                                 marketData.inPlay = market.in_play;
                                 marketData.noValue = market.l1;
                                 marketData.noRate = market.ls1;
@@ -65,7 +65,7 @@ const updateFancyDetailsFunc = async (eventId,fencydata) => {
                                     "marketName": market.name,
                                     "bettingType": "LINE",
                                     "marketType": "FANCY",
-                                    "status": market.status1,
+                                    "status": ["ACTIVE","SUSPENDED","BALL_RUNNING"].includes(market.status1)?"OPEN":"CLOSED",
                                     "noValue": market.l1,
                                     "noRate": market.ls1,
                                     "yesValue": market.b1,

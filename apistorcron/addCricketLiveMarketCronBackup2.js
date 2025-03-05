@@ -83,7 +83,7 @@ client.on('connect', () => {
                         let fetchMarketData2 = []
                         let OnlyMOBMmARKETOpenArr = []
                         let OnlyMOBMMarketIdsArr = []
-                        // let isTest = false
+                        let isTest = false
                         eventData = await client.get(`${eventIds[i]}_diamondEventData`)
                         if(eventData){
                             eventData = JSON.parse(eventData)
