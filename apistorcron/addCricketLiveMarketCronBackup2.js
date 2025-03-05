@@ -87,9 +87,9 @@ client.on('connect', () => {
                         eventData = await client.get(`${eventIds[i]}_diamondEventData`)
                         if(eventData){
                             eventData = JSON.parse(eventData)
-                            // if(eventData.competitionName == "Test Matches"){
-                            //     isTest = true
-                            // }
+                            if(eventData.competitionName == "Test Matches"){
+                                isTest = true
+                            }
                             MOBMMarketArr = await client.get(`${eventIds[i]}_MOBMMarketArr_diamond`)
                             MOBMMarketArr = JSON.parse(MOBMMarketArr)
                             OnlyMOBMMarketIdsArr = await client.get(`${eventIds[i]}_OnlyMOMarketIdsArr_diamond`)
