@@ -304,7 +304,7 @@ client.on('connect', () => {
                                     //     }
                     
                                     // }
-                                    let liveMatchCheckMarket = []
+                                    let liveMatchCheckMarket2 = []
                                     let fetchMarketData3
                                     if(OtherMOMarketArr.length !== 0){
                                         let momarketIds = OtherMOMarketArr.join(",")
@@ -314,20 +314,20 @@ client.on('connect', () => {
                                             await delay(1000 * 10)
                                             fetchMarketData3 = await fetchMOBook(momarketIds)
                                         }
-                                        liveMatchCheckMarket = fetchMarketData3.filter(item => (item && ["OPEN","SUSPENDED","BALL_RUNNING"].includes(item.status)))
+                                        liveMatchCheckMarket2 = fetchMarketData3.filter(item => (item && ["OPEN","SUSPENDED","BALL_RUNNING"].includes(item.status)))
                                     }
-                                    if(liveMatchCheckMarket.length > 0){
-                                        for(let a = 0;a<liveMatchCheckMarket.length;a++){
-                                            let thismarketdetail = await client.get(`${liveMatchCheckMarket[a].marketId}_diamond`)
+                                    if(liveMatchCheckMarket2.length > 0){
+                                        for(let a = 0;a<liveMatchCheckMarket2.length;a++){
+                                            let thismarketdetail = await client.get(`${liveMatchCheckMarket2[a].marketId}_diamond`)
                                             if(thismarketdetail){
                                                 thismarketdetail = JSON.parse(thismarketdetail)
-                                                thismarketdetail.status = liveMatchCheckMarket[a].status
-                                                thismarketdetail.marketTime = liveMatchCheckMarket[a].lastUpdatedTime
-                                                for(let c = 0;c<liveMatchCheckMarket[a].runners.length;c++){
-                                                    let thisrunner = thismarketdetail.runners.find(item => item.runnerId == liveMatchCheckMarket[a].runners[c].selectionId)
-                                                    thisrunner.status = liveMatchCheckMarket[a].runners[c].status
-                                                    thisrunner.layPrices = liveMatchCheckMarket[a].runners[c].ex.availableToLay,
-                                                    thisrunner.backPrices = liveMatchCheckMarket[a].runners[c].ex.availableToBack
+                                                thismarketdetail.status = liveMatchCheckMarket2[a].status
+                                                thismarketdetail.marketTime = liveMatchCheckMarket2[a].lastUpdatedTime
+                                                for(let c = 0;c<liveMatchCheckMarket2[a].runners.length;c++){
+                                                    let thisrunner = thismarketdetail.runners.find(item => item.runnerId == liveMatchCheckMarket2[a].runners[c].selectionId)
+                                                    thisrunner.status = liveMatchCheckMarket2[a].runners[c].status
+                                                    thisrunner.layPrices = liveMatchCheckMarket2[a].runners[c].ex.availableToLay,
+                                                    thisrunner.backPrices = liveMatchCheckMarket2[a].runners[c].ex.availableToBack
                                                 }
                                                 matchOddMarketArr.push(thismarketdetail)
                                                 if(!OtherSportLiveMarketIdsMO.includes(thismarketdetail.marketId)){
