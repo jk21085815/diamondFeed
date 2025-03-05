@@ -161,7 +161,6 @@ client.on('connect', () => {
                                 if(pushstatus){
                                     let bookmakerdata = await fetchBMBook(eventIds[i])
                                     let matchoddmarketRedis = await client.get(`${liveMatchCheckMarket.marketId}_diamond`)
-                                    console.log(matchoddmarketRedis,'matchodd dataaaaaaaaaaaaaaaaaa')
                                     if(matchoddmarketRedis){
                                         matchoddmarketRedis = JSON.parse(matchoddmarketRedis)
                                         let matchodddata = await fetchMOBook(liveMatchCheckMarket.marketId)
