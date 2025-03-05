@@ -334,14 +334,14 @@ client.on('connect', () => {
                                                     thisrunner.layPrices = liveMatchCheckMarket[a].runners[c].ex.availableToLay,
                                                     thisrunner.backPrices = liveMatchCheckMarket[a].runners[c].ex.availableToBack
                                                 }
-                                                matchOddsArr2.push(thismarketdetail)
+                                                matchOddMarketArr.push(thismarketdetail)
                                                 if(!OtherSportLiveMarketIdsMO.includes(thismarketdetail.marketId)){
                                                     OtherSportLiveMarketIdsMO.push(thismarketdetail.marketId)
                                                 }
                                             }
 
                                         }
-                                        eventData.markets.matchOdds = liveMatchCheckMarket
+                                        eventData.markets.matchOdds = matchOddMarketArr
                                         eventData.status == "IN_PLAY"
                                         await client.set(`${eventIds[i]}_diamondEventData`,JSON.stringify(eventData))
                                         OtherSportLiveEventIds.push(eventIds[i])
