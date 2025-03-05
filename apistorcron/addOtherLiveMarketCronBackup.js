@@ -159,7 +159,7 @@ client.on('connect', () => {
                                     }
                                 }
                                 if(pushstatus){
-                                    let bookmakerdata = await fetchBMBook(eventIds[i])
+                                    // let bookmakerdata = await fetchBMBook(eventIds[i])
                                     let matchoddmarketRedis = await client.get(`${liveMatchCheckMarket.marketId}_diamond`)
                                     if(matchoddmarketRedis){
                                         matchoddmarketRedis = JSON.parse(matchoddmarketRedis)
@@ -203,63 +203,63 @@ client.on('connect', () => {
                                             }
                                         }
                                     }
-                                    if(bookmakerdata){
-                                        for(let a = 0; a<bookmakerdata.length; a++){
-                                            if(Object.keys(bookmakerdata[a].data).length !== 0){
-                                                let tempRunner = []
-                                                let marketName
-                                                let tempObj = {
-                                                    "marketId": bookmakerdata[a].bookmaker_id,
-                                                    "marketTime": new Date(),
-                                                    "bettingType": "BOOKMAKER",
-                                                    "marketType": "BOOKMAKER",
-                                                    "provider": "DIAMOND",
-                                                    "status": bookmakerdata[a].data.status
-                                                }
-                                                if(bookmakerdata[a].data.type == "MATCH_ODDS"){
-                                                    marketName = "Bookmaker"
-                                                }else if(bookmakerdata[a].data.type == "MINI_BOOKMAKER"){
-                                                    marketName = "Bookmaker 0 Commission"
-                                                }else if(bookmakerdata[a].data.type == "TO_WIN_THE_TOSS"){
-                                                    marketName = "To Win The Toss"
-                                                }else{
-                                                    marketName = "Other Bookmaker"
-                                                }
-                                                tempObj["marketName"] = marketName
+                                    // if(bookmakerdata){
+                                    //     for(let a = 0; a<bookmakerdata.length; a++){
+                                    //         if(Object.keys(bookmakerdata[a].data).length !== 0){
+                                    //             let tempRunner = []
+                                    //             let marketName
+                                    //             let tempObj = {
+                                    //                 "marketId": bookmakerdata[a].bookmaker_id,
+                                    //                 "marketTime": new Date(),
+                                    //                 "bettingType": "BOOKMAKER",
+                                    //                 "marketType": "BOOKMAKER",
+                                    //                 "provider": "DIAMOND",
+                                    //                 "status": bookmakerdata[a].data.status
+                                    //             }
+                                    //             if(bookmakerdata[a].data.type == "MATCH_ODDS"){
+                                    //                 marketName = "Bookmaker"
+                                    //             }else if(bookmakerdata[a].data.type == "MINI_BOOKMAKER"){
+                                    //                 marketName = "Bookmaker 0 Commission"
+                                    //             }else if(bookmakerdata[a].data.type == "TO_WIN_THE_TOSS"){
+                                    //                 marketName = "To Win The Toss"
+                                    //             }else{
+                                    //                 marketName = "Other Bookmaker"
+                                    //             }
+                                    //             tempObj["marketName"] = marketName
                             
-                                                let bookmakerrunner = JSON.parse(bookmakerdata[a].data.runners)
-                                                let runnerIds = Object.keys(bookmakerrunner)
-                                                for(let c = 0;c<runnerIds.length;c++){
-                                                    let runner = bookmakerrunner[runnerIds[c]]
-                                                    let tempObjrunner = 
-                                                    {
-                                                        "status": runner.status,
-                                                        "metadata": "",
-                                                        "runnerName": runner.name,
-                                                        "runnerId": runner.selection_id,
-                                                        "layPrices": [{
-                                                            "price":runner.lay_price,
-                                                            "size":runner.lay_volume
-                                                        }],
-                                                        "backPrices": [{
-                                                            "price":runner.back_price,
-                                                            "size":runner.back_volume
-                                                        }]
-                                                    }
-                                                    tempRunner.push(tempObjrunner)
-                                                }
-                                                tempObj.runners = tempRunner
-                                                if(["OPEN","SUSPENDED","BALL_RUNNING"].includes(tempObj.status)){
-                                                    bookmakersMarketArr.push(tempObj)
-                                                    await client.set(`${tempObj.marketId}_diamond`, JSON.stringify(tempObj), 'EX', 24 * 60 * 60);
+                                    //             let bookmakerrunner = JSON.parse(bookmakerdata[a].data.runners)
+                                    //             let runnerIds = Object.keys(bookmakerrunner)
+                                    //             for(let c = 0;c<runnerIds.length;c++){
+                                    //                 let runner = bookmakerrunner[runnerIds[c]]
+                                    //                 let tempObjrunner = 
+                                    //                 {
+                                    //                     "status": runner.status,
+                                    //                     "metadata": "",
+                                    //                     "runnerName": runner.name,
+                                    //                     "runnerId": runner.selection_id,
+                                    //                     "layPrices": [{
+                                    //                         "price":runner.lay_price,
+                                    //                         "size":runner.lay_volume
+                                    //                     }],
+                                    //                     "backPrices": [{
+                                    //                         "price":runner.back_price,
+                                    //                         "size":runner.back_volume
+                                    //                     }]
+                                    //                 }
+                                    //                 tempRunner.push(tempObjrunner)
+                                    //             }
+                                    //             tempObj.runners = tempRunner
+                                    //             if(["OPEN","SUSPENDED","BALL_RUNNING"].includes(tempObj.status)){
+                                    //                 bookmakersMarketArr.push(tempObj)
+                                    //                 await client.set(`${tempObj.marketId}_diamond`, JSON.stringify(tempObj), 'EX', 24 * 60 * 60);
 
-                                                    // if(!OtherSportLiveMarketIdsBM.includes(tempObj.marketId)){
-                                                    //     OtherSportLiveMarketIdsBM.push(tempObj.marketId)
-                                                    // }
-                                                }
-                                            }
-                                        }
-                                    }
+                                    //                 // if(!OtherSportLiveMarketIdsBM.includes(tempObj.marketId)){
+                                    //                 //     OtherSportLiveMarketIdsBM.push(tempObj.marketId)
+                                    //                 // }
+                                    //             }
+                                    //         }
+                                    //     }
+                                    // }
                                     if(eventData.sportId == 1){
                                         let matchoddmarketdata = await fetchUOMarketData(eventData.eventId)
                                         for(let d = 0;d<matchoddmarketdata.length;d++){
@@ -306,7 +306,7 @@ client.on('connect', () => {
                     
                                     }
                                     eventData.markets.matchOdds = matchOddMarketArr
-                                    eventData.markets.bookmakers = bookmakersMarketArr
+                                    // eventData.markets.bookmakers = bookmakersMarketArr
                                     showEvent.push(eventIds[i])
                                                 
                                 }
