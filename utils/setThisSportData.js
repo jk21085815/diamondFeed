@@ -119,7 +119,7 @@ const setThisSportData = async(eventlist,SportName) => {
                             thatcatalog = eventlist[k].catalogues.find(item => item.marketId == matchodddata[d].marketId)
                             tempObj = {
                                 "marketId": matchodddata[d].marketId,
-                                "marketTime": matchodddata[d].lastMatchTime,
+                                "marketTime": matchodddata[d].lastUpdatedTime,
                                 "marketType": thatcatalog.description.marketType,
                                 "bettingType": thatcatalog.description.bettingType,
                                 "marketName": thatcatalog.marketName,

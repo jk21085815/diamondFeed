@@ -330,7 +330,7 @@ client.on('connect', () => {
                                         if(thismarketdetail){
                                             thismarketdetail = JSON.parse(thismarketdetail)
                                             thismarketdetail.status = liveMatchCheckMarket[a].status
-                                            thismarketdetail.marketTime = liveMatchCheckMarket[a].lastMatchTime
+                                            thismarketdetail.marketTime = liveMatchCheckMarket[a].lastUpdatedTime
                                             for(let c = 0;c<liveMatchCheckMarket[a].runners.length;c++){
                                                 let thisrunner = thismarketdetail.runners.find(item => item.runnerId == liveMatchCheckMarket[a].runners[c].selectionId)
                                                 thisrunner.status = liveMatchCheckMarket[a].runners[c].status
