@@ -159,11 +159,12 @@ client.on('connect', () => {
                                     }
                                 }
                                 if(pushstatus){
-                                    let matchoddmarketdata = await fetchOtherMOMarketData(eventIds[i])
-                                    console.log(matchoddmarketdata,'matchodddataaaaaaaaaaaa')
                                     let bookmakerdata = await fetchBMBook(eventIds[i])
-                                    for(let d = 0;d<matchoddmarketdata.length;d++){
-                                        let matchodddata = await fetchMOBook(matchoddmarketdata[d].marketId)
+                                    let matchoddmarketRedis = await client.get(`${liveMatchCheckMarket.marketId}_diamond`)
+                                    console.log(matchoddmarketRedis,'matchodd dataaaaaaaaaaaaaaaaaa')
+                                    if(matchoddmarketRedis){
+                                        matchoddmarketRedis = JSON.parse(matchoddmarketRedis)
+                                        let matchodddata = await fetchMOBook(liveMatchCheckMarket.marketId)
                                         for(let e = 0;e<matchodddata.length;e++){
                                             if(matchodddata[e]){
                                                 let tempObj
@@ -171,15 +172,15 @@ client.on('connect', () => {
                                                 tempObj = {
                                                     "marketId": matchodddata[e].marketId,
                                                     "marketTime": matchodddata[e].lastMatchTime,
-                                                    "marketType": matchoddmarketdata[d].description.marketType,
-                                                    "bettingType": matchoddmarketdata[d].description.bettingType,
-                                                    "marketName": matchoddmarketdata[d].marketName,
+                                                    "marketType": matchoddmarketRedis.marketType,
+                                                    "bettingType": matchoddmarketRedis.bettingType,
+                                                    "marketName": matchoddmarketRedis.marketName,
                                                     "provider": "DIAMOND",
                                                     "status": matchodddata[e].status
                                                 }
                                                 for(let c = 0;c<matchodddata[e].runners.length;c++){
                                                     let runner
-                                                    runner = matchoddmarketdata[d].runners.find(item => item.selectionId == matchodddata[e].runners[c].selectionId)
+                                                    runner = matchoddmarketRedis.runners.find(item => item.runnerId == matchodddata[e].runners[c].selectionId)
                                                     let tempObjrunner = 
                                                     {
                                                         "status": matchodddata[e].runners[c].status,
@@ -198,7 +199,7 @@ client.on('connect', () => {
                                                         OtherSportLiveMarketIdsMO.push(tempObj.marketId)
                                                     }
                                                     await client.set(`${tempObj.marketId}_diamond`, JSON.stringify(tempObj), 'EX', 24 * 60 * 60);
-
+    
                                                 }
                                             }
                                         }
