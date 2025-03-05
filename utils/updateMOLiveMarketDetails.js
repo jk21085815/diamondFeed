@@ -37,7 +37,7 @@ const updateLiveMarketDetails = async(marketIds) => {
                                 runner.backPrices = fetchMarketDatajson[i].runners[j].ex.availableToBack
                                 runner.status = fetchMarketDatajson[i].runners[j].status
                                 if(fetchMarketDatajson[i].marketId == "1.240213065"){
-                                    console.log(runner,'runnerrrrrrrrrrrrrrr')
+                                    // console.log(runner,'runnerrrrrrrrrrrrrrr')
                                 }
                             }
                         }
