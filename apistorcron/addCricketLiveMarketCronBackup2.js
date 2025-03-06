@@ -174,8 +174,8 @@ client.on('connect', () => {
                                                 }
                                                 if(["OPEN","SUSPENDED","BALL_RUNNING"].includes(matchoddmarketRedis.status)){
                                                     matchOddMarketArr.push(matchoddmarketRedis)
-                                                    if(!OtherSportLiveMarketIdsMO.includes(matchoddmarketRedis.marketId)){
-                                                        OtherSportLiveMarketIdsMO.push(matchoddmarketRedis.marketId)
+                                                    if(!marketIdsArrMO.includes(matchoddmarketRedis.marketId)){
+                                                        marketIdsArrMO.push(matchoddmarketRedis.marketId)
                                                     }
                                                     await client.set(`${matchoddmarketRedis.marketId}_diamond`, JSON.stringify(matchoddmarketRedis), 'EX', 24 * 60 * 60);
     
