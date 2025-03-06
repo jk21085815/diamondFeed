@@ -125,7 +125,7 @@ const setThisSportData = async(eventlist,SportName) => {
                         }else{
                             tempObj = {
                                 "marketId": matchodddata[d].marketId,
-                                "marketTime": matchodddata[d].lastMatchTime,
+                                "marketTime": eventlist[k].description.marketTime,
                                 "marketType": eventlist[k].description.marketType,
                                 "bettingType": eventlist[k].description.bettingType,
                                 "marketName": eventlist[k].marketName,

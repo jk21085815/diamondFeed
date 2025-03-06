@@ -307,7 +307,6 @@ client.on('connect', () => {
                                             if(thismarketdetail){
                                                 thismarketdetail = JSON.parse(thismarketdetail)
                                                 thismarketdetail.status = liveMatchCheckMarket2[a].status
-                                                thismarketdetail.marketTime = liveMatchCheckMarket2[a].lastUpdatedTime
                                                 for(let c = 0;c<liveMatchCheckMarket2[a].runners.length;c++){
                                                     let thisrunner = thismarketdetail.runners.find(item => item.runnerId == liveMatchCheckMarket2[a].runners[c].selectionId)
                                                     thisrunner.status = liveMatchCheckMarket2[a].runners[c].status
@@ -347,7 +346,6 @@ client.on('connect', () => {
                                         if(thismarketdetail){
                                             thismarketdetail = JSON.parse(thismarketdetail)
                                             thismarketdetail.status = liveMatchCheckMarket[a].status
-                                            thismarketdetail.marketTime = liveMatchCheckMarket[a].lastUpdatedTime
                                             for(let c = 0;c<liveMatchCheckMarket[a].runners.length;c++){
                                                 let thisrunner = thismarketdetail.runners.find(item => item.runnerId == liveMatchCheckMarket[a].runners[c].selectionId)
                                                 thisrunner.status = liveMatchCheckMarket[a].runners[c].status
