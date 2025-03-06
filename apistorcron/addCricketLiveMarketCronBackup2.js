@@ -3,7 +3,9 @@ const setNewLiveEvent = require('../utils/newEventUpdate')
 const setNewEventDetails = require('../utils/setNewThisEvent')
 const redis = require('redis');
 const client = redis.createClient({url:process.env.redisurl});
+const Publishclient = redis.createClient({url:process.env.redisurl});
 client.connect()
+Publishclient.connect()
 const client2 = redis.createClient({url:process.env.redisurl2});
 client2.connect()
 client.on('error', (err) => {
@@ -272,6 +274,8 @@ client.on('connect', () => {
                                                 if(["OPEN","SUSPENDED","BALL_RUNNING"].includes(tempObj.status)){
                                                     bookmakersMarketArr.push(tempObj)
                                                     await client.set(`${tempObj.marketId}_diamond`, JSON.stringify(tempObj), 'EX', 24 * 60 * 60);
+                                                    await client.set(`/topic/diamond_bm_update/${tempObj.marketId}`,JSON.stringify(tempObj));
+                                                    Publishclient.publish(`/topic/diamond_bm_update/${tempObj.marketId}`,JSON.stringify(tempObj));
                                                     // if(!marketIdsArrBM.includes(tempObj.marketId)){
                                                     //     marketIdsArrBM.push(tempObj.marketId)
                                                     // }
