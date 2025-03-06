@@ -96,7 +96,7 @@ client.on('connect', () => {
                         let matchOddMarketArr = []
                         let bookmakersMarketArr = []
                         let OtherMOMarketArr = []
-                        // console.log(new Date(),i,eventIds[i],'Add Other eventIds and Market iiiiiiiii')
+                        console.log(new Date(),i,eventIds[i],'Add Other eventIds and Market iiiiiiiii')
                         let liveMatchCheckMarket
                         let isLiveStatus = false
                         let eventData
@@ -165,38 +165,20 @@ client.on('connect', () => {
                                         let matchodddata = await fetchMOBook(liveMatchCheckMarket.marketId)
                                         for(let e = 0;e<matchodddata.length;e++){
                                             if(matchodddata[e]){
-                                                let tempObj
-                                                let tempRunner = []
-                                                tempObj = {
-                                                    "marketId": matchodddata[e].marketId,
-                                                    "marketTime": matchodddata[e].lastMatchTime,
-                                                    "marketType": matchoddmarketRedis.marketType,
-                                                    "bettingType": matchoddmarketRedis.bettingType,
-                                                    "marketName": matchoddmarketRedis.marketName,
-                                                    "provider": "DIAMOND",
-                                                    "status": matchodddata[e].status
-                                                }
+                                                matchoddmarketRedis.status = matchodddata[e].status
                                                 for(let c = 0;c<matchodddata[e].runners.length;c++){
                                                     let runner
                                                     runner = matchoddmarketRedis.runners.find(item => item.runnerId == matchodddata[e].runners[c].selectionId)
-                                                    let tempObjrunner = 
-                                                    {
-                                                        "status": matchodddata[e].runners[c].status,
-                                                        "metadata": runner.metadata,
-                                                        "runnerName": runner.runnerName,
-                                                        "runnerId": matchodddata[e].runners[c].selectionId,
-                                                        "layPrices": matchodddata[e].runners[c].ex.availableToLay,
-                                                        "backPrices": matchodddata[e].runners[c].ex.availableToBack
-                                                    }
-                                                    tempRunner.push(tempObjrunner)
+                                                    runner.status = matchodddata[e].runners[c].status
+                                                    runner.layPrices = matchodddata[e].runners[c].ex.availableToLay
+                                                    runner.backPrices = matchodddata[e].runners[c].ex.availableToBack
                                                 }
-                                                tempObj.runners = tempRunner
-                                                if(["OPEN","SUSPENDED","BALL_RUNNING"].includes(tempObj.status)){
-                                                    matchOddMarketArr.push(tempObj)
-                                                    if(!OtherSportLiveMarketIdsMO.includes(tempObj.marketId)){
-                                                        OtherSportLiveMarketIdsMO.push(tempObj.marketId)
+                                                if(["OPEN","SUSPENDED","BALL_RUNNING"].includes(matchoddmarketRedis.status)){
+                                                    matchOddMarketArr.push(matchoddmarketRedis)
+                                                    if(!OtherSportLiveMarketIdsMO.includes(matchoddmarketRedis.marketId)){
+                                                        OtherSportLiveMarketIdsMO.push(matchoddmarketRedis.marketId)
                                                     }
-                                                    await client.set(`${tempObj.marketId}_diamond`, JSON.stringify(tempObj), 'EX', 24 * 60 * 60);
+                                                    await client.set(`${matchoddmarketRedis.marketId}_diamond`, JSON.stringify(matchoddmarketRedis), 'EX', 24 * 60 * 60);
     
                                                 }
                                             }

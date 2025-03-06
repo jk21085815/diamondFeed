@@ -115,7 +115,7 @@ const setThisSportData = async(eventlist,SportName) => {
                             thatcatalog = eventlist[k].catalogues.find(item => item.marketId == matchodddata[d].marketId)
                             tempObj = {
                                 "marketId": matchodddata[d].marketId,
-                                "marketTime": matchodddata[d].lastUpdatedTime,
+                                "marketTime": thatcatalog.description.marketTime,
                                 "marketType": thatcatalog.description.marketType,
                                 "bettingType": thatcatalog.description.bettingType,
                                 "marketName": thatcatalog.marketName,
@@ -170,7 +170,7 @@ const setThisSportData = async(eventlist,SportName) => {
                                 let tempRunner = []
                                 tempObj = {
                                     "marketId": matchodddata[e].marketId,
-                                    "marketTime": matchodddata[e].lastMatchTime,
+                                    "marketTime": matchoddmarketdata[d].description.marketTime,
                                     "marketType": matchoddmarketdata[d].description.marketType,
                                     "bettingType": matchoddmarketdata[d].description.bettingType,
                                     "marketName": matchoddmarketdata[d].marketName,
@@ -213,7 +213,7 @@ const setThisSportData = async(eventlist,SportName) => {
                                 let tempRunner = []
                                 tempObj = {
                                     "marketId": matchodddata[e].marketId,
-                                    "marketTime": matchodddata[e].lastMatchTime,
+                                    "marketTime": matchoddmarketdata[d].description.marketTime,
                                     "marketType": matchoddmarketdata[d].description.marketType,
                                     "bettingType": matchoddmarketdata[d].description.bettingType,
                                     "marketName": matchoddmarketdata[d].marketName,
