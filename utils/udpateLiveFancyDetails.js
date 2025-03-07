@@ -18,16 +18,10 @@ const updateFancyDetailsFunc = async (eventId,fencydata) => {
                 if (response.hasOwnProperty(key)) {
                     const market = JSON.parse(response[key]);
                     if (market) {
-                        if(market.id == "12892085"){
-                            console.log(market,Object.keys(fencydata).length,"340966733409667334096673")
-                        }
                         let marketData = await client.get(`${key}_diamond`);
                         marketData = marketData ? JSON.parse(marketData) : null;
                         try{
-                            if (marketData) {
-                                if(market.id == "12892085"){
-                                    console.log(marketData,'marketdataaaaaaaa')
-                                }
+                            if (marketData && false) {
                                 marketData.status = ["ACTIVE","SUSPENDED","BALL_RUNNING"].includes(market.status1)?"OPEN":"CLOSED";
                                 marketData.inPlay = market.in_play;
                                 marketData.noValue = market.l1;
