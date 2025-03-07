@@ -449,8 +449,8 @@ exports.tournamentwinner = catchAsync(async(req, res, next) => {
                 'Content-type': 'application/json',
             }
         })
-        console.log(fetchMarketData,'fetcvhMarketdataaaaaaa')
         fetchMarketData = await fetchMarketData.text()
+        console.log(fetchMarketData,'fetcvhMarketdataaaaaaa')
     }catch(err){
         console.log(err)
     }
