@@ -25,6 +25,9 @@ const updateFancyDetailsFunc = async (eventId,fencydata) => {
                         marketData = marketData ? JSON.parse(marketData) : null;
                         try{
                             if (marketData) {
+                                if(market.id == "12892085"){
+                                    console.log(marketData,'marketdataaaaaaaa')
+                                }
                                 marketData.status = ["ACTIVE","SUSPENDED","BALL_RUNNING"].includes(market.status1)?"OPEN":"CLOSED";
                                 marketData.inPlay = market.in_play;
                                 marketData.noValue = market.l1;
