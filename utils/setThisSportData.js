@@ -335,11 +335,11 @@ const setThisSportData = async(eventlist,SportName) => {
                             category = "OVERS"
                         }else if(["42","20","18","22","36","14"].includes(tempObjfancy.type_code.toString())){
                             category = "BATSMAN"
-                        }else if(tempObjfancy.type_code == 2){
+                        }else if(tempObjfancy.type_code.toString() == "2"){
                             category = "SINGLE_OVER"
-                        }else if(tempObjfancy.type_code == 28){
+                        }else if(tempObjfancy.type_code.toString() == "28"){
                             category = "ODD_EVEN"
-                        }else if(tempObjfancy.type_code == 6){
+                        }else if(tempObjfancy.type_code.toString() == "6"){
                             category = "BALL_BY_BALL"
                         }else{
                             category = "OTHER"
