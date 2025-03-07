@@ -45,6 +45,7 @@ module.exports = () => {
                         fetchMarketData = await fetchBMBook(eventIds[i])
                     }
                     if(fetchMarketData){
+                        await client.set(`bookmakerlist_${eventIds[i]}`,JSON.stringify(fetchMarketData))
                         updateBMMarketDetails(fetchMarketData)
                     }
                 }
