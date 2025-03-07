@@ -6,8 +6,6 @@ client.connect()
 client.on('error', (err) => {
     console.log(`Error(In setMarketIdsCron.js):${err}`);
 });
-const { promisify } = require('util');
-const { log } = require('console');
 client.on('connect', () => {
     // console.log('Connected to Redis1');
 });
@@ -24,7 +22,7 @@ client.on('connect', () => {
               }
               cricketEventIds.map(async (eventId) => {
                 try {
-                  let fancylist = await client.set(`fancylist_${eventId}`,JSON.stringify(fetchMarketData))
+                  let fancylist = await client.get(`fancylist_${eventId}`)
                   if(fancylist){
                     fancylist = JSON.parse(fancylist);
                     if (fancylist) {
