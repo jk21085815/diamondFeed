@@ -17,7 +17,7 @@ module.exports = () => {
                 let cricketEventIds
                 cricketEventIds = await client.get('crone_CricketliveEventIds_diamond_UPD'); 
                 cricketEventIds = JSON.parse(cricketEventIds)
-                console.log(cricketEventIds.length,'cricketEvent Idsssssss')
+                // console.log(cricketEventIds.length,'cricketEvent Idsssssss')
                 function delay(ms) {
                     return new Promise(resolve => setTimeout(resolve, ms));
                 }
@@ -47,7 +47,7 @@ module.exports = () => {
                         }
                         fetchMarketData = await fetchMarketData.json();
                         fetchMarketData = fetchMarketData.data
-                        // await client.set(`fancylist_${cricketEventIds[i]}`,JSON.stringify(fetchMarketData))
+                        await client.set(`fancylist_${cricketEventIds[i]}`,JSON.stringify(fetchMarketData))
                         updateFanctDetails(cricketEventIds[i],fetchMarketData)
                     }
                 }
