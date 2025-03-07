@@ -28,9 +28,6 @@ const updateLiveMarketDetails = async(bookmakerdata) => {
                             thisrunner.backPrices[0].price = runner.back_price
                             thisrunner.backPrices[0].size = runner.back_volume
                             thisrunner.status = runner.status
-                            if(c == 0 && bookmakerdata[a].bookmaker_id == "105871"){
-                                console.log(thisrunner.layPrices,thisrunner.status,'thisrunnerrrrrrrrrrrrrr')
-                            }
                         }
                         await client.set(`${marketdata.marketId}_diamond`, JSON.stringify(marketdata), 'EX', 24 * 60 * 60);
                         await client.set(`/topic/diamond_bm_update/${marketdata.marketId}`,JSON.stringify(marketdata));
