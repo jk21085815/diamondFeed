@@ -47,6 +47,7 @@ module.exports = () => {
                         }
                         fetchMarketData = await fetchMarketData.json();
                         fetchMarketData = fetchMarketData.data
+                        // await client.set(`fancylist_${cricketEventIds[i]}`,JSON.stringify(fetchMarketData))
                         updateFanctDetails(cricketEventIds[i],fetchMarketData)
                     }
                 }

@@ -24,14 +24,12 @@ client.on('connect', () => {
               }
               cricketEventIds.map(async (eventId) => {
                 try {
-                  let marketIds = await client.get(`cricketFanctMarketIds_${eventId}`);
-                  marketIds = JSON.parse(marketIds);
-      
-                  if (marketIds) {
-                    if(eventId == "33815465"){
-                      // console.log(marketIds,'marketiddddddddddddssssssssss')
+                  let fancylist = await client.set(`fancylist_${eventId}`,JSON.stringify(fetchMarketData))
+                  if(fancylist){
+                    fancylist = JSON.parse(fancylist);
+                    if (fancylist) {
+                      updateFanctDetails(eventId,fancylist);
                     }
-                    updateFanctDetails(marketIds, eventId);
                   }
                 } catch (error) {
                   console.error(`Error updating event ${eventId}:`, error);
