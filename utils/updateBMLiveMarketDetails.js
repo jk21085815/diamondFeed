@@ -28,7 +28,7 @@ const updateLiveMarketDetails = async(bookmakerdata) => {
                             thisrunner.backPrices[0].price = runner.back_price
                             thisrunner.backPrices[0].size = runner.back_volume
                             thisrunner.status = runner.status
-                            if(c == 0){
+                            if(c == 0 && bookmakerdata[a].bookmaker_id == "105871"){
                                 console.log(thisrunner.layPrices,thisrunner.status,'thisrunnerrrrrrrrrrrrrr')
                             }
                         }
