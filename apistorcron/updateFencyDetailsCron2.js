@@ -26,7 +26,7 @@ client.on('connect', () => {
                   if(fancylist){
                     fancylist = JSON.parse(fancylist);
                     if (fancylist) {
-                      console.log('fffffffffffffffffffffffffffffff')
+                      console.log(eventId,"eventIdeventId")
                       updateFanctDetails(eventId,fancylist);
                     }
                   }
