@@ -19,7 +19,7 @@ const updateFancyDetailsFunc = async (eventId,fencydata) => {
                     const market = JSON.parse(response[key]);
                     if (market) {
                         if(eventId == "34096673"){
-                            console.log(fencydata,"340966733409667334096673")
+                            console.log(market,"340966733409667334096673")
                         }
                         let marketData = await client.get(`${key}_diamond`);
                         marketData = marketData ? JSON.parse(marketData) : null;
