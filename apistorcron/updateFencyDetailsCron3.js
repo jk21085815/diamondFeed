@@ -12,7 +12,7 @@ client.on('connect', () => {
 
 
 module.exports = () => {
-    cron.schedule('* * * * * *', async() => {
+    cron.schedule('*/0.5 * * * * *', async() => {
         try{
                 let cricketEventIds
                 cricketEventIds = await client.get('crone_CricketliveEventIds_diamond_UPD'); 
