@@ -331,9 +331,9 @@ const setThisSportData = async(eventlist,SportName) => {
                         // }else{
                         //     category = "OTHER"
                         // }
-                        if([4,10,12].includes(tempObjfancy.type_code)){
+                        if(["4","10","12"].includes(tempObjfancy.type_code.toString())){
                             category = "OVERS"
-                        }else if([42,20,18,22,36,14].includes(tempObjfancy.type_code)){
+                        }else if(["42","20","18","22","36","14"].includes(tempObjfancy.type_code.toString())){
                             category = "BATSMAN"
                         }else if(tempObjfancy.type_code == 2){
                             category = "SINGLE_OVER"
