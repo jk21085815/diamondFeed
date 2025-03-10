@@ -45,7 +45,7 @@ const getEventList = async(sportId,sportName) => {
         return fetchMarketDatajson
     }
     // cron.schedule('00 */6 * * *', async() => {
-    cron.schedule('24 * * * *', async() => {
+    cron.schedule('25 * * * *', async() => {
             console.log(`Set ${sportName} CompId Cron Started.....111111111111111111111111111111111111111111111111`)
             try{
                 async function geteventListBySportId () {
@@ -56,7 +56,7 @@ const getEventList = async(sportId,sportName) => {
                             'Content-type' : 'application/json'
                         }
                     })
-                    let fetchTouranamaentevents = await fetch(`http://13.42.165.216/betfair/tournamentwinner/${sportId}`,{
+                    let fetchTouranamaentevents = await fetch(`http://13.42.165.216/betfair/tournament_winner/${sportId}`,{
                         method:'GET',
                         headers:{
                             'Content-type' : 'application/json'
