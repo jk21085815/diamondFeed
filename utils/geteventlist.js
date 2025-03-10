@@ -45,7 +45,7 @@ const getEventList = async(sportId,sportName) => {
         return fetchMarketDatajson
     }
     // cron.schedule('00 */6 * * *', async() => {
-    cron.schedule('10 * * * *', async() => {
+    cron.schedule('14 * * * *', async() => {
             console.log(`Set ${sportName} CompId Cron Started.....111111111111111111111111111111111111111111111111`)
             try{
                 async function geteventListBySportId () {
@@ -99,6 +99,8 @@ const getEventList = async(sportId,sportName) => {
                         }else if(isElection){
                             eventlist.push(eventdata)
                         }else if(eventdata.competition && (eventdata.event.name.trim() == eventdata.competition.name.trim())){
+                            console.log('in winnerrrrrrrrrrrrrrrr')
+
                             let fetchMarketData;
                             try{
                                 fetchMarketData = await fetchMOBook(eventdata.marketId)
