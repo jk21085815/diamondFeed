@@ -45,7 +45,7 @@ const getEventList = async(sportId,sportName) => {
         return fetchMarketDatajson
     }
     // cron.schedule('00 */6 * * *', async() => {
-    cron.schedule('15 * * * *', async() => {
+    cron.schedule('24 * * * *', async() => {
             console.log(`Set ${sportName} CompId Cron Started.....111111111111111111111111111111111111111111111111`)
             try{
                 async function geteventListBySportId () {
@@ -63,10 +63,11 @@ const getEventList = async(sportId,sportName) => {
                         }
                     })
                     fetchTouranamaentevents = await fetchTouranamaentevents.text()
-                    fetchTouranamaentevents = JSON.parse(fetchTouranamaentevents)
+                    let parsedata2 = JSON.parse(fetchTouranamaentevents)
                     fetchEventList = await fetchEventList.text()
                     let parsedata = JSON.parse(fetchEventList)
-                    parsedata = parsedata.concat(fetchTouranamaentevents)
+                    console.log(parsedata2,'parsedata 2222222222')
+                    parsedata = parsedata.concat(parsedata2)
                     for(let j = 0;j<parsedata.length;j++){
                         let isTestMatch = false
                         let isElection = false
