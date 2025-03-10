@@ -66,7 +66,6 @@ const getEventList = async(sportId,sportName) => {
                     let parsedata2 = JSON.parse(fetchTouranamaentevents)
                     fetchEventList = await fetchEventList.text()
                     let parsedata = JSON.parse(fetchEventList)
-                    console.log(parsedata2,'parsedata 2222222222')
                     parsedata = parsedata.concat(parsedata2)
                     for(let j = 0;j<parsedata.length;j++){
                         let isTestMatch = false

@@ -19,16 +19,12 @@ client.on('connect', () => {
 // module.exports = () => {
     // cron.schedule('*/02 * * * *', async() => {
         const addcricketlivemarketcronFunc = async() => {
-            let starttime = new Date();
             try{
                 let chunkSize = 30
                 let marketIdsArrMO = [];
-                // let marketIdsArrBM = [];
                 let liveEventInCricket = [];
-                let newEventAdded = false
                 let newEventIdsArray = []
                 let showEvent = []
-                // let eventIds = await client.get('crone_getEventIds_Cricket');
                 let eventIds = await client.get('crone_getEventIds_Cricket_diamond');
                 let CricketLiveEventIds = await client.get('crone_CricketliveEventIds_diamond_UPD');
                 let forcefullyLiveEvents = await client2.get('InPlayEventdata')
@@ -40,22 +36,11 @@ client.on('connect', () => {
                 }
                 eventIds = JSON.parse(eventIds)
                 // console.log(eventIds.length,'cricketEventIdssssssss')
-                console.log(eventIds.find(item => item == "32127028"),'321270283212702832127028')
                 function delay(ms) {
                     return new Promise(resolve => setTimeout(resolve, ms));
                 }
                 async function fetchMOBook(marketIds) {
                     let fetchMarketData = await fetch(` http://13.42.165.216:8443/api/betfair/${marketIds}`,{
-                        method: 'GET',
-                        headers: {
-                            'Content-type': 'application/json',
-                        }
-                    })
-                    let fetchMarketDatajson = await fetchMarketData.json()
-                    return fetchMarketDatajson
-                }
-                async function fetchOtherMOMarketData(eventId) {
-                    let fetchMarketData = await fetch(`http://13.42.165.216/betfair/cricket_extra_market_list/${eventId}`,{
                         method: 'GET',
                         headers: {
                             'Content-type': 'application/json',
@@ -112,10 +97,6 @@ client.on('connect', () => {
                                     }
                                     fetchMarketData2 = fetchMarketData2.concat(fetchMarketDatachunk)
                                 }
-                                // let openMarkets = fetchMarketData2.filter(item => ["OPEN","SUSPENDED"].includes(item.status))
-                                // for(let i = 0;i<openMarkets.length;i++){
-                                //     OnlyMOBMmARKETOpenArr.push(openMarkets[i].marketId)
-                                // }
                                 liveMatchCheckMarket = fetchMarketData2.find(item => (item.status !== "CLOSED"))
                             }
                             if(liveMatchCheckMarket){
@@ -150,169 +131,150 @@ client.on('connect', () => {
                             }
                             let eventStatus = isLiveStatus?'IN_PLAY':'UPCOMING'
                             eventData.status = eventStatus
-                            // if(OnlyMOMarketIdsArr.length !== 0){
-                                let pushstatus = false 
-                                let thatMO = liveMatchCheckMarket
-                                if(thatMO){
-                                    if(['OPEN','SUSPENDED',"BALL_RUNNING"].includes(thatMO.status)){
-                                        pushstatus = true
-                                    }
+                            let pushstatus = false 
+                            let thatMO = liveMatchCheckMarket
+                            if(thatMO){
+                                if(['OPEN','SUSPENDED',"BALL_RUNNING"].includes(thatMO.status)){
+                                    pushstatus = true
                                 }
-                                if(pushstatus){
-                                    // let matchoddmarketdata = await fetchOtherMOMarketData(eventIds[i])
-                                    let bookmakerdata = await fetchBMBook(eventIds[i])
-                                    let matchoddmarketRedis = await client.get(`${liveMatchCheckMarket.marketId}_diamond`)
-                                    if(matchoddmarketRedis){
-                                        matchoddmarketRedis = JSON.parse(matchoddmarketRedis)
-                                        let matchodddata = await fetchMOBook(liveMatchCheckMarket.marketId)
-                                        for(let e = 0;e<matchodddata.length;e++){
-                                            if(matchodddata[e]){
-                                                matchoddmarketRedis.status = matchodddata[e].status
-                                                for(let c = 0;c<matchodddata[e].runners.length;c++){
-                                                    let runner
-                                                    runner = matchoddmarketRedis.runners.find(item => item.runnerId == matchodddata[e].runners[c].selectionId)
-                                                    runner.status = matchodddata[e].runners[c].status
-                                                    runner.layPrices = matchodddata[e].runners[c].ex.availableToLay
-                                                    runner.backPrices = matchodddata[e].runners[c].ex.availableToBack
-                                                }
-                                                if(["OPEN","SUSPENDED","BALL_RUNNING"].includes(matchoddmarketRedis.status)){
-                                                    matchOddMarketArr.push(matchoddmarketRedis)
-                                                    if(!marketIdsArrMO.includes(matchoddmarketRedis.marketId)){
-                                                        marketIdsArrMO.push(matchoddmarketRedis.marketId)
-                                                    }
-                                                    await client.set(`${matchoddmarketRedis.marketId}_diamond`, JSON.stringify(matchoddmarketRedis), 'EX', 24 * 60 * 60);
-    
-                                                }
-                                            }
-                                        }
-                                    }
-                                    // for(let d = 0;d<matchoddmarketdata.length;d++){
-                                    //     let matchodddata = await fetchMOBook(matchoddmarketdata[d].marketId)
-                                    //     for(let e = 0;e<matchodddata.length;e++){
-                                    //         if(matchodddata[e]){
-                                    //             let tempObj
-                                    //             let tempRunner = []
-                                    //             tempObj = {
-                                    //                 "marketId": matchodddata[e].marketId,
-                                    //                 "marketTime": matchodddata[e].lastMatchTime,
-                                    //                 "marketType": matchoddmarketdata[d].description.marketType,
-                                    //                 "bettingType": matchoddmarketdata[d].description.bettingType,
-                                    //                 "marketName": matchoddmarketdata[d].marketName,
-                                    //                 "provider": "DIAMOND",
-                                    //                 "status": matchodddata[e].status
-                                    //             }
-                                    //             for(let c = 0;c<matchodddata[e].runners.length;c++){
-                                    //                 let runner
-                                    //                 runner = matchoddmarketdata[d].runners.find(item => item.selectionId == matchodddata[e].runners[c].selectionId)
-                                    //                 let tempObjrunner = 
-                                    //                 {
-                                    //                     "status": matchodddata[e].runners[c].status,
-                                    //                     "metadata": runner.metadata,
-                                    //                     "runnerName": runner.runnerName,
-                                    //                     "runnerId": matchodddata[e].runners[c].selectionId,
-                                    //                     "layPrices": matchodddata[e].runners[c].ex.availableToLay,
-                                    //                     "backPrices": matchodddata[e].runners[c].ex.availableToBack
-                                    //                 }
-                                    //                 tempRunner.push(tempObjrunner)
-                                    //             }
-                                    //             tempObj.runners = tempRunner
-                                    //             if(["OPEN","SUSPENDED","BALL_RUNNING"].includes(tempObj.status)){
-                                    //                 matchOddMarketArr.push(tempObj)
-                                    //                 if(!marketIdsArrMO.includes(tempObj.marketId)){
-                                    //                     marketIdsArrMO.push(tempObj.marketId)
-                                    //                 }
-                                    //                 await client.set(`${tempObj.marketId}_diamond`, JSON.stringify(tempObj), 'EX', 24 * 60 * 60);
-                                    //             }
-                                    //         }
-                                    //     }
-                                    // }
-                                    if(bookmakerdata){
-                                        for(let a = 0; a<bookmakerdata.length; a++){
-                                            if(Object.keys(bookmakerdata[a].data).length !== 0){
-                                                let tempRunner = []
-                                                let marketName
-                                                let tempObj = {
-                                                    "marketId": bookmakerdata[a].bookmaker_id,
-                                                    "marketTime": new Date(),
-                                                    "bettingType": "BOOKMAKER",
-                                                    "marketType": "BOOKMAKER",
-                                                    "provider": "DIAMOND",
-                                                    "status": bookmakerdata[a].data.status
-                                                }
-                                                if(bookmakerdata[a].data.type == "MATCH_ODDS"){
-                                                    marketName = "Bookmaker"
-                                                }else if(bookmakerdata[a].data.type == "MINI_BOOKMAKER"){
-                                                    marketName = "Bookmaker 0 Commission"
-                                                }else if(bookmakerdata[a].data.type == "TO_WIN_THE_TOSS"){
-                                                    marketName = "To Win The Toss"
-                                                }else{
-                                                    marketName = "Other Bookmaker"
-                                                }
-                                                tempObj["marketName"] = marketName
-                            
-                                                let bookmakerrunner = JSON.parse(bookmakerdata[a].data.runners)
-                                                let runnerIds = Object.keys(bookmakerrunner)
-                                                for(let c = 0;c<runnerIds.length;c++){
-                                                    let runner = bookmakerrunner[runnerIds[c]]
-                                                    let tempObjrunner = 
-                                                    {
-                                                        "status": runner.status,
-                                                        "metadata": "",
-                                                        "runnerName": runner.name,
-                                                        "runnerId": runner.selection_id,
-                                                        "layPrices": [{
-                                                            "price":runner.lay_price,
-                                                            "size":runner.lay_volume
-                                                        }],
-                                                        "backPrices": [{
-                                                            "price":runner.back_price,
-                                                            "size":runner.back_volume
-                                                        }]
-                                                    }
-                                                    tempRunner.push(tempObjrunner)
-                                                }
-                                                tempObj.runners = tempRunner
-                                                if(["OPEN","SUSPENDED","BALL_RUNNING"].includes(tempObj.status)){
-                                                    bookmakersMarketArr.push(tempObj)
-                                                    await client.set(`${tempObj.marketId}_diamond`, JSON.stringify(tempObj), 'EX', 24 * 60 * 60);
-                                                    await client.set(`/topic/diamond_bm_update/${tempObj.marketId}`,JSON.stringify(tempObj));
-                                                    Publishclient.publish(`/topic/diamond_bm_update/${tempObj.marketId}`,JSON.stringify(tempObj));
-                                                    // if(!marketIdsArrBM.includes(tempObj.marketId)){
-                                                    //     marketIdsArrBM.push(tempObj.marketId)
-                                                    // }
-                                                }
-                                            }
-                                        }
-                                    }
-                                    eventData.markets.matchOdds = matchOddMarketArr
-                                    eventData.markets.bookmakers = bookmakersMarketArr
-                                    showEvent.push(eventIds[i])
+                            }else{
+                                if(eventData.competitionName.trim() == eventData.eventName.trim()){
+                                    pushstatus = true
                                 }
-                            // }
+                            }
+                            if(pushstatus){
+                                let bookmakerdata = await fetchBMBook(eventIds[i])
+                                let matchoddmarketRedis = await client.get(`${liveMatchCheckMarket.marketId}_diamond`)
+                                if(matchoddmarketRedis){
+                                    matchoddmarketRedis = JSON.parse(matchoddmarketRedis)
+                                    let matchodddata = await fetchMOBook(liveMatchCheckMarket.marketId)
+                                    for(let e = 0;e<matchodddata.length;e++){
+                                        if(matchodddata[e]){
+                                            matchoddmarketRedis.status = matchodddata[e].status
+                                            for(let c = 0;c<matchodddata[e].runners.length;c++){
+                                                let runner
+                                                runner = matchoddmarketRedis.runners.find(item => item.runnerId == matchodddata[e].runners[c].selectionId)
+                                                runner.status = matchodddata[e].runners[c].status
+                                                runner.layPrices = matchodddata[e].runners[c].ex.availableToLay
+                                                runner.backPrices = matchodddata[e].runners[c].ex.availableToBack
+                                            }
+                                            if(["OPEN","SUSPENDED","BALL_RUNNING"].includes(matchoddmarketRedis.status)){
+                                                matchOddMarketArr.push(matchoddmarketRedis)
+                                                if(!marketIdsArrMO.includes(matchoddmarketRedis.marketId)){
+                                                    marketIdsArrMO.push(matchoddmarketRedis.marketId)
+                                                }
+                                                await client.set(`${matchoddmarketRedis.marketId}_diamond`, JSON.stringify(matchoddmarketRedis), 'EX', 24 * 60 * 60);
 
+                                            }
+                                        }
+                                    }
+                                }
+                                if(bookmakerdata){
+                                    for(let a = 0; a<bookmakerdata.length; a++){
+                                        if(Object.keys(bookmakerdata[a].data).length !== 0){
+                                            let tempRunner = []
+                                            let marketName
+                                            let tempObj = {
+                                                "marketId": bookmakerdata[a].bookmaker_id,
+                                                "marketTime": new Date(),
+                                                "bettingType": "BOOKMAKER",
+                                                "marketType": "BOOKMAKER",
+                                                "provider": "DIAMOND",
+                                                "status": bookmakerdata[a].data.status
+                                            }
+                                            if(bookmakerdata[a].data.type == "MATCH_ODDS"){
+                                                marketName = "Bookmaker"
+                                            }else if(bookmakerdata[a].data.type == "MINI_BOOKMAKER"){
+                                                marketName = "Bookmaker 0 Commission"
+                                            }else if(bookmakerdata[a].data.type == "TO_WIN_THE_TOSS"){
+                                                marketName = "To Win The Toss"
+                                            }else{
+                                                marketName = "Other Bookmaker"
+                                            }
+                                            tempObj["marketName"] = marketName
+                        
+                                            let bookmakerrunner = JSON.parse(bookmakerdata[a].data.runners)
+                                            let runnerIds = Object.keys(bookmakerrunner)
+                                            for(let c = 0;c<runnerIds.length;c++){
+                                                let runner = bookmakerrunner[runnerIds[c]]
+                                                let tempObjrunner = 
+                                                {
+                                                    "status": runner.status,
+                                                    "metadata": "",
+                                                    "runnerName": runner.name,
+                                                    "runnerId": runner.selection_id,
+                                                    "layPrices": [{
+                                                        "price":runner.lay_price,
+                                                        "size":runner.lay_volume
+                                                    }],
+                                                    "backPrices": [{
+                                                        "price":runner.back_price,
+                                                        "size":runner.back_volume
+                                                    }]
+                                                }
+                                                tempRunner.push(tempObjrunner)
+                                            }
+                                            tempObj.runners = tempRunner
+                                            if(["OPEN","SUSPENDED","BALL_RUNNING"].includes(tempObj.status)){
+                                                bookmakersMarketArr.push(tempObj)
+                                                await client.set(`${tempObj.marketId}_diamond`, JSON.stringify(tempObj), 'EX', 24 * 60 * 60);
+                                                await client.set(`/topic/diamond_bm_update/${tempObj.marketId}`,JSON.stringify(tempObj));
+                                                Publishclient.publish(`/topic/diamond_bm_update/${tempObj.marketId}`,JSON.stringify(tempObj));
+                                                // if(!marketIdsArrBM.includes(tempObj.marketId)){
+                                                //     marketIdsArrBM.push(tempObj.marketId)
+                                                // }
+                                            }
+                                        }
+                                    }
+                                }
+                                let liveMatchCheckMarket2 = []
+                                let fetchMarketData3
+                                if(OtherMOMarketArr.length !== 0){
+                                    let momarketIds = OtherMOMarketArr.join(",")
+                                    try{
+                                        fetchMarketData3 = await fetchMOBook(momarketIds)
+                                    }catch(error){
+                                        await delay(1000 * 10)
+                                        fetchMarketData3 = await fetchMOBook(momarketIds)
+                                    }
+                                    liveMatchCheckMarket2 = fetchMarketData3.filter(item => (item && ["OPEN","SUSPENDED","BALL_RUNNING"].includes(item.status)))
+                                }
+                                if(liveMatchCheckMarket2.length > 0){
+                                    for(let a = 0;a<liveMatchCheckMarket2.length;a++){
+                                        let thismarketdetail = await client.get(`${liveMatchCheckMarket2[a].marketId}_diamond`)
+                                        if(thismarketdetail){
+                                            thismarketdetail = JSON.parse(thismarketdetail)
+                                            thismarketdetail.status = liveMatchCheckMarket2[a].status
+                                            for(let c = 0;c<liveMatchCheckMarket2[a].runners.length;c++){
+                                                let thisrunner = thismarketdetail.runners.find(item => item.runnerId == liveMatchCheckMarket2[a].runners[c].selectionId)
+                                                thisrunner.status = liveMatchCheckMarket2[a].runners[c].status
+                                                thisrunner.layPrices = liveMatchCheckMarket2[a].runners[c].ex.availableToLay,
+                                                thisrunner.backPrices = liveMatchCheckMarket2[a].runners[c].ex.availableToBack
+                                            }
+                                            matchOddMarketArr.push(thismarketdetail)
+                                            if(!marketIdsArrMO.includes(thismarketdetail.marketId)){
+                                                marketIdsArrMO.push(thismarketdetail.marketId)
+                                            }
+                                        }
+
+                                    }
+                                }
+                                eventData.markets.matchOdds = matchOddMarketArr
+                                eventData.markets.bookmakers = bookmakersMarketArr
+                                showEvent.push(eventIds[i])
+                            }
                             await client.set(`${eventIds[i]}_diamondEventData`,JSON.stringify(eventData))
                         }else{
                             showEvent.push(eventIds[i])
-                            // setNewEventDetails([eventIds[i]])
                         }
-                        // for(let i = 0;i<OnlyMOBMmARKETOpenArr.length;i++){
-                        //     if(!marketIdsArr.includes(OnlyMOBMmARKETOpenArr[i])){
-                        //         marketIdsArr.push(OnlyMOBMmARKETOpenArr[i])
-                        //     }
-                        // }
                     }catch(error){
                         showEvent.push(eventIds[i])
                         console.log("Error:",error)
                     }
                 }       
-                if(newEventAdded){
-                    // await setNewLiveEvent(newEventIdsArray)
-                }
-                // console.log(liveEventInCricket,'liveEventInCricketliveEventInCricket')
                 await client.set('crone_CricketliveEventIds_diamond_UPD',JSON.stringify(liveEventInCricket));
                 await client.set('crone_getEventIds_Cricket_diamond_UPD',JSON.stringify(showEvent));
                 await client.set('crone_CricketliveMarketIds_MO_diamond_UPD',JSON.stringify(marketIdsArrMO));
-                // await client.set('crone_CricketliveMarketIds_BM_diamond_UPD',JSON.stringify(marketIdsArrBM));
                 addcricketlivemarketcronFunc()
             }catch(error){
                 addcricketlivemarketcronFunc()
