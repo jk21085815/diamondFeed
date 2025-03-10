@@ -34,8 +34,18 @@ const getEventList = async(sportId,sportName) => {
         dateToCheck.toISOString()
         return dateToCheck >= fiveDaysAgo && dateToCheck <= currentDate;
     }
+    async function fetchMOBook(marketIds) {
+        let fetchMarketData = await fetch(`http://13.42.165.216:8443/api/betfair/${marketIds}`,{
+            method: 'GET',
+            headers: {
+                'Content-type': 'application/json',
+            }
+        })
+        let fetchMarketDatajson = await fetchMarketData.json()
+        return fetchMarketDatajson
+    }
     // cron.schedule('00 */6 * * *', async() => {
-    cron.schedule('57 * * * *', async() => {
+    cron.schedule('10 * * * *', async() => {
             console.log(`Set ${sportName} CompId Cron Started.....111111111111111111111111111111111111111111111111`)
             try{
                 async function geteventListBySportId () {
@@ -75,13 +85,13 @@ const getEventList = async(sportId,sportName) => {
                             if(isDateWithinLast5Days(eventdata.event.openDate)){
                                 let fetchMarketData;
                                 try{
-                                    fetchMarketData = await fetchEventDataFunc(eventdata.event.id)
+                                    fetchMarketData = await fetchMOBook(eventdata.marketId)
                                 }catch(error){
                                     await delay(1000 * 30)
-                                    fetchMarketData = await fetchEventDataFunc(eventdata.event.id)
+                                    fetchMarketData = await fetchMOBook(eventdata.marketId)
                                 }
                                 await delay(1000)
-                                let matchodds = fetchMarketData.catalogues.find(item => item.marketName.trim() == "Match Odds")
+                                let matchodds = fetchMarketData[0]
                                 if(matchodds && (matchodds.status !== 'CLOSED')){
                                     eventlist.push(eventdata)
                                 }
@@ -91,13 +101,14 @@ const getEventList = async(sportId,sportName) => {
                         }else if(eventdata.competition && (eventdata.event.name.trim() == eventdata.competition.name.trim())){
                             let fetchMarketData;
                             try{
-                                fetchMarketData = await fetchEventDataFunc(eventdata.event.id)
+                                fetchMarketData = await fetchMOBook(eventdata.marketId)
                             }catch(error){
                                 await delay(1000 * 30)
-                                fetchMarketData = await fetchEventDataFunc(eventdata.event.id)
+                                fetchMarketData = await fetchMOBook(eventdata.marketId)
                             }
                             await delay(1000)
-                            let winner = fetchMarketData.catalogues.find(item => item.marketType == "TOURNAMENT_WINNER")
+                            let winner = fetchMarketData[0]
+                            console.log(winner,'winnerrrrrrrrrrrrrrrr')
                             if(winner && (winner.status !== 'CLOSED')){
                                 eventlist.push(eventdata)
                             }
