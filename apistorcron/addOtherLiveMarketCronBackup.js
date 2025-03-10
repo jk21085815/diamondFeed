@@ -129,27 +129,29 @@ client.on('connect', () => {
                                 }
                                 if(pushstatus){
                                     let bookmakerdata = await fetchBMBook(eventIds[i])
-                                    let matchoddmarketRedis = await client.get(`${liveMatchCheckMarket.marketId}_diamond`)
-                                    if(matchoddmarketRedis){
-                                        matchoddmarketRedis = JSON.parse(matchoddmarketRedis)
-                                        let matchodddata = await fetchMOBook(liveMatchCheckMarket.marketId)
-                                        for(let e = 0;e<matchodddata.length;e++){
-                                            if(matchodddata[e]){
-                                                matchoddmarketRedis.status = matchodddata[e].status
-                                                for(let c = 0;c<matchodddata[e].runners.length;c++){
-                                                    let runner
-                                                    runner = matchoddmarketRedis.runners.find(item => item.runnerId == matchodddata[e].runners[c].selectionId)
-                                                    runner.status = matchodddata[e].runners[c].status
-                                                    runner.layPrices = matchodddata[e].runners[c].ex.availableToLay
-                                                    runner.backPrices = matchodddata[e].runners[c].ex.availableToBack
-                                                }
-                                                if(["OPEN","SUSPENDED","BALL_RUNNING"].includes(matchoddmarketRedis.status)){
-                                                    matchOddMarketArr.push(matchoddmarketRedis)
-                                                    if(!OtherSportLiveMarketIdsMO.includes(matchoddmarketRedis.marketId)){
-                                                        OtherSportLiveMarketIdsMO.push(matchoddmarketRedis.marketId)
+                                    if(liveMatchCheckMarket){
+                                        let matchoddmarketRedis = await client.get(`${liveMatchCheckMarket.marketId}_diamond`)
+                                        if(matchoddmarketRedis){
+                                            matchoddmarketRedis = JSON.parse(matchoddmarketRedis)
+                                            let matchodddata = await fetchMOBook(liveMatchCheckMarket.marketId)
+                                            for(let e = 0;e<matchodddata.length;e++){
+                                                if(matchodddata[e]){
+                                                    matchoddmarketRedis.status = matchodddata[e].status
+                                                    for(let c = 0;c<matchodddata[e].runners.length;c++){
+                                                        let runner
+                                                        runner = matchoddmarketRedis.runners.find(item => item.runnerId == matchodddata[e].runners[c].selectionId)
+                                                        runner.status = matchodddata[e].runners[c].status
+                                                        runner.layPrices = matchodddata[e].runners[c].ex.availableToLay
+                                                        runner.backPrices = matchodddata[e].runners[c].ex.availableToBack
                                                     }
-                                                    await client.set(`${matchoddmarketRedis.marketId}_diamond`, JSON.stringify(matchoddmarketRedis), 'EX', 24 * 60 * 60);
-    
+                                                    if(["OPEN","SUSPENDED","BALL_RUNNING"].includes(matchoddmarketRedis.status)){
+                                                        matchOddMarketArr.push(matchoddmarketRedis)
+                                                        if(!OtherSportLiveMarketIdsMO.includes(matchoddmarketRedis.marketId)){
+                                                            OtherSportLiveMarketIdsMO.push(matchoddmarketRedis.marketId)
+                                                        }
+                                                        await client.set(`${matchoddmarketRedis.marketId}_diamond`, JSON.stringify(matchoddmarketRedis), 'EX', 24 * 60 * 60);
+        
+                                                    }
                                                 }
                                             }
                                         }
