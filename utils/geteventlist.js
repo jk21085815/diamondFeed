@@ -45,7 +45,7 @@ const getEventList = async(sportId,sportName) => {
         return fetchMarketDatajson
     }
     // cron.schedule('00 */6 * * *', async() => {
-    cron.schedule('26 * * * *', async() => {
+    cron.schedule('28 * * * *', async() => {
             console.log(`Set ${sportName} CompId Cron Started.....111111111111111111111111111111111111111111111111`)
             try{
                 async function geteventListBySportId () {
@@ -84,14 +84,7 @@ const getEventList = async(sportId,sportName) => {
                         // let isUpcomingComp = false
                         if(isTestMatch){
                             if(isDateWithinLast5Days(eventdata.event.openDate)){
-                                let fetchMarketData;
-                                try{
-                                    fetchMarketData = await fetchMOBook(eventdata.marketId)
-                                }catch(error){
-                                    await delay(1000 * 30)
-                                    fetchMarketData = await fetchMOBook(eventdata.marketId)
-                                }
-                                await delay(1000)
+                                let fetchMarketData = await fetchMOBook(eventdata.marketId)
                                 let matchodds = fetchMarketData[0]
                                 if(matchodds && (matchodds.status !== 'CLOSED')){
                                     eventlist.push(eventdata)
@@ -102,14 +95,7 @@ const getEventList = async(sportId,sportName) => {
                         }else if(eventdata.competition && (eventdata.event.name.trim() == eventdata.competition.name.trim())){
                             console.log('in winnerrrrrrrrrrrrrrrr')
 
-                            let fetchMarketData;
-                            try{
-                                fetchMarketData = await fetchMOBook(eventdata.marketId)
-                            }catch(error){
-                                await delay(1000 * 30)
-                                fetchMarketData = await fetchMOBook(eventdata.marketId)
-                            }
-                            await delay(1000)
+                            let fetchMarketData = await fetchMOBook(eventdata.marketId)
                             let winner = fetchMarketData[0]
                             console.log(winner,'winnerrrrrrrrrrrrrrrr')
                             if(winner && (winner.status !== 'CLOSED')){
