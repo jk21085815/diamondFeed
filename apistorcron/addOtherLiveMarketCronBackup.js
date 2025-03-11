@@ -98,7 +98,7 @@ client.on('connect', () => {
                                     await delay(1000 * 10)
                                     fetchMarketData2 = await fetchMOBook(MOMarketId)
                                 }
-                                liveMatchCheckMarket = fetchMarketData2.find(item => (item.status !== "CLOSED"))
+                                liveMatchCheckMarket = fetchMarketData2.find(item => (item && item.status !== "CLOSED"))
                             }
                             if(!issportHRGH){
                                 if(liveMatchCheckMarket){
