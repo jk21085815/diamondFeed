@@ -98,6 +98,7 @@ client.on('connect', () => {
                                     fetchMarketData2 = fetchMarketData2.concat(fetchMarketDatachunk)
                                 }
                                 liveMatchCheckMarket = fetchMarketData2.find(item => (item.status !== "CLOSED"))
+                                console.log(liveMatchCheckMarket,"liveMatchCheckMarketliveMatchCheckMarket")
                             }
                             if(liveMatchCheckMarket){
                                 if(liveMatchCheckMarket.inplay == true && liveMatchCheckMarket.status !== 'CLOSED'){
