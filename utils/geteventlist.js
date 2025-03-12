@@ -63,6 +63,7 @@ const getEventList = async(sportId,sportName) => {
                         }
                     })
                     fetchTouranamaentevents = await fetchTouranamaentevents.text()
+                    console.log(fetchTouranamaentevents,"fetchTouranamaentevents")
                     let parsedata2 = JSON.parse(fetchTouranamaentevents)
                     fetchEventList = await fetchEventList.text()
                     let parsedata = JSON.parse(fetchEventList)
