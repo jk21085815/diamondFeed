@@ -36,6 +36,7 @@ client.on('connect', () => {
                 }
                 eventIds = JSON.parse(eventIds)
                 // console.log(eventIds.length,'cricketEventIdssssssss')
+                console.log(eventIds.find(item => item == "34112215"),'341122153411221534112215')
                 function delay(ms) {
                     return new Promise(resolve => setTimeout(resolve, ms));
                 }
