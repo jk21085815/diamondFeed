@@ -14,9 +14,6 @@ const setThisSportData = async(eventlist,SportName) => {
         async function seteventdataFunc () {
             let thisSportEventId = []
             console.log(eventlist.length,`Event list length  in ${SportName} Sport`)
-            function delay(ms) {
-                return new Promise(resolve => setTimeout(resolve, ms));
-            }
             async function fetchMOBook(marketIds) {
                 let fetchMarketData = await fetch(`http://13.42.165.216:8443/api/betfair/${marketIds}`,{
                     method: 'GET',
@@ -430,7 +427,7 @@ const setThisSportData = async(eventlist,SportName) => {
         }
         await seteventdataFunc()
     }catch(error){
-        await seteventdataFunc()
+        setThisSportData(eventlist,SportName)
         console.log(error,'Errorrr setthisSportData')
     }
 
