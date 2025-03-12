@@ -271,7 +271,12 @@ const setThisSportData = async(eventlist,SportName) => {
                         }
                         tempObj["marketName"] = marketName
     
-                        let bookmakerrunner = JSON.parse(bookmakerdata[a].data.runners)
+                        let bookmakerrunner = bookmakerdata[a].data.runners
+                        if (typeof bookmakerrunner === "string" && bookmakerrunner.trim() !== "") {
+                            bookmakerrunner = JSON.parse(bookmakerrunner);
+                        } else {
+                            console.error("Invalid JSON data:", data);
+                        }
                         let runnerIds = Object.keys(bookmakerrunner)
                         for(let c = 0;c<runnerIds.length;c++){
                             let runner = bookmakerrunner[runnerIds[c]]
@@ -424,9 +429,8 @@ const setThisSportData = async(eventlist,SportName) => {
             console.log(starttime,new Date(),(Date.now()-(starttime.getTime()))/1000,`Set ${SportName} Sport Cron  Ended.....`)
         }
         await seteventdataFunc()
-        
     }catch(error){
-        // await setThisSportData(eventlist,SportName)
+        await seteventdataFunc()
         console.log(error,'Errorrr setthisSportData')
     }
 
