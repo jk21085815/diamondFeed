@@ -95,7 +95,7 @@ client.on('connect', () => {
                                 try{
                                     fetchMarketData2 = await fetchMOBook(MOMarketId)
                                 }catch(error){
-                                    await delay(1000 * 10)
+                                    // await delay(1000 * 10)
                                     fetchMarketData2 = await fetchMOBook(MOMarketId)
                                 }
                                 liveMatchCheckMarket = fetchMarketData2.find(item => (item && item.status !== "CLOSED"))
@@ -221,7 +221,7 @@ client.on('connect', () => {
                                         try{
                                             fetchMarketData3 = await fetchMOBook(momarketIds)
                                         }catch(error){
-                                            await delay(1000 * 10)
+                                            // await delay(1000 * 10)
                                             fetchMarketData3 = await fetchMOBook(momarketIds)
                                         }
                                         liveMatchCheckMarket2 = fetchMarketData3.filter(item => (item && ["OPEN","SUSPENDED","BALL_RUNNING"].includes(item.status)))
@@ -260,7 +260,7 @@ client.on('connect', () => {
                                     try{
                                         fetchMarketData3 = await fetchMOBook(momarketIds)
                                     }catch(error){
-                                        await delay(1000 * 10)
+                                        // await delay(1000 * 10)
                                         fetchMarketData3 = await fetchMOBook(momarketIds)
                                     }
                                     liveMatchCheckMarket = fetchMarketData3.filter(item => (item && ["OPEN","SUSPENDED","BALL_RUNNING"].includes(item.status)))

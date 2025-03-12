@@ -82,7 +82,7 @@ client.on('connect', () => {
                         console.log("Non-JSON response received");
 
                     }
-                    await delay(1000 * 30);
+                    // await delay(1000 * 30);
                     // Check Event Live Status
                     liveMatchCheckMarket = fetchMarketData.catalogues.find(item => item.marketName == 'Match Odds')
                     liveMatchCheckMarket2 = fetchMarketData.catalogues.find(item => item.marketName == 'Bookmaker')

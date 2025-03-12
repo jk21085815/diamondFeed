@@ -32,9 +32,9 @@ module.exports = () => {
                                         'Content-type': 'application/json',
                                     }
                                 })
-                                await delay(1000);
+                                // await delay(1000);
                             }catch(error){
-                                await delay(1000 * 10)
+                                // await delay(1000 * 10)
                                 fetchMarketData = await fetch(` https://odds.datafeed365.com/api/active-fancy/${cricketEventIds[i]}`,{
                                     method: 'GET',
                                     headers: {

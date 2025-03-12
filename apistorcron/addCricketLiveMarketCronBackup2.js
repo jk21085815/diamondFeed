@@ -92,7 +92,7 @@ client.on('connect', () => {
                                     try{
                                         fetchMarketDatachunk = await fetchMOBook(marketchunks)
                                     }catch(error){
-                                        await delay(1000 * 30)
+                                        // await delay(1000 * 30)
                                         fetchMarketDatachunk = await fetchMOBook(marketchunks)
                                     }
                                     fetchMarketData2 = fetchMarketData2.concat(fetchMarketDatachunk)
@@ -236,7 +236,7 @@ client.on('connect', () => {
                                     try{
                                         fetchMarketData3 = await fetchMOBook(momarketIds)
                                     }catch(error){
-                                        await delay(1000 * 10)
+                                        // await delay(1000 * 10)
                                         fetchMarketData3 = await fetchMOBook(momarketIds)
                                     }
                                     liveMatchCheckMarket2 = fetchMarketData3.filter(item => (item && ["OPEN","SUSPENDED","BALL_RUNNING"].includes(item.status)))

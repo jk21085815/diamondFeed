@@ -49,7 +49,7 @@ module.exports = () => {
                                 console.log("Non-JSON response received");
 
                             }
-                            await delay(1000 * 30);
+                            // await delay(1000 * 30);
                             if(fetchMarketData && fetchMarketData.catalogues){
                                 let mobmmarkets = fetchMarketData.catalogues.filter(item => item.bettingType !== "LINE")
                                 for(let j = 0;j<mobmmarkets.length;j++){
