@@ -40,9 +40,9 @@ module.exports = () => {
                         let fetchMarketData
                         try{
                             fetchMarketData = await fetchBMBook(eventIds[i])
-                            await delay(1000);
+                            // await delay(1000);
                         }catch(error){
-                            await delay(1000 * 10)
+                            // await delay(1000 * 10)
                             fetchMarketData = await fetchBMBook(eventIds[i])
                         }
                         if(fetchMarketData){
