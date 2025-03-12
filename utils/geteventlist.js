@@ -45,7 +45,7 @@ const getEventList = async(sportId,sportName) => {
         return fetchMarketDatajson
     }
     // cron.schedule('00 */6 * * *', async() => {
-    cron.schedule('16 * * * *', async() => {
+    cron.schedule('20 * * * *', async() => {
             console.log(`Set ${sportName} CompId Cron Started.....111111111111111111111111111111111111111111111111`)
             try{
                 async function geteventListBySportId () {
@@ -63,7 +63,7 @@ const getEventList = async(sportId,sportName) => {
                         }
                     })
                     fetchTouranamaentevents = await fetchTouranamaentevents.text()
-                    console.log(fetchTouranamaentevents,"fetchTouranamaentevents")
+                    console.log(fetchTouranamaentevents,sportName,"fetchTouranamaentevents")
                     let parsedata2 = JSON.parse(fetchTouranamaentevents)
                     fetchEventList = await fetchEventList.text()
                     let parsedata = JSON.parse(fetchEventList)
