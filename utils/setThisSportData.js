@@ -68,7 +68,7 @@ const setThisSportData = async(eventlist,SportName) => {
                 return fetchMarketDatajson.data
             }
             for(let k = 0;k<eventlist.length;k++){
-                console.log(eventlist[k].eventId,k,new Date(),'kkk')
+                console.log(eventlist[k].event.id,k,new Date(),'kkk')
                 let matchOddsArr = [];
                 let matchOddsArr2 = [];
                 let bookMakerMarketArr = [];
@@ -410,7 +410,6 @@ const setThisSportData = async(eventlist,SportName) => {
                 let MOMarketDetailsArr = matchOddsArr2
                 let OnlyOtherMOMarketDetails = MOMarketDetailsArr.filter(item => ((item.marketType == "COMPLETED_MATCH" || item.marketType == "TIED_MATCH" || item.marketType == "WINNING_ODDS" || item.marketType == "WIN" || item.marketType == "TOURNAMENT_WINNER"  || item.marketName.trim().toLowerCase().startsWith('over/under') && ["OPEN","SUSPENDED","BALL_RUNNING"].includes(item.status))))
                 let OnlyMOMarketId = MOMarketDetailsArr.filter(item => (item.marketType == "MATCH_ODDS"))
-                console.log(OnlyMOMarketId,"OnlyMOMarketIdOnlyMOMarketId")
                 for(let j = 0;j<OnlyOtherMOMarketDetails.length;j++){
                     OnlyOtherMOMarketIdsArr.push(OnlyOtherMOMarketDetails[j].marketId)
                 }
