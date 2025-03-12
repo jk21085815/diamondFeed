@@ -44,13 +44,14 @@ const getEventList = async(sportId,sportName) => {
         let fetchMarketDatajson = await fetchMarketData.json()
         return fetchMarketDatajson
     }
-    // cron.schedule('00 */6 * * *', async() => {
-    cron.schedule('41 * * * *', async() => {
+    cron.schedule('00 */6 * * *', async() => {
+    // cron.schedule('41 * * * *', async() => {
             console.log(`Set ${sportName} CompId Cron Started.....111111111111111111111111111111111111111111111111`)
             try{
                 async function geteventListBySportId () {
                     try{
                         let eventlist = []
+                        let parsedata2 = []
                         let fetchEventList = await fetch(`http://13.42.165.216/betfair/get_latest_event_list/${sportId}`,{
                             method:'GET',
                             headers:{
@@ -64,7 +65,11 @@ const getEventList = async(sportId,sportName) => {
                             }
                         })
                         fetchTouranamaentevents = await fetchTouranamaentevents.text()
-                        let parsedata2 = JSON.parse(fetchTouranamaentevents)
+                        if (typeof fetchTouranamaentevents === "string" && fetchTouranamaentevents.trim() !== "") {
+                            parsedata2 = JSON.parse(fetchTouranamaentevents)
+                        } else {
+                            console.error("Invalid JSON data:", fetchTouranamaentevents);
+                        }
                         fetchEventList = await fetchEventList.text()
                         let parsedata = JSON.parse(fetchEventList)
                         parsedata = parsedata.concat(parsedata2)
