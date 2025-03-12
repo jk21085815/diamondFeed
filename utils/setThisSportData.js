@@ -247,55 +247,57 @@ const setThisSportData = async(eventlist,SportName) => {
                 }
                 if(bookmakerdata){
                     for(let a = 0; a<bookmakerdata.length; a++){
-                        let tempRunner = []
-                        let marketName
-                        let tempObj = {
-                            "marketId": bookmakerdata[a].bookmaker_id,
-                            "marketTime": new Date(),
-                            "bettingType": "BOOKMAKER",
-                            "marketType": "BOOKMAKER",
-                            "provider": "DIAMOND",
-                            "status": bookmakerdata[a].data.status
-                        }
-                        if(bookmakerdata[a].data.type == "MATCH_ODDS"){
-                            marketName = "Bookmaker"
-                        }else if(bookmakerdata[a].data.type == "MINI_BOOKMAKER"){
-                            marketName = "Bookmaker 0 Commission"
-                        }else if(bookmakerdata[a].data.type == "TO_WIN_THE_TOSS"){
-                            marketName = "To Win The Toss"
-                        }else{
-                            marketName = bookmakerdata[a].data.name
-                        }
-                        tempObj["marketName"] = marketName
-    
-                        let bookmakerrunner = bookmakerdata[a].data.runners
-                        if (typeof bookmakerrunner === "string" && bookmakerrunner.trim() !== "") {
-                            bookmakerrunner = JSON.parse(bookmakerrunner);
-                        } else {
-                            console.error("Invalid JSON data:", data);
-                        }
-                        let runnerIds = Object.keys(bookmakerrunner)
-                        for(let c = 0;c<runnerIds.length;c++){
-                            let runner = bookmakerrunner[runnerIds[c]]
-                            let tempObjrunner = 
-                            {
-                                "status": runner.status,
-                                "metadata": "",
-                                "runnerName": runner.name,
-                                "runnerId": runner.selection_id,
-                                "layPrices": [{
-                                    "price":runner.lay_price,
-                                    "size":runner.lay_volume
-                                }],
-                                "backPrices": [{
-                                    "price":runner.back_price,
-                                    "size":runner.back_volume
-                                }]
+                        if(Object.keys(bookmakerdata[a].data).length !== 0){
+                            let tempRunner = []
+                            let marketName
+                            let tempObj = {
+                                "marketId": bookmakerdata[a].bookmaker_id,
+                                "marketTime": new Date(),
+                                "bettingType": "BOOKMAKER",
+                                "marketType": "BOOKMAKER",
+                                "provider": "DIAMOND",
+                                "status": bookmakerdata[a].data.status
                             }
-                            tempRunner.push(tempObjrunner)
+                            if(bookmakerdata[a].data.type == "MATCH_ODDS"){
+                                marketName = "Bookmaker"
+                            }else if(bookmakerdata[a].data.type == "MINI_BOOKMAKER"){
+                                marketName = "Bookmaker 0 Commission"
+                            }else if(bookmakerdata[a].data.type == "TO_WIN_THE_TOSS"){
+                                marketName = "To Win The Toss"
+                            }else{
+                                marketName = bookmakerdata[a].data.name
+                            }
+                            tempObj["marketName"] = marketName
+        
+                            let bookmakerrunner = bookmakerdata[a].data.runners
+                            if (typeof bookmakerrunner === "string" && bookmakerrunner.trim() !== "") {
+                                bookmakerrunner = JSON.parse(bookmakerrunner);
+                            } else {
+                                console.error("Invalid JSON data:", bookmakerrunner);
+                            }
+                            let runnerIds = Object.keys(bookmakerrunner)
+                            for(let c = 0;c<runnerIds.length;c++){
+                                let runner = bookmakerrunner[runnerIds[c]]
+                                let tempObjrunner = 
+                                {
+                                    "status": runner.status,
+                                    "metadata": "",
+                                    "runnerName": runner.name,
+                                    "runnerId": runner.selection_id,
+                                    "layPrices": [{
+                                        "price":runner.lay_price,
+                                        "size":runner.lay_volume
+                                    }],
+                                    "backPrices": [{
+                                        "price":runner.back_price,
+                                        "size":runner.back_volume
+                                    }]
+                                }
+                                tempRunner.push(tempObjrunner)
+                            }
+                            tempObj.runners = tempRunner
+                            await client.set(`${tempObj.marketId}_diamond`, JSON.stringify(tempObj), 'EX', 24 * 60 * 60);
                         }
-                        tempObj.runners = tempRunner
-                        await client.set(`${tempObj.marketId}_diamond`, JSON.stringify(tempObj), 'EX', 24 * 60 * 60);
 
                     }
                 }
