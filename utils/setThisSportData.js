@@ -68,7 +68,7 @@ const setThisSportData = async(eventlist,SportName) => {
                 return fetchMarketDatajson.data
             }
             for(let k = 0;k<eventlist.length;k++){
-                console.log(k,new Date(),'kkk')
+                console.log(eventlist[k].eventId,k,new Date(),'kkk')
                 let matchOddsArr = [];
                 let matchOddsArr2 = [];
                 let bookMakerMarketArr = [];
@@ -90,7 +90,6 @@ const setThisSportData = async(eventlist,SportName) => {
                 delete eventlist[k]['marketStartTime']
                 delete eventlist[k]['totalMatched']
                 thisSportEventId.push(eventlist[k].eventId)
-                // console.log(eventlist[k],'eventlist[kkkkkkkkkkkkkkk')
                 let marketIds = []
                 if(["7","4339"].includes(eventlist[k].sportId)){
                     eventlist[k].catalogues.forEach(item => {

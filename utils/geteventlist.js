@@ -94,7 +94,6 @@ const getEventList = async(sportId,sportName) => {
                         }else if(eventdata.competition && (eventdata.event.name.trim() == eventdata.competition.name.trim())){
                             let fetchMarketData = await fetchMOBook(eventdata.marketId)
                             let winner = fetchMarketData[0]
-                            console.log(winner,'winnerrrrrrrrrrrrrrrrrrrr')
                             if(winner && (winner.status !== 'CLOSED')){
                                 eventlist.push(eventdata)
                             }
