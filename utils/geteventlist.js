@@ -45,7 +45,7 @@ const getEventList = async(sportId,sportName) => {
         return fetchMarketDatajson
     }
     // cron.schedule('00 */6 * * *', async() => {
-    cron.schedule('35 * * * *', async() => {
+    cron.schedule('37 * * * *', async() => {
             console.log(`Set ${sportName} CompId Cron Started.....111111111111111111111111111111111111111111111111`)
             try{
                 async function geteventListBySportId () {
@@ -141,7 +141,7 @@ const getEventList = async(sportId,sportName) => {
                 geteventListBySportId()
             }catch(error){
                 console.log(error,'Errorrr setCompIdCrone')
-                getEventList(sportName)
+                // getEventList(sportName)
             }
     })
 }

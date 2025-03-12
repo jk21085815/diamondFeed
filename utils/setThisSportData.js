@@ -427,7 +427,7 @@ const setThisSportData = async(eventlist,SportName) => {
         }
         await seteventdataFunc()
     }catch(error){
-        setThisSportData(eventlist,SportName)
+        // setThisSportData(eventlist,SportName)
         console.log(error,'Errorrr setthisSportData')
     }
 
