@@ -240,12 +240,12 @@ client.on('connect', () => {
                                     }
                                     liveMatchCheckMarket2 = fetchMarketData3.filter(item => (item && ["OPEN","SUSPENDED","BALL_RUNNING"].includes(item.status)))
                                 }
-                                if(eventIds[i] == "34114193"){
-                                    console.log(liveMatchCheckMarket2,"liveMatchCheckMarket2liveMatchCheckMarket2")
-                                }
                                 if(liveMatchCheckMarket2.length > 0){
                                     for(let a = 0;a<liveMatchCheckMarket2.length;a++){
                                         let thismarketdetail = await client.get(`${liveMatchCheckMarket2[a].marketId}_diamond`)
+                                        if(eventIds[i] == "34114193"){
+                                            console.log(thismarketdetail,"thismarketdetailthismarketdetailthismarketdetail")
+                                        }
                                         if(thismarketdetail){
                                             thismarketdetail = JSON.parse(thismarketdetail)
                                             thismarketdetail.status = liveMatchCheckMarket2[a].status
