@@ -258,7 +258,7 @@ const setThisSportData = async(eventlist,SportName) => {
                                 "provider": "DIAMOND",
                                 "status": bookmakerdata[a].data.status
                             }
-                            if(bookmakerdata[a].data.type == "MATCH_ODDS"){
+                            if(bookmakerdata[a].data.name == "BOOKMAKER"){
                                 marketName = "Bookmaker"
                             }else if(bookmakerdata[a].data.type == "MINI_BOOKMAKER"){
                                 marketName = "Bookmaker 0 Commission"

@@ -184,14 +184,14 @@ client.on('connect', () => {
                                                 "provider": "DIAMOND",
                                                 "status": bookmakerdata[a].data.status
                                             }
-                                            if(bookmakerdata[a].data.type == "MATCH_ODDS"){
+                                            if(bookmakerdata[a].data.name == "BOOKMAKER"){
                                                 marketName = "Bookmaker"
                                             }else if(bookmakerdata[a].data.type == "MINI_BOOKMAKER"){
                                                 marketName = "Bookmaker 0 Commission"
                                             }else if(bookmakerdata[a].data.type == "TO_WIN_THE_TOSS"){
                                                 marketName = "To Win The Toss"
                                             }else{
-                                                marketName = "Other Bookmaker"
+                                                marketName = bookmakerdata[a].data.name
                                             }
                                             tempObj["marketName"] = marketName
                         
