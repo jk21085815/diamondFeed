@@ -236,10 +236,12 @@ client.on('connect', () => {
                                     try{
                                         fetchMarketData3 = await fetchMOBook(momarketIds)
                                     }catch(error){
-                                        // await delay(1000 * 10)
                                         fetchMarketData3 = await fetchMOBook(momarketIds)
                                     }
                                     liveMatchCheckMarket2 = fetchMarketData3.filter(item => (item && ["OPEN","SUSPENDED","BALL_RUNNING"].includes(item.status)))
+                                }
+                                if(eventIds[i] == "34114193"){
+                                    console.log(liveMatchCheckMarket2,"liveMatchCheckMarket2liveMatchCheckMarket2")
                                 }
                                 if(liveMatchCheckMarket2.length > 0){
                                     for(let a = 0;a<liveMatchCheckMarket2.length;a++){
