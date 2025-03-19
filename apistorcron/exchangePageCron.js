@@ -17,7 +17,7 @@ module.exports = () => {
     // const exchangePageUpdate =  async () => {
         // setInterval(async() => {
             let starttime = new Date();
-            console.log(starttime,'Exchange Page Cron Started......................')
+            // console.log(starttime,'Exchange Page Cron Started......................')
             try{
                 let cricketData
                 let OtherSportData
@@ -87,7 +87,7 @@ module.exports = () => {
                 }
                 await client.set('/topic/diamond_exchange',JSON.stringify(eventlist))
                 Publishclient.publish('/topic/diamond_exchange',JSON.stringify(eventlist))
-                console.log(starttime,'Exchange Page Cron End......................')
+                // console.log(starttime,'Exchange Page Cron End......................')
 
             }catch(error){
                 console.log(error,'Errorrr exchagnePageCron')
