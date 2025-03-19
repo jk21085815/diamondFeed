@@ -87,6 +87,8 @@ module.exports = () => {
                 }
                 await client.set('/topic/diamond_exchange',JSON.stringify(eventlist))
                 Publishclient.publish('/topic/diamond_exchange',JSON.stringify(eventlist))
+                console.log(starttime,'Exchange Page Cron End......................')
+
             }catch(error){
                 console.log(error,'Errorrr exchagnePageCron')
             }
