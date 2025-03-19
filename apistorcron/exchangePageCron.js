@@ -17,10 +17,8 @@ module.exports = () => {
     // const exchangePageUpdate =  async () => {
         // setInterval(async() => {
             let starttime = new Date();
-            // console.log(starttime,'Exchange Page Cron Started......................')
+            console.log(starttime,'Exchange Page Cron Started......................')
             try{
-                let liveCricketEventIds
-                let liveOtherSportEventIds
                 let cricketData
                 let OtherSportData
                 let eventlist = []
