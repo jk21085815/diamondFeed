@@ -216,7 +216,7 @@ client.on('connect', () => {
                 }
                     
                 await client.set('crone_CricketliveEventIds_diamond_UPD',JSON.stringify(liveEventInCricket));
-                await client.set('crone_getEventIds_Cricket_UPD',JSON.stringify(eventIds));
+                await client.set('crone_getEventIds_Cricket_diamond_UPD',JSON.stringify(eventIds));
                 await client.set('crone_CricketliveMarketIds_UPD',JSON.stringify(marketIdsArr));
                 if(await client.get('crone_CricketClosedEventIds')){
                     let closedOldEventId = await client.get('crone_CricketClosedEventIds') 

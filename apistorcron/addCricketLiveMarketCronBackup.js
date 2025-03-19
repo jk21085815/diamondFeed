@@ -323,7 +323,7 @@ module.exports = () => {
                     await setNewLiveEvent(newEventIdsArray)
                 }
                 await client.set('crone_CricketliveEventIds_diamond_UPD',JSON.stringify(liveEventInCricket));
-                await client.set('crone_getEventIds_Cricket_UPD',JSON.stringify(showEvent));
+                await client.set('crone_getEventIds_Cricket_diamond_UPD',JSON.stringify(showEvent));
                 await client.set('crone_CricketliveMarketIds_UPD',JSON.stringify(marketIdsArr));
             }catch(error){
                 console.log(error,'ErrorrrAddCricketLiveMarketCroneBackup')

@@ -24,14 +24,14 @@ module.exports = () => {
                 let cricketData
                 let OtherSportData
                 let eventlist = []
-                cricketData = await client.get('crone_getEventIds_Cricket_UPD')
+                cricketData = await client.get('crone_getEventIds_Cricket_diamond_UPD')
                 if(!cricketData){
-                    cricketData = await client.get('crone_getEventIds_Cricket')
+                    cricketData = await client.get('crone_getEventIds_Cricket_diamond')
                 }
                 cricketData = JSON.parse(cricketData)
-                OtherSportData = await client.get('crone_getEventIds_OtherSport_UPD')
+                OtherSportData = await client.get('crone_getEventIds_OtherSport_diamond_UPD')
                 if(!OtherSportData){
-                    OtherSportData = await client.get('crone_getEventIds_OtherSport')
+                    OtherSportData = await client.get('crone_getEventIds_OtherSport_diamond')
                 }
                 OtherSportData = JSON.parse(OtherSportData)
                 let allData = cricketData.concat(OtherSportData)
@@ -45,7 +45,7 @@ module.exports = () => {
                         if(eventData.markets.matchOdds != null && eventData.markets.matchOdds[0]){
                             let index = eventData.markets.matchOdds.findIndex(item => item.marketName.trim() == "Match Odds")
                             if(index !== -1){
-                                let matchodddetails = await client.get(`${eventData.markets.matchOdds[index].marketId}_shark`)
+                                let matchodddetails = await client.get(`${eventData.markets.matchOdds[index].marketId}_diamond`)
                                 if(matchodddetails){
                                     matchodddetails = JSON.parse(matchodddetails)
                                     eventData.markets.matchOdds[index] = matchodddetails
@@ -87,9 +87,8 @@ module.exports = () => {
                         }
                     }
                 }
-                await client.set('/topic/exchange',JSON.stringify(eventlist))
-                Publishclient.publish('/topic/exchange',JSON.stringify(eventlist))
-                // console.log((Date.now() - starttime.getTime())/(1000),'Exchange Page Cron Endedddddd...............')
+                await client.set('/topic/diamond_exchange',JSON.stringify(eventlist))
+                Publishclient.publish('/topic/diamond_exchange',JSON.stringify(eventlist))
             }catch(error){
                 console.log(error,'Errorrr exchagnePageCron')
             }
