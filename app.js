@@ -55,7 +55,7 @@ updateFancyCron()
 // updateAdvFanctCron()
 // updateLiveFanctCron2()
 updateLiveFanctCron3()
-// exchangePageCron()
+exchangePageCron()
 // setSportDataCron()
 
 app.use(morgan('dev'));
