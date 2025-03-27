@@ -132,6 +132,7 @@ client.on('connect', () => {
                             let eventStatus = isLiveStatus?'IN_PLAY':'UPCOMING'
                             eventData.status = eventStatus
                             if(eventStatus.isvirtual){
+                                console.log(eventData.openDate,new Date(eventData.openDate).getTime() <= Date.now())
                                 if(new Date(eventData.openDate).getTime() <= Date.now()){
                                     liveEventInCricket.push(eventIds[i])
                                     eventData.status == "IN_PLAY"
