@@ -88,9 +88,6 @@ const setThisSportData = async(eventlist,SportName) => {
                 delete eventlist[k]['marketStartTime']
                 delete eventlist[k]['totalMatched']
                 thisSportEventId.push(eventlist[k].eventId)
-                if(eventlist[k].isvirtual){
-                    console.log(eventlist[k],'eventlist{kkkkkkkkkkkkkkk}')
-                }
                 let marketIds = []
                 if(["7","4339"].includes(eventlist[k].sportId)){
                     eventlist[k].catalogues.forEach(item => {

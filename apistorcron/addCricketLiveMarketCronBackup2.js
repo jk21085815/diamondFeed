@@ -140,6 +140,8 @@ client.on('connect', () => {
                             }else{
                                 if(eventData.competitionName.trim() == eventData.eventName.trim()){
                                     pushstatus = true
+                                }else if(eventData.isvirtual){
+                                    pushstatus = true
                                 }
                             }
                             if(pushstatus){
