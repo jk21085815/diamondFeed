@@ -80,6 +80,7 @@ const setThisSportData = async(eventlist,SportName) => {
                 eventlist[k].eventName = eventlist[k].event.name
                 eventlist[k].country = eventlist[k].event.countryCode
                 eventlist[k].venue = eventlist[k].event.venue
+                eventlist[k].isvirtual = eventlist[k].isvirtual?true:false
                 eventlist[k].status = 'UPCOMING'
                 delete eventlist[k]['eventType']
                 delete eventlist[k]['competition']
@@ -94,10 +95,15 @@ const setThisSportData = async(eventlist,SportName) => {
                     })
                     marketIds = marketIds.join(",")
                 }else{
-                    marketIds = [eventlist[k].marketId]
-                    marketIds = marketIds.join(",")
+                    if(!eventlist[k].isvirtual){
+                        marketIds = [eventlist[k].marketId]
+                        marketIds = marketIds.join(",")
+                    }
                 }
-                let matchodddata = await fetchMOBook(marketIds)
+                let matchodddata = []
+                if(!eventlist[k].isvirtual){
+                    matchodddata = await fetchMOBook(marketIds)
+                }
                 let bookmakerdata = await fetchBMBook(eventlist[k].eventId)
                 let fancydata = await fetchFancyBook(eventlist[k].eventId)
                 let fancyMarketIdArray = Object.keys(fancydata)
@@ -156,7 +162,7 @@ const setThisSportData = async(eventlist,SportName) => {
 
                     }
                 }
-                if(eventlist[k].sportId == 4){
+                if(!eventlist[k].isvirtual && eventlist[k].sportId == 4){
                     let matchoddmarketdata = await fetchOtherMOMarketData(eventlist[k].eventId)
                     for(let d = 0;d<matchoddmarketdata.length;d++){
                         let matchodddata = await fetchMOBook(matchoddmarketdata[d].marketId)

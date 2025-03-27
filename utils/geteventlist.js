@@ -23,6 +23,15 @@ const getEventList = async(sportId,sportName) => {
         eventDate.toISOString()
         return eventDate.getTime() >= today.getTime();
     }
+    function isTodaysEvent(date) {
+        let today = new Date(new Date().getTime() + (5.5 * 60 * 60 * 1000));
+        today.setUTCHours(0, 0, 0, 0);
+        today.toISOString() 
+        let eventDate = new Date(new Date(date).getTime() + (5.5 * 60 * 60 * 1000));
+        eventDate.setUTCHours(0, 0, 0, 0);
+        eventDate.toISOString()
+        return eventDate.getTime() == today.getTime();
+    }
     function isDateWithinLast5Days(inputDate) {
         const currentDate = new Date(new Date().getTime() + (5.5 * 60 * 60 * 1000));
         const fiveDaysAgo = new Date(new Date().getTime() + (5.5 * 60 * 60 * 1000));
@@ -87,8 +96,8 @@ const getEventList = async(sportId,sportName) => {
                         if(sportId == "4"){
                             let activeevent = await fetchactiveevent()
                             virtualCricket = activeevent.data.filter(item => item.name.indexOf('T10') !== -1)
+                            parsedata = parsedata.concat(virtualCricket)
                         }
-                        console.log(virtualCricket,'virtualCricket')
                         for(let j = 0;j<parsedata.length;j++){
                             let isTestMatch = false
                             let isElection = false
@@ -97,11 +106,32 @@ const getEventList = async(sportId,sportName) => {
                                 isTestMatch = true
                                 console.log(eventdata.competition.name,'competetion name')
                             }else{
-                                if(eventdata.eventType.id == 500){
+                                if(eventdata.eventType && eventdata.eventType.id == 500){
                                     isElection = true
                                 }
                             }
-                            if(isTestMatch){
+                            if(eventdata.event_type_name){
+                                if(isTodaysEvent(eventdata.open_date)){
+                                    let tempObj = {
+                                        eventType:{
+                                            id:"4",
+                                            name:'Cricket'
+                                        },
+                                        event:{
+                                            id:eventdata.id.toString(),
+                                            name:eventdata.name,
+                                            openDate:eventdata.open_date,
+                                            countryCode:"",
+                                            venue:""
+                                        },
+                                        runners:eventdata.runners,
+                                        isvirtual:true
+
+                                    }
+                                    eventlist.push(tempObj)
+                                }
+
+                            }else if(isTestMatch){
                                 if(isDateWithinLast5Days(eventdata.event.openDate)){
                                     let fetchMarketData = await fetchMOBook(eventdata.marketId)
                                     let matchodds = fetchMarketData[0]
