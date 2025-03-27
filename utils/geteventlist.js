@@ -63,8 +63,8 @@ const getEventList = async(sportId,sportName) => {
         let fetchMarketDatajson = await fetchMarketData.json()
         return fetchMarketDatajson
     }
-    cron.schedule('00 */6 * * *', async() => {
-    // cron.schedule('03 * * * *', async() => {
+    // cron.schedule('00 */6 * * *', async() => {
+    cron.schedule('18 * * * *', async() => {
             console.log(`Set ${sportName} CompId Cron Started.....111111111111111111111111111111111111111111111111`)
             try{
                 async function geteventListBySportId () {
@@ -123,6 +123,10 @@ const getEventList = async(sportId,sportName) => {
                                             openDate:eventdata.open_date,
                                             countryCode:"",
                                             venue:""
+                                        },
+                                        competition: {
+                                            id: "354807569",
+                                            name: "Virtual Cricket League"
                                         },
                                         runners:eventdata.runners,
                                         isvirtual:true
