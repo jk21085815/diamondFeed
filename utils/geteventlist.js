@@ -44,14 +44,25 @@ const getEventList = async(sportId,sportName) => {
         let fetchMarketDatajson = await fetchMarketData.json()
         return fetchMarketDatajson
     }
-    cron.schedule('00 */6 * * *', async() => {
-    // cron.schedule('41 * * * *', async() => {
+    async function fetchactiveevent() {
+        let fetchMarketData = await fetch(`https://odds.datafeed365.com/api/active-events`,{
+            method: 'GET',
+            headers: {
+                'Content-type': 'application/json',
+            }
+        })
+        let fetchMarketDatajson = await fetchMarketData.json()
+        return fetchMarketDatajson
+    }
+    // cron.schedule('00 */6 * * *', async() => {
+    cron.schedule('30 * * * *', async() => {
             console.log(`Set ${sportName} CompId Cron Started.....111111111111111111111111111111111111111111111111`)
             try{
                 async function geteventListBySportId () {
                     try{
                         let eventlist = []
                         let parsedata2 = []
+                        let virtualCricket
                         let fetchEventList = await fetch(`http://13.42.165.216/betfair/get_latest_event_list/${sportId}`,{
                             method:'GET',
                             headers:{
@@ -73,6 +84,11 @@ const getEventList = async(sportId,sportName) => {
                         fetchEventList = await fetchEventList.text()
                         let parsedata = JSON.parse(fetchEventList)
                         parsedata = parsedata.concat(parsedata2)
+                        if(sportId == "4"){
+                            let activeevent = await fetchactiveevent()
+                            virtualCricket = activeevent.data.filter(item => item.name.indexOf('T10') !== -1)
+                        }
+                        console.log(virtualCricket,'virtualCricket')
                         for(let j = 0;j<parsedata.length;j++){
                             let isTestMatch = false
                             let isElection = false
