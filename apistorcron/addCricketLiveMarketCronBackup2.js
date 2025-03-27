@@ -224,9 +224,6 @@ client.on('connect', () => {
                                                 await client.set(`${tempObj.marketId}_diamond`, JSON.stringify(tempObj), 'EX', 24 * 60 * 60);
                                                 await client.set(`/topic/diamond_bm_update/${tempObj.marketId}`,JSON.stringify(tempObj));
                                                 Publishclient.publish(`/topic/diamond_bm_update/${tempObj.marketId}`,JSON.stringify(tempObj));
-                                                // if(!marketIdsArrBM.includes(tempObj.marketId)){
-                                                //     marketIdsArrBM.push(tempObj.marketId)
-                                                // }
                                             }
                                         }
                                     }
