@@ -133,6 +133,7 @@ client.on('connect', () => {
                             eventData.status = eventStatus
                             if(eventStatus.isvirtual){
                                 if(new Date(eventData.openDate).getTime() <= Date.now()){
+                                    liveEventInCricket.push(eventIds[i])
                                     eventData.status == "IN_PLAY"
                                 }else{
                                     eventData.status == "UPCOMING"
