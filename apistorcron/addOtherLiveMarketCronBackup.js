@@ -278,7 +278,7 @@ client.on('connect', () => {
                                                     thisrunner.layPrices = liveMatchCheckMarket[a].runners[c].ex.availableToLay,
                                                     thisrunner.backPrices = liveMatchCheckMarket[a].runners[c].ex.availableToBack
                                                 }else{
-                                                    console.log(thismarketdetail.runners,liveMatchCheckMarket[a].runners[c],'runner dataaaaaaaaaaaaa')
+                                                    console.log(liveMatchCheckMarket[a].marketId,thismarketdetail.runners,liveMatchCheckMarket[a].runners[c],'runner dataaaaaaaaaaaaa')
                                                 }
                                                
                                             }
