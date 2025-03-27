@@ -128,7 +128,6 @@ const getEventList = async(sportId,sportName) => {
                                         isvirtual:true
 
                                     }
-                                    console.log(tempObj,'tempObjjj')
                                     eventlist.push(tempObj)
                                 }
 
