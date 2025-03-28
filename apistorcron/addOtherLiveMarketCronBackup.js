@@ -234,9 +234,11 @@ client.on('connect', () => {
                                                 thismarketdetail.status = liveMatchCheckMarket2[a].status
                                                 for(let c = 0;c<liveMatchCheckMarket2[a].runners.length;c++){
                                                     let thisrunner = thismarketdetail.runners.find(item => item.runnerId == liveMatchCheckMarket2[a].runners[c].selectionId)
-                                                    thisrunner.status = liveMatchCheckMarket2[a].runners[c].status
-                                                    thisrunner.layPrices = liveMatchCheckMarket2[a].runners[c].ex.availableToLay,
-                                                    thisrunner.backPrices = liveMatchCheckMarket2[a].runners[c].ex.availableToBack
+                                                    if(thisrunner){
+                                                        thisrunner.status = liveMatchCheckMarket2[a].runners[c].status
+                                                        thisrunner.layPrices = liveMatchCheckMarket2[a].runners[c].ex.availableToLay,
+                                                        thisrunner.backPrices = liveMatchCheckMarket2[a].runners[c].ex.availableToBack
+                                                    }
                                                 }
                                                 matchOddMarketArr.push(thismarketdetail)
                                                 if(!OtherSportLiveMarketIdsMO.includes(thismarketdetail.marketId)){
