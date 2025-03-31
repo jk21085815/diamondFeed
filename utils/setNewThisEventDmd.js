@@ -34,7 +34,7 @@ const setThisEvent = async(eventIds) => {
         
         for(let k = 0;k<eventIds.length;k++){
             console.log(eventIds[k],'kkkkkkkkkkk')
-            let udpateevent = false
+            let udpateevent = true
             let eventUpdateTime = await client.get(`${eventIds[k]}_udpateTime_diamond`)
             if(eventUpdateTime){
                 if(new Date(JSON.parse(eventUpdateTime)).getTime() >= (Date.now() - (5 * 1000 * 60)) ){
@@ -270,7 +270,7 @@ const setThisEvent = async(eventIds) => {
                             otherEventIds = otherEventIds.concat(eventIds[k])
                             await client.set(`crone_getEventIds_Other_diamond`,JSON.stringify(otherEventIds))
                         }
-                        await client.set(`${eventIds[k]}_diamondEventData`,JSON.stringify(eventIds[k]),'EX',7 * 24 * 60 * 60)
+                        await client.set(`${eventIds[k]}_diamondEventData`,JSON.stringify(thisevent),'EX',7 * 24 * 60 * 60)
                     }
                 }
             }
