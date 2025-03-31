@@ -27,6 +27,7 @@ client.on('connect', () => {
                 let showEvent = []
                 let eventIds = await client.get('crone_getEventIds_Cricket_diamond');
                 let CricketLiveEventIds = await client.get('crone_CricketliveEventIds_diamond_UPD');
+                let otherEvents = await client.get('crone_getEventIds_Other_diamond')
                 let forcefullyLiveEvents = await client2.get('InPlayEventdata')
                 forcefullyLiveEvents = JSON.parse(forcefullyLiveEvents)
                 if(CricketLiveEventIds){
@@ -34,7 +35,13 @@ client.on('connect', () => {
                 }else{
                     CricketLiveEventIds = []
                 }
+                if(otherEvents){
+                    otherEvents = JSON.parse(otherEvents)
+                }else{
+                    otherEvents = []
+                }
                 eventIds = JSON.parse(eventIds)
+                eventIds = eventIds.concat(otherEvents)
                 // console.log(eventIds.length,'cricketEventIdssssssss')
                 function delay(ms) {
                     return new Promise(resolve => setTimeout(resolve, ms));
@@ -69,7 +76,6 @@ client.on('connect', () => {
                         let liveMatchCheckMarket
                         let eventData
                         let fetchMarketData2 = []
-                        let OnlyMOBMmARKETOpenArr = []
                         let OnlyMOMarketIdsArr = []
                         let isTest = false
                         eventData = await client.get(`${eventIds[i]}_diamondEventData`)
@@ -100,7 +106,7 @@ client.on('connect', () => {
                                 liveMatchCheckMarket = fetchMarketData2.find(item => (item && item.status !== "CLOSED"))
                             }
                             if(liveMatchCheckMarket){
-                                if(liveMatchCheckMarket.inplay == true && liveMatchCheckMarket.status !== 'CLOSED'){
+                                if((liveMatchCheckMarket.inplay == true && liveMatchCheckMarket.status !== 'CLOSED') || forcefullyLiveEvents.includes(eventData.eventId)){
                                     if(!CricketLiveEventIds.includes(eventIds[i])){
                                         newEventAdded = true
                                         newEventIdsArray.push(eventIds[i])
