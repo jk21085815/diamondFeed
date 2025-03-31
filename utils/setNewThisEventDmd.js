@@ -49,7 +49,7 @@ const setThisEvent = async(eventIds) => {
             }
             if(udpateevent){
                 let eventData = await client.get(`${eventIds[k]}_diamondEventData`)
-                if(!eventData){
+                if(!eventData || true){
                     let matchOddsArr = [];
                     let matchOddsArr2 = [];
                     let bookMakerMarketArr = [];
