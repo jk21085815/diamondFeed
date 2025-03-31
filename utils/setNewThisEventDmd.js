@@ -61,6 +61,7 @@ const setThisEvent = async(eventIds) => {
                         }
                     })
                     fetchActiveEvent = fetchActiveEvent.json()
+                    console.log(fetchActiveEvent,'active eventtttttt');
                     let eventlist = fetchActiveEvent.data
                     let thisevent = eventlist.find(item => item.id == eventIds[i])
                     if(thisevent){
