@@ -61,9 +61,8 @@ const setThisEvent = async(eventIds) => {
                         }
                     })
                     fetchActiveEvent = await fetchActiveEvent.json()
-                    console.log(fetchActiveEvent,'active eventtttttt');
                     let eventlist = fetchActiveEvent.data
-                    let thisevent = eventlist.find(item => item.id == eventIds[i])
+                    let thisevent = eventlist.find(item => item.id == eventIds[k])
                     if(thisevent){
                         thisevent.openDate = new Date(new Date(thisevent.open_date).getTime() + (1000 * 60 * 60 * 5.5)).toISOString()
                         thisevent.providerName = ""
