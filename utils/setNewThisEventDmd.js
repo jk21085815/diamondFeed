@@ -60,7 +60,7 @@ const setThisEvent = async(eventIds) => {
                             'Content-type': 'application/json',
                         }
                     })
-                    fetchActiveEvent = fetchActiveEvent.json()
+                    fetchActiveEvent = await fetchActiveEvent.json()
                     console.log(fetchActiveEvent,'active eventtttttt');
                     let eventlist = fetchActiveEvent.data
                     let thisevent = eventlist.find(item => item.id == eventIds[i])
