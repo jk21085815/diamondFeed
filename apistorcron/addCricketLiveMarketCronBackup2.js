@@ -82,6 +82,9 @@ client.on('connect', () => {
                         eventData = await client.get(`${eventIds[i]}_diamondEventData`)
                         if(eventData){
                             eventData = JSON.parse(eventData)
+                            if(eventIds[i] == "1743011746"){
+                                console.log(eventData,'eventDataaaaaaaaaa')
+                            }
                             if(eventData.competitionName == "Test Matches"){
                                 isTest = true
                             }
