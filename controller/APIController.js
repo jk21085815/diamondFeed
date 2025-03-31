@@ -499,6 +499,7 @@ exports.addmarket = catchAsync(async(req, res, next) => {
 })
 
 exports.addOtherEvent = catchAsync(async(req, res, next) => {
+    console.log(req.body,'bodyyyyyyyyyyyyyyyyyyyyyyyy')
     const eventIds = req.body.eventIds
     if(Array.isArray(eventIds)){
         let udpateevent = await addOtherEventFunc(eventIds)
