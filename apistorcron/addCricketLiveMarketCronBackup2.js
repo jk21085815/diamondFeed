@@ -40,6 +40,7 @@ client.on('connect', () => {
                 }else{
                     otherEvents = []
                 }
+                console.log(otherEvents,'othereventttttttttttttt')
                 eventIds = JSON.parse(eventIds)
                 eventIds = eventIds.concat(otherEvents)
                 // console.log(eventIds.length,'cricketEventIdssssssss')
