@@ -129,7 +129,8 @@ const getEventList = async(sportId,sportName) => {
                                             name: "Virtual Cricket League"
                                         },
                                         runners:eventdata.runners,
-                                        isvirtual:true
+                                        isvirtual:true,
+                                        isother:true
 
                                     }
                                     eventlist.push(tempObj)

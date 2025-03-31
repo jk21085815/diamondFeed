@@ -81,6 +81,7 @@ const setThisSportData = async(eventlist,SportName) => {
                 eventlist[k].country = eventlist[k].event.countryCode
                 eventlist[k].venue = eventlist[k].event.venue
                 eventlist[k].isvirtual = eventlist[k].isvirtual?true:false
+                eventlist[k].isother = eventlist[k].isother?true:false
                 eventlist[k].status = 'UPCOMING'
                 delete eventlist[k]['eventType']
                 delete eventlist[k]['competition']
