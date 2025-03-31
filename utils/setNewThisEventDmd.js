@@ -36,17 +36,17 @@ const setThisEvent = async(eventIds) => {
             console.log(eventIds[k],'kkkkkkkkkkk')
             let udpateevent = true
             let eventUpdateTime = await client.get(`${eventIds[k]}_udpateTime_diamond`)
-            if(eventUpdateTime){
-                if(new Date(JSON.parse(eventUpdateTime)).getTime() >= (Date.now() - (5 * 1000 * 60)) ){
-                    return false
-                }else{
-                    udpateevent = true
-                    await client.set(`${eventIds[k]}_udpateTime_diamond`,JSON.stringify(new Date()),'EX',24 * 60 * 60)
-                }
-            }else{
-                udpateevent = true
-                await client.set(`${eventIds[k]}_udpateTime_diamond`,JSON.stringify(new Date()),'EX',24 * 60 * 60)
-            }
+            // if(eventUpdateTime){
+            //     if(new Date(JSON.parse(eventUpdateTime)).getTime() >= (Date.now() - (5 * 1000 * 60)) ){
+            //         return false
+            //     }else{
+            //         udpateevent = true
+            //         await client.set(`${eventIds[k]}_udpateTime_diamond`,JSON.stringify(new Date()),'EX',24 * 60 * 60)
+            //     }
+            // }else{
+            //     udpateevent = true
+            //     await client.set(`${eventIds[k]}_udpateTime_diamond`,JSON.stringify(new Date()),'EX',24 * 60 * 60)
+            // }
             if(udpateevent){
                 let eventData = await client.get(`${eventIds[k]}_diamondEventData`)
                 if(!eventData || true){
