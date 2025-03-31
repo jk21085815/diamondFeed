@@ -17,6 +17,8 @@ router.post('/cricketextramarketlist', APIController.cricketextramarketlist)
 router.post('/tournamentwinner', APIController.tournamentwinner)
 router.post('/underover', APIController.underover)
 router.post('/addmarket', APIController.addmarket)
+router.post('/updateOrAddEventDmd',authController.isProtected,APIController.addOtherEvent)
+
 
 
 

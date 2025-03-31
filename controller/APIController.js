@@ -8,6 +8,7 @@ const marketrulesModel = require('../model/getmarketrules')
 const marketresultModel = require('../model/marketresultModel')
 const sportdataModel = require('../model/sportdataModel')
 const marketidsstoreModel = require('../model/marketidstoreModel')
+const addOtherEventFunc = require('../utils/setNewThisEventDmd')
 const catchAsync = require('../utils/catchAsync')
 const redis = require('redis');
 const { json } = require('body-parser')
@@ -495,6 +496,28 @@ exports.addmarket = catchAsync(async(req, res, next) => {
         status:'success',
         data:fetchMarketData
     })
+})
+
+exports.addOtherEvent = catchAsync(async(req, res, next) => {
+    const eventIds = req.body.eventIds
+    if(Array.isArray(eventIds)){
+        let udpateevent = await addOtherEventFunc(eventIds)
+        if(udpateevent){
+            return res.status(200).json({
+                status:"success"
+            })
+        }else{
+            return res.status(200).json({
+                status:"fail",
+                msg: "You can update an event 5 minutes after the previous update."
+            })
+        }
+    }else{
+        return res.status(200).json({
+            status:"fail",
+            msg:"Please enter event ids in comma saperated"
+        })
+    }
 })
 
 // exports.thatperticularMatch = catchAsync(async(req, res, next) => {
