@@ -74,7 +74,7 @@ const setThisSportData = async(eventlist,SportName) => {
                 eventlist[k].providerName = eventlist[k].competition?eventlist[k].competition.provider:""
                 eventlist[k].sportId = eventlist[k].eventType.id
                 eventlist[k].sportName = eventlist[k].eventType.name
-                eventlist[k].competitionId = eventlist[k].competition?eventlist[k].competition.id:eventlist[k].event.id
+                eventlist[k].competitionId = eventlist[k].competition?eventlist[k].competition.id:eventlist[k].event.countryCode
                 eventlist[k].competitionName = eventlist[k].competition?eventlist[k].competition.name:eventlist[k].event.countryCode
                 eventlist[k].eventId = eventlist[k].event.id
                 eventlist[k].eventName = eventlist[k].event.name
