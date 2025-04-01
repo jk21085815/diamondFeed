@@ -510,7 +510,7 @@ exports.addOtherEvent = catchAsync(async(req, res, next) => {
         }else{
             return res.status(200).json({
                 status:"fail",
-                msg: "You can update an event 5 minutes after the previous update."
+                msg: "This event already added"
             })
         }
     }else{
