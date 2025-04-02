@@ -530,7 +530,10 @@ exports.getcvirtualcricketdata = catchAsync(async(req, res, next) => {
             }
         })
         fetchActiveEvent = await fetchActiveEvent.json()
-        let filterevents = fetchActiveEvent.data.filter(item => eventIds.includes(item.id.tostring()) )
+        let filterevents = fetchActiveEvent.data.filter(item => {
+            console.log(item.id,'iddddddddddd')
+            return eventIds.includes(item.id)} 
+        )
         return res.status(200).json({
             status:"success",
             events:filterevents
