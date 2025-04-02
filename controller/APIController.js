@@ -499,7 +499,6 @@ exports.addmarket = catchAsync(async(req, res, next) => {
 })
 
 exports.addOtherEvent = catchAsync(async(req, res, next) => {
-    console.log(req.body,'bodyyyyyyyyyyyyyyyyyyyyyyyy')
     const eventIds = req.body.eventIds
     if(Array.isArray(eventIds)){
         let udpateevent = await addOtherEventFunc(eventIds)
@@ -513,6 +512,29 @@ exports.addOtherEvent = catchAsync(async(req, res, next) => {
                 msg: "This event already added"
             })
         }
+    }else{
+        return res.status(200).json({
+            status:"fail",
+            msg:"Please enter event ids in comma saperated"
+        })
+    }
+})
+
+exports.getcvirtualcricketdata = catchAsync(async(req, res, next) => {
+    const eventIds = req.body.eventIds
+    if(Array.isArray(eventIds)){
+        let fetchActiveEvent = await fetch(`https://odds.datafeed365.com/api/active-events`,{
+            method: 'GET',
+            headers: {
+                'Content-type': 'application/json',
+            }
+        })
+        fetchActiveEvent = await fetchActiveEvent.json()
+        let filterevents = fetchActiveEvent.filter(item => eventIds.includes(item.id) )
+        return res.status(200).json({
+            status:"success",
+            events:filterevents
+        })
     }else{
         return res.status(200).json({
             status:"fail",
