@@ -18,7 +18,7 @@ router.post('/tournamentwinner', APIController.tournamentwinner)
 router.post('/underover', APIController.underover)
 router.post('/addmarket', APIController.addmarket)
 router.post('/updateOrAddEventDmd',APIController.addOtherEvent)
-router.post('/getVirtualCricketData',APIController.addOtherEvent)
+router.post('/getVirtualCricketData',APIController.getcvirtualcricketdata)
 
 
 
