@@ -137,7 +137,7 @@ client.on('connect', () => {
                             }
                             let eventStatus = isLiveStatus?'IN_PLAY':'UPCOMING'
                             eventData.status = eventStatus
-                            if(eventData.isvirtual){
+                            if(eventData.isother){
                                 if(new Date(eventData.openDate).getTime() <= Date.now()){
                                     liveEventInCricket.push(eventIds[i])
                                     eventData.status = "IN_PLAY"
@@ -155,7 +155,7 @@ client.on('connect', () => {
                             }else{
                                 if(eventData.competitionName.trim() == eventData.eventName.trim()){
                                     pushstatus = true
-                                }else if(eventData.isvirtual){
+                                }else if(eventData.isother){
                                     pushstatus = true
                                 }
                             }
@@ -281,7 +281,7 @@ client.on('connect', () => {
                                 }
                                 eventData.markets.matchOdds = matchOddMarketArr
                                 eventData.markets.bookmakers = bookmakersMarketArr
-                                if(eventData.isvirtual){
+                                if(eventData.isother){
                                     if(!showvirtual){
                                         if(eventData.markets.fancyMarkets.length > 0){
                                             showvirtual = true
