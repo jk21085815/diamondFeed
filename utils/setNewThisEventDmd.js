@@ -75,7 +75,11 @@ const setThisEvent = async(eventIds) => {
                         let bookmakerdata = await fetchBMBook(thisevent.eventId)
                         let fancydata = await fetchFancyBook(thisevent.eventId)
                         let fancyMarketIdArray = Object.keys(fancydata)
-                        delete thisevent['marketId']
+                        delete thisevent['id']
+                        delete thisevent['name']
+                        delete thisevent['event_type_id']
+                        delete thisevent['event_type_name']
+                        delete thisevent['open_date']
                         if(bookmakerdata){
                             for(let a = 0; a<bookmakerdata.length; a++){
                                 if(Object.keys(bookmakerdata[a].data).length !== 0){
