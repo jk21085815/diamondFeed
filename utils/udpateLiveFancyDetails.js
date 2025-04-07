@@ -169,7 +169,7 @@ const updateFancyDetailsFunc = async (eventId,fencydata) => {
             await client.set(`${eventId}_diamondEventData`, JSON.stringify(eventData), 'EX', 24 * 60 * 60);
             const api1ResponseTime = Date.now() - startTime;
         fs.appendFile('../../response_time_log2.txt', `Total Time: ${api1ResponseTime}ms\n`, (err) => {
-            if (err) console.error('Error writing to log file:', err);
+            // if (err) console.error('Error writing to log file:', err);
         });
         });        
     } catch (error) {
