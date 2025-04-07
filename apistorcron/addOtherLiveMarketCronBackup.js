@@ -55,6 +55,8 @@ client.on('connect', () => {
                         }
                     })
                     let fetchMarketDatajson = await fetchMarketData.json()
+                    console.log(fetchMarketDatajson, 'fetchMarketDatajsonfetchMarketDatajsonfetchMarketDatajsonfetchMarketDatajson');
+                    
                     return fetchMarketDatajson
                 }
                 async function fetchBMBook(eventId) {
