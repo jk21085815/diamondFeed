@@ -358,6 +358,8 @@ exports.eventData = catchAsync(async(req, res, next) => {
         })
         // console.log(new Date(),i,eventIds[i],'iiiiiiiii')
         fetchMarketData = await fetchMarketData.json()
+        console.log(fetchMarketData, 'fetchMarketDatafetchMarketDatafetchMarketData');
+        
     }catch(err){
         console.log(err)
     }
