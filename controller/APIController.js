@@ -350,7 +350,8 @@ exports.thatperticularMatch = catchAsync(async(req, res, next) => {
 exports.eventData = catchAsync(async(req, res, next) => {
     let fetchMarketData
     try{
-        fetchMarketData = await fetch(` http://18.171.69.133:6008/sports/events/${req.body.eventId}`,{
+        // fetchMarketData = await fetch(` http://18.171.69.133:6008/sports/events/${req.body.eventId}`,{
+            fetchMarketData = await fetch(` https://odds.datafeed365.com/api/active-fancy/${req.body.eventId}`,{
             method: 'GET',
             headers: {
                 'Content-type': 'application/json',
