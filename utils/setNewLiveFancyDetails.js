@@ -42,9 +42,12 @@ const updateFancyDetailsFunc = async(marketIdsArr,eventId,jj,countLenth,isNewLiv
                 }
             })
             fetchMarketDatajson2 = await fetchMarketData2.json()
+            
             // console.log((Date.now() - starttime)/1000,jj,"jj timeeeeeeeeee before code exicutionnn")
             // console.log(`*${k}*`,new Date(),(new Date().getTime() - starttime.getTime())/(1000),'API CALL Ended.....')
             let fetchMarketDatajson = await fetchMarketData.json()
+            console.log(fetchMarketDatajson2, fetchMarketDatajson, 'fetchMarketDatajsonfetchMarketDatajson');
+
             // fetchMarketDatajson2 = await JSON.parse(fetchMarketDatajson2)
             let keys = Object.keys(fetchMarketDatajson)
             for(let i = 0;i<keys.length;i++){
