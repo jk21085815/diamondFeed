@@ -351,7 +351,7 @@ exports.eventData = catchAsync(async(req, res, next) => {
     let fetchMarketData
     try{
         // fetchMarketData = await fetch(` http://18.171.69.133:6008/sports/events/${req.body.eventId}`,{
-            fetchMarketData = await fetch(` http://13.42.165.216/betfair/under_over_goal_market_list/${req.body.eventId}`,{
+            fetchMarketData = await fetch(` http://13.42.165.216/betfair/cricket_extra_market_list/${req.body.eventId}`,{
             method: 'GET',
             headers: {
                 'Content-type': 'application/json',
