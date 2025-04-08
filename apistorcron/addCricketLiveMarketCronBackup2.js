@@ -30,8 +30,6 @@ client.on('connect', () => {
                 let otherEvents = await client.get('crone_getEventIds_Other_diamond')
                 let forcefullyLiveEvents = await client2.get('InPlayEventdata')
                 forcefullyLiveEvents = JSON.parse(forcefullyLiveEvents)
-                console.log(forcefullyLiveEvents, 'forcefullyLiveEventsforcefullyLiveEventsforcefullyLiveEvents');
-                
                 if(CricketLiveEventIds){
                     CricketLiveEventIds = JSON.parse(CricketLiveEventIds)
                 }else{
