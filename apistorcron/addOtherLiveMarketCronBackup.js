@@ -26,7 +26,12 @@ client.on('connect', () => {
                 let showEvent = []
                 let tennisLiveEventIds = []
                 let forcefullyLiveEvents = await client2.get('InPlayEventdata')
-                forcefullyLiveEvents = JSON.parse(forcefullyLiveEvents)
+                if(!forcefullyLiveEvents){
+                    forcefullyLiveEvents = []
+                }else{
+                    forcefullyLiveEvents = JSON.parse(forcefullyLiveEvents)
+                }
+                // forcefullyLiveEvents = JSON.parse(forcefullyLiveEvents)
                 let eventIds2 = await client.get(`crone_getEventIds_Tennis_diamond`);
                 let eventIds1 = await client.get(`crone_getEventIds_Soccer_diamond`);
                 let eventIds3 = await client.get(`crone_getEventIds_GreyHound_diamond`);
