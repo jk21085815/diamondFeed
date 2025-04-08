@@ -104,6 +104,7 @@ client.on('connect', () => {
                                     // await delay(1000 * 10)
                                     fetchMarketData2 = await fetchMOBook(MOMarketId)
                                 }
+                                console.log(fetchMarketData2, 'fetchMarketData2fetchMarketData2fetchMarketData2');
                                 
                                 liveMatchCheckMarket = fetchMarketData2.find(item => (item && item.status !== "CLOSED"))
                             }
