@@ -37,7 +37,7 @@ const updateLiveMarketDetails = async(marketIds) => {
                                 runner.status = fetchMarketDatajson[i].runners[j].status
                             }
                         }
-                        if(fetchMarketDatajson[i].marketId == "1.241797085"){
+                        if(fetchMarketDatajson[i].marketId == "1.241883911"){
                             console.log(marketdata.runners[0].layPrices,'layPriceslayPriceslayPriceslayPriceslayPrices')
                         }
                         await client.set(`${fetchMarketDatajson[i].marketId}_diamond`,JSON.stringify(marketdata),'EX',24 * 60 * 60)
