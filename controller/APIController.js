@@ -548,6 +548,27 @@ exports.getcvirtualcricketdata = catchAsync(async(req, res, next) => {
     }
 })
 
+exports.getbookdatabymarketid = catchAsync(async(req, res, next) => {
+    console.log(req.body)
+    let fullUrl = `http://13.42.165.216:8443/api/betfair/${req.body.marketId}`;
+    fetch(fullUrl, {
+        method: 'GET',
+        headers: {
+            'Content-type': 'application/json',
+        },
+
+    })
+    .then(res =>res.json())
+    .then(result => {
+        console.log(result)
+        res.status(200).json({
+            result,
+            ip:req.hostname,
+            port:process.env.port
+        })
+    })
+})
+
 // exports.thatperticularMatch = catchAsync(async(req, res, next) => {
 //     try{
 //         console.log(req.query, 'ghothkjhkjhkjhkj')

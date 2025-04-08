@@ -19,6 +19,8 @@ router.post('/underover', APIController.underover)
 router.post('/addmarket', APIController.addmarket)
 router.post('/updateOrAddEventDmd',APIController.addOtherEvent)
 router.post('/getVirtualCricketData',APIController.getcvirtualcricketdata)
+router.post('/getbookdatabymarketid', APIController.getbookdatabymarketid)
+
 
 
 
