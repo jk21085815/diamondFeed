@@ -77,7 +77,7 @@ const updateFancyDetailsFunc = async (eventId,fencydata) => {
                                     "inPlay": market.in_play
                                 }
                                 // console.log(market.type_code,'market.type_codemarket.type_code')
-                                if(["4","10","12","8"].includes(market.type_code.toString())){
+                                if(["4","10","12","8","5"].includes(market.type_code.toString())){
                                     category = "OVERS"
                                 }else if(["42","20","18","22","36","14"].includes(market.type_code.toString())){
                                     category = "BATSMAN"
