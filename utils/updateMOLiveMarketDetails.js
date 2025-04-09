@@ -12,7 +12,7 @@ client.on('connect', () => {
 const updateLiveMarketDetails = async(marketIds) => {
     let runner
     try{
-        marketIds = JSON.parse(marketIds)
+        // marketIds = JSON.parse(marketIds)
         let fetchMarketData = await fetch(` http://13.42.165.216:8443/api/betfair/${marketIds}`,{
             method: 'GET',
             headers: {

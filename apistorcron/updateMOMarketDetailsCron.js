@@ -33,7 +33,7 @@ module.exports = () => {
             for(let k = 0;k<count;k++){
                 let marketids = liveMarketIds.slice((k*resultlength),(resultlength * (1+k)))
                 marketids = marketids.join(',')
-                await client.set(`marketidkcount_MO_${k}`,JSON.stringify(marketids))
+                await client.set(`marketidkcount_MO_${k}`,marketids)
             }
             
         }catch(error){
