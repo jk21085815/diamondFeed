@@ -56,10 +56,10 @@ const updateFancyDetailsFunc = async (eventId,fencydata) => {
                                 }else{
                                     console.log(marketData.runners,eventId,'marketid with no runnerrrr222222222222')
                                 }
-                                if(marketData.marketId == "12976802"){
-                                    console.log(marketData.noValue,marketData.yesValue,marketData.status,'valueeeee');
+                                // if(marketData.marketId == "12976802"){
+                                //     console.log(marketData.noValue,marketData.yesValue,marketData.status,'valueeeee');
                                     
-                                }
+                                // }
                                 await client.set(`${marketData.marketId}_diamond`, JSON.stringify(marketData), 'EX', 24 * 60 * 60);
                                 fancyArr.push(marketData)
     
@@ -144,10 +144,10 @@ const updateFancyDetailsFunc = async (eventId,fencydata) => {
                                 tempRunner.push(tempObjrunner2)
                                 tempRunner.push(tempObjrunner3)
                                 tempObj.runners = tempRunner
-                                if(marketData.marketId == "12976802"){
-                                    console.log(marketData.noValue,marketData.yesValue,marketData.status,'valueeeee');
+                                // if(marketData.marketId == "12976802"){
+                                //     console.log(marketData.noValue,marketData.yesValue,marketData.status,'valueeeee');
                                     
-                                }
+                                // }
                                 await client.set(`${tempObj.marketId}_diamond`, JSON.stringify(tempObj), 'EX', 24 * 60 * 60);
                                 fancyArr.push(tempObj)
                             }
