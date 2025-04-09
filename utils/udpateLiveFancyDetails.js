@@ -15,8 +15,6 @@ const updateFancyDetailsFunc = async (eventId,fencydata) => {
         let fancyArr = [];
         async function processResponse(response) {
             let starttime = Date.now()
-            console.log(response,'responseeeeeeeeee');
-            
             for (const key in response) {
                 if (response.hasOwnProperty(key)) {
                     const market = JSON.parse(response[key]);
