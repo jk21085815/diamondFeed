@@ -21,7 +21,7 @@ const updateFancyDetailsFunc = async (eventId,fencydata) => {
                         let marketData = await client.get(`${key}_diamond`);
                         marketData = marketData ? JSON.parse(marketData) : null;
                         try{
-                            if (marketData) {
+                            if (marketData && false) {
                                 marketData.status = market.status1 == "ACTIVE" ?"OPEN":market.status1,
                                 marketData.inPlay = market.in_play;
                                 marketData.noValue = market.l1;
