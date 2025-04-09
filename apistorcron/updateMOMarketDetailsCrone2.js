@@ -20,7 +20,7 @@ const updateSetinterval = async() => {
             let marketIds = await client.get(`marketidkcount_MO_${k}`)
             marketIds = JSON.parse(marketIds)
             console.log(count,'countttttttt22222222');
-            updateMOMarketDetails(marketIds)
+            updateMOMarketDetails(marketIds,k)
         }
     },505)
 }

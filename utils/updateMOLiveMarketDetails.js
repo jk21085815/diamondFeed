@@ -9,8 +9,8 @@ client.on('error', (err) => {
 client.on('connect', () => {
     // console.log('Connected to Redis1');
 });
-const updateLiveMarketDetails = async(marketIds) => {
-    console.log('call this funccc')
+const updateLiveMarketDetails = async(marketIds,k) => {
+    console.log('call this funccc',k)
     let runner
     try{
         let fetchMarketData = await fetch(` http://13.42.165.216:8443/api/betfair/${marketIds}`,{
