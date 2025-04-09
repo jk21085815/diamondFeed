@@ -169,7 +169,7 @@ const setThisEvent = async(eventIds) => {
                                 // }else{
                                 //     category = "OTHER"
                                 // }
-                                if(["4","10","12"].includes(tempObjfancy.type_code.toString())){
+                                if(["4","10","12","8"].includes(tempObjfancy.type_code.toString())){
                                     category = "OVERS"
                                 }else if(["42","20","18","22","36","14"].includes(tempObjfancy.type_code.toString())){
                                     category = "BATSMAN"
