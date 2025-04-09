@@ -27,7 +27,7 @@ module.exports = () => {
             liveMarketIds = JSON.parse(liveMarketIds)
             liveMarketIds = liveMarketIds.concat(cricketLiveMarkerIds)
             // console.log(liveMarketIds.find(item => item == "1.241627539"),"1.2416275391.2416275391.2416275391.2416275391.241627539")
-            let resultlength = 50
+            let resultlength = 30
             let count = Math.ceil((liveMarketIds.length)/resultlength)
             await client.set('marketidCounts_MO',JSON.stringify(count))
             for(let k = 0;k<count;k++){
