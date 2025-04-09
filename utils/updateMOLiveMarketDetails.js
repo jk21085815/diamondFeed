@@ -13,6 +13,7 @@ const updateLiveMarketDetails = async(marketIds,k) => {
     console.log('call this funccc',k)
     let runner
     try{
+        marketIds = JSON.parse(marketIds)
         let fetchMarketData = await fetch(` http://13.42.165.216:8443/api/betfair/${marketIds}`,{
             method: 'GET',
             headers: {
