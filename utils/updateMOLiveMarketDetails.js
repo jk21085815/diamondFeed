@@ -23,14 +23,8 @@ const updateLiveMarketDetails = async(marketIds) => {
         for(let i = 0;i<fetchMarketDatajson.length;i++){
             if(["OPEN","SUSPENDED","BALL_RUNNING"].includes(fetchMarketDatajson[i].status.trim())){
                 let marketdata = await client.get(`${fetchMarketDatajson[i].marketId}_diamond`)
-                // if(fetchMarketDatajson[i].marketId == "1.241917604"){
-                    // console.log(marketdata,'marketdataaaaaa');
-                    
-                    // console.log(marketdata.runners[0].layPrices,'layPriceslayPriceslayPriceslayPriceslayPrices')
-                // }
                 if(marketdata){
                     try{
-                       
                         marketdata = JSON.parse(marketdata)
                         marketdata.status = fetchMarketDatajson[i].status
                         for(let j = 0;j<fetchMarketDatajson[i].runners.length;j++){
@@ -41,7 +35,9 @@ const updateLiveMarketDetails = async(marketIds) => {
                                 runner.status = fetchMarketDatajson[i].runners[j].status
                             }
                         }
-                       
+                        if(fetchMarketDatajson[i].marketId == "1.241973954"){
+                        console.log(marketdata.runners[0].layPrices,'layPriceslayPriceslayPriceslayPriceslayPrices')
+                        }
                         await client.set(`${fetchMarketDatajson[i].marketId}_diamond`,JSON.stringify(marketdata),'EX',24 * 60 * 60)
                         await client.set(`/topic/diamond_match_odds_update/${fetchMarketDatajson[i].marketId}`,JSON.stringify(marketdata));
                         Publishclient.publish(`/topic/diamond_match_odds_update/${fetchMarketDatajson[i].marketId}`,JSON.stringify(marketdata));
