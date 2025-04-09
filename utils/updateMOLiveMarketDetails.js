@@ -14,7 +14,6 @@ const updateLiveMarketDetails = async(marketIds) => {
     try{
         // marketIds = JSON.parse(marketIds)
         console.log(marketIds.includes('1.241973954'))
-        let starttime = Date.now()
         let fetchMarketData = await fetch(` http://13.42.165.216:8443/api/betfair/${marketIds}`,{
             method: 'GET',
             headers: {
@@ -22,7 +21,6 @@ const updateLiveMarketDetails = async(marketIds) => {
             }
         })
         let fetchMarketDatajson = await fetchMarketData.json()
-        console.log(Date.now() - starttime,'diff dateeeeeeeeeee');
 
         for(let i = 0;i<fetchMarketDatajson.length;i++){ 
             console.log(i,fetchMarketDatajson[i].marketId,'fetchMarketDatajson[i].marketIdfetchMarketDatajson[i].marketId');
@@ -31,7 +29,9 @@ const updateLiveMarketDetails = async(marketIds) => {
                 console.log(fetchMarketDatajson[i].status.trim(),'fetchMarketDatajson[i].status.trim()');
             }
             if(["OPEN","SUSPENDED","BALL_RUNNING"].includes(fetchMarketDatajson[i].status.trim())){
+                 let starttime = Date.now()
                 let marketdata = await client.get(`${fetchMarketDatajson[i].marketId}_diamond`)
+                console.log(Date.now() - starttime,'diff dateeeeeeeeeee');
                
 
                 // if(marketdata){
