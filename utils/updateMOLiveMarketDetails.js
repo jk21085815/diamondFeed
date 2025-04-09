@@ -14,6 +14,7 @@ const updateLiveMarketDetails = async(marketIds) => {
     try{
         // marketIds = JSON.parse(marketIds)
         console.log(marketIds.includes('1.241973954'))
+        let starttime = Date.now()
         let fetchMarketData = await fetch(` http://13.42.165.216:8443/api/betfair/${marketIds}`,{
             method: 'GET',
             headers: {
@@ -21,7 +22,7 @@ const updateLiveMarketDetails = async(marketIds) => {
             }
         })
         let fetchMarketDatajson = await fetchMarketData.json()
-        let starttime = Date.now()
+        console.log(Date.now() - starttime,'diff dateeeeeeeeeee');
 
         for(let i = 0;i<fetchMarketDatajson.length;i++){
             if(fetchMarketDatajson[i].marketId == "1.241973954"){
@@ -57,7 +58,6 @@ const updateLiveMarketDetails = async(marketIds) => {
                 }
             }
         }
-        console.log(Date.now() - starttime,'diff dateeeeeeeeeee');
         
     }catch(error){
         console.log(error,"marketIds",'Errorrr updateLiveMarketDetailss')
