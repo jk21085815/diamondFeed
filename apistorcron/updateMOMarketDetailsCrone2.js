@@ -13,6 +13,8 @@ client.on('connect', () => {
 const updateSetinterval = async() => {
     let count = await client.get('marketidCounts_MO')
     count = JSON.parse(count)
+    console.log(count,'countttttttttttt');
+    
     for(let k = 0;k<count;k++){
         let marketIds = await client.get(`marketidkcount_MO_${k}`)
         console.log(k,'kkkkkkkkkkkkkkkkkkkk');
