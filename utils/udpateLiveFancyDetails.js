@@ -20,10 +20,10 @@ const updateFancyDetailsFunc = async (eventId,fencydata) => {
                     if (market) {
                         let starttime = Date.now()
                         let marketData = await client.get(`${key}_diamond`);
+                        marketData = marketData ? JSON.parse(marketData) : null;
                         if(marketData.marketId == "12975807"){
                             console.log(Date.now()-starttime,'timeeeeeeeeeeeeeeeeeeeeeee');
                         }
-                        marketData = marketData ? JSON.parse(marketData) : null;
                         try{
                             if (marketData) {
                                 marketData.status = market.status1 == "ACTIVE" ?"OPEN":market.status1,
