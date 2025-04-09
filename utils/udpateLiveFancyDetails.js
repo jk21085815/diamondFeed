@@ -56,7 +56,7 @@ const updateFancyDetailsFunc = async (eventId,fencydata) => {
                                 }else{
                                     console.log(marketData.runners,eventId,'marketid with no runnerrrr222222222222')
                                 }
-                                if(marketData.marketId == "12975807"){
+                                if(marketData.marketId == "12976802"){
                                     console.log(marketData.noValue,marketData.yesValue,marketData.status,'valueeeee');
                                     
                                 }
@@ -144,7 +144,7 @@ const updateFancyDetailsFunc = async (eventId,fencydata) => {
                                 tempRunner.push(tempObjrunner2)
                                 tempRunner.push(tempObjrunner3)
                                 tempObj.runners = tempRunner
-                                if(marketData.marketId == "12975807"){
+                                if(marketData.marketId == "12976802"){
                                     console.log(marketData.noValue,marketData.yesValue,marketData.status,'valueeeee');
                                     
                                 }
