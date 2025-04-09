@@ -25,6 +25,8 @@ const updateLiveMarketDetails = async(marketIds) => {
         console.log(Date.now() - starttime,'diff dateeeeeeeeeee');
 
         for(let i = 0;i<fetchMarketDatajson.length;i++){
+            console.log(fetchMarketDatajson[i].marketId,'fetchMarketDatajson[i].marketIdfetchMarketDatajson[i].marketId');
+            
             if(fetchMarketDatajson[i].marketId == "1.241973954"){
                 console.log(fetchMarketDatajson[i].status.trim(),'fetchMarketDatajson[i].status.trim()');
             }
