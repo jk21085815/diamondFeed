@@ -9,8 +9,7 @@ client.on('error', (err) => {
 client.on('connect', () => {
     // console.log('Connected to Redis1');
 });
-const updateLiveMarketDetails = async(marketIds,k) => {
-    console.log('call this funccc',k)
+const updateLiveMarketDetails = async(marketIds) => {
     let runner
     try{
         marketIds = JSON.parse(marketIds)
@@ -26,10 +25,7 @@ const updateLiveMarketDetails = async(marketIds,k) => {
         for(let i = 0;i<fetchMarketDatajson.length;i++){
             if(["OPEN","SUSPENDED","BALL_RUNNING"].includes(fetchMarketDatajson[i].status.trim())){
                 let marketdata = await client.get(`${fetchMarketDatajson[i].marketId}_diamond`)
-                if(fetchMarketDatajson[i].marketId == "1.241973954"){
-                    // console.log(marketdata.runners[0].layPrices,'layPriceslayPriceslayPriceslayPriceslayPrices')
-                    // console.log(marketdata,'marketdataaaaaaaaaaaaaa')
-                }
+               
 
                 if(marketdata){
                     try{
@@ -42,6 +38,10 @@ const updateLiveMarketDetails = async(marketIds,k) => {
                                 runner.backPrices = fetchMarketDatajson[i].runners[j].ex.availableToBack
                                 runner.status = fetchMarketDatajson[i].runners[j].status
                             }
+                        }
+                        if(fetchMarketDatajson[i].marketId == "1.241973954"){
+                            console.log(marketdata.runners[0].layPrices,'layPriceslayPriceslayPriceslayPriceslayPrices')
+                            // console.log(marketdata,'marketdataaaaaaaaaaaaaa')
                         }
                         await client.set(`${fetchMarketDatajson[i].marketId}_diamond`,JSON.stringify(marketdata),'EX',24 * 60 * 60)
                         await client.set(`/topic/diamond_match_odds_update/${fetchMarketDatajson[i].marketId}`,JSON.stringify(marketdata));
