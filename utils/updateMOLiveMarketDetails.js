@@ -54,7 +54,7 @@ const updateLiveMarketDetails = async(marketIds) => {
         console.log(Date.now() - starttime,'diff dateeeeeeeeeee');
         
     }catch(error){
-        console.log("error","marketIds",'Errorrr updateLiveMarketDetailss')
+        console.log(error,"marketIds",'Errorrr updateLiveMarketDetailss')
     }
 
 }
