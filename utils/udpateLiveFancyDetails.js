@@ -59,7 +59,7 @@ const updateFancyDetailsFunc = async (eventId,fencydata) => {
                                 if(marketData.marketId == "12975921"){
                                     console.log(marketData.noValue,marketData.yesValue,marketData.status,'valueeeee');
                                     
-                                // }
+                                }
                                 await client.set(`${marketData.marketId}_diamond`, JSON.stringify(marketData), 'EX', 24 * 60 * 60);
                                 fancyArr.push(marketData)
     
