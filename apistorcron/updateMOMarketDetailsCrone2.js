@@ -11,17 +11,15 @@ client.on('connect', () => {
 });
 
 const updateSetinterval = async() => {
-    let count = await client.get('marketidCounts_MO')
-    count = JSON.parse(count)
-    console.log(count,'countttttttttttt');
-    
-    for(let k = 0;k<count;k++){
-        let marketIds = await client.get(`marketidkcount_MO_${k}`)
-        console.log(k,'kkkkkkkkkkkkkkkkkkkk');
-        updateMOMarketDetails(marketIds)
-    }
-    // setInterval(async()=>{
-    // },505)
+    setInterval(async()=>{
+        let count = await client.get('marketidCounts_MO')
+        count = JSON.parse(count)        
+        for(let k = 0;k<count;k++){
+            let marketIds = await client.get(`marketidkcount_MO_${k}`)
+            console.log(k,'kkkkkkkkkkkkkkkkkkkk');
+            updateMOMarketDetails(marketIds)
+        }
+    },505)
 }
 
 module.exports = updateSetinterval
