@@ -29,7 +29,7 @@ const updateLiveMarketDetails = async(marketIds) => {
                 console.log(fetchMarketDatajson[i].status.trim(),'fetchMarketDatajson[i].status.trim()');
             }
             if(["OPEN","SUSPENDED","BALL_RUNNING"].includes(fetchMarketDatajson[i].status.trim())){
-                 let starttime = Date.now()
+                let starttime = Date.now()
                 let marketdata = await client.get(`${fetchMarketDatajson[i].marketId}_diamond`)
                 console.log(Date.now() - starttime,'diff dateeeeeeeeeee');
                
