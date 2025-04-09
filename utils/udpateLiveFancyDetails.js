@@ -18,14 +18,10 @@ const updateFancyDetailsFunc = async (eventId,fencydata) => {
                 if (response.hasOwnProperty(key)) {
                     const market = JSON.parse(response[key]);
                     if (market) {
-                        let starttime = Date.now()
                         let marketData = await client.get(`${key}_diamond`);
                         marketData = marketData ? JSON.parse(marketData) : null;
-                        if(marketData.marketId == "12975807"){
-                            console.log(Date.now()-starttime,'timeeeeeeeeeeeeeeeeeeeeeee');
-                        }
                         try{
-                            if (marketData) {
+                            if (marketData || false) {
                                 marketData.status = market.status1 == "ACTIVE" ?"OPEN":market.status1,
                                 marketData.inPlay = market.in_play;
                                 marketData.noValue = market.l1;
@@ -148,6 +144,10 @@ const updateFancyDetailsFunc = async (eventId,fencydata) => {
                                 tempRunner.push(tempObjrunner2)
                                 tempRunner.push(tempObjrunner3)
                                 tempObj.runners = tempRunner
+                                if(marketData.marketId == "12975807"){
+                                    console.log(marketData.noValue,marketData.yesValue,marketData.status,'valueeeee');
+                                    
+                                }
                                 await client.set(`${tempObj.marketId}_diamond`, JSON.stringify(tempObj), 'EX', 24 * 60 * 60);
                                 fancyArr.push(tempObj)
                             }
