@@ -67,7 +67,7 @@ const updateFancyDetailsFunc = async (eventId,fencydata) => {
                                 // }
                                 fancyArr.push(marketData)
                                 if(eventId == "34164556"){
-                                    console.log(fancyArr.find(item => item.marketId == '12977756'), '00000000000000000');
+                                    console.log(fancyArr.find(item => item.marketId == '12977756'),marketData.status, '00000000000000000');
                                 }
     
                             }
@@ -165,9 +165,9 @@ const updateFancyDetailsFunc = async (eventId,fencydata) => {
                     }
                 }
             }
-            if(eventId == "34164556"){
-                console.log(fancyArr.find(item => item.marketId == '12977756'));
-            }
+            // if(eventId == "34164556"){
+            //     console.log(fancyArr.find(item => item.marketId == '12977756'));
+            // }
             
 
         }
