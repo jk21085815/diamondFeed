@@ -171,6 +171,9 @@ const updateFancyDetailsFunc = async (eventId,fencydata) => {
         const startTime = Date.now();
         processMarketArray(fencydata).then(async(responses) => {
             // console.log('API Responses:', responses);
+            if(eventId == '34164556'){
+                console.log(fancyArr, 'fancyArrfancyArr')
+            }
             await client.set(`${eventId}_diamond`, JSON.stringify(fancyArr), 'EX', 24 * 60 * 60);
             Publishclient.publish(`/topic/diamond_fancy_update/${eventId}`, JSON.stringify(fancyArr));
             let eventData = await client.get(`${eventId}_diamondEventData`);
