@@ -161,7 +161,9 @@ const updateFancyDetailsFunc = async (eventId,fencydata) => {
                     }
                 }
             }
-            console.log(fancyArr.find(item => item.marketId == '12977756'));
+            if(eventId == "34164556"){
+                console.log(fancyArr.find(item => item.marketId == '12977756'));
+            }
             
 
         }
