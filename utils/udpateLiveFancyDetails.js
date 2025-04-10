@@ -57,10 +57,14 @@ const updateFancyDetailsFunc = async (eventId,fencydata) => {
                                     console.log(marketData.runners,eventId,'marketid with no runnerrrr222222222222')
                                 }
                                 if(marketData.marketId == "12977756"){
-                                    console.log(marketData.marketName,marketData.noValue,marketData.yesValue,marketData.status,'valueeeee');
+                                    console.log(marketData.marketName,marketData.noValue,marketData.yesValue,marketData.status,'11111111111111111111');
                                     
                                 }
                                 await client.set(`${marketData.marketId}_diamond`, JSON.stringify(marketData), 'EX', 24 * 60 * 60);
+                                if(marketData.marketId == "12977756"){
+                                    console.log(marketData.marketName,marketData.noValue,marketData.yesValue,marketData.status,'2222222222222222222');
+                                    
+                                }
                                 fancyArr.push(marketData)
     
                             }else{
