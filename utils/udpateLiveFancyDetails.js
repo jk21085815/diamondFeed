@@ -59,16 +59,18 @@ const updateFancyDetailsFunc = async (eventId,fencydata) => {
                             }else{
                                 console.log(marketData.runners,eventId,'marketid with no runnerrrr222222222222')
                             }
-                            if(marketData.marketId == "12977756"){
-                                console.log(marketData.status, market.status1,'11111111111111111111');
+                            // if(marketData.marketId == "12977756"){
+                            //     console.log(marketData.status, market.status1,'11111111111111111111');
                                 
-                            }
+                            // }
                             await client.set(`${marketData.marketId}_diamond`, JSON.stringify(marketData), 'EX', 24 * 60 * 60);
                             // if(marketData.marketId == "12977756"){
                             //     console.log(marketData.marketName,marketData.noValue,marketData.yesValue,marketData.status,'2222222222222222222');
                                 
                             // }
-                            fancyArr.push(marketData)
+                            if(!fancyArr.some(item2 => item2.marketId.trim() == marketData.marketId.trim())){
+                                fancyArr.push(marketData)
+                            }
                             // if(eventId == "34164556"){
                             //     console.log(fancyArr.find(item => item.marketId == '12977756'),marketData.status, '00000000000000000');
                             // }
@@ -160,7 +162,10 @@ const updateFancyDetailsFunc = async (eventId,fencydata) => {
                                 
                             // }
                             await client.set(`${tempObj.marketId}_diamond`, JSON.stringify(tempObj), 'EX', 24 * 60 * 60);
-                            fancyArr.push(tempObj)
+                            if(!fancyArr.some(item2 => item2.marketId.trim() == tempObj.marketId.trim())){
+                                // fancyArr.push(marketData)
+                                fancyArr.push(tempObj)
+                            }
                         }
                     }catch(error){
                         console.log(error,eventId,":Errorrrrrr")
@@ -187,9 +192,9 @@ const updateFancyDetailsFunc = async (eventId,fencydata) => {
         const startTime = Date.now();
         processMarketArray(fencydata).then(async(responses) => {
             // console.log('API Responses:', responses);
-            if(eventId == '34164556'){
-                console.log(fancyArr,'fancyArrfancyArr')
-            }
+            // if(eventId == '34164556'){
+            //     console.log(fancyArr,'fancyArrfancyArr')
+            // }
             await client.set(`${eventId}_diamond`, JSON.stringify(fancyArr), 'EX', 24 * 60 * 60);
             Publishclient.publish(`/topic/diamond_fancy_update/${eventId}`, JSON.stringify(fancyArr));
             let eventData = await client.get(`${eventId}_diamondEventData`);
