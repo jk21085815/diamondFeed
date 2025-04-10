@@ -174,7 +174,7 @@ const updateFancyDetailsFunc = async (eventId,fencydata) => {
             });
             await Promise.all(marketPromises);
             if(eventId == "34164556"){
-                console.log(fancyArr.find(item => item.marketId == '12977756'));
+                console.log(fancyArr.find(item => item.marketId == '12977756'), 'fffffffffffffffgggggggggggg');
             }
             
 
