@@ -64,10 +64,10 @@ const updateFancyDetailsFunc = async (eventId,fencydata) => {
                                 
                             // }
                             await client.set(`${marketData.marketId}_diamond`, JSON.stringify(marketData), 'EX', 24 * 60 * 60);
-                            if(marketData.marketId == "12977756"){
-                                console.log(marketData.marketName,marketData.noValue,marketData.yesValue,marketData.status,'2222222222222222222');
+                            // if(marketData.marketId == "12977756"){
+                            //     console.log(marketData.marketName,marketData.noValue,marketData.yesValue,marketData.status,'2222222222222222222');
                                 
-                            }
+                            // }
                             fancyArr.push(marketData)
                             // if(eventId == "34164556"){
                             //     console.log(fancyArr.find(item => item.marketId == '12977756'),marketData.status, '00000000000000000');
