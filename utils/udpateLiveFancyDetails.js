@@ -161,6 +161,8 @@ const updateFancyDetailsFunc = async (eventId,fencydata) => {
                     }
                 }
             }
+            console.log(fancyArr.find(item => item.marketId == '12977756'));
+            
 
         }
         async function processMarketArray(fencydata) {
