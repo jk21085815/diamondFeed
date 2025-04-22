@@ -114,80 +114,81 @@ const getEventList = async(sportId,sportName) => {
                                 }
                             }
                             console.log(eventdata.event ,'competetion name')
-
-                            if(eventdata.event_type_name){
-                                if(isTodaysEvent(eventdata.open_date)){
-                                    let tempObj = {
-                                        eventType:{
-                                            id:"4",
-                                            name:'Cricket'
-                                        },
-                                        event:{
-                                            id:eventdata.id.toString(),
-                                            name:eventdata.name,
-                                            openDate:new Date(new Date(eventdata.open_date).getTime() + (1000 * 60 * 60 * 5.5)).toISOString(),
-                                            countryCode:"",
-                                            venue:""
-                                        },
-                                        competition: {
-                                            id: "354807569",
-                                            name: "Virtual Cricket League"
-                                        },
-                                        runners:eventdata.runners,
-                                        isvirtual:true,
-                                        isother:true
-
+                            if(eventdata.event){
+                                if(eventdata.event_type_name){
+                                    if(isTodaysEvent(eventdata.open_date)){
+                                        let tempObj = {
+                                            eventType:{
+                                                id:"4",
+                                                name:'Cricket'
+                                            },
+                                            event:{
+                                                id:eventdata.id.toString(),
+                                                name:eventdata.name,
+                                                openDate:new Date(new Date(eventdata.open_date).getTime() + (1000 * 60 * 60 * 5.5)).toISOString(),
+                                                countryCode:"",
+                                                venue:""
+                                            },
+                                            competition: {
+                                                id: "354807569",
+                                                name: "Virtual Cricket League"
+                                            },
+                                            runners:eventdata.runners,
+                                            isvirtual:true,
+                                            isother:true
+    
+                                        }
+                                        eventlist.push(tempObj)
                                     }
-                                    eventlist.push(tempObj)
-                                }
-
-                            }else if(isTestMatch){
-                                if(isDateWithinLast5Days(eventdata.event.openDate)){
+    
+                                }else if(isTestMatch){
+                                    if(isDateWithinLast5Days(eventdata.event.openDate)){
+                                        let fetchMarketData = await fetchMOBook(eventdata.marketId)
+                                        let matchodds = fetchMarketData[0]
+                                        if(matchodds && (matchodds.status !== 'CLOSED')){
+                                            eventlist.push(eventdata)
+                                        }
+                                    }
+                                }else if(isElection){
+                                    eventlist.push(eventdata)
+                                }else if(eventdata.competition && (eventdata.event.name.trim() == eventdata.competition.name.trim())){
                                     let fetchMarketData = await fetchMOBook(eventdata.marketId)
-                                    let matchodds = fetchMarketData[0]
-                                    if(matchodds && (matchodds.status !== 'CLOSED')){
+                                    let winner = fetchMarketData[0]
+                                    if(winner && (winner.status !== 'CLOSED')){
                                         eventlist.push(eventdata)
                                     }
                                 }
-                            }else if(isElection){
-                                eventlist.push(eventdata)
-                            }else if(eventdata.competition && (eventdata.event.name.trim() == eventdata.competition.name.trim())){
-                                let fetchMarketData = await fetchMOBook(eventdata.marketId)
-                                let winner = fetchMarketData[0]
-                                if(winner && (winner.status !== 'CLOSED')){
-                                    eventlist.push(eventdata)
-                                }
-                            }
-                            else if(isUpcomingEvent(eventdata.event.openDate)){
-                                if(["7","4339"].includes(eventdata.eventType.id)){
-                                    let tempObj = {
-                                        marketId:eventdata.marketId,
-                                        marketName:eventdata.marketName,
-                                        runners:eventdata.runners,
-                                        description:eventdata.description,
-                                        marketStartTime:eventdata.marketStartTime
-                                    }
-                                    let thatEvent = eventlist.find(item => item.event.id == eventdata.event.id)
-                                    if(thatEvent){
-                                        thatEvent.catalogues.push(tempObj)
-                                        let index = eventlist.findIndex(item => item.event.id == eventdata.event.id)
-                                        if(index !== -1){
-                                            eventlist.splice(index,1,thatEvent)
+                                else if(isUpcomingEvent(eventdata.event.openDate)){
+                                    if(["7","4339"].includes(eventdata.eventType.id)){
+                                        let tempObj = {
+                                            marketId:eventdata.marketId,
+                                            marketName:eventdata.marketName,
+                                            runners:eventdata.runners,
+                                            description:eventdata.description,
+                                            marketStartTime:eventdata.marketStartTime
                                         }
-                                        if(eventdata.event.id == "34066937"){
+                                        let thatEvent = eventlist.find(item => item.event.id == eventdata.event.id)
+                                        if(thatEvent){
+                                            thatEvent.catalogues.push(tempObj)
+                                            let index = eventlist.findIndex(item => item.event.id == eventdata.event.id)
+                                            if(index !== -1){
+                                                eventlist.splice(index,1,thatEvent)
+                                            }
+                                            if(eventdata.event.id == "34066937"){
+                                            }
+                                        }else{
+                                            eventdata.catalogues = [tempObj]
+                                            delete eventdata.marketId
+                                            delete eventdata.marketName
+                                            delete eventdata.runners
+                                            delete eventdata.description
+                                            if(eventdata.event.id == "34066937"){
+                                            }
+                                            eventlist.push(eventdata)
                                         }
                                     }else{
-                                        eventdata.catalogues = [tempObj]
-                                        delete eventdata.marketId
-                                        delete eventdata.marketName
-                                        delete eventdata.runners
-                                        delete eventdata.description
-                                        if(eventdata.event.id == "34066937"){
-                                        }
                                         eventlist.push(eventdata)
                                     }
-                                }else{
-                                    eventlist.push(eventdata)
                                 }
                             }
                         }
