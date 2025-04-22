@@ -195,6 +195,8 @@ const getEventList = async(sportId,sportName) => {
                         await setFinalResult(sportName)
                     }catch(error){
                         geteventListBySportId()
+                        console.log(error, 'errorerrorerror');
+                        
                     }
                     
                 } 
