@@ -98,11 +98,13 @@ const getEventList = async(sportId,sportName) => {
                             virtualCricket = activeevent.data.filter(item => item.name.indexOf('T10') !== -1)
                             parsedata = parsedata.concat(virtualCricket)
                         }
+                        console.log(parsedata, 'parsedataparsedata');
+                        
                         for(let j = 0;j<parsedata.length;j++){
                             let isTestMatch = false
                             let isElection = false
                             let eventdata = parsedata[j]
-                            console.log(parsedata[j], parsedata.length, 'parsedata');
+                            // console.log(parsedata[j], parsedata.length, 'parsedata');
                             
                             if(eventdata.competition && (eventdata.competition.name.toLowerCase().indexOf("test") !== -1 || eventdata.competition.name.toLowerCase().indexOf("ranji trophy") !== -1 || eventdata.competition.name.toLowerCase().indexOf("west indies championship") !== -1)){
                                 isTestMatch = true
