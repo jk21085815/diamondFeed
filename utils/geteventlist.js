@@ -98,7 +98,7 @@ const getEventList = async(sportId,sportName) => {
                             virtualCricket = activeevent.data.filter(item => item.name.indexOf('T10') !== -1)
                             parsedata = parsedata.concat(virtualCricket)
                         }
-                        console.log(parsedata, 'parsedataparsedata');
+                        // console.log(parsedata, 'parsedataparsedata');
                         
                         for(let j = 0;j<parsedata.length;j++){
                             let isTestMatch = false
@@ -108,7 +108,7 @@ const getEventList = async(sportId,sportName) => {
                             
                             if(eventdata.competition && (eventdata.competition.name.toLowerCase().indexOf("test") !== -1 || eventdata.competition.name.toLowerCase().indexOf("ranji trophy") !== -1 || eventdata.competition.name.toLowerCase().indexOf("west indies championship") !== -1)){
                                 isTestMatch = true
-                                console.log(eventdata.competition.name,'competetion name')
+                                console.log(eventdata,eventdata.event ,'competetion name')
                             }else{
                                 if(eventdata.eventType && eventdata.eventType.id == 500){
                                     isElection = true
