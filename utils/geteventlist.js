@@ -108,12 +108,13 @@ const getEventList = async(sportId,sportName) => {
                             
                             if(eventdata.competition && (eventdata.competition.name.toLowerCase().indexOf("test") !== -1 || eventdata.competition.name.toLowerCase().indexOf("ranji trophy") !== -1 || eventdata.competition.name.toLowerCase().indexOf("west indies championship") !== -1)){
                                 isTestMatch = true
-                                console.log(eventdata.event.openDate ,'competetion name')
                             }else{
                                 if(eventdata.eventType && eventdata.eventType.id == 500){
                                     isElection = true
                                 }
                             }
+                            console.log(eventdata.event.openDate ,'competetion name')
+
                             if(eventdata.event_type_name){
                                 if(isTodaysEvent(eventdata.open_date)){
                                     let tempObj = {
