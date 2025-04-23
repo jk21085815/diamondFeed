@@ -68,7 +68,7 @@ const updateFancyDetailsFunc = async (eventId,fencydata) => {
                             //     console.log(marketData.marketName,marketData.noValue,marketData.yesValue,marketData.status,'2222222222222222222');
                                 
                             // }
-                            if(eventId == "34238025"){
+                            if(eventId == "34238025" && marketData.marketId ==  '13021018'){
                                 console.log(marketData, 'marketDatamarketDatamarketDatamarketData');
                                 
                             }
