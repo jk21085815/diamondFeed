@@ -69,7 +69,7 @@ const updateFancyDetailsFunc = async (eventId,fencydata) => {
                                 
                             // }
                             if(eventId == "34238025"){
-                                console.log(marketData, 'marketDatamarketDatamarketDatamarketData');
+                                console.log(marketData.find(item => item.marketId == '13021018'), 'marketDatamarketDatamarketDatamarketData');
                                 
                             }
                             fancyArr.push(marketData)
