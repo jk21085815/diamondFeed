@@ -123,7 +123,7 @@ const getEventList = async(sportId,sportName) => {
                             }
                             if(eventdata.event){
                                 // console.log(eventdata,'competetion name')
-                                if(eventdata.event_type_name){
+                                if(eventdata.event_type_name || (eventdata.event_type_id && eventdata.event_type_id == 4)){
                                     if(isTodaysEvent(eventdata.open_date)){
                                         let tempObj = {
                                             eventType:{
