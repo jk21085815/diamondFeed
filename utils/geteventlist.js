@@ -114,8 +114,8 @@ const getEventList = async(sportId,sportName) => {
                                 }
                             }
                             if(eventdata.event){
+                                console.log(eventdata,'competetion name')
                                 if(eventdata.event_type_name){
-                                    console.log(eventdata ,'competetion name')
                                     if(isTodaysEvent(eventdata.open_date)){
                                         let tempObj = {
                                             eventType:{
