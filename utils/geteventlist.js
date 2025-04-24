@@ -3,6 +3,7 @@ const cheerio = require('cheerio');
 const setFinalResult = require('./setFinalResult');
 const redis = require('redis');
 const client = redis.createClient({url:process.env.redisurl});
+const fs = require('fs');
 client.connect()
 client.on('error', (err) => {
     console.log(`Error(In setcompIdCrone.js):${err}`);
@@ -99,6 +100,13 @@ const getEventList = async(sportId,sportName) => {
                             parsedata = parsedata.concat(virtualCricket)
                         }
                         console.log(parsedata, 'parsedataparsedata');
+                        fs.writeFile('./print.txt', JSON.stringify(parsedata, null, 2), (err) => {
+                            if (err) {
+                              console.error('Error writing file:', err);
+                            } else {
+                              console.log('parsedata saved to ./print.txt');
+                            }
+                          });
                         
                         for(let j = 0;j<parsedata.length;j++){
                             let isTestMatch = false
