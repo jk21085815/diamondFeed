@@ -99,14 +99,14 @@ const getEventList = async(sportId,sportName) => {
                             virtualCricket = activeevent.data.filter(item => item.name.indexOf('T10') !== -1)
                             parsedata = parsedata.concat(virtualCricket)
                         }
-                        console.log(parsedata, 'parsedataparsedata');
-                        fs.writeFile('./print.txt', JSON.stringify(parsedata, null, 2), (err) => {
-                            if (err) {
-                              console.error('Error writing file:', err);
-                            } else {
-                              console.log('parsedata saved to ./print.txt');
-                            }
-                          });
+                        // console.log(parsedata, 'parsedataparsedata');
+                        // fs.writeFile('./print.txt', JSON.stringify(parsedata, null, 2), (err) => {
+                        //     if (err) {
+                        //       console.error('Error writing file:', err);
+                        //     } else {
+                        //       console.log('parsedata saved to ./print.txt');
+                        //     }
+                        //   });
                         
                         for(let j = 0;j<parsedata.length;j++){
                             let isTestMatch = false
@@ -122,8 +122,8 @@ const getEventList = async(sportId,sportName) => {
                                 }
                             }
                             if(eventdata.event){
-                                // console.log(eventdata,'competetion name')
                                 if(eventdata.event_type_name || (eventdata.event_type_id && eventdata.event_type_id == 4)){
+                                    console.log(eventdata,'competetion name')
                                     if(isTodaysEvent(eventdata.open_date)){
                                         let tempObj = {
                                             eventType:{
