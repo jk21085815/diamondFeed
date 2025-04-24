@@ -64,8 +64,8 @@ const getEventList = async(sportId,sportName) => {
         let fetchMarketDatajson = await fetchMarketData.json()
         return fetchMarketDatajson
     }
-    // cron.schedule('00 */6 * * *', async() => {
-    cron.schedule('57 * * * *', async() => {
+    cron.schedule('00 */6 * * *', async() => {
+    // cron.schedule('57 * * * *', async() => {
             console.log(`Set ${sportName} CompId Cron Started.....111111111111111111111111111111111111111111111111`)
             try{
                 async function geteventListBySportId () {
@@ -100,16 +100,16 @@ const getEventList = async(sportId,sportName) => {
                             parsedata = parsedata.concat(virtualCricket)
                         }
                         // console.log(parsedata, 'parsedataparsedata');
-                        if(sportName=== 'Cricket'){
-                            fs.writeFile('./print.txt', JSON.stringify(parsedata, null, 2), (err) => {
-                                if (err) {
-                                  console.error('Error writing file:', err);
-                                } else {
-                                  console.log('parsedata saved to ./print.txt');
-                                }
-                              });
+                        // if(sportName=== 'Cricket'){
+                        //     fs.writeFile('./print.txt', JSON.stringify(parsedata, null, 2), (err) => {
+                        //         if (err) {
+                        //           console.error('Error writing file:', err);
+                        //         } else {
+                        //           console.log('parsedata saved to ./print.txt');
+                        //         }
+                        //       });
 
-                        }
+                        // }
                         
                         for(let j = 0;j<parsedata.length;j++){
                             let isTestMatch = false
