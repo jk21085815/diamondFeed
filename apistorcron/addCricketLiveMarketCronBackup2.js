@@ -46,7 +46,7 @@ client.on('connect', () => {
                 }
                 eventIds = JSON.parse(eventIds)
                 eventIds = eventIds.concat(otherEvents)
-                console.log(eventIds.length,'cricketEventIdssssssss')
+                // console.log(eventIds.length,'cricketEventIdssssssss')
                 function delay(ms) {
                     return new Promise(resolve => setTimeout(resolve, ms));
                 }
@@ -72,7 +72,7 @@ client.on('connect', () => {
                 }
                 for(let i = 0;i<eventIds.length;i++){
                     try{
-                        console.log(new Date(),i,eventIds[i],'Add Cricket eventIds and Market iiiiiiiii')
+                        // console.log(new Date(),i,eventIds[i],'Add Cricket eventIds and Market iiiiiiiii')
                         let matchOddMarketArr = []
                         let bookmakersMarketArr = []
                         let OtherMOMarketArr = []

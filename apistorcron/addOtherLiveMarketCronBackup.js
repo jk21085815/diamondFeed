@@ -48,7 +48,7 @@ client.on('connect', () => {
                 }else{
                     liveEventIds = []
                 }
-                console.log(eventIds.length,'otherSportEventIdssssssss')
+                // console.log(eventIds.length,'otherSportEventIdssssssss')
                 function delay(ms) {
                     return new Promise(resolve => setTimeout(resolve, ms));
                 }
@@ -78,7 +78,7 @@ client.on('connect', () => {
                         let matchOddMarketArr = []
                         let bookmakersMarketArr = []
                         let OtherMOMarketArr = []
-                        console.log(new Date(),i,eventIds[i],'Add Other eventIds and Market iiiiiiiii')
+                        // console.log(new Date(),i,eventIds[i],'Add Other eventIds and Market iiiiiiiii')
                         let liveMatchCheckMarket
                         let isLiveStatus = false
                         let eventData
