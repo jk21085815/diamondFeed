@@ -45,17 +45,19 @@ app.use(express.urlencoded({ extended: true, limit: '50mb' }));
 app.use(cookieParser());
 
 seteventList()
-updateMOLiveMarketDetails() 
-updateMOLiveMarketDetails2()
-updateBMLiveMarketDetails()
-// updateBMLiveMarketDetails2()
+// updateMOLiveMarketDetails() 
+// updateMOLiveMarketDetails2()
+// updateBMLiveMarketDetails()
 addLiveMarketCron()
 addOtherSportLiveMarketCron()
-updateFancyCron()
+// updateFancyCron()
+// updateLiveFanctCron2()
+// exchangePageCron()
+
+
 // updateAdvFanctCron()
-updateLiveFanctCron2()
 // updateLiveFanctCron3()
-exchangePageCron()
+// updateBMLiveMarketDetails2()
 // setSportDataCron()
 
 app.use(morgan('dev'));
