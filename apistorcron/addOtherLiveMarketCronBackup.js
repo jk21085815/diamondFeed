@@ -78,7 +78,7 @@ client.on('connect', () => {
                         let matchOddMarketArr = []
                         let bookmakersMarketArr = []
                         let OtherMOMarketArr = []
-                        // console.log(new Date(),i,eventIds[i],'Add Other eventIds and Market iiiiiiiii')
+                        console.log(new Date(),i,eventIds[i],'Add Other eventIds and Market iiiiiiiii')
                         let liveMatchCheckMarket
                         let isLiveStatus = false
                         let eventData
