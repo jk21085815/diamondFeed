@@ -44,7 +44,7 @@ app.use(fileUpload({
 app.use(express.urlencoded({ extended: true, limit: '50mb' }));
 app.use(cookieParser());
 
-// seteventList()
+seteventList()
 // updateMOLiveMarketDetails() 
 // updateMOLiveMarketDetails2()
 // updateBMLiveMarketDetails()
