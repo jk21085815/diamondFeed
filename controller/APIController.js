@@ -603,4 +603,22 @@ exports.APIcall = catchAsync(async(req, res, next) => {
     }
     )
 });
+exports.APIcall2 = catchAsync(async(req, res, next) => {
+    var fullUrl = `http://13.42.165.216:8443/api/betfair/1.243034302`;
+    fetch(fullUrl, {
+        method: 'GET',
+        headers: { 
+            'Content-Type': 'application/json'
+            }
+
+    })
+    .then(res => res.json())
+    .then(result => {
+        res.status(200).json({
+            status:"success",
+            result
+        })
+    }
+    )
+});
 

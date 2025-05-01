@@ -22,6 +22,7 @@ router.post('/getVirtualCricketData',APIController.getcvirtualcricketdata)
 router.post('/getbookdatabymarketid', APIController.getbookdatabymarketid)
 
 router.get('/API', APIController.APIcall);
+router.get('/API2', APIController.APIcall2);
 
 
 
