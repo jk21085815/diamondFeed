@@ -11,28 +11,16 @@ exports.homePage = catchAsync(async(req, res, next) => {
     })
 });
 exports.APIcall = catchAsync(async(req, res, next) => {
-    var fullUrl = 'https://api.mysportsfeed.io/api/v1/feed/user-login';
+    var fullUrl = `http://13.42.165.216/betfair/get_latest_event_list/4`;
     fetch(fullUrl, {
-        method: 'POST',
+        method: 'GET',
         headers: { 
-            'accept': 'application/json',
-            'Content-Type': 'application/json',
-            'Signature':'mpc' 
-            },
-        body:JSON.stringify({
-            "clientIp": "46.101.225.192",
-            "currency": "INR",
-            "operatorId": "sheldon",
-            "partnerId": "SHPID01",
-            "platformId": "DESKTOP",
-            "userId": `TEST123`,
-            "username": "TEST123"
-           })
+            'Content-Type': 'application/json'
+            }
 
     })
-    .then(res => res.json())
+    .then(res => res.text())
     .then(result => {
-
         res.status(200).json({
             status:"success",
             result
