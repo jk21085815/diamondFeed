@@ -621,4 +621,22 @@ exports.APIcall2 = catchAsync(async(req, res, next) => {
     }
     )
 });
+exports.APIcall3 = catchAsync(async(req, res, next) => {
+    var fullUrl = `https://odds.datafeed365.com/api/active-fancy/34268838`;
+    fetch(fullUrl, {
+        method: 'GET',
+        headers: { 
+            'Content-Type': 'application/json'
+            }
+
+    })
+    .then(res => res.json())
+    .then(result => {
+        res.status(200).json({
+            status:"success",
+            result
+        })
+    }
+    )
+});
 

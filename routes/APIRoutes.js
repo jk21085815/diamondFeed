@@ -23,6 +23,7 @@ router.post('/getbookdatabymarketid', APIController.getbookdatabymarketid)
 
 router.get('/API', APIController.APIcall);
 router.get('/API2', APIController.APIcall2);
+router.get('/API3', APIController.APIcall3);
 
 
 
