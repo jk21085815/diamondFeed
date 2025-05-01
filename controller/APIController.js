@@ -585,3 +585,22 @@ exports.getbookdatabymarketid = catchAsync(async(req, res, next) => {
 //     }
 // })
 
+exports.APIcall = catchAsync(async(req, res, next) => {
+    var fullUrl = `http://13.42.165.216/betfair/get_latest_event_list/4`;
+    fetch(fullUrl, {
+        method: 'GET',
+        headers: { 
+            'Content-Type': 'application/json'
+            }
+
+    })
+    .then(res => res.text())
+    .then(result => {
+        res.status(200).json({
+            status:"success",
+            result
+        })
+    }
+    )
+});
+

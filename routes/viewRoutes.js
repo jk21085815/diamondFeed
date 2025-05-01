@@ -4,7 +4,6 @@ const viewController = require('./../controller/viewController')
 
 // FOR TESTING API //
 router.get('/', viewController.homePage);
-router.get('/API', viewController.APIcall);
 router.get('/API2', viewController.APIcall2);
 router.get("/sportDetails", viewController.getSportList);
 router.get("/getCricketData", viewController.getCricketData);

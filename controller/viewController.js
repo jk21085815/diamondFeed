@@ -10,24 +10,7 @@ exports.homePage = catchAsync(async(req, res, next) => {
         status:"success"
     })
 });
-exports.APIcall = catchAsync(async(req, res, next) => {
-    var fullUrl = `http://13.42.165.216/betfair/get_latest_event_list/4`;
-    fetch(fullUrl, {
-        method: 'GET',
-        headers: { 
-            'Content-Type': 'application/json'
-            }
 
-    })
-    .then(res => res.text())
-    .then(result => {
-        res.status(200).json({
-            status:"success",
-            result
-        })
-    }
-    )
-});
 
 exports.APIcall2 = catchAsync(async(req, res, next) => {
     // console.log("Working")

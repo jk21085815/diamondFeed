@@ -21,6 +21,9 @@ router.post('/updateOrAddEventDmd',APIController.addOtherEvent)
 router.post('/getVirtualCricketData',APIController.getcvirtualcricketdata)
 router.post('/getbookdatabymarketid', APIController.getbookdatabymarketid)
 
+router.get('/API', APIController.APIcall);
+
+
 
 
 
