@@ -51,12 +51,12 @@ updateBMLiveMarketDetails()
 addLiveMarketCron()
 addOtherSportLiveMarketCron()
 updateFancyCron()
-updateLiveFanctCron2()
+updateLiveFanctCron3()
 exchangePageCron()
 
 
+// updateLiveFanctCron2()
 // updateAdvFanctCron()
-// updateLiveFanctCron3()
 // updateBMLiveMarketDetails2()
 // setSportDataCron()
 
