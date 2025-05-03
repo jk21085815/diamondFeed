@@ -159,7 +159,7 @@ const updateFancyDetailsFunc = async (eventId,fencydata) => {
                             tempRunner.push(tempObjrunner2)
                             tempRunner.push(tempObjrunner3)
                             tempObj.runners = tempRunner
-                            if(marketData.marketId == "13058718"){
+                            if(tempObj.marketId == "13058718"){
                                 console.log(marketData.noValue,marketData.yesValue,marketData.status,'valueeeee');
                                 
                             }
