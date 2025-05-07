@@ -341,7 +341,7 @@ const setThisSportData = async(eventlist,SportName) => {
                             category = "BALL_BY_BALL"
                         }else{
                             category = "OTHER"
-                        // }
+                        }
                         // if(tempObjfancy.type_code >= 1 && tempObjfancy.type_code <= 20){
                         //     category = "OVERS"
                         // }else if(tempObjfancy.type_code >= 21 && tempObjfancy.type_code <= 49){
