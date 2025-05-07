@@ -96,28 +96,28 @@ const updateFancyDetailsFunc = async (eventId,fencydata) => {
                                 "inPlay": market.in_play
                             }
                             // console.log(market.type_code,'market.type_codemarket.type_code')
-                            if(market.type_code >= 1 && market.type_code <= 20){
-                                category = "OVERS"
-                            }else if(market.type_code >= 21 && market.type_code <= 49){
-                                category = "BATSMAN"
-                            }else if(market.type_code >= 50 && market.type_code <= 55){
-                                category = "OTHER"
-                            }else if(market.type_code >= 60 && market.type_code <= 99){
-                                category = "ODD_EVEN"
-                            }
-                            // if(["4","10","12","8","5","53"].includes(market.type_code.toString())){
+                            // if(market.type_code >= 1 && market.type_code <= 20){
                             //     category = "OVERS"
-                            // }else if(["42","20","18","22","36","14","38","44"].includes(market.type_code.toString())){
+                            // }else if(market.type_code >= 21 && market.type_code <= 49){
                             //     category = "BATSMAN"
-                            // }else if(market.type_code.toString() == "2"){
-                            //     category = "SINGLE_OVER"
-                            // }else if(["28","26"].includes(market.type_code.toString())){
-                            //     category = "ODD_EVEN"
-                            // }else if(market.type_code.toString() == "6"){
-                            //     category = "BALL_BY_BALL"
-                            // }else{
+                            // }else if(market.type_code >= 50 && market.type_code <= 55){
                             //     category = "OTHER"
+                            // }else if(market.type_code >= 60 && market.type_code <= 99){
+                            //     category = "ODD_EVEN"
                             // }
+                            if(["4","10","12","8","5","53"].includes(market.type_code.toString())){
+                                category = "OVERS"
+                            }else if(["42","20","18","22","36","14","38","44"].includes(market.type_code.toString())){
+                                category = "BATSMAN"
+                            }else if(market.type_code.toString() == "2"){
+                                category = "SINGLE_OVER"
+                            }else if(["28","26"].includes(market.type_code.toString())){
+                                category = "ODD_EVEN"
+                            }else if(market.type_code.toString() == "6"){
+                                category = "BALL_BY_BALL"
+                            }else{
+                                category = "OTHER"
+                            }
                             tempObj.category = category
                             let tempObjrunner1 = 
                             {
