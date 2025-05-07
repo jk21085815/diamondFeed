@@ -24,7 +24,7 @@ const updateFancyDetailsFunc = async (eventId,fencydata) => {
                     marketData = cachedData ? JSON.parse(cachedData) : null;
             
                     try{
-                        if (marketData) {
+                        if (marketData || true) {
                             marketData.status = market.status1 == "ACTIVE" ?"OPEN":market.status1,
                             marketData.inPlay = market.in_play;
                             marketData.noValue = market.l1;
@@ -96,9 +96,9 @@ const updateFancyDetailsFunc = async (eventId,fencydata) => {
                                 "inPlay": market.in_play
                             }
                             // console.log(market.type_code,'market.type_codemarket.type_code')
-                            if(["4","10","12","8","5"].includes(market.type_code.toString())){
+                            if(["4","10","12","8","5","53"].includes(market.type_code.toString())){
                                 category = "OVERS"
-                            }else if(["42","20","18","22","36","14"].includes(market.type_code.toString())){
+                            }else if(["42","20","18","22","36","14","38","44"].includes(market.type_code.toString())){
                                 category = "BATSMAN"
                             }else if(market.type_code.toString() == "2"){
                                 category = "SINGLE_OVER"
