@@ -102,7 +102,7 @@ const updateFancyDetailsFunc = async (eventId,fencydata) => {
                                 category = "BATSMAN"
                             }else if(market.type_code.toString() == "2"){
                                 category = "SINGLE_OVER"
-                            }else if(market.type_code.toString() == "28"){
+                            }else if(["28","26"].includes(market.type_code.toString())){
                                 category = "ODD_EVEN"
                             }else if(market.type_code.toString() == "6"){
                                 category = "BALL_BY_BALL"
