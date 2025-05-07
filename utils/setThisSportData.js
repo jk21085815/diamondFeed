@@ -329,28 +329,28 @@ const setThisSportData = async(eventlist,SportName) => {
                             "inPlay": tempObjfancy.in_play
                         }
                  
-                        // if(["4","10","12","8","5","53"].includes(tempObjfancy.type_code.toString())){
-                        //     category = "OVERS"
-                        // }else if(["42","20","18","22","36","14","38","44"].includes(tempObjfancy.type_code.toString())){
-                        //     category = "BATSMAN"
-                        // }else if(tempObjfancy.type_code.toString() == "2"){
-                        //     category = "SINGLE_OVER"
-                        // }else if(["28","26"].includes(tempObjfancy.type_code.toString())){
-                        //     category = "ODD_EVEN"
-                        // }else if(tempObjfancy.type_code.toString() == "6"){
-                        //     category = "BALL_BY_BALL"
-                        // }else{
-                        //     category = "OTHER"
-                        // }
-                        if(tempObjfancy.type_code >= 1 && tempObjfancy.type_code <= 20){
+                        if(["4","10","12","8","5","53"].includes(tempObjfancy.type_code.toString())){
                             category = "OVERS"
-                        }else if(tempObjfancy.type_code >= 21 && tempObjfancy.type_code <= 49){
+                        }else if(["42","20","18","22","36","14","38","44"].includes(tempObjfancy.type_code.toString())){
                             category = "BATSMAN"
-                        }else if(tempObjfancy.type_code >= 50 && tempObjfancy.type_code <= 55){
-                            category = "OTHER"
-                        }else if(tempObjfancy.type_code >= 60 && tempObjfancy.type_code <= 99){
+                        }else if(tempObjfancy.type_code.toString() == "2"){
+                            category = "SINGLE_OVER"
+                        }else if(["28","26"].includes(tempObjfancy.type_code.toString())){
                             category = "ODD_EVEN"
-                        }
+                        }else if(tempObjfancy.type_code.toString() == "6"){
+                            category = "BALL_BY_BALL"
+                        }else{
+                            category = "OTHER"
+                        // }
+                        // if(tempObjfancy.type_code >= 1 && tempObjfancy.type_code <= 20){
+                        //     category = "OVERS"
+                        // }else if(tempObjfancy.type_code >= 21 && tempObjfancy.type_code <= 49){
+                        //     category = "BATSMAN"
+                        // }else if(tempObjfancy.type_code >= 50 && tempObjfancy.type_code <= 55){
+                        //     category = "OTHER"
+                        // }else if(tempObjfancy.type_code >= 60 && tempObjfancy.type_code <= 99){
+                        //     category = "ODD_EVEN"
+                        // }
                         tempObj.category = category
                         let tempObjrunner1 = 
                         {
