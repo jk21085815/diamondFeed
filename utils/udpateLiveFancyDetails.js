@@ -95,7 +95,7 @@ const updateFancyDetailsFunc = async (eventId,fencydata) => {
                                 "yesRate": market.bs1,
                                 "inPlay": market.in_play
                             }
-                            console.log(market.type_code,'market.type_codemarket.type_code')
+                            console.log(market.type_code,market.type_code >= 1,'market.type_codemarket.type_code')
                             // if(market.type_code >= 1 && market.type_code <= 20){
                             //     category = "OVERS"
                             // }else if(market.type_code >= 21 && market.type_code <= 49){
