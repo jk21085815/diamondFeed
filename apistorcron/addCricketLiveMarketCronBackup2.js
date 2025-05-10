@@ -48,6 +48,8 @@ client.on('connect', () => {
                 if (index > -1) {
                     otherEvents.splice(index, 1);
                 }
+                await client.set('crone_getEventIds_Other_diamond',JSON.stringify(otherEvents))
+
                 eventIds = JSON.parse(eventIds)
                 eventIds = eventIds.concat(otherEvents)
                 function delay(ms) {
