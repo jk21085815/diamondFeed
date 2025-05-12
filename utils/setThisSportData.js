@@ -430,7 +430,6 @@ const setThisSportData = async(eventlist,SportName) => {
                     await client.set(`${eventlist[k].eventId}_OnlyMOMarketIdsArr_diamond`,JSON.stringify(OnlyMOMarketIdArr),'EX',7 * 24 * 60 * 60)
                     await client.set(`${eventlist[k].eventId}_diamondEventData`,JSON.stringify(eventlist[k]),'EX',7 * 24 * 60 * 60)
                 }else{
-                    console.log(eventlist[k].event.id,k,new Date(),'kkk2222')
                     thisSportEventId.push(eventlist[k].event.id)
                 }
             }
