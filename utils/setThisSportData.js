@@ -66,7 +66,7 @@ const setThisSportData = async(eventlist,SportName) => {
             }
             for(let k = 0;k<eventlist.length;k++){
                 console.log(eventlist[k].event.id,k,new Date(),'kkk')
-                let previouseventdata = await client.get(`${eventlist[k].eventId}_diamondEventData`)
+                let previouseventdata = await client.get(`${eventlist[k].event.id}_diamondEventData`)
                 if(!previouseventdata){
                     let matchOddsArr = [];
                     let matchOddsArr2 = [];
@@ -431,7 +431,7 @@ const setThisSportData = async(eventlist,SportName) => {
                     await client.set(`${eventlist[k].eventId}_diamondEventData`,JSON.stringify(eventlist[k]),'EX',7 * 24 * 60 * 60)
                 }else{
                     console.log(eventlist[k].event.id,k,new Date(),'kkk2222')
-                    thisSportEventId.push(eventlist[k].eventId)
+                    thisSportEventId.push(eventlist[k].event.id)
                 }
             }
             await client.set(`crone_getEventIds_${SportName}_diamond`,JSON.stringify(thisSportEventId))
