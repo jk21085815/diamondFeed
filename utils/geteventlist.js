@@ -66,187 +66,188 @@ const getEventList = async(sportId,sportName) => {
     }
     cron.schedule('00 */6 * * *', async() => {
     // cron.schedule('21 * * * *', async() => {
-            console.log(`Set ${sportName} CompId Cron Started.....111111111111111111111111111111111111111111111111`)
-            try{
-                async function geteventListBySportId () {
-                    try{
-                        let eventlist = []
-                        let parsedata2 = []
-                        let virtualCricket
-                        let fetchEventList = await fetch(`http://13.42.165.216/betfair/get_latest_event_list/${sportId}`,{
-                            method:'GET',
-                            headers:{
-                                'Content-type' : 'application/json'
-                            }
-                        })
-                        let fetchTouranamaentevents = await fetch(`http://13.42.165.216/betfair/tournament_winner/${sportId}`,{
-                            method:'GET',
-                            headers:{
-                                'Content-type' : 'application/json'
-                            }
-                        })
-                        fetchTouranamaentevents = await fetchTouranamaentevents.text()
-                        if (typeof fetchTouranamaentevents === "string" && fetchTouranamaentevents.trim() !== "") {
-                            parsedata2 = JSON.parse(fetchTouranamaentevents)
-                        } else {
-                            console.error("Invalid JSON data:", fetchTouranamaentevents);
+        let starttime = new Date();
+        console.log(starttime,`Set ${sportName} CompId Cron Started.....111111111111111111111111111111111111111111111111`)
+        try{
+            async function geteventListBySportId () {
+                try{
+                    let eventlist = []
+                    let parsedata2 = []
+                    let virtualCricket
+                    let fetchEventList = await fetch(`http://13.42.165.216/betfair/get_latest_event_list/${sportId}`,{
+                        method:'GET',
+                        headers:{
+                            'Content-type' : 'application/json'
                         }
-                        fetchEventList = await fetchEventList.text()
-                        let parsedata = JSON.parse(fetchEventList)
-                        parsedata = parsedata.concat(parsedata2)
-                        if(sportId == "4"){
-                            let activeevent = await fetchactiveevent()
-                            virtualCricket = activeevent.data.filter(item => item.name.indexOf('T10') !== -1)
-                            parsedata = parsedata.concat(virtualCricket)
+                    })
+                    let fetchTouranamaentevents = await fetch(`http://13.42.165.216/betfair/tournament_winner/${sportId}`,{
+                        method:'GET',
+                        headers:{
+                            'Content-type' : 'application/json'
                         }
-                        // console.log(parsedata, 'parsedataparsedata');
-                        // if(sportName=== 'Cricket'){
-                        //     fs.writeFile('./print.txt', JSON.stringify(parsedata, null, 2), (err) => {
-                        //         if (err) {
-                        //           console.error('Error writing file:', err);
-                        //         } else {
-                        //           console.log('parsedata saved to ./print.txt');
-                        //         }
-                        //       });
+                    })
+                    fetchTouranamaentevents = await fetchTouranamaentevents.text()
+                    if (typeof fetchTouranamaentevents === "string" && fetchTouranamaentevents.trim() !== "") {
+                        parsedata2 = JSON.parse(fetchTouranamaentevents)
+                    } else {
+                        console.error("Invalid JSON data:", fetchTouranamaentevents);
+                    }
+                    fetchEventList = await fetchEventList.text()
+                    let parsedata = JSON.parse(fetchEventList)
+                    parsedata = parsedata.concat(parsedata2)
+                    if(sportId == "4"){
+                        let activeevent = await fetchactiveevent()
+                        virtualCricket = activeevent.data.filter(item => item.name.indexOf('T10') !== -1)
+                        parsedata = parsedata.concat(virtualCricket)
+                    }
+                    // console.log(parsedata, 'parsedataparsedata');
+                    // if(sportName=== 'Cricket'){
+                    //     fs.writeFile('./print.txt', JSON.stringify(parsedata, null, 2), (err) => {
+                    //         if (err) {
+                    //           console.error('Error writing file:', err);
+                    //         } else {
+                    //           console.log('parsedata saved to ./print.txt');
+                    //         }
+                    //       });
 
-                        // }
+                    // }
+                    
+                    for(let j = 0;j<parsedata.length;j++){
+                        let isTestMatch = false
+                        let isElection = false
+                        let eventdata = parsedata[j]
+                        // console.log(parsedata[j], parsedata.length, 'parsedata');
                         
-                        for(let j = 0;j<parsedata.length;j++){
-                            let isTestMatch = false
-                            let isElection = false
-                            let eventdata = parsedata[j]
-                            // console.log(parsedata[j], parsedata.length, 'parsedata');
-                            
-                            if(eventdata.competition && (eventdata.competition.name.toLowerCase().indexOf("test") !== -1 || eventdata.competition.name.toLowerCase().indexOf("ranji trophy") !== -1 || eventdata.competition.name.toLowerCase().indexOf("west indies championship") !== -1)){
-                                isTestMatch = true
-                            }else{
-                                if(eventdata.eventType && eventdata.eventType.id == 500){
-                                    isElection = true
-                                }
+                        if(eventdata.competition && (eventdata.competition.name.toLowerCase().indexOf("test") !== -1 || eventdata.competition.name.toLowerCase().indexOf("ranji trophy") !== -1 || eventdata.competition.name.toLowerCase().indexOf("west indies championship") !== -1)){
+                            isTestMatch = true
+                        }else{
+                            if(eventdata.eventType && eventdata.eventType.id == 500){
+                                isElection = true
                             }
-                            if(eventdata.event_type_name || (eventdata.event_type_id && eventdata.event_type_id == 4)){
-                                console.log(eventdata,'competetion name 111111111111111111111')
-                                if(isTodaysEvent(eventdata.open_date)){
-                                    let tempObj = {
-                                        eventType:{
-                                            id:"4",
-                                            name:'Cricket'
-                                        },
-                                        event:{
-                                            id:eventdata.id.toString(),
-                                            name:eventdata.name,
-                                            openDate:new Date(new Date(eventdata.open_date).getTime() + (1000 * 60 * 60 * 5.5)).toISOString(),
-                                            countryCode:"",
-                                            venue:""
-                                        },
-                                        competition: {
-                                            id: "354807569",
-                                            name: "Virtual Cricket League"
-                                        },
-                                        runners:eventdata.runners,
-                                        isvirtual:true,
-                                        isother:true
+                        }
+                        if(eventdata.event_type_name || (eventdata.event_type_id && eventdata.event_type_id == 4)){
+                            console.log(eventdata,'competetion name 111111111111111111111')
+                            if(isTodaysEvent(eventdata.open_date)){
+                                let tempObj = {
+                                    eventType:{
+                                        id:"4",
+                                        name:'Cricket'
+                                    },
+                                    event:{
+                                        id:eventdata.id.toString(),
+                                        name:eventdata.name,
+                                        openDate:new Date(new Date(eventdata.open_date).getTime() + (1000 * 60 * 60 * 5.5)).toISOString(),
+                                        countryCode:"",
+                                        venue:""
+                                    },
+                                    competition: {
+                                        id: "354807569",
+                                        name: "Virtual Cricket League"
+                                    },
+                                    runners:eventdata.runners,
+                                    isvirtual:true,
+                                    isother:true
 
-                                    }
-                                    eventlist.push(tempObj)
                                 }
-
+                                eventlist.push(tempObj)
                             }
-                            if(eventdata.event){
-                                // if(eventdata.event_type_name || (eventdata.event_type_id && eventdata.event_type_id == 4)){
-                                //     console.log(eventdata,'competetion name 111111111111111111111')
-                                //     if(isTodaysEvent(eventdata.open_date)){
-                                //         let tempObj = {
-                                //             eventType:{
-                                //                 id:"4",
-                                //                 name:'Cricket'
-                                //             },
-                                //             event:{
-                                //                 id:eventdata.id.toString(),
-                                //                 name:eventdata.name,
-                                //                 openDate:new Date(new Date(eventdata.open_date).getTime() + (1000 * 60 * 60 * 5.5)).toISOString(),
-                                //                 countryCode:"",
-                                //                 venue:""
-                                //             },
-                                //             competition: {
-                                //                 id: "354807569",
-                                //                 name: "Virtual Cricket League"
-                                //             },
-                                //             runners:eventdata.runners,
-                                //             isvirtual:true,
-                                //             isother:true
-    
-                                //         }
-                                //         eventlist.push(tempObj)
-                                //     }
-    
-                                // }else 
-                                if(isTestMatch){
-                                    if(isDateWithinLast5Days(eventdata.event.openDate)){
-                                        let fetchMarketData = await fetchMOBook(eventdata.marketId)
-                                        let matchodds = fetchMarketData[0]
-                                        if(matchodds && (matchodds.status !== 'CLOSED')){
-                                            eventlist.push(eventdata)
-                                        }
-                                    }
-                                }else if(isElection){
-                                    eventlist.push(eventdata)
-                                }else if(eventdata.competition && (eventdata.event.name.trim() == eventdata.competition.name.trim())){
+
+                        }
+                        if(eventdata.event){
+                            // if(eventdata.event_type_name || (eventdata.event_type_id && eventdata.event_type_id == 4)){
+                            //     console.log(eventdata,'competetion name 111111111111111111111')
+                            //     if(isTodaysEvent(eventdata.open_date)){
+                            //         let tempObj = {
+                            //             eventType:{
+                            //                 id:"4",
+                            //                 name:'Cricket'
+                            //             },
+                            //             event:{
+                            //                 id:eventdata.id.toString(),
+                            //                 name:eventdata.name,
+                            //                 openDate:new Date(new Date(eventdata.open_date).getTime() + (1000 * 60 * 60 * 5.5)).toISOString(),
+                            //                 countryCode:"",
+                            //                 venue:""
+                            //             },
+                            //             competition: {
+                            //                 id: "354807569",
+                            //                 name: "Virtual Cricket League"
+                            //             },
+                            //             runners:eventdata.runners,
+                            //             isvirtual:true,
+                            //             isother:true
+
+                            //         }
+                            //         eventlist.push(tempObj)
+                            //     }
+
+                            // }else 
+                            if(isTestMatch){
+                                if(isDateWithinLast5Days(eventdata.event.openDate)){
                                     let fetchMarketData = await fetchMOBook(eventdata.marketId)
-                                    let winner = fetchMarketData[0]
-                                    if(winner && (winner.status !== 'CLOSED')){
+                                    let matchodds = fetchMarketData[0]
+                                    if(matchodds && (matchodds.status !== 'CLOSED')){
                                         eventlist.push(eventdata)
                                     }
                                 }
-                                else if(isUpcomingEvent(eventdata.event.openDate)){
-                                    if(["7","4339"].includes(eventdata.eventType.id)){
-                                        let tempObj = {
-                                            marketId:eventdata.marketId,
-                                            marketName:eventdata.marketName,
-                                            runners:eventdata.runners,
-                                            description:eventdata.description,
-                                            marketStartTime:eventdata.marketStartTime
+                            }else if(isElection){
+                                eventlist.push(eventdata)
+                            }else if(eventdata.competition && (eventdata.event.name.trim() == eventdata.competition.name.trim())){
+                                let fetchMarketData = await fetchMOBook(eventdata.marketId)
+                                let winner = fetchMarketData[0]
+                                if(winner && (winner.status !== 'CLOSED')){
+                                    eventlist.push(eventdata)
+                                }
+                            }
+                            else if(isUpcomingEvent(eventdata.event.openDate)){
+                                if(["7","4339"].includes(eventdata.eventType.id)){
+                                    let tempObj = {
+                                        marketId:eventdata.marketId,
+                                        marketName:eventdata.marketName,
+                                        runners:eventdata.runners,
+                                        description:eventdata.description,
+                                        marketStartTime:eventdata.marketStartTime
+                                    }
+                                    let thatEvent = eventlist.find(item => item.event.id == eventdata.event.id)
+                                    if(thatEvent){
+                                        thatEvent.catalogues.push(tempObj)
+                                        let index = eventlist.findIndex(item => item.event.id == eventdata.event.id)
+                                        if(index !== -1){
+                                            eventlist.splice(index,1,thatEvent)
                                         }
-                                        let thatEvent = eventlist.find(item => item.event.id == eventdata.event.id)
-                                        if(thatEvent){
-                                            thatEvent.catalogues.push(tempObj)
-                                            let index = eventlist.findIndex(item => item.event.id == eventdata.event.id)
-                                            if(index !== -1){
-                                                eventlist.splice(index,1,thatEvent)
-                                            }
-                                            if(eventdata.event.id == "34066937"){
-                                            }
-                                        }else{
-                                            eventdata.catalogues = [tempObj]
-                                            delete eventdata.marketId
-                                            delete eventdata.marketName
-                                            delete eventdata.runners
-                                            delete eventdata.description
-                                            if(eventdata.event.id == "34066937"){
-                                            }
-                                            eventlist.push(eventdata)
+                                        if(eventdata.event.id == "34066937"){
                                         }
                                     }else{
+                                        eventdata.catalogues = [tempObj]
+                                        delete eventdata.marketId
+                                        delete eventdata.marketName
+                                        delete eventdata.runners
+                                        delete eventdata.description
+                                        if(eventdata.event.id == "34066937"){
+                                        }
                                         eventlist.push(eventdata)
                                     }
+                                }else{
+                                    eventlist.push(eventdata)
                                 }
                             }
                         }
-                        client.set(`crone_getEvent_list_${sportName}_diamond`,JSON.stringify(eventlist))  
-                        console.log(`Set ${sportName} CompititionId Cron Ended...`) 
-                        await setFinalResult(sportName)
-                    }catch(error){
-                        geteventListBySportId()
-                        console.log(error, 'errorerrorerror');
-                        
                     }
+                    client.set(`crone_getEvent_list_${sportName}_diamond`,JSON.stringify(eventlist))  
+                    console.log(starttime,new Date(),(Date.now()-(starttime.getTime()))/1000,`Set ${sportName} CompititionId Cron Ended...`) 
+                    await setFinalResult(sportName)
+                }catch(error){
+                    geteventListBySportId()
+                    console.log(error, 'errorerrorerror');
                     
-                } 
-                geteventListBySportId()
-            }catch(error){
-                console.log(error,'Errorrr setCompIdCrone')
-                // getEventList(sportName)
-            }
+                }
+                
+            } 
+            geteventListBySportId()
+        }catch(error){
+            console.log(error,'Errorrr setCompIdCrone')
+            // getEventList(sportName)
+        }
     })
 }
 

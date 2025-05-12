@@ -126,7 +126,7 @@ client.on('connect', () => {
                                 eventData.status = eventStatus
                                 if(eventData.isother){
                                     if(new Date(eventData.openDate).getTime() <= Date.now()){
-                                        liveEventInCricket.push(eventIds[i])
+                                        OtherSportLiveEventIds.push(eventIds[i])
                                         eventData.status = "IN_PLAY"
                                     }else{
                                         eventData.status = "UPCOMING"
