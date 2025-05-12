@@ -124,7 +124,16 @@ client.on('connect', () => {
                                 }
                                 let eventStatus = isLiveStatus?'IN_PLAY':'UPCOMING'
                                 eventData.status = eventStatus
+                                if(eventData.isother){
+                                    if(new Date(eventData.openDate).getTime() <= Date.now()){
+                                        liveEventInCricket.push(eventIds[i])
+                                        eventData.status = "IN_PLAY"
+                                    }else{
+                                        eventData.status = "UPCOMING"
+                                    }
+                                }
                                 let pushstatus = false 
+                                let showvirtual = false
                                 let thatMO = liveMatchCheckMarket
                                 if(thatMO){
                                     if(['OPEN','SUSPENDED','BALL_RUNNING'].includes(thatMO.status)){
@@ -132,6 +141,8 @@ client.on('connect', () => {
                                     }
                                 }else{
                                     if(eventData.competitionName.trim() == eventData.eventName.trim()){
+                                        pushstatus = true
+                                    }else if(eventData.isother){
                                         pushstatus = true
                                     }
                                 }
@@ -167,6 +178,9 @@ client.on('connect', () => {
                                     if(bookmakerdata){
                                         for(let a = 0; a<bookmakerdata.length; a++){
                                             if(Object.keys(bookmakerdata[a].data).length !== 0){
+                                                if(bookmakerdata[a].data.status !== 'CLOSED'){
+                                                    showvirtual = true
+                                                }
                                                 let tempRunner = []
                                                 let marketName
                                                 let tempObj = {
@@ -258,7 +272,19 @@ client.on('connect', () => {
                                     }
                                     eventData.markets.matchOdds = matchOddMarketArr
                                     eventData.markets.bookmakers = bookmakersMarketArr
-                                    showEvent.push(eventIds[i])
+
+                                    if(eventData.isother){
+                                        if(!showvirtual){
+                                            if(eventData.markets.fancyMarkets.length > 0){
+                                                showvirtual = true
+                                            }
+                                        }
+                                        if(showvirtual){
+                                            showEvent.push(eventIds[i])
+                                        }
+                                    }else{
+                                        showEvent.push(eventIds[i])
+                                    }
                                                 
                                 }
                                 await client.set(`${eventIds[i]}_diamondEventData`,JSON.stringify(eventData))
