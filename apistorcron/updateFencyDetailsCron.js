@@ -17,7 +17,7 @@ module.exports = () => {
                 let cricketEventIdsLive
                 cricketEventIdsLive = await client.get('crone_CricketliveEventIds_diamond_UPD'); 
                 cricketEventIdsLive = JSON.parse(cricketEventIdsLive)
-                let cricketEventIdsAll = await client.get('crone_getEventIds_Cricket_diamond'); 
+                let cricketEventIdsAll = await client.get('crone_getEventIds_Cricket_diamond_UPD'); 
                 cricketEventIdsAll = JSON.parse(cricketEventIdsAll)
                 let cricketEventIds = cricketEventIdsAll.filter(item => !cricketEventIdsLive.includes(item))
                 console.log(cricketEventIds.length,'cricketEvent Idsssssss')
