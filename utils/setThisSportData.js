@@ -408,6 +408,7 @@ const setThisSportData = async(eventlist,SportName) => {
                                 tempRunner.push(tempObjrunner3)
                                 tempObj.runners = tempRunner
                                 fanctMarketArr.push(tempObj)
+                                await client.set(`${tempObj.marketId}_diamond`, JSON.stringify(tempObj), 'EX', 24 * 60 * 60);
                             }
                             await client.set(`/topic/diamond_fancy_update/${eventlist[k].eventId}`, JSON.stringify(fanctMarketArr), 'EX', 24 * 60 * 60);
                             Publishclient.publish(`/topic/diamond_fancy_update/${eventlist[k].eventId}`, JSON.stringify(fanctMarketArr));
