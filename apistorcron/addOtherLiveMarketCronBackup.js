@@ -36,11 +36,17 @@ client.on('connect', () => {
                 let eventIds1 = await client.get(`crone_getEventIds_Soccer_diamond`);
                 let eventIds3 = await client.get(`crone_getEventIds_GreyHound_diamond`);
                 let eventIds4 = await client.get(`crone_getEventIds_HorseRacing_diamond`);
+                let otherEvents = await client.get('crone_getEventIds_Other_Other_diamond')
+                if(otherEvents){
+                    otherEvents = JSON.parse(otherEvents)
+                }else{
+                    otherEvents = []
+                }
                 eventIds1 = JSON.parse(eventIds1)
                 eventIds2 = JSON.parse(eventIds2)
                 eventIds3 = JSON.parse(eventIds3)
                 eventIds4 = JSON.parse(eventIds4)
-                let eventIds = eventIds1.concat(eventIds2,eventIds3,eventIds4)
+                let eventIds = eventIds1.concat(eventIds2,eventIds3,eventIds4,otherEvents)
                 await client.set('crone_getEventIds_OtherSport_diamond',JSON.stringify(eventIds))
                 let liveEventIds = await client.get('crone_OtherSportLiveEventIds_diamond_UPD');
                 if(liveEventIds){

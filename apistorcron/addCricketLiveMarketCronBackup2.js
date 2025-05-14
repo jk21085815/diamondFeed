@@ -39,7 +39,7 @@ client.on('connect', () => {
                 }else{
                     CricketLiveEventIds = []
                 }
-                if(otherEvents && false){
+                if(otherEvents){
                     otherEvents = JSON.parse(otherEvents)
                 }else{
                     otherEvents = []
