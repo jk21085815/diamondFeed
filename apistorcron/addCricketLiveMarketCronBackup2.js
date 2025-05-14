@@ -44,6 +44,7 @@ client.on('connect', () => {
                 }else{
                     otherEvents = []
                 }
+                console.log(otherEvents,'other eventssssssssssss')
                 eventIds = JSON.parse(eventIds)
                 eventIds = eventIds.concat(otherEvents)
                 function delay(ms) {
