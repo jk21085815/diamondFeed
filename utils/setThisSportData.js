@@ -1,6 +1,8 @@
 const redis = require('redis');
 const client = redis.createClient({url:process.env.redisurl});
+const Publishclient = redis.createClient({url:process.env.redisurl});
 client.connect()
+Publishclient.connect()
 client.on('error', (err) => {
     console.log(`Error(In setMarketIdsCron.js):${err}`);
 });
@@ -108,8 +110,7 @@ const setThisSportData = async(eventlist,SportName) => {
                         matchodddata = await fetchMOBook(marketIds)
                     }
                     // let bookmakerdata = await fetchBMBook(eventlist[k].eventId)
-                    // let fancydata = await fetchFancyBook(eventlist[k].eventId)
-                    // let fancyMarketIdArray = Object.keys(fancydata)
+                    
                     delete eventlist[k]['marketId']
                     for(let d = 0;d<matchodddata.length;d++){
                         if(matchodddata[d]){
@@ -310,103 +311,108 @@ const setThisSportData = async(eventlist,SportName) => {
     
                     //     }
                     // }
-                    // if(Object.keys(fancyMarketIdArray).length > 0){
-                    //     for(let b = 0; b<fancyMarketIdArray.length; b++){
-                    //         let tempRunner = []
-                    //         let category = ""
-                    //         let tempObjfancy = fancydata[fancyMarketIdArray[b]]
-                    //         tempObjfancy = JSON.parse(tempObjfancy)
-                    //         let tempObj = {
-                    //             "marketId": tempObjfancy.id,
-                    //             "marketTime": new Date(),
-                    //             "provider": "DIAMOND",
-                    //             "marketName": tempObjfancy.name,
-                    //             "bettingType": "LINE",
-                    //             "marketType": "FANCY",
-                    //             "status": ["ACTIVE","SUSPENDED","BALL_RUNNING"].includes(tempObjfancy.status1)?"OPEN":"CLOSED",
-                    //             "noValue": tempObjfancy.l1,
-                    //             "noRate": tempObjfancy.ls1,
-                    //             "yesValue": tempObjfancy.b1,
-                    //             "yesRate": tempObjfancy.bs1,
-                    //             "inPlay": tempObjfancy.in_play
-                    //         }
-                     
-                    //         if(["4","10","12","8","5","53"].includes(tempObjfancy.type_code.toString())){
-                    //             category = "OVERS"
-                    //         }else if(["42","20","18","22","36","14","38","44"].includes(tempObjfancy.type_code.toString())){
-                    //             category = "BATSMAN"
-                    //         }else if(tempObjfancy.type_code.toString() == "2"){
-                    //             category = "SINGLE_OVER"
-                    //         }else if(["28","26"].includes(tempObjfancy.type_code.toString())){
-                    //             category = "ODD_EVEN"
-                    //         }else if(tempObjfancy.type_code.toString() == "6"){
-                    //             category = "BALL_BY_BALL"
-                    //         }else{
-                    //             category = "OTHER"
-                    //         }
-                    //         // if(tempObjfancy.type_code >= 1 && tempObjfancy.type_code <= 20){
-                    //         //     category = "OVERS"
-                    //         // }else if(tempObjfancy.type_code >= 21 && tempObjfancy.type_code <= 49){
-                    //         //     category = "BATSMAN"
-                    //         // }else if(tempObjfancy.type_code >= 50 && tempObjfancy.type_code <= 55){
-                    //         //     category = "OTHER"
-                    //         // }else if(tempObjfancy.type_code >= 60 && tempObjfancy.type_code <= 99){
-                    //         //     category = "ODD_EVEN"
-                    //         // }
-                    //         tempObj.category = category
-                    //         let tempObjrunner1 = 
-                    //         {
-                    //             "status": tempObjfancy.status1,
-                    //             "metadata": "",
-                    //             "runnerName": tempObjfancy.name,
-                    //             "runnerId": tempObjfancy.id + '1',
-                    //             "layPrices": [{
-                    //                 "price":tempObjfancy.l1,
-                    //                 "line":tempObjfancy.ls1
-                    //             }],
-                    //             "backPrices": [{
-                    //                 "price":tempObjfancy.b1,
-                    //                 "line":tempObjfancy.bs1
-                    //             }]
-                    //         }
-                    //         let tempObjrunner2 = 
-                    //         {
-                    //             "status": tempObjfancy.status2,
-                    //             "metadata": "",
-                    //             "runnerName": tempObjfancy.name,
-                    //             "runnerId": tempObjfancy.id + '2',
-                    //             "layPrices": [{
-                    //                 "price":tempObjfancy.l2,
-                    //                 "line":tempObjfancy.ls2
-                    //             }],
-                    //             "backPrices": [{
-                    //                 "price":tempObjfancy.b2,
-                    //                 "line":tempObjfancy.bs2
-                    //             }]
-                    //         }
-                    //         let tempObjrunner3 = 
-                    //         {
-                    //             "status": tempObjfancy.status3,
-                    //             "metadata": "",
-                    //             "runnerName": tempObjfancy.name,
-                    //             "runnerId": tempObjfancy.id + '3',
-                    //             "layPrices": [{
-                    //                 "price":tempObjfancy.l3,
-                    //                 "line":tempObjfancy.ls3
-                    //             }],
-                    //             "backPrices": [{
-                    //                 "price":tempObjfancy.b3,
-                    //                 "line":tempObjfancy.bs3
-                    //             }]
-                    //         }
-                    //         tempRunner.push(tempObjrunner1)
-                    //         tempRunner.push(tempObjrunner2)
-                    //         tempRunner.push(tempObjrunner3)
-                    //         tempObj.runners = tempRunner
-                    //         fanctMarketArr.push(tempObj)
-        
-                    //     }
-                    // }
+                    if(["4"].includes(eventlist[k].sportId)){
+                        let fancydata = await fetchFancyBook(eventlist[k].eventId)
+                        let fancyMarketIdArray = Object.keys(fancydata)
+                        if(Object.keys(fancyMarketIdArray).length > 0){
+                            for(let b = 0; b<fancyMarketIdArray.length; b++){
+                                let tempRunner = []
+                                let category = ""
+                                let tempObjfancy = fancydata[fancyMarketIdArray[b]]
+                                tempObjfancy = JSON.parse(tempObjfancy)
+                                let tempObj = {
+                                    "marketId": tempObjfancy.id,
+                                    "marketTime": new Date(),
+                                    "provider": "DIAMOND",
+                                    "marketName": tempObjfancy.name,
+                                    "bettingType": "LINE",
+                                    "marketType": "FANCY",
+                                    "status": ["ACTIVE","SUSPENDED","BALL_RUNNING"].includes(tempObjfancy.status1)?"OPEN":"CLOSED",
+                                    "noValue": tempObjfancy.l1,
+                                    "noRate": tempObjfancy.ls1,
+                                    "yesValue": tempObjfancy.b1,
+                                    "yesRate": tempObjfancy.bs1,
+                                    "inPlay": tempObjfancy.in_play
+                                }
+                         
+                                if(["4","10","12","8","5","53"].includes(tempObjfancy.type_code.toString())){
+                                    category = "OVERS"
+                                }else if(["42","20","18","22","36","14","38","44"].includes(tempObjfancy.type_code.toString())){
+                                    category = "BATSMAN"
+                                }else if(tempObjfancy.type_code.toString() == "2"){
+                                    category = "SINGLE_OVER"
+                                }else if(["28","26"].includes(tempObjfancy.type_code.toString())){
+                                    category = "ODD_EVEN"
+                                }else if(tempObjfancy.type_code.toString() == "6"){
+                                    category = "BALL_BY_BALL"
+                                }else{
+                                    category = "OTHER"
+                                }
+                                // if(tempObjfancy.type_code >= 1 && tempObjfancy.type_code <= 20){
+                                //     category = "OVERS"
+                                // }else if(tempObjfancy.type_code >= 21 && tempObjfancy.type_code <= 49){
+                                //     category = "BATSMAN"
+                                // }else if(tempObjfancy.type_code >= 50 && tempObjfancy.type_code <= 55){
+                                //     category = "OTHER"
+                                // }else if(tempObjfancy.type_code >= 60 && tempObjfancy.type_code <= 99){
+                                //     category = "ODD_EVEN"
+                                // }
+                                tempObj.category = category
+                                let tempObjrunner1 = 
+                                {
+                                    "status": tempObjfancy.status1,
+                                    "metadata": "",
+                                    "runnerName": tempObjfancy.name,
+                                    "runnerId": tempObjfancy.id + '1',
+                                    "layPrices": [{
+                                        "price":tempObjfancy.l1,
+                                        "line":tempObjfancy.ls1
+                                    }],
+                                    "backPrices": [{
+                                        "price":tempObjfancy.b1,
+                                        "line":tempObjfancy.bs1
+                                    }]
+                                }
+                                let tempObjrunner2 = 
+                                {
+                                    "status": tempObjfancy.status2,
+                                    "metadata": "",
+                                    "runnerName": tempObjfancy.name,
+                                    "runnerId": tempObjfancy.id + '2',
+                                    "layPrices": [{
+                                        "price":tempObjfancy.l2,
+                                        "line":tempObjfancy.ls2
+                                    }],
+                                    "backPrices": [{
+                                        "price":tempObjfancy.b2,
+                                        "line":tempObjfancy.bs2
+                                    }]
+                                }
+                                let tempObjrunner3 = 
+                                {
+                                    "status": tempObjfancy.status3,
+                                    "metadata": "",
+                                    "runnerName": tempObjfancy.name,
+                                    "runnerId": tempObjfancy.id + '3',
+                                    "layPrices": [{
+                                        "price":tempObjfancy.l3,
+                                        "line":tempObjfancy.ls3
+                                    }],
+                                    "backPrices": [{
+                                        "price":tempObjfancy.b3,
+                                        "line":tempObjfancy.bs3
+                                    }]
+                                }
+                                tempRunner.push(tempObjrunner1)
+                                tempRunner.push(tempObjrunner2)
+                                tempRunner.push(tempObjrunner3)
+                                tempObj.runners = tempRunner
+                                fanctMarketArr.push(tempObj)
+                            }
+                            await client.set(`/topic/diamond_fancy_update/${eventlist[k].eventId}`, JSON.stringify(fanctMarketArr), 'EX', 24 * 60 * 60);
+                            Publishclient.publish(`/topic/diamond_fancy_update/${eventlist[k].eventId}`, JSON.stringify(fanctMarketArr));
+                        }
+                    }
                     delete eventlist[k]['marketName']
                     delete eventlist[k]['runners']
                     delete eventlist[k]['description']
