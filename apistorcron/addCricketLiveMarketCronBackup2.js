@@ -69,6 +69,7 @@ client.on('connect', () => {
                     let fetchMarketDatajson = await fetchMarketData.json()
                     return fetchMarketDatajson.data
                 }
+                console.log(eventIds.length,'cricket eventIdssssssssssssssssss')
                 for(let i = 0;i<eventIds.length;i++){
                     try{
                         // console.log(new Date(),i,eventIds[i],'Add Cricket eventIds and Market iiiiiiiii')
