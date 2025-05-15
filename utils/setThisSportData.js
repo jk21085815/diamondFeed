@@ -437,10 +437,186 @@ const setThisSportData = async(eventlist,SportName) => {
                     await client.set(`${eventlist[k].eventId}_OnlyMOMarketIdsArr_diamond`,JSON.stringify(OnlyMOMarketIdArr),'EX',7 * 24 * 60 * 60)
                     await client.set(`${eventlist[k].eventId}_diamondEventData`,JSON.stringify(eventlist[k]),'EX',7 * 24 * 60 * 60)
                 }else{
+                    let matchOddsArr = [];
+                    let matchOddsArr2 = [];
                     previouseventdata = JSON.parse(previouseventdata)
                     previouseventdata.openDate = eventlist[k].event.openDate
-                    thisSportEventId.push(eventlist[k].event.id)
-                    await client.set(`${eventlist[k].event.id}_diamondEventData`,JSON.stringify(previouseventdata))
+                    thisSportEventId.push(previouseventdata.eventId)
+                    let marketIds = []
+                    if(["7","4339"].includes(previouseventdata.sportId)){
+                        eventlist[k].catalogues.forEach(item => {
+                            marketIds.push(item.marketId)
+                        })
+                        marketIds = marketIds.join(",")
+                    }else{
+                        if(!previouseventdata.isvirtual){
+                            marketIds = [eventlist[k].marketId]
+                            marketIds = marketIds.join(",")
+                        }
+                    }
+                    let matchodddata = []
+                    if(!previouseventdata.isvirtual){
+                        matchodddata = await fetchMOBook(marketIds)
+                    }
+                    delete eventlist[k]['marketId']
+                    for(let d = 0;d<matchodddata.length;d++){
+                        if(matchodddata[d]){
+                            let tempObj
+                            let thatcatalog
+                            let tempRunner = []
+                            if(["7","4339"].includes(previouseventdata.sportId)){
+                                thatcatalog = eventlist[k].catalogues.find(item => item.marketId == matchodddata[d].marketId)
+                                tempObj = {
+                                    "marketId": matchodddata[d].marketId,
+                                    "marketTime": thatcatalog.description.marketTime,
+                                    "marketType": thatcatalog.description.marketType,
+                                    "bettingType": thatcatalog.description.bettingType,
+                                    "marketName": thatcatalog.marketName,
+                                    "provider": "DIAMOND",
+                                    "status": matchodddata[d].status
+                                }
+                            }else{
+                                tempObj = {
+                                    "marketId": matchodddata[d].marketId,
+                                    "marketTime": eventlist[k].description.marketTime,
+                                    "marketType": eventlist[k].description.marketType,
+                                    "bettingType": eventlist[k].description.bettingType,
+                                    "marketName": eventlist[k].marketName,
+                                    "provider": "DIAMOND",
+                                    "status": matchodddata[d].status
+                                }
+                            }
+                            for(let c = 0;c<matchodddata[d].runners.length;c++){
+                                let runner
+                                if(["7","4339"].includes(previouseventdata.sportId)){
+                                    runner = thatcatalog.runners.find(item => item.selectionId == matchodddata[d].runners[c].selectionId)
+                                }else{
+                                    runner = eventlist[k].runners.find(item => item.selectionId == matchodddata[d].runners[c].selectionId)
+                                }
+                                let tempObjrunner = 
+                                {
+                                    "status": matchodddata[d].runners[c].status,
+                                    "metadata": runner.metadata,
+                                    "runnerName": runner.runnerName,
+                                    "runnerId": matchodddata[d].runners[c].selectionId,
+                                    "layPrices": matchodddata[d].runners[c].ex.availableToLay,
+                                    "backPrices": matchodddata[d].runners[c].ex.availableToBack
+                                }
+                                tempRunner.push(tempObjrunner)
+                            }
+                            tempObj.runners = tempRunner
+                            matchOddsArr2.push(tempObj)
+                            if(["OPEN","SUSPENDED","BALL_RUNNING"].includes(tempObj.status)){
+                                matchOddsArr.push(tempObj)
+                            }
+                            await client.set(`${tempObj.marketId}_diamond`, JSON.stringify(tempObj), 'EX', 24 * 60 * 60);
+    
+                        }
+                    }
+                    if(!previouseventdata.isvirtual && previouseventdata.sportId == 4){
+                        let matchoddmarketdata = await fetchOtherMOMarketData(previouseventdata.eventId)
+                        for(let d = 0;d<matchoddmarketdata.length;d++){
+                            let matchodddata = await fetchMOBook(matchoddmarketdata[d].marketId)
+                            for(let e = 0;e<matchodddata.length;e++){
+                                if(matchodddata[e] && matchoddmarketdata[d].marketName !== "Match Odds"){
+                                    let tempObj
+                                    let tempRunner = []
+                                    tempObj = {
+                                        "marketId": matchodddata[e].marketId,
+                                        "marketTime": matchoddmarketdata[d].description.marketTime,
+                                        "marketType": matchoddmarketdata[d].description.marketType,
+                                        "bettingType": matchoddmarketdata[d].description.bettingType,
+                                        "marketName": matchoddmarketdata[d].marketName,
+                                        "provider": "DIAMOND",
+                                        "status": matchodddata[e].status
+                                    }
+                                    for(let c = 0;c<matchodddata[e].runners.length;c++){
+                                        let runner
+                                        runner = matchoddmarketdata[d].runners.find(item => item.selectionId == matchodddata[e].runners[c].selectionId)
+                                        let tempObjrunner = 
+                                        {
+                                            "status": matchodddata[e].runners[c].status,
+                                            "metadata": runner.metadata,
+                                            "runnerName": runner.runnerName,
+                                            "runnerId": matchodddata[e].runners[c].selectionId,
+                                            "layPrices": matchodddata[e].runners[c].ex.availableToLay,
+                                            "backPrices": matchodddata[e].runners[c].ex.availableToBack
+                                        }
+                                        tempRunner.push(tempObjrunner)
+                                    }
+                                    tempObj.runners = tempRunner
+                                    matchOddsArr2.push(tempObj)
+                                    if(["OPEN","SUSPENDED","BALL_RUNNING"].includes(tempObj.status)){
+                                        matchOddsArr.push(tempObj)
+                                    }
+                                    await client.set(`${tempObj.marketId}_diamond`, JSON.stringify(tempObj), 'EX', 24 * 60 * 60);
+    
+                                }
+                            }
+                        }
+    
+                    }
+                    if(previouseventdata.sportId == 1){
+                        let matchoddmarketdata = await fetchUOMarketData(previouseventdata.eventId)
+                        for(let d = 0;d<matchoddmarketdata.length;d++){
+                            let matchodddata = await fetchMOBook(matchoddmarketdata[d].marketId)
+                            for(let e = 0;e<matchodddata.length;e++){
+                                if(matchodddata[e] && matchoddmarketdata[d].marketName !== "Match Odds"){
+                                    let tempObj
+                                    let tempRunner = []
+                                    tempObj = {
+                                        "marketId": matchodddata[e].marketId,
+                                        "marketTime": matchoddmarketdata[d].description.marketTime,
+                                        "marketType": matchoddmarketdata[d].description.marketType,
+                                        "bettingType": matchoddmarketdata[d].description.bettingType,
+                                        "marketName": matchoddmarketdata[d].marketName,
+                                        "provider": "DIAMOND",
+                                        "status": matchodddata[e].status
+                                    }
+                                    for(let c = 0;c<matchodddata[e].runners.length;c++){
+                                        let runner
+                                        runner = matchoddmarketdata[d].runners.find(item => item.selectionId == matchodddata[e].runners[c].selectionId)
+                                        let tempObjrunner = 
+                                        {
+                                            "status": matchodddata[e].runners[c].status,
+                                            "metadata": runner.metadata,
+                                            "runnerName": runner.runnerName,
+                                            "runnerId": matchodddata[e].runners[c].selectionId,
+                                            "layPrices": matchodddata[e].runners[c].ex.availableToLay,
+                                            "backPrices": matchodddata[e].runners[c].ex.availableToBack
+                                        }
+                                        tempRunner.push(tempObjrunner)
+                                    }
+                                    tempObj.runners = tempRunner
+                                    matchOddsArr2.push(tempObj)
+                                    if(["OPEN","SUSPENDED","BALL_RUNNING"].includes(tempObj.status)){
+                                        matchOddsArr.push(tempObj)
+                                    }
+                                    await client.set(`${tempObj.marketId}_diamond`, JSON.stringify(tempObj), 'EX', 24 * 60 * 60);
+    
+                                }
+                            }
+                        }
+    
+                    }
+                    if(["7","4339"].includes(eventlist[k].sportId)){
+                        delete eventlist[k]['catalogues']
+                    }
+                    previouseventdata.markets.matchOdds = matchOddsArr
+                    let OnlyOtherMOMarketIdsArr = [];
+                    let OnlyMOMarketIdArr = []
+                    let MOMarketDetailsArr = matchOddsArr2
+                    let OnlyOtherMOMarketDetails = MOMarketDetailsArr.filter(item => ((item.marketType == "COMPLETED_MATCH" || item.marketType == "TIED_MATCH" || item.marketType == "WINNING_ODDS" || item.marketType == "WIN" || item.marketType == "TOURNAMENT_WINNER"  || item.marketName.trim().toLowerCase().startsWith('over/under') && ["OPEN","SUSPENDED","BALL_RUNNING"].includes(item.status))))
+                    let OnlyMOMarketId = MOMarketDetailsArr.filter(item => (item.marketType == "MATCH_ODDS"))
+                    for(let j = 0;j<OnlyOtherMOMarketDetails.length;j++){
+                        OnlyOtherMOMarketIdsArr.push(OnlyOtherMOMarketDetails[j].marketId)
+                    }
+                    for(let j = 0;j<OnlyMOMarketId.length;j++){
+                        OnlyMOMarketIdArr.push(OnlyMOMarketId[j].marketId)
+                    }
+                    await client.set(`${eventlist[k].eventId}_OnlyOtherMOMarketIdsArr_diamond`,JSON.stringify(OnlyOtherMOMarketIdsArr),'EX',7 * 24 * 60 * 60)
+                    await client.set(`${eventlist[k].eventId}_OnlyMOMarketIdsArr_diamond`,JSON.stringify(OnlyMOMarketIdArr),'EX',7 * 24 * 60 * 60)
+                    await client.set(`${previouseventdata.eventId}_diamondEventData`,JSON.stringify(previouseventdata))
                 }
             }
             await client.set(`crone_getEventIds_${SportName}_diamond`,JSON.stringify(thisSportEventId))
