@@ -93,9 +93,9 @@ client.on('connect', () => {
                             OtherMOMarketArr = JSON.parse(OtherMOMarketArr)
                             OnlyMOMarketIdsArr = await client.get(`${eventIds[i]}_OnlyMOMarketIdsArr_diamond`)
                             OnlyMOMarketIdsArr = JSON.parse(OnlyMOMarketIdsArr)
-                            if(eventData.eventId == "34316669"){
-                                console.log(OnlyMOMarketIdsArr,OtherMOMarketArr,"OnlyMOMarketIdsArr")
-                            }
+                            // if(eventData.eventId == "34316669"){
+                                // console.log(OnlyMOMarketIdsArr,OtherMOMarketArr,"OnlyMOMarketIdsArr")
+                            // }
                             if(OnlyMOMarketIdsArr.length !== 0){
                                 let count = Math.ceil(OnlyMOMarketIdsArr.length/chunkSize)
                                 for(let k = 0;k<count;k++){
