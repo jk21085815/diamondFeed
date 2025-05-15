@@ -614,8 +614,8 @@ const setThisSportData = async(eventlist,SportName) => {
                     for(let j = 0;j<OnlyMOMarketId.length;j++){
                         OnlyMOMarketIdArr.push(OnlyMOMarketId[j].marketId)
                     }
-                    await client.set(`${eventlist[k].eventId}_OnlyOtherMOMarketIdsArr_diamond`,JSON.stringify(OnlyOtherMOMarketIdsArr),'EX',7 * 24 * 60 * 60)
-                    await client.set(`${eventlist[k].eventId}_OnlyMOMarketIdsArr_diamond`,JSON.stringify(OnlyMOMarketIdArr),'EX',7 * 24 * 60 * 60)
+                    await client.set(`${previouseventdata.eventId}_OnlyOtherMOMarketIdsArr_diamond`,JSON.stringify(OnlyOtherMOMarketIdsArr),'EX',7 * 24 * 60 * 60)
+                    await client.set(`${previouseventdata.eventId}_OnlyMOMarketIdsArr_diamond`,JSON.stringify(OnlyMOMarketIdArr),'EX',7 * 24 * 60 * 60)
                     await client.set(`${previouseventdata.eventId}_diamondEventData`,JSON.stringify(previouseventdata))
                 }
             }
