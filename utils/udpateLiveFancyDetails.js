@@ -10,9 +10,8 @@ client.on('error', (err) => {
 client.on('connect', () => {
     // console.log('Connected to Redis1');
 });
-const updateFancyDetailsFunc = async (i,eventId) => {
+const updateFancyDetailsFunc = async (eventId) => {
     try {
-        console.log(i,'i222222222222222222222222222')
         let fancyArr = [];
           async function fetchData() {
             let response
@@ -30,7 +29,6 @@ const updateFancyDetailsFunc = async (i,eventId) => {
 
             } catch (error) {
                 try{
-                    await delay(1000 * 10)
                     response = await fetch(url,{
                     method: 'GET',
                     headers: {
@@ -91,7 +89,7 @@ const updateFancyDetailsFunc = async (i,eventId) => {
                             }else{
                                 console.log(marketData.runners,eventId,'marketid with no runnerrrr222222222222')
                             }
-                            // await client.set(`${marketData.marketId}_diamond`, JSON.stringify(marketData), 'EX', 24 * 60 * 60);
+                            await client.set(`${marketData.marketId}_diamond`, JSON.stringify(marketData), 'EX', 24 * 60 * 60);
                             fancyArr.push(marketData)
                         }
                         else{
@@ -187,7 +185,7 @@ const updateFancyDetailsFunc = async (i,eventId) => {
                             tempRunner.push(tempObjrunner2)
                             tempRunner.push(tempObjrunner3)
                             tempObj.runners = tempRunner
-                            // await client.set(`${tempObj.marketId}_diamond`, JSON.stringify(tempObj), 'EX', 24 * 60 * 60);
+                            await client.set(`${tempObj.marketId}_diamond`, JSON.stringify(tempObj), 'EX', 24 * 60 * 60);
                             fancyArr.push(tempObj)
                         }
                     } catch (error) {
@@ -209,9 +207,15 @@ const updateFancyDetailsFunc = async (i,eventId) => {
         }
         processMarketArray().then(async(responses) => {
             // console.log('API Responses:', responses);
-            if(eventId == "34316676"){
-                console.log(fancyArr,'fancyArrayyyyyyyy')
-            }
+            await client.set(`/topic/diamond_fancy_update/${eventId}`, JSON.stringify(fancyArr), 'EX', 24 * 60 * 60);
+            await Publishclient.publish(`/topic/diamond_fancy_update/${eventId}`, JSON.stringify(fancyArr));
+            let eventData = await client.get(`${eventId}_diamondEventData`);
+            eventData = JSON.parse(eventData);
+            eventData.markets.fancyMarkets = fancyArr;
+             // if(eventId == "34321472"){
+            //     console.log(fancyArr,'fancyArrrrrrrrr')
+            // }
+            await client.set(`${eventId}_diamondEventData`, JSON.stringify(eventData), 'EX', 24 * 60 * 60);
         });        
     } catch (error) {
         console.error('Error:', error);

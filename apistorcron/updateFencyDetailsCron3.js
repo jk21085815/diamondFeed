@@ -24,8 +24,7 @@ module.exports = () => {
                     }
                     if(cricketEventIds){
                         for(let i = 0;i<cricketEventIds.length;i++){
-                            console.log(i,'iii1111111111111111')
-                            updateFanctDetails(i,cricketEventIds[i])
+                            updateFanctDetails(cricketEventIds[i])
                         }
                         console.log('Endddddddd')
                     }
