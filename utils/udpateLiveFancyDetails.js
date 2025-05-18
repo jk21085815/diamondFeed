@@ -210,7 +210,7 @@ const updateFancyDetailsFunc = async (i,eventId) => {
         processMarketArray().then(async(responses) => {
             // console.log('API Responses:', responses);
             if(eventId == "34316676"){
-                // console.log(fancyArr,'fancyArrayyyyyyyy')
+                console.log(fancyArr,'fancyArrayyyyyyyy')
             }
         });        
     } catch (error) {
