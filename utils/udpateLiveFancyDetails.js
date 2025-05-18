@@ -10,7 +10,7 @@ client.on('error', (err) => {
 client.on('connect', () => {
     // console.log('Connected to Redis1');
 });
-const updateFancyDetailsFunc = async (eventId) => {
+const updateFancyDetailsFunc = async (i,eventId) => {
     try {
         console.log(i,'i222222222222222222222222222')
         let fancyArr = [];
