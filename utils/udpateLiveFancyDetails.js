@@ -12,7 +12,7 @@ client.on('connect', () => {
 });
 const updateFancyDetailsFunc = async (i,eventId,fencydata) => {
     try {
-        console.log(i,'i222222222222222222222222222')
+        // console.log(i,'i222222222222222222222222222')
         let fancyArr = [];
         async function processResponse(response) {
             const marketPromises = Object.keys(response).map(async (key) => {
