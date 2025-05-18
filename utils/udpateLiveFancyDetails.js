@@ -12,7 +12,7 @@ client.on('connect', () => {
 });
 const updateFancyDetailsFunc = async (eventId) => {
     try {
-        // console.log(i,'i222222222222222222222222222')
+        console.log(i,'i222222222222222222222222222')
         let fancyArr = [];
           async function fetchData() {
             let response
@@ -210,7 +210,7 @@ const updateFancyDetailsFunc = async (eventId) => {
         processMarketArray().then(async(responses) => {
             console.log('API Responses:', responses);
             if(eventId == "34316676"){
-                console.log(fancyArr,'fancyArrayyyyyyyy')
+                // console.log(fancyArr,'fancyArrayyyyyyyy')
             }
         });        
     } catch (error) {
