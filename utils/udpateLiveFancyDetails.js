@@ -189,9 +189,9 @@ const updateFancyDetailsFunc = async (eventId,fencydata) => {
                 }
             });
             await Promise.all(marketPromises);
-            if(eventId == "34316676"){
-                console.log(fancyArr,'fancyArrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr');
-            }
+            // if(eventId == "34316676"){
+            //     console.log(fancyArr,'fancyArrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr');
+            // }
             
 
         }
@@ -211,8 +211,8 @@ const updateFancyDetailsFunc = async (eventId,fencydata) => {
             let eventData = await client.get(`${eventId}_diamondEventData`);
             eventData = JSON.parse(eventData);
             eventData.markets.fancyMarkets = fancyArr;
-            if(eventId == "34296856"){
-                // console.log(fancyArr,'fancyArrrrrrrrr')
+            if(eventId == "34321472"){
+                console.log(fancyArr,'fancyArrrrrrrrr')
             }
             await client.set(`${eventId}_diamondEventData`, JSON.stringify(eventData), 'EX', 24 * 60 * 60);
             const api1ResponseTime = Date.now() - startTime;
