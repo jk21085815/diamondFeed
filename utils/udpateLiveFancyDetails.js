@@ -196,7 +196,7 @@ const updateFancyDetailsFunc = async (eventId) => {
                 }
             }
         }
-        async function processMarketArray(fencydata) {
+        async function processMarketArray() {
             // const apiStartDate = Date.now()
             const response = await fetchData();
                 
@@ -207,7 +207,7 @@ const updateFancyDetailsFunc = async (eventId) => {
             const apiResponses = response;
             return apiResponses;
         }
-        processMarketArray(fencydata).then(async(responses) => {
+        processMarketArray().then(async(responses) => {
             console.log('API Responses:', responses);
             if(eventId == "34316676"){
                 console.log(fancyArr,'fancyArrayyyyyyyy')
