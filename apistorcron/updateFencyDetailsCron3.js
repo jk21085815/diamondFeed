@@ -24,33 +24,7 @@ module.exports = () => {
                     }
                     if(cricketEventIds){
                         for(let i = 0;i<cricketEventIds.length;i++){
-                            let fetchMarketData
-                            try{
-                                fetchMarketData = await fetch(` https://odds.datafeed365.com/api/active-fancy/${cricketEventIds[i]}`,{
-                                    method: 'GET',
-                                    headers: {
-                                        'Content-type': 'application/json',
-                                    }
-                                })
-                                // await delay(1000);
-                            }catch(error){
-                                // await delay(1000 * 10)
-                                fetchMarketData = await fetch(` https://odds.datafeed365.com/api/active-fancy/${cricketEventIds[i]}`,{
-                                    method: 'GET',
-                                    headers: {
-                                        'Content-type': 'application/json',
-                                    }
-                                })
-                            }
-                            const contentType = fetchMarketData.headers.get('content-type');
-                            if (!contentType || !contentType.includes("application/json")) {
-                                throw new Error("Non-JSON response received");
-                            }
-                            fetchMarketData = await fetchMarketData.json();
-                            fetchMarketData = fetchMarketData.data
-                            // await client.set(`fancylist_${cricketEventIds[i]}`,JSON.stringify(fetchMarketData))
-                            // console.log(i,'i111111111111111111111111')
-                            updateFanctDetails(i,cricketEventIds[i],fetchMarketData)
+                            updateFanctDetails(cricketEventIds[i])
                         }
                     }
                 }catch(error){
