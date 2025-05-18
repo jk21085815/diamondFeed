@@ -1,5 +1,5 @@
 const cron = require('node-cron');
-const updateFanctDetails = require('../utils/udpateLiveFancyDetails')
+const updateFanctDetails = require('../utils/udpateLiveFancyDetailsBackup')
 const redis = require('redis');
 const client = redis.createClient({url:process.env.redisurl});
 client.connect()
