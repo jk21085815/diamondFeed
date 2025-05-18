@@ -16,6 +16,7 @@ const updateFancyDetailsFunc = async (eventId,fencydata) => {
         async function processResponse(response) {
             const marketPromises = Object.keys(response).map(async (key) => {
                 const market = JSON.parse(response[key]);
+                console.log(eventId,market,'markettttttttt')
                 if (!market) return;
             
                 let marketData;
