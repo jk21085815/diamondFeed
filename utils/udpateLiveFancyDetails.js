@@ -16,9 +16,6 @@ const updateFancyDetailsFunc = async (eventId,fencydata) => {
         async function processResponse(response) {
             const marketPromises = Object.keys(response).map(async (key) => {
                 const market = JSON.parse(response[key]);
-                if(!market){
-                    console.log(eventId,market,'markettttttttt')
-                }
                 if (!market) return;
             
                 let marketData;
@@ -192,9 +189,9 @@ const updateFancyDetailsFunc = async (eventId,fencydata) => {
                 }
             });
             await Promise.all(marketPromises);
-            // if(eventId == "34164556"){
-            //     console.log(fancyArr.find(item => item.marketId == '12977756'), 'fffffffffffffffgggggggggggg');
-            // }
+            if(eventId == "34316676"){
+                console.log(fancyArr,'fancyArrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr');
+            }
             
 
         }
