@@ -20,8 +20,8 @@ const updateBMLiveMarketDetails2 = require('./apistorcron/updateBMMarketDetailsC
 const setSportDataCron = require('./apistorcron/setsportdataCron')
 const updateFancyCron = require('./apistorcron/updateFencyDetailsCron')
 const updateLiveFanctCron2 = require('./apistorcron/updateFencyDetailsCron2')
-const updateLiveFanctCron3 = require('./apistorcron/updateFencyDetailsCron3Backup')
-const updateLiveFanctCron3Temp = require('./apistorcron/updateFencyDetailsCron3')
+const updateLiveFanctCron3Temp = require('./apistorcron/updateFencyDetailsCron3Backup')
+const updateLiveFanctCron3 = require('./apistorcron/updateFencyDetailsCron3')
 const updateAdvFanctCron = require('./apistorcron/updateAdvFancyCron')
 const exchangePageCron = require('./apistorcron/exchangePageCron')
 const redis = require('redis');
@@ -51,11 +51,11 @@ updateMOLiveMarketDetails2()
 updateBMLiveMarketDetails()
 addLiveMarketCron()
 addOtherSportLiveMarketCron()
-// updateFancyCron()
-// updateLiveFanctCron3()
+updateFancyCron()
+updateLiveFanctCron3()
 exchangePageCron()
 
-updateLiveFanctCron3Temp()
+// updateLiveFanctCron3Temp()
 
 
 // updateLiveFanctCron2()
