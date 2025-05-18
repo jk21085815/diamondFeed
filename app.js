@@ -56,8 +56,6 @@ updateLiveFanctCron3()
 exchangePageCron()
 
 // updateLiveFanctCron3Temp()
-
-
 // updateLiveFanctCron2()
 // updateAdvFanctCron()
 // updateBMLiveMarketDetails2()

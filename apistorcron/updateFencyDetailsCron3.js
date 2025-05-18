@@ -12,27 +12,19 @@ client.on('connect', () => {
 
 
 module.exports = () => {
-    // cron.schedule('*/0.5 * * * * *', async() => {
-        setInterval(async () => {
-            try{
-                    let cricketEventIds
-                    cricketEventIds = await client.get('crone_CricketliveEventIds_diamond_UPD'); 
-                    cricketEventIds = JSON.parse(cricketEventIds)
-                    // console.log(cricketEventIds.length,'cricketEvent Idsssssss')
-                    function delay(ms) {
-                        return new Promise(resolve => setTimeout(resolve, ms));
+    setInterval(async () => {
+        try{
+                let cricketEventIds
+                cricketEventIds = await client.get('crone_CricketliveEventIds_diamond_UPD'); 
+                cricketEventIds = JSON.parse(cricketEventIds)
+                // console.log(cricketEventIds.length,'cricketEvent Idsssssss')
+                if(cricketEventIds){
+                    for(let i = 0;i<cricketEventIds.length;i++){
+                        updateFanctDetails(cricketEventIds[i])
                     }
-                    if(cricketEventIds){
-                        for(let i = 0;i<cricketEventIds.length;i++){
-                            updateFanctDetails(cricketEventIds[i])
-                        }
-                        console.log('Endddddddd')
-                    }
-                }catch(error){
-                    console.log(error,'Errorrr updateFenctDetailsCrone3333')
                 }
-        }, 505);
-
-
-    // })
+            }catch(error){
+                console.log(error,'Errorrr updateFenctDetailsCrone3333')
+            }
+    }, 505);
 }
