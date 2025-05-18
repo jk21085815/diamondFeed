@@ -214,7 +214,7 @@ const updateFancyDetailsFunc = async (eventId) => {
             }
         });        
     } catch (error) {
-        console.error('Error:', "error");
+        console.error('Error:', error);
     }
 };
 
