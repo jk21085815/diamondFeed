@@ -154,34 +154,6 @@ const getEventList = async(sportId,sportName) => {
 
                         }
                         if(eventdata.event){
-                            // if(eventdata.event_type_name || (eventdata.event_type_id && eventdata.event_type_id == 4)){
-                            //     console.log(eventdata,'competetion name 111111111111111111111')
-                            //     if(isTodaysEvent(eventdata.open_date)){
-                            //         let tempObj = {
-                            //             eventType:{
-                            //                 id:"4",
-                            //                 name:'Cricket'
-                            //             },
-                            //             event:{
-                            //                 id:eventdata.id.toString(),
-                            //                 name:eventdata.name,
-                            //                 openDate:new Date(new Date(eventdata.open_date).getTime() + (1000 * 60 * 60 * 5.5)).toISOString(),
-                            //                 countryCode:"",
-                            //                 venue:""
-                            //             },
-                            //             competition: {
-                            //                 id: "354807569",
-                            //                 name: "Virtual Cricket League"
-                            //             },
-                            //             runners:eventdata.runners,
-                            //             isvirtual:true,
-                            //             isother:true
-
-                            //         }
-                            //         eventlist.push(tempObj)
-                            //     }
-
-                            // }else 
                             if(isTestMatch){
                                 if(isDateWithinLast5Days(eventdata.event.openDate)){
                                     let fetchMarketData = await fetchMOBook(eventdata.marketId)
@@ -195,6 +167,7 @@ const getEventList = async(sportId,sportName) => {
                             }else if(eventdata.competition && (eventdata.event.name.trim() == eventdata.competition.name.trim())){
                                 let fetchMarketData = await fetchMOBook(eventdata.marketId)
                                 let winner = fetchMarketData[0]
+                                console.log(winner,'winnner markettttttttt')
                                 if(winner && (winner.status !== 'CLOSED')){
                                     eventlist.push(eventdata)
                                 }
