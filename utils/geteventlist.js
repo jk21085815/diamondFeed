@@ -128,7 +128,7 @@ const getEventList = async(sportId,sportName) => {
                         }
                         if(eventdata.event_type_name || (eventdata.event_type_id && eventdata.event_type_id == 4)){
                             console.log(eventdata.event_type_id,eventdata.open_date,'eventdata.event_type_ideventdata.event_type_ideventdata.event_type_id')
-                            if(isTodaysEvent(eventdata.open_date)){
+                            if(isUpcomingEvent(new Date(new Date(eventdata.open_date).getTime() + (1000 * 60 * 60 * 5.5)).toISOString())){
                                 let tempObj = {
                                     eventType:{
                                         id:"4",
