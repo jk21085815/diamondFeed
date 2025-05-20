@@ -65,7 +65,7 @@ const getEventList = async(sportId,sportName) => {
         let fetchMarketDatajson = await fetchMarketData.json()
         return fetchMarketDatajson
     }
-    cron.schedule('26 * * * *', async() => {
+    cron.schedule('27 * * * *', async() => {
     // cron.schedule('*/30 * * * *', async() => {
         let starttime = new Date();
         console.log(starttime,`Set ${sportName} CompId Cron Started.....111111111111111111111111111111111111111111111111`)
@@ -118,7 +118,7 @@ const getEventList = async(sportId,sportName) => {
                         let isElection = false
                         let eventdata = parsedata[j]
                         // console.log(parsedata[j], parsedata.length, 'parsedata');
-                        console.log(parsedata[j],'parsedata[jjjjjjjjjjjjjjjjjjjjjjjjjjjjj]')
+                        console.log(eventdata,'eventdataeventdataeventdataeventdataeventdataeventdata')
                         
                         if(eventdata.competition && (eventdata.competition.name.toLowerCase().indexOf("test") !== -1 || eventdata.competition.name.toLowerCase().indexOf("ranji trophy") !== -1 || eventdata.competition.name.toLowerCase().indexOf("west indies championship") !== -1)){
                             isTestMatch = true
