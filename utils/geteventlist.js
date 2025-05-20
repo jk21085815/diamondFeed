@@ -65,7 +65,7 @@ const getEventList = async(sportId,sportName) => {
         let fetchMarketDatajson = await fetchMarketData.json()
         return fetchMarketDatajson
     }
-    cron.schedule('29 * * * *', async() => {
+    cron.schedule('31 * * * *', async() => {
     // cron.schedule('*/30 * * * *', async() => {
         let starttime = new Date();
         console.log(starttime,`Set ${sportName} CompId Cron Started.....111111111111111111111111111111111111111111111111`)
@@ -174,7 +174,7 @@ const getEventList = async(sportId,sportName) => {
                                 }
                             }
                             else if(isUpcomingEvent(eventdata.event.openDate)){
-                                console.log(eventdata.eventType.id,eventdata.event.openDate,'eventdata.event.openDateeventdata.event.openDate')
+                                console.log(eventdata.event.id,eventdata.event.openDate,'eventdata.event.openDateeventdata.event.openDate')
                                 if(["7","4339"].includes(eventdata.eventType.id)){
                                     let tempObj = {
                                         marketId:eventdata.marketId,
