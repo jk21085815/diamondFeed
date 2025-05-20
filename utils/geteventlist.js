@@ -127,7 +127,6 @@ const getEventList = async(sportId,sportName) => {
                             }
                         }
                         if(eventdata.event_type_name || (eventdata.event_type_id && eventdata.event_type_id == 4)){
-                            console.log(eventdata.event_type_id,eventdata.open_date,'eventdata.event_type_ideventdata.event_type_ideventdata.event_type_id')
                             if(isUpcomingEvent(new Date(new Date(eventdata.open_date).getTime() + (1000 * 60 * 60 * 5.5)).toISOString())){
                                 let tempObj = {
                                     eventType:{
@@ -174,7 +173,6 @@ const getEventList = async(sportId,sportName) => {
                                 }
                             }
                             else if(isUpcomingEvent(eventdata.event.openDate)){
-                                console.log(eventdata.event.id,eventdata.event.openDate,'eventdata.event.openDateeventdata.event.openDate')
                                 if(["7","4339"].includes(eventdata.eventType.id)){
                                     let tempObj = {
                                         marketId:eventdata.marketId,
