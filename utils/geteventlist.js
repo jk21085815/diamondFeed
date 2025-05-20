@@ -118,6 +118,7 @@ const getEventList = async(sportId,sportName) => {
                         let isElection = false
                         let eventdata = parsedata[j]
                         // console.log(parsedata[j], parsedata.length, 'parsedata');
+                        console.log(parsedata[j],'parsedata[jjjjjjjjjjjjjjjjjjjjjjjjjjjjj]')
                         
                         if(eventdata.competition && (eventdata.competition.name.toLowerCase().indexOf("test") !== -1 || eventdata.competition.name.toLowerCase().indexOf("ranji trophy") !== -1 || eventdata.competition.name.toLowerCase().indexOf("west indies championship") !== -1)){
                             isTestMatch = true
@@ -127,7 +128,7 @@ const getEventList = async(sportId,sportName) => {
                             }
                         }
                         if(eventdata.event_type_name || (eventdata.event_type_id && eventdata.event_type_id == 4)){
-                            console.log(eventdata,'competetion name 111111111111111111111')
+                            // console.log(eventdata,'competetion name 111111111111111111111')
                             if(isTodaysEvent(eventdata.open_date)){
                                 let tempObj = {
                                     eventType:{
