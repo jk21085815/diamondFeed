@@ -28,11 +28,15 @@ const getEventList = async(sportId,sportName) => {
         let today = new Date(new Date().getTime() + (5.5 * 60 * 60 * 1000));
         today.setUTCHours(0, 0, 0, 0);
         today.toISOString() 
+        let yesterday = new Date(new Date().getTime() + (5.5 * 60 * 60 * 1000));
+        yesterday.setUTCDate(yesterday.getUTCDate() - 1);
+        yesterday.setUTCHours(0, 0, 0, 0);
+        yesterday.toISOString() 
         let eventDate = new Date(new Date(date).getTime() + (5.5 * 60 * 60 * 1000));
         eventDate.setUTCHours(0, 0, 0, 0);
         eventDate.toISOString()
-        console.log(date,today,eventDate,'dateeeeeeeeeeeee')
-        return eventDate.getTime() == today.getTime();
+        console.log(date,eventDate.getTime() <= today.getTime() && eventDate.getTime() >= yesterday.getTime(),'dateeeeeeeeeeeee')
+        return eventDate.getTime() <= today.getTime() && eventDate.getTime() >= yesterday.getTime();
     }
     function isDateWithinLast5Days(inputDate) {
         const currentDate = new Date(new Date().getTime() + (5.5 * 60 * 60 * 1000));
@@ -65,7 +69,7 @@ const getEventList = async(sportId,sportName) => {
         let fetchMarketDatajson = await fetchMarketData.json()
         return fetchMarketDatajson
     }
-    cron.schedule('41 * * * *', async() => {
+    cron.schedule('48 * * * *', async() => {
     // cron.schedule('*/30 * * * *', async() => {
         let starttime = new Date();
         console.log(starttime,`Set ${sportName} CompId Cron Started.....111111111111111111111111111111111111111111111111`)
