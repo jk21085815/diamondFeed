@@ -65,7 +65,7 @@ const getEventList = async(sportId,sportName) => {
         let fetchMarketDatajson = await fetchMarketData.json()
         return fetchMarketDatajson
     }
-    cron.schedule('27 * * * *', async() => {
+    cron.schedule('29 * * * *', async() => {
     // cron.schedule('*/30 * * * *', async() => {
         let starttime = new Date();
         console.log(starttime,`Set ${sportName} CompId Cron Started.....111111111111111111111111111111111111111111111111`)
@@ -118,7 +118,6 @@ const getEventList = async(sportId,sportName) => {
                         let isElection = false
                         let eventdata = parsedata[j]
                         // console.log(parsedata[j], parsedata.length, 'parsedata');
-                        console.log(eventdata,'eventdataeventdataeventdataeventdataeventdataeventdata')
                         
                         if(eventdata.competition && (eventdata.competition.name.toLowerCase().indexOf("test") !== -1 || eventdata.competition.name.toLowerCase().indexOf("ranji trophy") !== -1 || eventdata.competition.name.toLowerCase().indexOf("west indies championship") !== -1)){
                             isTestMatch = true
@@ -128,7 +127,7 @@ const getEventList = async(sportId,sportName) => {
                             }
                         }
                         if(eventdata.event_type_name || (eventdata.event_type_id && eventdata.event_type_id == 4)){
-                            // console.log(eventdata,'competetion name 111111111111111111111')
+                            console.log(eventdata.event_type_id,eventdata.open_date,'eventdata.event_type_ideventdata.event_type_ideventdata.event_type_id')
                             if(isTodaysEvent(eventdata.open_date)){
                                 let tempObj = {
                                     eventType:{
@@ -169,12 +168,13 @@ const getEventList = async(sportId,sportName) => {
                             }else if(eventdata.competition && (eventdata.event.name.trim() == eventdata.competition.name.trim())){
                                 let fetchMarketData = await fetchMOBook(eventdata.marketId)
                                 let winner = fetchMarketData[0]
-                                console.log(winner,'winnner markettttttttt')
+                                // console.log(winner,'winnner markettttttttt')
                                 if(winner && (winner.status !== 'CLOSED')){
                                     eventlist.push(eventdata)
                                 }
                             }
                             else if(isUpcomingEvent(eventdata.event.openDate)){
+                                console.log(eventdata.eventType.id,eventdata.event.openDate,'eventdata.event.openDateeventdata.event.openDate')
                                 if(["7","4339"].includes(eventdata.eventType.id)){
                                     let tempObj = {
                                         marketId:eventdata.marketId,
