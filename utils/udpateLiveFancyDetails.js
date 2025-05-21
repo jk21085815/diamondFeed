@@ -122,7 +122,7 @@ const updateFancyDetailsFunc = async (eventId) => {
                             //     category2 = "ODD_EVEN"
                             // }
                             // console.log(market.type_code,'market.type_codemarket.type_codemarket.type_code')
-                            if(["4","10","12","8","5","53"].includes(market.type_code.toString())){
+                            if(["4","10","12","8","5","53","0"].includes(market.type_code.toString())){
                                 category = "OVERS"
                             }else if(["42","20","18","22","36","14","38","44"].includes(market.type_code.toString())){
                                 category = "BATSMAN"

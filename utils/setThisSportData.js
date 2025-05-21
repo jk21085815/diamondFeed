@@ -335,7 +335,7 @@ const setThisSportData = async(eventlist,SportName) => {
                                     "inPlay": tempObjfancy.in_play
                                 }
                          
-                                if(["4","10","12","8","5","53"].includes(tempObjfancy.type_code.toString())){
+                                if(["4","10","12","8","5","53","0"].includes(tempObjfancy.type_code.toString())){
                                     category = "OVERS"
                                 }else if(["42","20","18","22","36","14","38","44"].includes(tempObjfancy.type_code.toString())){
                                     category = "BATSMAN"
