@@ -44,14 +44,14 @@ client.on('connect', () => {
                 }else{
                     otherEvents = []
                 }
+                // console.log(otherEvents,'other eventssssssssssss')
                 eventIds = JSON.parse(eventIds)
                 eventIds = eventIds.concat(otherEvents)
-                // console.log(eventIds.length,'cricketEventIdssssssss')
                 function delay(ms) {
                     return new Promise(resolve => setTimeout(resolve, ms));
                 }
                 async function fetchMOBook(marketIds) {
-                    let fetchMarketData = await fetch(` http://13.42.165.216:8443/api/betfair/${marketIds}`,{
+                    let fetchMarketData = await fetch(`http://13.42.165.216:8443/api/betfair/${marketIds}`,{
                         method: 'GET',
                         headers: {
                             'Content-type': 'application/json',
@@ -70,6 +70,8 @@ client.on('connect', () => {
                     let fetchMarketDatajson = await fetchMarketData.json()
                     return fetchMarketDatajson.data
                 }
+                console.log(eventIds.length,'cricket eventIdssssssssssssssssss')
+                console.log(eventIds.find(item => item == "28127348"),"281273482812734828127348")
                 for(let i = 0;i<eventIds.length;i++){
                     try{
                         // console.log(new Date(),i,eventIds[i],'Add Cricket eventIds and Market iiiiiiiii')
@@ -92,7 +94,9 @@ client.on('connect', () => {
                             OtherMOMarketArr = JSON.parse(OtherMOMarketArr)
                             OnlyMOMarketIdsArr = await client.get(`${eventIds[i]}_OnlyMOMarketIdsArr_diamond`)
                             OnlyMOMarketIdsArr = JSON.parse(OnlyMOMarketIdsArr)
-                            // console.log(OnlyMOMarketIdsArr,"OnlyMOMarketIdsArr")
+                            // if(eventData.eventId == "34316669"){
+                                // console.log(OnlyMOMarketIdsArr,OtherMOMarketArr,"OnlyMOMarketIdsArr")
+                            // }
                             if(OnlyMOMarketIdsArr.length !== 0){
                                 let count = Math.ceil(OnlyMOMarketIdsArr.length/chunkSize)
                                 for(let k = 0;k<count;k++){

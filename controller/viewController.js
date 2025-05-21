@@ -10,36 +10,7 @@ exports.homePage = catchAsync(async(req, res, next) => {
         status:"success"
     })
 });
-exports.APIcall = catchAsync(async(req, res, next) => {
-    var fullUrl = 'https://api.mysportsfeed.io/api/v1/feed/user-login';
-    fetch(fullUrl, {
-        method: 'POST',
-        headers: { 
-            'accept': 'application/json',
-            'Content-Type': 'application/json',
-            'Signature':'mpc' 
-            },
-        body:JSON.stringify({
-            "clientIp": "46.101.225.192",
-            "currency": "INR",
-            "operatorId": "sheldon",
-            "partnerId": "SHPID01",
-            "platformId": "DESKTOP",
-            "userId": `TEST123`,
-            "username": "TEST123"
-           })
 
-    })
-    .then(res => res.json())
-    .then(result => {
-
-        res.status(200).json({
-            status:"success",
-            result
-        })
-    }
-    )
-});
 
 exports.APIcall2 = catchAsync(async(req, res, next) => {
     // console.log("Working")

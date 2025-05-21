@@ -585,3 +585,58 @@ exports.getbookdatabymarketid = catchAsync(async(req, res, next) => {
 //     }
 // })
 
+exports.APIcall = catchAsync(async(req, res, next) => {
+    var fullUrl = `http://13.42.165.216/betfair/get_latest_event_list/4`;
+    fetch(fullUrl, {
+        method: 'GET',
+        headers: { 
+            'Content-Type': 'application/json'
+            }
+
+    })
+    .then(res => res.text())
+    .then(result => {
+        res.status(200).json({
+            status:"success",
+            result
+        })
+    }
+    )
+});
+exports.APIcall2 = catchAsync(async(req, res, next) => {
+    var fullUrl = `http://13.42.165.216:8443/api/betfair/1.243034302`;
+    fetch(fullUrl, {
+        method: 'GET',
+        headers: { 
+            'Content-Type': 'application/json'
+            }
+
+    })
+    .then(res => res.json())
+    .then(result => {
+        res.status(200).json({
+            status:"success",
+            result
+        })
+    }
+    )
+});
+exports.APIcall3 = catchAsync(async(req, res, next) => {
+    var fullUrl = `https://odds.datafeed365.com/api/active-fancy/34268838`;
+    fetch(fullUrl, {
+        method: 'GET',
+        headers: { 
+            'Content-Type': 'application/json'
+            }
+
+    })
+    .then(res => res.json())
+    .then(result => {
+        res.status(200).json({
+            status:"success",
+            result
+        })
+    }
+    )
+});
+

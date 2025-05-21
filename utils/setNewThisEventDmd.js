@@ -65,7 +65,7 @@ const setThisEvent = async(eventIds) => {
                         thisevent.sportName = thisevent.event_type_name
                         thisevent.competitionId = "12547896542"
                         thisevent.competitionName = "Other"
-                        thisevent.eventId = thisevent.id
+                        thisevent.eventId = thisevent.id.toString()
                         thisevent.eventName = thisevent.name
                         thisevent.country = ""
                         thisevent.venue = ""

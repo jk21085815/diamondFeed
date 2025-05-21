@@ -12,51 +12,19 @@ client.on('connect', () => {
 
 
 module.exports = () => {
-    // cron.schedule('*/0.5 * * * * *', async() => {
-        setInterval(async () => {
-            try{
-                    let cricketEventIds
-                    cricketEventIds = await client.get('crone_CricketliveEventIds_diamond_UPD'); 
-                    cricketEventIds = JSON.parse(cricketEventIds)
-                    // console.log(cricketEventIds.length,'cricketEvent Idsssssss')
-                    function delay(ms) {
-                        return new Promise(resolve => setTimeout(resolve, ms));
+    setInterval(async () => {
+        try{
+                let cricketEventIds
+                cricketEventIds = await client.get('crone_CricketliveEventIds_diamond_UPD'); 
+                cricketEventIds = JSON.parse(cricketEventIds)
+                // console.log(cricketEventIds.length,'cricketEvent Idsssssss')
+                if(cricketEventIds){
+                    for(let i = 0;i<cricketEventIds.length;i++){
+                        updateFanctDetails(cricketEventIds[i])
                     }
-                    if(cricketEventIds){
-                        for(let i = 0;i<cricketEventIds.length;i++){
-                            let fetchMarketData
-                            try{
-                                fetchMarketData = await fetch(` https://odds.datafeed365.com/api/active-fancy/${cricketEventIds[i]}`,{
-                                    method: 'GET',
-                                    headers: {
-                                        'Content-type': 'application/json',
-                                    }
-                                })
-                                // await delay(1000);
-                            }catch(error){
-                                // await delay(1000 * 10)
-                                fetchMarketData = await fetch(` https://odds.datafeed365.com/api/active-fancy/${cricketEventIds[i]}`,{
-                                    method: 'GET',
-                                    headers: {
-                                        'Content-type': 'application/json',
-                                    }
-                                })
-                            }
-                            const contentType = fetchMarketData.headers.get('content-type');
-                            if (!contentType || !contentType.includes("application/json")) {
-                                throw new Error("Non-JSON response received");
-                            }
-                            fetchMarketData = await fetchMarketData.json();
-                            fetchMarketData = fetchMarketData.data
-                            // await client.set(`fancylist_${cricketEventIds[i]}`,JSON.stringify(fetchMarketData))
-                            updateFanctDetails(cricketEventIds[i],fetchMarketData)
-                        }
-                    }
-                }catch(error){
-                    console.log(error,'Errorrr updateFenctDetailsCrone3333')
                 }
-        }, 505);
-
-
-    // })
+            }catch(error){
+                console.log(error,'Errorrr updateFenctDetailsCrone3333')
+            }
+    }, 505);
 }

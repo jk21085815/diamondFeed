@@ -10,50 +10,21 @@ client.on('error', (err) => {
 client.on('connect', () => {
     // console.log('Connected to Redis1');
 });
-const updateFancyDetailsFunc = async (eventId) => {
+const updateFancyDetailsFunc = async (eventId,fencydata) => {
     try {
+        // console.log(i,'i222222222222222222222222222')
         let fancyArr = [];
-          async function fetchData() {
-            let response
-            let result
-            const url = ` https://odds.datafeed365.com/api/active-fancy/${eventId}`;
-            try {
-                response = await fetch(url,{
-                    method: 'GET',
-                    headers: {
-                        'Content-type': 'application/json',
-                    }
-                })
-                result = await response.json();
-                result = result.data
-
-            } catch (error) {
-                try{
-                    response = await fetch(url,{
-                    method: 'GET',
-                    headers: {
-                        'Content-type': 'application/json',
-                    }
-                })
-                result = await response.json();
-                result = result.data
-
-                }catch(error){
-                    console.error('Error fetching data:', error);
-                    return null
-                }
-                console.error('Error fetching data:', error);
-            }
-            return result;
-        }
         async function processResponse(response) {
-            for (const key in response) {
-                if (response.hasOwnProperty(key)) {
-                    const market = JSON.parse(response[key]);
-                    let marketData;
-                    try {
-                        const cachedData = await client.get(`${key}_diamond`);
-                        marketData = cachedData ? JSON.parse(cachedData) : null;
+            const marketPromises = Object.keys(response).map(async (key) => {
+                const market = JSON.parse(response[key]);
+                if (!market) return;
+            
+                let marketData;
+                try {
+                    const cachedData = await client.get(`${key}_diamond`);
+                    marketData = cachedData ? JSON.parse(cachedData) : null;
+            
+                    try{
                         if (marketData) {
                             marketData.status = market.status1 == "ACTIVE" ?"OPEN":market.status1,
                             marketData.inPlay = market.in_play;
@@ -89,8 +60,24 @@ const updateFancyDetailsFunc = async (eventId) => {
                             }else{
                                 console.log(marketData.runners,eventId,'marketid with no runnerrrr222222222222')
                             }
+                            // if(marketData.marketId == "13058718"){
+                            //     console.log(marketData.status, market.status1,'11111111111111111111');
+                                
+                            // }
                             await client.set(`${marketData.marketId}_diamond`, JSON.stringify(marketData), 'EX', 24 * 60 * 60);
+                            // if(marketData.marketId == "12977756"){
+                            //     console.log(marketData.marketName,marketData.noValue,marketData.yesValue,marketData.status,'2222222222222222222');
+                                
+                            // }
+                            // if(eventId == "34238025" && marketData.marketId ==  '13021018'){
+                            //     console.log(marketData, 'marketDatamarketDatamarketDatamarketData');
+                                
+                            // }
                             fancyArr.push(marketData)
+                            // if(eventId == "34164556"){
+                            //     console.log(fancyArr.find(item => item.marketId == '12977756'),marketData.status, '00000000000000000');
+                            // }
+
                         }
                         else{
                             let tempRunner = []
@@ -185,40 +172,57 @@ const updateFancyDetailsFunc = async (eventId) => {
                             tempRunner.push(tempObjrunner2)
                             tempRunner.push(tempObjrunner3)
                             tempObj.runners = tempRunner
+                            // if(tempObj.marketId == "13058718"){
+                            //     console.log(marketData.noValue,marketData.yesValue,marketData.status,'valueeeee');
+                                
+                            // }
                             await client.set(`${tempObj.marketId}_diamond`, JSON.stringify(tempObj), 'EX', 24 * 60 * 60);
                             fancyArr.push(tempObj)
                         }
-                    } catch (error) {
-                        console.log(error, eventId, ":Errorrrrrr");
+                    }catch(error){
+                        console.log(error,eventId,":Errorrrrrr")
                     }
+                    // await client.set(`${marketData.marketId}_diamond`, JSON.stringify(marketData), 'EX', 24 * 60 * 60);
+                    // fancyArr.push(marketData);
+            
+                } catch (error) {
+                    console.log(error, eventId, ":Errorrrrrr");
                 }
-            }
+            });
+            await Promise.all(marketPromises);
+            // if(eventId == "34316676"){
+            //     console.log(fancyArr,'fancyArrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr');
+            // }
+            
+
         }
-        async function processMarketArray() {
-            // const apiStartDate = Date.now()
-            const response = await fetchData();
-                
-            // const apiEndDate =  Date.now() - apiStartDate
-            if (response) {
-                await processResponse(response);
-            }
-            const apiResponses = response;
+        async function processMarketArray(fencydata) {
+            const apiResponses = fencydata;
+            await processResponse(fencydata);
             return apiResponses;
         }
-        processMarketArray().then(async(responses) => {
+        const startTime = Date.now();
+        processMarketArray(fencydata).then(async(responses) => {
             // console.log('API Responses:', responses);
+            // if(eventId == '34164556'){
+            //     console.log(fancyArr,'fancyArrfancyArr')
+            // }
             await client.set(`/topic/diamond_fancy_update/${eventId}`, JSON.stringify(fancyArr), 'EX', 24 * 60 * 60);
             await Publishclient.publish(`/topic/diamond_fancy_update/${eventId}`, JSON.stringify(fancyArr));
             let eventData = await client.get(`${eventId}_diamondEventData`);
             eventData = JSON.parse(eventData);
             eventData.markets.fancyMarkets = fancyArr;
-             // if(eventId == "34321472"){
+            // if(eventId == "34321472"){
             //     console.log(fancyArr,'fancyArrrrrrrrr')
             // }
             await client.set(`${eventId}_diamondEventData`, JSON.stringify(eventData), 'EX', 24 * 60 * 60);
+            const api1ResponseTime = Date.now() - startTime;
+        fs.appendFile('../../response_time_log2.txt', `Total Time: ${api1ResponseTime}ms\n`, (err) => {
+            // if (err) console.error('Error writing to log file:', err);
+        });
         });        
     } catch (error) {
-        console.error('Error:', error);
+        console.error('Error:', "error");
     }
 };
 

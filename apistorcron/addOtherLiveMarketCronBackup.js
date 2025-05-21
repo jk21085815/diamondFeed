@@ -36,11 +36,17 @@ client.on('connect', () => {
                 let eventIds1 = await client.get(`crone_getEventIds_Soccer_diamond`);
                 let eventIds3 = await client.get(`crone_getEventIds_GreyHound_diamond`);
                 let eventIds4 = await client.get(`crone_getEventIds_HorseRacing_diamond`);
+                let otherEvents = await client.get('crone_getEventIds_Other_Other_diamond')
+                if(otherEvents){
+                    otherEvents = JSON.parse(otherEvents)
+                }else{
+                    otherEvents = []
+                }
                 eventIds1 = JSON.parse(eventIds1)
                 eventIds2 = JSON.parse(eventIds2)
                 eventIds3 = JSON.parse(eventIds3)
                 eventIds4 = JSON.parse(eventIds4)
-                let eventIds = eventIds1.concat(eventIds2,eventIds3,eventIds4)
+                let eventIds = eventIds1.concat(eventIds2,eventIds3,eventIds4,otherEvents)
                 await client.set('crone_getEventIds_OtherSport_diamond',JSON.stringify(eventIds))
                 let liveEventIds = await client.get('crone_OtherSportLiveEventIds_diamond_UPD');
                 if(liveEventIds){
@@ -124,7 +130,16 @@ client.on('connect', () => {
                                 }
                                 let eventStatus = isLiveStatus?'IN_PLAY':'UPCOMING'
                                 eventData.status = eventStatus
+                                if(eventData.isother){
+                                    if(new Date(eventData.openDate).getTime() <= Date.now()){
+                                        OtherSportLiveEventIds.push(eventIds[i])
+                                        eventData.status = "IN_PLAY"
+                                    }else{
+                                        eventData.status = "UPCOMING"
+                                    }
+                                }
                                 let pushstatus = false 
+                                let showvirtual = false
                                 let thatMO = liveMatchCheckMarket
                                 if(thatMO){
                                     if(['OPEN','SUSPENDED','BALL_RUNNING'].includes(thatMO.status)){
@@ -132,6 +147,8 @@ client.on('connect', () => {
                                     }
                                 }else{
                                     if(eventData.competitionName.trim() == eventData.eventName.trim()){
+                                        pushstatus = true
+                                    }else if(eventData.isother){
                                         pushstatus = true
                                     }
                                 }
@@ -167,6 +184,9 @@ client.on('connect', () => {
                                     if(bookmakerdata){
                                         for(let a = 0; a<bookmakerdata.length; a++){
                                             if(Object.keys(bookmakerdata[a].data).length !== 0){
+                                                if(bookmakerdata[a].data.status !== 'CLOSED'){
+                                                    showvirtual = true
+                                                }
                                                 let tempRunner = []
                                                 let marketName
                                                 let tempObj = {
@@ -258,7 +278,19 @@ client.on('connect', () => {
                                     }
                                     eventData.markets.matchOdds = matchOddMarketArr
                                     eventData.markets.bookmakers = bookmakersMarketArr
-                                    showEvent.push(eventIds[i])
+
+                                    if(eventData.isother){
+                                        if(!showvirtual){
+                                            if(eventData.markets.fancyMarkets.length > 0){
+                                                showvirtual = true
+                                            }
+                                        }
+                                        if(showvirtual){
+                                            showEvent.push(eventIds[i])
+                                        }
+                                    }else{
+                                        showEvent.push(eventIds[i])
+                                    }
                                                 
                                 }
                                 await client.set(`${eventIds[i]}_diamondEventData`,JSON.stringify(eventData))
