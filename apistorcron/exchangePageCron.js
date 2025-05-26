@@ -13,7 +13,7 @@ client.on('connect', () => {
 
 
 module.exports = () => {
-    cron.schedule('00 * * * * *', async() => {
+    cron.schedule('*/1 * * * * *', async() => {
     // const exchangePageUpdate =  async () => {
         // setInterval(async() => {
             let starttime = new Date();
