@@ -24,6 +24,7 @@ const updateLiveFanctCron3Temp = require('./apistorcron/updateFencyDetailsCron3B
 const updateLiveFanctCron3 = require('./apistorcron/updateFencyDetailsCron3')
 const updateAdvFanctCron = require('./apistorcron/updateAdvFancyCron')
 const exchangePageCron = require('./apistorcron/exchangePageCron')
+const liveexchangePageCron = require('./apistorcron/liveexchangePageCron')
 const redis = require('redis');
 const client = redis.createClient({url:process.env.redisurl});
 client.connect()
@@ -54,6 +55,7 @@ addOtherSportLiveMarketCron()
 updateFancyCron()
 updateLiveFanctCron3()
 exchangePageCron()
+liveexchangePageCron()
 
 // updateLiveFanctCron3Temp()
 // updateLiveFanctCron2()

@@ -13,39 +13,25 @@ client.on('connect', () => {
 
 
 module.exports = () => {
-    cron.schedule('* * * * *', async() => {
+    cron.schedule('*/10 * * * * *', async() => {
     // const exchangePageUpdate =  async () => {
         // setInterval(async() => {
             let starttime = new Date();
             // console.log(starttime,'Exchange Page Cron Started......................')
             try{
-                let cricketData
-                let OtherSportData
                 let eventlist = []
-                cricketData = await client.get('crone_getEventIds_Cricket_diamond_UPD')
-                if(!cricketData){
-                    cricketData = await client.get('crone_getEventIds_Cricket_diamond')
-                }
-                let liveCricketEvents = await client.get('crone_CricketliveEventIds_diamond_UPD');
-                if(liveCricketEvents){
-                    liveCricketEvents = JSON.parse(liveCricketEvents)
+                let cricketData = await client.get('crone_CricketliveEventIds_diamond_UPD');
+                if(cricketData){
+                    cricketData = JSON.parse(cricketData)
                 }else{
-                    liveCricketEvents = []
+                    cricketData = []
                 }
-                cricketData = JSON.parse(cricketData)
-                cricketData = cricketData.filter(item => !liveCricketEvents.includes(item))
-                OtherSportData = await client.get('crone_getEventIds_OtherSport_diamond_UPD')
-                if(!OtherSportData){
-                    OtherSportData = await client.get('crone_getEventIds_OtherSport_diamond')
-                }
-                let liveOtherEvents = await client.get('crone_OtherSportLiveEventIds_diamond_UPD');
-                if(liveOtherEvents){
-                    liveOtherEvents = JSON.parse(liveOtherEvents)
+                let OtherSportData = await client.get('crone_OtherSportLiveEventIds_diamond_UPD');
+                if(OtherSportData){
+                    OtherSportData = JSON.parse(OtherSportData)
                 }else{
-                    liveOtherEvents = []
+                    OtherSportData = []
                 }
-                OtherSportData = JSON.parse(OtherSportData)
-                OtherSportData = OtherSportData.filter(item => !liveOtherEvents.includes(item))
                 let allData = cricketData.concat(OtherSportData)
                 let eventIds = [...allData]
                 // console.log(eventIds.length,'eventIdsttttttttttt in exchange page Lengthhhh')
@@ -99,8 +85,8 @@ module.exports = () => {
                         }
                     }
                 }
-                await client.set('/topic/diamond_exchange',JSON.stringify(eventlist))
-                Publishclient.publish('/topic/diamond_exchange',JSON.stringify(eventlist))
+                await client.set('/topic/diamond_liveexchange',JSON.stringify(eventlist))
+                Publishclient.publish('/topic/diamond_liveexchangelive',JSON.stringify(eventlist))
                 // console.log(starttime,'Exchange Page Cron End......................')
 
             }catch(error){
