@@ -73,7 +73,7 @@ client.on('connect', () => {
                     return fetchMarketDatajson.data
                 }
                 console.log(eventIds.length,'cricket eventIdssssssssssssssssss')
-                console.log(eventIds.find(item => item == "28127348"),"281273482812734828127348")
+                // console.log(eventIds.find(item => item == "28127348"),"281273482812734828127348")
                 for(let i = 0;i<eventIds.length;i++){
                     try{
                         // console.log(new Date(),i,eventIds[i],'Add Cricket eventIds and Market iiiiiiiii')
