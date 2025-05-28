@@ -4,6 +4,7 @@ const clientme = redis.createClient({url:process.env.redisurlme});
 const Publishclient = redis.createClient({url:process.env.redisurl});
 const fs = require('fs');
 client.connect()
+clientme.connect()
 Publishclient.connect()
 client.on('error', (err) => {
     console.log(`Error(In setMarketIdsCron.js):${err}`);

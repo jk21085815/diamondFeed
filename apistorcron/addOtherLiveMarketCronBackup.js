@@ -6,6 +6,7 @@ const client = redis.createClient({url:process.env.redisurl});
 const clientme = redis.createClient({url:process.env.redisurlme});
 const Publishclient = redis.createClient({url:process.env.redisurl});
 client.connect()
+clientme.connect()
 Publishclient.connect()
 const client2 = redis.createClient({url:process.env.redisurl2});
 client2.connect()
