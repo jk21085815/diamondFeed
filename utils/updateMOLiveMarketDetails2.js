@@ -1,5 +1,6 @@
 const redis = require('redis');
 const client = redis.createClient({url:process.env.redisurl});
+const clientme = redis.createClient({url:process.env.redisurlme});
 const Publishclient = redis.createClient({url:process.env.redisurl});
 client.connect()
 Publishclient.connect()
@@ -30,6 +31,7 @@ const updateLiveMarketDetails2 = async(bookdata) => {
                     //     console.log(marketdata.runners[0].backPrices,marketdata.runners[0].status,'backPricesbackPricesbackPricesbackPricesbackPricesbackPricesbackPricesbackPrices')
                     // }
                     client.set(`${bookdata.marketId}_diamond`,JSON.stringify(marketdata),'EX',24 * 60 * 60)
+                    clientme.set(`${bookdata.marketId}_diamond`,JSON.stringify(marketdata),'EX',24 * 60 * 60)
                     client.set(`/topic/diamond_match_odds_update/${bookdata.marketId}`,JSON.stringify(marketdata));
                     Publishclient.publish(`/topic/diamond_match_odds_update/${bookdata.marketId}`,JSON.stringify(marketdata));
                 }catch(error){

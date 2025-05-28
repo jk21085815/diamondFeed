@@ -3,6 +3,7 @@ const setNewLiveEvent = require('../utils/newEventUpdate')
 const setNewEventDetails = require('../utils/setNewThisEvent')
 const redis = require('redis');
 const client = redis.createClient({url:process.env.redisurl});
+const clientme = redis.createClient({url:process.env.redisurlme});
 const Publishclient = redis.createClient({url:process.env.redisurl});
 client.connect()
 Publishclient.connect()
@@ -175,6 +176,7 @@ client.on('connect', () => {
                                                             OtherSportLiveMarketIdsMO.push(matchoddmarketRedis.marketId)
                                                         }
                                                         await client.set(`${matchoddmarketRedis.marketId}_diamond`, JSON.stringify(matchoddmarketRedis), 'EX', 24 * 60 * 60);
+                                                        await clientme.set(`${matchoddmarketRedis.marketId}_diamond`, JSON.stringify(matchoddmarketRedis), 'EX', 24 * 60 * 60);
         
                                                     }
                                                 }
@@ -233,6 +235,7 @@ client.on('connect', () => {
                                                 if(["OPEN","SUSPENDED","BALL_RUNNING"].includes(tempObj.status)){
                                                     bookmakersMarketArr.push(tempObj)
                                                     await client.set(`${tempObj.marketId}_diamond`, JSON.stringify(tempObj), 'EX', 24 * 60 * 60);
+                                                    await clientme.set(`${tempObj.marketId}_diamond`, JSON.stringify(tempObj), 'EX', 24 * 60 * 60);
                                                     await client.set(`/topic/diamond_bm_update/${tempObj.marketId}`,JSON.stringify(tempObj));
                                                     Publishclient.publish(`/topic/diamond_bm_update/${tempObj.marketId}`,JSON.stringify(tempObj));
                                                     // if(!OtherSportLiveMarketIdsBM.includes(tempObj.marketId)){
@@ -294,6 +297,7 @@ client.on('connect', () => {
                                                 
                                 }
                                 await client.set(`${eventIds[i]}_diamondEventData`,JSON.stringify(eventData))
+                                await clientme.set(`${eventIds[i]}_diamondEventData`,JSON.stringify(eventData))
                             }else{
                                 let liveMatchCheckMarket = []
                                 let fetchMarketData3
@@ -334,13 +338,16 @@ client.on('connect', () => {
                                     eventData.markets.matchOdds = matchOddMarketArr
                                     eventData.status == "IN_PLAY"
                                     await client.set(`${eventIds[i]}_diamondEventData`,JSON.stringify(eventData))
+                                    await clientme.set(`${eventIds[i]}_diamondEventData`,JSON.stringify(eventData))
                                     OtherSportLiveEventIds.push(eventIds[i])
                                 }else{
                                     eventData.markets.matchOdds = liveMatchCheckMarket
                                     eventData.status == "UPCOMING"
                                     await client.set(`${eventIds[i]}_diamondEventData`,JSON.stringify(eventData))
+                                    await clientme.set(`${eventIds[i]}_diamondEventData`,JSON.stringify(eventData))
                                 }
                                 await client.set(`${eventIds[i]}_diamondEventData`,JSON.stringify(eventData))
+                                await clientme.set(`${eventIds[i]}_diamondEventData`,JSON.stringify(eventData))
                                 showEvent.push(eventIds[i])
                             }
                         }else{

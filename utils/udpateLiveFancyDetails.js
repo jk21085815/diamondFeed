@@ -1,5 +1,6 @@
 const redis = require('redis');
 const client = redis.createClient({url:process.env.redisurl});
+const clientme = redis.createClient({url:process.env.redisurlme});
 const Publishclient = redis.createClient({url:process.env.redisurl});
 const fs = require('fs');
 client.connect()
@@ -90,6 +91,7 @@ const updateFancyDetailsFunc = async (eventId) => {
                                 console.log(marketData.runners,eventId,'marketid with no runnerrrr222222222222')
                             }
                             await client.set(`${marketData.marketId}_diamond`, JSON.stringify(marketData), 'EX', 24 * 60 * 60);
+                            await clientme.set(`${marketData.marketId}_diamond`, JSON.stringify(marketData), 'EX', 24 * 60 * 60);
                             fancyArr.push(marketData)
                         }
                         else{
@@ -186,6 +188,7 @@ const updateFancyDetailsFunc = async (eventId) => {
                             tempRunner.push(tempObjrunner3)
                             tempObj.runners = tempRunner
                             await client.set(`${tempObj.marketId}_diamond`, JSON.stringify(tempObj), 'EX', 24 * 60 * 60);
+                            await clientme.set(`${tempObj.marketId}_diamond`, JSON.stringify(tempObj), 'EX', 24 * 60 * 60);
                             fancyArr.push(tempObj)
                         }
                     } catch (error) {
@@ -216,6 +219,7 @@ const updateFancyDetailsFunc = async (eventId) => {
             //     console.log(fancyArr,'fancyArrrrrrrrr')
             // }
             await client.set(`${eventId}_diamondEventData`, JSON.stringify(eventData), 'EX', 24 * 60 * 60);
+            await clientme.set(`${eventId}_diamondEventData`, JSON.stringify(eventData), 'EX', 24 * 60 * 60);
         });        
     } catch (error) {
         console.error('Error:', error);
