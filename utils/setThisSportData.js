@@ -1,7 +1,9 @@
 const redis = require('redis');
+const clientme = redis.createClient({url:process.env.redisurlme});
 const client = redis.createClient({url:process.env.redisurl});
 const Publishclient = redis.createClient({url:process.env.redisurl});
 client.connect()
+clientme.connect()
 Publishclient.connect()
 client.on('error', (err) => {
     console.log(`Error(In setMarketIdsCron.js):${err}`);
@@ -163,6 +165,7 @@ const setThisSportData = async(eventlist,SportName) => {
                                 matchOddsArr.push(tempObj)
                             }
                             await client.set(`${tempObj.marketId}_diamond`, JSON.stringify(tempObj), 'EX', 24 * 60 * 60);
+                            await clientme.set(`${tempObj.marketId}_diamond`, JSON.stringify(tempObj), 'EX', 24 * 60 * 60);
     
                         }
                     }
@@ -203,6 +206,7 @@ const setThisSportData = async(eventlist,SportName) => {
                                         matchOddsArr.push(tempObj)
                                     }
                                     await client.set(`${tempObj.marketId}_diamond`, JSON.stringify(tempObj), 'EX', 24 * 60 * 60);
+                                    await clientme.set(`${tempObj.marketId}_diamond`, JSON.stringify(tempObj), 'EX', 24 * 60 * 60);
     
                                 }
                             }
@@ -246,6 +250,7 @@ const setThisSportData = async(eventlist,SportName) => {
                                         matchOddsArr.push(tempObj)
                                     }
                                     await client.set(`${tempObj.marketId}_diamond`, JSON.stringify(tempObj), 'EX', 24 * 60 * 60);
+                                    await clientme.set(`${tempObj.marketId}_diamond`, JSON.stringify(tempObj), 'EX', 24 * 60 * 60);
     
                                 }
                             }
@@ -409,6 +414,7 @@ const setThisSportData = async(eventlist,SportName) => {
                                 tempObj.runners = tempRunner
                                 fanctMarketArr.push(tempObj)
                                 await client.set(`${tempObj.marketId}_diamond`, JSON.stringify(tempObj), 'EX', 24 * 60 * 60);
+                                await clientme.set(`${tempObj.marketId}_diamond`, JSON.stringify(tempObj), 'EX', 24 * 60 * 60);
                             }
                             await client.set(`/topic/diamond_fancy_update/${eventlist[k].eventId}`, JSON.stringify(fanctMarketArr), 'EX', 24 * 60 * 60);
                             Publishclient.publish(`/topic/diamond_fancy_update/${eventlist[k].eventId}`, JSON.stringify(fanctMarketArr));
@@ -433,9 +439,10 @@ const setThisSportData = async(eventlist,SportName) => {
                     for(let j = 0;j<OnlyMOMarketId.length;j++){
                         OnlyMOMarketIdArr.push(OnlyMOMarketId[j].marketId)
                     }
-                    await client.set(`${eventlist[k].eventId}_OnlyOtherMOMarketIdsArr_diamond`,JSON.stringify(OnlyOtherMOMarketIdsArr),'EX',7 * 24 * 60 * 60)
-                    await client.set(`${eventlist[k].eventId}_OnlyMOMarketIdsArr_diamond`,JSON.stringify(OnlyMOMarketIdArr),'EX',7 * 24 * 60 * 60)
-                    await client.set(`${eventlist[k].eventId}_diamondEventData`,JSON.stringify(eventlist[k]),'EX',7 * 24 * 60 * 60)
+                    await client.set(`${eventlist[k].eventId}_OnlyOtherMOMarketIdsArr_diamond`,JSON.stringify(OnlyOtherMOMarketIdsArr),'EX',2 * 24 * 60 * 60)
+                    await client.set(`${eventlist[k].eventId}_OnlyMOMarketIdsArr_diamond`,JSON.stringify(OnlyMOMarketIdArr),'EX',2 * 24 * 60 * 60)
+                    await client.set(`${eventlist[k].eventId}_diamondEventData`,JSON.stringify(eventlist[k]),'EX',2 * 24 * 60 * 60)
+                    await clientme.set(`${eventlist[k].eventId}_diamondEventData`,JSON.stringify(eventlist[k]),'EX',2 * 24 * 60 * 60)
                 }else{
                     let matchOddsArr = [];
                     let matchOddsArr2 = [];
@@ -510,6 +517,7 @@ const setThisSportData = async(eventlist,SportName) => {
                                 matchOddsArr.push(tempObj)
                             }
                             await client.set(`${tempObj.marketId}_diamond`, JSON.stringify(tempObj), 'EX', 24 * 60 * 60);
+                            await clientme.set(`${tempObj.marketId}_diamond`, JSON.stringify(tempObj), 'EX', 24 * 60 * 60);
     
                         }
                     }
@@ -550,6 +558,7 @@ const setThisSportData = async(eventlist,SportName) => {
                                         matchOddsArr.push(tempObj)
                                     }
                                     await client.set(`${tempObj.marketId}_diamond`, JSON.stringify(tempObj), 'EX', 24 * 60 * 60);
+                                    await clientme.set(`${tempObj.marketId}_diamond`, JSON.stringify(tempObj), 'EX', 24 * 60 * 60);
     
                                 }
                             }
@@ -593,6 +602,7 @@ const setThisSportData = async(eventlist,SportName) => {
                                         matchOddsArr.push(tempObj)
                                     }
                                     await client.set(`${tempObj.marketId}_diamond`, JSON.stringify(tempObj), 'EX', 24 * 60 * 60);
+                                    await clientme.set(`${tempObj.marketId}_diamond`, JSON.stringify(tempObj), 'EX', 24 * 60 * 60);
     
                                 }
                             }
@@ -614,9 +624,10 @@ const setThisSportData = async(eventlist,SportName) => {
                     for(let j = 0;j<OnlyMOMarketId.length;j++){
                         OnlyMOMarketIdArr.push(OnlyMOMarketId[j].marketId)
                     }
-                    await client.set(`${previouseventdata.eventId}_OnlyOtherMOMarketIdsArr_diamond`,JSON.stringify(OnlyOtherMOMarketIdsArr),'EX',7 * 24 * 60 * 60)
-                    await client.set(`${previouseventdata.eventId}_OnlyMOMarketIdsArr_diamond`,JSON.stringify(OnlyMOMarketIdArr),'EX',7 * 24 * 60 * 60)
+                    await client.set(`${previouseventdata.eventId}_OnlyOtherMOMarketIdsArr_diamond`,JSON.stringify(OnlyOtherMOMarketIdsArr),'EX',2 * 24 * 60 * 60)
+                    await client.set(`${previouseventdata.eventId}_OnlyMOMarketIdsArr_diamond`,JSON.stringify(OnlyMOMarketIdArr),'EX',2 * 24 * 60 * 60)
                     await client.set(`${previouseventdata.eventId}_diamondEventData`,JSON.stringify(previouseventdata))
+                    await clientme.set(`${previouseventdata.eventId}_diamondEventData`,JSON.stringify(previouseventdata))
                 }
             }
             await client.set(`crone_getEventIds_${SportName}_diamond`,JSON.stringify(thisSportEventId))
