@@ -86,7 +86,7 @@ module.exports = () => {
                     }
                 }
                 await client.set('/topic/diamond_liveexchange',JSON.stringify(eventlist))
-                Publishclient.publish('/topic/diamond_liveexchangelive',JSON.stringify(eventlist))
+                Publishclient.publish('/topic/diamond_liveexchange',JSON.stringify(eventlist))
                 // console.log(starttime,'Exchange Page Cron End......................')
 
             }catch(error){
