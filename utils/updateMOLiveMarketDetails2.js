@@ -32,9 +32,9 @@ const updateLiveMarketDetails2 = async(bookdata) => {
                             runner.status = bookdata.runners[j].status
                         }
                     }
-                    if(bookdata.marketId == "1.244295255"){
-                        console.log(marketdata.runners[0].backPrices[0],'backPricesbackPricesbackPricesbackPricesbackPricesbackPricesbackPricesbackPrices')
-                    }
+                    // if(bookdata.marketId == "1.244295255"){
+                    //     console.log(marketdata.runners[0].backPrices[0],'backPricesbackPricesbackPricesbackPricesbackPricesbackPricesbackPricesbackPrices')
+                    // }
                     client.set(`${bookdata.marketId}_diamond`,JSON.stringify(marketdata),'EX',24 * 60 * 60)
                     clientme.set(`${bookdata.marketId}_diamond`,JSON.stringify(marketdata),'EX',24 * 60 * 60)
                     client.set(`/topic/diamond_match_odds_update/${bookdata.marketId}`,JSON.stringify(marketdata));
