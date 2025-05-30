@@ -20,34 +20,18 @@ const updateLiveMarketDetails2 = async(bookdata) => {
                 try{
                     marketdata = JSON.parse(marketdata)
                     marketdata.status = bookdata.status
-                    // for(let j = 0;j<bookdata.runners.length;j++){
-                    //     runner = marketdata.runners.find(item => (item && item.runnerId && item.runnerId == bookdata.runners[j].selectionId))
-                    //     if(runner){
-                    //         runner.layPrices = bookdata.runners[j].ex.availableToLay
-                    //         runner.backPrices = bookdata.runners[j].ex.availableToBack
-                    //         runner.status = bookdata.runners[j].status
-                    //     }
-                    // }
-
-                    const runnerMap = {};
-for (let i = 0; i < marketdata.runners.length; i++) {
-    const r = marketdata.runners[i];
-    if (r && r.runnerId != null) {
-        runnerMap[r.runnerId] = r;
-    }
-}
-
-for (let j = 0; j < bookdata.runners.length; j++) {
-    const bRunner = bookdata.runners[j];
-    const runner = runnerMap[bRunner.selectionId];
-    if (runner) {
-        runner.layPrices = bRunner.ex.availableToLay;
-        runner.backPrices = bRunner.ex.availableToBack;
-        runner.status = bRunner.status;
-    }
-}
-
-
+                    for(let j = 0;j<bookdata.runners.length;j++){
+                        runner = marketdata.runners.find(item => (item && item.runnerId && item.runnerId == bookdata.runners[j].selectionId))
+                        if(runner){
+                            runner.layPrices = bookdata.runners[j].ex.availableToLay
+                            runner.backPrices = bookdata.runners[j].ex.availableToBack
+                            if(bookdata.marketId == "1.244295255"){
+                                console.log(runner.layPrices, 'runner.layPrices');
+                                
+                            }
+                            runner.status = bookdata.runners[j].status
+                        }
+                    }
                     // if(bookdata.marketId == "1.244255031"){
                     //     console.log(marketdata.runners[0].backPrices,marketdata.runners[0].status,'backPricesbackPricesbackPricesbackPricesbackPricesbackPricesbackPricesbackPrices')
                     // }
