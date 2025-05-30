@@ -23,7 +23,7 @@ const updateLiveMarketDetails = async(marketIds) => {
         let fetchMarketDatajson = await fetchMarketData.json()
 
         // console.log(Date.now() -date, 'datedatedatedate' );
-        console.log(fetchMarketDatajson.find(item => item.marketId == "1.244295255"), 'fetchMarketDatajsonfetchMarketDatajson');
+        // console.log(fetchMarketDatajson.find(item => item.marketId == "1.244295255"), 'fetchMarketDatajsonfetchMarketDatajson');
         let thatId = fetchMarketDatajson.find(item => item.marketId == "1.244295255")
         if(thatId){
             console.log(thatId, 'thatIdthatId');
