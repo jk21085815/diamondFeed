@@ -35,7 +35,7 @@ await Promise.all(promises);
 // console.log('woegfgfgf');
 
         
-    },303)
+    },505)
 }
 
 module.exports = updateSetinterval
