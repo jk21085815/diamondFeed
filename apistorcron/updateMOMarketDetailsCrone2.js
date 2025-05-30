@@ -20,7 +20,7 @@ const updateSetinterval = async() => {
         // }
 
         const promises = [];
-console.log(k, 123456);
+console.log(count, 123456);
 
 for (let k = 0; k < count; k++) {
     promises.push(
