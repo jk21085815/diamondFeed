@@ -24,7 +24,11 @@ const updateLiveMarketDetails = async(marketIds) => {
 
         // console.log(Date.now() -date, 'datedatedatedate' );
         console.log(fetchMarketDatajson.find(item => item.marketId == "1.244295255"), 'fetchMarketDatajsonfetchMarketDatajson');
-        
+        let thatId = fetchMarketDatajson.find(item => item.marketId == "1.244295255")
+        if(thatId){
+            console.log(thatId, 'thatIdthatId');
+            
+        }
         // for(let i = 0;i<fetchMarketDatajson.length;i++){ 
         //     if(["OPEN","SUSPENDED","BALL_RUNNING"].includes(fetchMarketDatajson[i].status.trim())){
         //         updateMOMarket2(fetchMarketDatajson[i])
