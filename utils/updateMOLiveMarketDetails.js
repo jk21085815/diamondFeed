@@ -20,11 +20,17 @@ const updateLiveMarketDetails = async(marketIds) => {
             }
         })
         let fetchMarketDatajson = await fetchMarketData.json()
-        for(let i = 0;i<fetchMarketDatajson.length;i++){ 
-            if(["OPEN","SUSPENDED","BALL_RUNNING"].includes(fetchMarketDatajson[i].status.trim())){
-                updateMOMarket2(fetchMarketDatajson[i])
-            }
-        }
+        // for(let i = 0;i<fetchMarketDatajson.length;i++){ 
+        //     if(["OPEN","SUSPENDED","BALL_RUNNING"].includes(fetchMarketDatajson[i].status.trim())){
+        //         updateMOMarket2(fetchMarketDatajson[i])
+        //     }
+        // }
+
+        const filteredMarkets = fetchMarketDatajson.filter(market => 
+            validStatuses.has(market.status.trim())
+        );
+
+        Promise.all(filteredMarkets.map(updateMOMarket2));
         
     }catch(error){
         console.log(error,"marketIds",'Errorrr updateLiveMarketDetailss')
