@@ -25,10 +25,10 @@ const updateLiveMarketDetails2 = async(bookdata) => {
                         if(runner){
                             runner.layPrices = bookdata.runners[j].ex.availableToLay
                             runner.backPrices = bookdata.runners[j].ex.availableToBack
-                            if(bookdata.marketId == "1.244295255"){
-                                console.log(runner.layPrices, 'runner.layPrices');
+                            // if(bookdata.marketId == "1.244295255"){
+                            //     console.log(runner.layPrices, 'runner.layPrices');
                                 
-                            }
+                            // }
                             runner.status = bookdata.runners[j].status
                         }
                     }

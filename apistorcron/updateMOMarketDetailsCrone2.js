@@ -31,6 +31,7 @@ for (let k = 0; k < count; k++) {
 
 await Promise.all(promises);
 
+console.log('woegfgfgf');
 
         
     },505)
