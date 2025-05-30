@@ -30,7 +30,7 @@ const updateLiveMarketDetails = async(marketIds) => {
         //     }
         // }
 
-        const BATCH_SIZE = 100;
+        const BATCH_SIZE = 10;
 const validStatuses = new Set(["OPEN", "SUSPENDED", "BALL_RUNNING"]);
 
 const toUpdate = fetchMarketDatajson.filter(
