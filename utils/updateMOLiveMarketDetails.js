@@ -22,6 +22,7 @@ const updateLiveMarketDetails = async(marketIds) => {
         })
         let fetchMarketDatajson = await fetchMarketData.json()
         // console.log(Date.now() -date, 'datedatedatedate' );
+        console.log(fetchMarketDatajson, 'fetchMarketDatajsonfetchMarketDatajson');
         
         for(let i = 0;i<fetchMarketDatajson.length;i++){ 
             if(["OPEN","SUSPENDED","BALL_RUNNING"].includes(fetchMarketDatajson[i].status.trim())){
