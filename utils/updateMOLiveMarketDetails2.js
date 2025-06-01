@@ -11,10 +11,11 @@ client.on('error', (err) => {
 client.on('connect', () => {
     // console.log('Connected to Redis1');
 });
-const updateLiveMarketDetails2 = async(bookdata,marketdata,i) => {
+const updateLiveMarketDetails2 = async(bookdata,i) => {
     let runner
     try{
-        // if(["OPEN","SUSPENDED","BALL_RUNNING"].includes(bookdata.status.trim())){
+        if(["OPEN","SUSPENDED","BALL_RUNNING"].includes(bookdata.status.trim())){
+            let marketdata = await client.get(`${bookdata.marketId}_diamond`)
             console.log(i,'iiiiii222222222222')
             if(marketdata){
                 try{
@@ -44,7 +45,7 @@ const updateLiveMarketDetails2 = async(bookdata,marketdata,i) => {
                 }
                 
             }
-        // }
+        }
         
     }catch(error){
         console.log(error,"marketIds",'Errorrr updateLiveMarketDetails2')
