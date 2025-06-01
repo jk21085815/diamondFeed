@@ -24,28 +24,28 @@ const updateLiveMarketDetails = async(marketIds) => {
 
         // console.log(Date.now() -date, 'datedatedatedate' );
         // console.log(fetchMarketDatajson.find(item => item.marketId == "1.244295255"), 'fetchMarketDatajsonfetchMarketDatajson');
-        let thatId = fetchMarketDatajson.find(item => item.marketId == "1.244295255")
-        if(thatId){
-            console.log(thatId.runners[0].ex.availableToBack, 'thatIdthatId');
+        // let thatId = fetchMarketDatajson.find(item => item.marketId == "1.244295255")
+        // if(thatId){
+        //     console.log(thatId.runners[0].ex.availableToBack, 'thatIdthatId');
             
-        }
-        // for(let i = 0;i<fetchMarketDatajson.length;i++){ 
-        //     if(["OPEN","SUSPENDED","BALL_RUNNING"].includes(fetchMarketDatajson[i].status.trim())){
-        //         updateMOMarket2(fetchMarketDatajson[i])
-        //     }
         // }
+        for(let i = 0;i<fetchMarketDatajson.length;i++){ 
+            if(["OPEN","SUSPENDED","BALL_RUNNING"].includes(fetchMarketDatajson[i].status.trim())){
+                updateMOMarket2(fetchMarketDatajson[i])
+            }
+        }
 
-        const BATCH_SIZE = 10;
-const validStatuses = new Set(["OPEN", "SUSPENDED", "BALL_RUNNING"]);
+//         const BATCH_SIZE = 10;
+// const validStatuses = new Set(["OPEN", "SUSPENDED", "BALL_RUNNING"]);
 
-const toUpdate = fetchMarketDatajson.filter(
-    market => market.status && validStatuses.has(market.status.trim())
-);
+// const toUpdate = fetchMarketDatajson.filter(
+//     market => market.status && validStatuses.has(market.status.trim())
+// );
 
-for (let i = 0; i < toUpdate.length; i += BATCH_SIZE) {
-    const batch = toUpdate.slice(i, i + BATCH_SIZE);
-    await Promise.all(batch.map(updateMOMarket2));
-}
+// for (let i = 0; i < toUpdate.length; i += BATCH_SIZE) {
+//     const batch = toUpdate.slice(i, i + BATCH_SIZE);
+//     await Promise.all(batch.map(updateMOMarket2));
+// }
 
 
         // const filteredMarkets = fetchMarketDatajson.filter(market => 
