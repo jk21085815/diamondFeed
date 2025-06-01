@@ -32,7 +32,9 @@ const updateLiveMarketDetails = async(marketIds) => {
         for(let i = 0;i<fetchMarketDatajson.length;i++){ 
             if(["OPEN","SUSPENDED","BALL_RUNNING"].includes(fetchMarketDatajson[i].status.trim())){
                 console.log(i,'iiiiiii111111111111111')
-                updateMOMarket2(fetchMarketDatajson[i],i)
+                let marketdata = await client.get(`${fetchMarketDatajson[i].marketId}_diamond`)
+
+                updateMOMarket2(fetchMarketDatajson[i],marketdata,i)
             }
         }
 
