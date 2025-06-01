@@ -12,7 +12,7 @@ client.on('connect', () => {
     // console.log('Connected to Redis1');
 });
 const updateLiveMarketDetails3 = async(bookdata,marketdata,i) => {
-        console.log(i,'iiiiii333333333333')
+        // console.log(i,'iiiiii333333333333')
    
         try{
             marketdata = JSON.parse(marketdata)

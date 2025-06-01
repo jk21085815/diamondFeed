@@ -13,7 +13,9 @@ const updateLiveMarketDetails2 = async(bookdata,i) => {
     try{
         // console.log(i,'iiiiii222222222222')
         if(["OPEN","SUSPENDED","BALL_RUNNING"].includes(bookdata.status.trim())){
+            let starttime = Date.now()
             let marketdata = await client.get(`${bookdata.marketId}_diamond`)
+            console.log((Date.now() - starttime)/1000,'timeeeeeeeeee')
             if(marketdata){
                 updateMoDetail3(bookdata,marketdata,i)
             }
