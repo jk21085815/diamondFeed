@@ -13,9 +13,11 @@ client.on('connect', () => {
 });
 const updateLiveMarketDetails2 = async(bookdata) => {
     let runner
+    console.log(i,'iiiiiii2222222222222')
     try{
         if(["OPEN","SUSPENDED","BALL_RUNNING"].includes(bookdata.status.trim())){
             let marketdata = await client.get(`${bookdata.marketId}_diamond`)
+            console.log(i,'iiiiiiiiii33333333333333')
             if(marketdata){
                 try{
                     marketdata = JSON.parse(marketdata)
