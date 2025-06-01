@@ -11,7 +11,7 @@ client.on('error', (err) => {
 client.on('connect', () => {
     // console.log('Connected to Redis1');
 });
-const updateLiveMarketDetails2 = async(bookdata) => {
+const updateLiveMarketDetails2 = async(bookdata,i) => {
     let runner
     console.log(i,'iiiiiii2222222222222')
     try{
