@@ -1,4 +1,6 @@
 const cron = require('node-cron');
+const fs = require('fs');
+const path = require('path');
 const setNewLiveEvent = require('../utils/newEventUpdate')
 const setNewEventDetails = require('../utils/setNewThisEvent')
 const redis = require('redis');
@@ -22,6 +24,8 @@ client.on('connect', () => {
     // cron.schedule('*/03 * * * *', async() => {
         const addotherlivemarketcronFunc = async() => {
             try{
+                const logFilePath = path.join(__dirname, `logs_Other.txt`);
+                const logStream = fs.createWriteStream(logFilePath, { flags: 'a' });
                 let OtherSportLiveMarketIdsMO = [];
                 let OtherSportLiveEventIds = [];
                 let newEventIdsArray = []
@@ -144,6 +148,8 @@ client.on('connect', () => {
                                 let showvirtual = false
                                 let thatMO = liveMatchCheckMarket
                                 if(thatMO){
+                                    const timestamp = new Date().toISOString();
+                                    logStream.write(`[${timestamp}]  ${thatMO.marketId} ${thatMO.status}\n`);
                                     if(['OPEN','SUSPENDED','BALL_RUNNING'].includes(thatMO.status)){
                                         pushstatus = true
                                     }

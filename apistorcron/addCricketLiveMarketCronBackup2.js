@@ -1,6 +1,8 @@
 const cron = require('node-cron');
 const setNewLiveEvent = require('../utils/newEventUpdate')
 const setNewEventDetails = require('../utils/setNewThisEvent')
+const fs = require('fs');
+const path = require('path');
 const redis = require('redis');
 const client = redis.createClient({url:process.env.redisurl});
 const clientme = redis.createClient({url:process.env.redisurlme});
@@ -22,6 +24,8 @@ client.on('connect', () => {
     // cron.schedule('*/02 * * * *', async() => {
         const addcricketlivemarketcronFunc = async() => {
             try{
+                const logFilePath = path.join(__dirname, `logs_Cricket.txt`);
+                const logStream = fs.createWriteStream(logFilePath, { flags: 'a' });
                 let chunkSize = 30
                 let marketIdsArrMO = [];
                 let liveEventInCricket = [];
@@ -159,6 +163,8 @@ client.on('connect', () => {
                             let showvirtual = false
                             let thatMO = liveMatchCheckMarket
                             if(thatMO){
+                                const timestamp = new Date().toISOString();
+                                logStream.write(`[${timestamp}]  ${thatMO.marketId} ${thatMO.status}\n`);
                                 if(['OPEN','SUSPENDED',"BALL_RUNNING"].includes(thatMO.status)){
                                     pushstatus = true
                                 }
