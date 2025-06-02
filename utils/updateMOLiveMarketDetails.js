@@ -13,8 +13,8 @@ client.on('connect', () => {
 const updateLiveMarketDetails = async(marketIds,k) => {
     let runner
     try{
-        let date = Date.now()
-        console.log(Date.now() -date, k,'datedatedatedate1111111111' );
+        // let date = Date.now()
+        // console.log(Date.now() -date, k,'datedatedatedate1111111111' );
 
         let fetchMarketData = await fetch(` http://13.42.165.216:8443/api/betfair/${marketIds}`,{
             method: 'GET',
@@ -36,7 +36,7 @@ const updateLiveMarketDetails = async(marketIds,k) => {
                 updateMOMarket2(fetchMarketDatajson[i],i)
             }
         }
-        console.log(Date.now() -date, k,'datedatedatedate22222222222222' );
+        // console.log(Date.now() -date, k,'datedatedatedate22222222222222' );
 
 
 //         const BATCH_SIZE = 10;
