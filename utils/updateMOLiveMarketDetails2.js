@@ -22,16 +22,29 @@ const updateLiveMarketDetails2 = async(bookdata,i) => {
                 try{
                     marketdata = JSON.parse(marketdata)
                     marketdata.status = bookdata.status
-                    for(let j = 0;j<bookdata.runners.length;j++){
-                        runner = marketdata.runners.find(item => (item && item.runnerId && item.runnerId == bookdata.runners[j].selectionId))
-                        if(runner){
-                            runner.layPrices = bookdata.runners[j].ex.availableToLay
-                            runner.backPrices = bookdata.runners[j].ex.availableToBack
-                            // if(bookdata.marketId == "1.244295255"){
-                            //     console.log(runner.layPrices, 'runner.layPrices');
+                    // for(let j = 0;j<bookdata.runners.length;j++){
+                    //     runner = marketdata.runners.find(item => (item && item.runnerId && item.runnerId == bookdata.runners[j].selectionId))
+                    //     if(runner){
+                    //         runner.layPrices = bookdata.runners[j].ex.availableToLay
+                    //         runner.backPrices = bookdata.runners[j].ex.availableToBack
+                    //         // if(bookdata.marketId == "1.244295255"){
+                    //         //     console.log(runner.layPrices, 'runner.layPrices');
                                 
-                            // }
-                            runner.status = bookdata.runners[j].status
+                    //         // }
+                    //         runner.status = bookdata.runners[j].status
+                    //     }
+                    // }
+                      // Create a map for faster lookup
+                    const runnerMap = new Map(
+                        marketdata.runners.map(r => [r?.runnerId, r])
+                    );
+
+                    for (const runnerUpdate of bookdata.runners) {
+                        const runner = runnerMap.get(runnerUpdate.selectionId);
+                        if (runner) {
+                            runner.layPrices = runnerUpdate.ex?.availableToLay || [];
+                            runner.backPrices = runnerUpdate.ex?.availableToBack || [];
+                            runner.status = runnerUpdate.status;
                         }
                     }
                     if(bookdata.marketId == "1.244407265"){
