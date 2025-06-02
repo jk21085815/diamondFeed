@@ -1,4 +1,6 @@
 const redis = require('redis');
+const fs = require('fs');
+const path = require('path');
 const client = redis.createClient({url:process.env.redisurl});
 client.connect()
 client.on('error', (err) => {
@@ -33,7 +35,13 @@ const updateSetinterval = async() => {
                         runner.status = runnerUpdate.status;
                     }
                 }
+                // Create a write stream
+                const logFile = path.join(__dirname, 'logs.txt');
+                const logStream = fs.createWriteStream(logFile, { flags: 'a' }); // 'a' = append
+                const timestamp = new Date().toISOString();
+                logStream.write(`[${timestamp}] ${marketdata.runners[0].backPrices}\n`);
                 console.log(marketdata.runners[0].backPrices,'backpriceeeeee1111111111')
+
             
         }
         

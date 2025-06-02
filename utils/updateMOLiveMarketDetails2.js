@@ -1,4 +1,6 @@
 const redis = require('redis');
+const fs = require('fs');
+const path = require('path');
 const client = redis.createClient({url:process.env.redisurl});
 const clientme = redis.createClient({url:process.env.redisurlme});
 const Publishclient = redis.createClient({url:process.env.redisurl});
@@ -47,8 +49,13 @@ const updateLiveMarketDetails2 = async(bookdataArray) => {
                         }
                     }
 
+                    // Create a write stream
+                    const logFile = path.join(__dirname, 'logs.txt');
+                    const logStream = fs.createWriteStream(logFile, { flags: 'a' }); // 'a' = append
                     if(bookdata.marketId == "1.244277489"){
                         console.log(marketdata.runners[0].backPrices,'backpriceeeeee22222222')
+                        const timestamp = new Date().toISOString();
+                        logStream.write(`[${timestamp}] ${marketdata.runners[0].backPrices}\n`);
                     }
 
                     const updatedStr = JSON.stringify(marketdata);
