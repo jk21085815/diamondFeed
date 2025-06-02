@@ -149,7 +149,7 @@ client.on('connect', () => {
                                 let thatMO = liveMatchCheckMarket
                                 if(thatMO){
                                     const timestamp = new Date().toISOString();
-                                    logStream.write(`[${timestamp}]  ${thatMO.marketId} ${thatMO.status}\n`);
+                                    logStream.write(`[${timestamp}]  ${eventData.eventId} ${eventData.status}\n`);
                                     if(['OPEN','SUSPENDED','BALL_RUNNING'].includes(thatMO.status)){
                                         pushstatus = true
                                     }
