@@ -1,5 +1,5 @@
 const redis = require('redis');
-const { log } = require('../utils/logger');
+// const { log } = require('../utils/logger');
 const client = redis.createClient({url:process.env.redisurl});
 client.connect()
 client.on('error', (err) => {
@@ -35,8 +35,8 @@ const updateSetinterval = async() => {
                     }
                 }
                 // Create a write stream
-                log(`Logs 1 [${timestamp}] ${JSON.stringify(marketdata.runners[0].backPrices)}\n`);
-                // console.log(marketdata.runners[0].backPrices,'backpriceeeeee1111111111')
+                // log(`Logs 1 [${timestamp}] ${JSON.stringify(marketdata.runners[0].backPrices)}\n`);
+                console.log(marketdata.runners[0].backPrices,'backpriceeeeee1111111111')
 
             
         }

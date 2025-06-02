@@ -1,5 +1,5 @@
 const redis = require('redis');
-const { log } = require('./utils/logger');
+// const { log } = require('./utils/logger');
 const client = redis.createClient({url:process.env.redisurl});
 const clientme = redis.createClient({url:process.env.redisurlme});
 const Publishclient = redis.createClient({url:process.env.redisurl});
@@ -49,7 +49,7 @@ const updateLiveMarketDetails2 = async(bookdataArray) => {
                     }
 
                     if(bookdata.marketId == "1.244277489"){
-                        // console.log(marketdata.runners[0].backPrices,'backpriceeeeee22222222')
+                        console.log(marketdata.runners[0].backPrices,'backpriceeeeee22222222')
                         // log(`Logs 2 [${timestamp}] ${JSON.stringify(marketdata.runners[0].backPrices)}\n`);
                     }
 
