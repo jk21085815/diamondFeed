@@ -48,7 +48,7 @@ const updateLiveMarketDetails2 = async(bookdataArray) => {
                     }
 
                     if(bookdata.marketId == "1.244277489"){
-                        console.log(bookdata,'backpriceeeeee22222222')
+                        console.log(marketdata.runners[0].backPrices,'backpriceeeeee22222222')
                     }
 
                     const updatedStr = JSON.stringify(marketdata);
