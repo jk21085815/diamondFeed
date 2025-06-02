@@ -23,19 +23,12 @@ const updateLiveMarketDetails = async(marketIds,k) => {
             }
         })
         let fetchMarketDatajson = await fetchMarketData.json()
-
-        // console.log(fetchMarketDatajson.find(item => item.marketId == "1.244295255"), 'fetchMarketDatajsonfetchMarketDatajson');
-        // let thatId = fetchMarketDatajson.find(item => item.marketId == "1.244295255")
-        // if(thatId){
-        //     console.log(thatId.runners[0].ex.availableToBack, 'thatIdthatId');
-            
+        // for(let i = 0;i<fetchMarketDatajson.length;i++){ 
+        //     if(["OPEN","SUSPENDED","BALL_RUNNING"].includes(fetchMarketDatajson[i].status.trim())){
+        //         // console.log(i,'iiiiiii111111111111111')
+        //         updateMOMarket2(fetchMarketDatajson[i],i)
+        //     }
         // }
-        for(let i = 0;i<fetchMarketDatajson.length;i++){ 
-            if(["OPEN","SUSPENDED","BALL_RUNNING"].includes(fetchMarketDatajson[i].status.trim())){
-                // console.log(i,'iiiiiii111111111111111')
-                updateMOMarket2(fetchMarketDatajson[i],i)
-            }
-        }
         // console.log(Date.now() -date, k,'datedatedatedate22222222222222' );
 
 
@@ -57,6 +50,12 @@ const updateLiveMarketDetails = async(marketIds,k) => {
         // );
 
         // Promise.all(filteredMarkets.map(updateMOMarket2));
+
+        const openMarkets = fetchMarketDatajson.filter(market =>
+            ["OPEN", "SUSPENDED", "BALL_RUNNING"].includes(market.status.trim())
+        );
+
+        await Promise.all(openMarkets.map((market, i) => updateMOMarket2(market, i)));
         
     }catch(error){
         console.log(error,"marketIds",'Errorrr updateLiveMarketDetailss')
