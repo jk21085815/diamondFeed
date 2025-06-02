@@ -39,7 +39,7 @@ const updateSetinterval = async() => {
                 const logFile = path.join(__dirname, 'logs.txt');
                 const logStream = fs.createWriteStream(logFile, { flags: 'a' }); // 'a' = append
                 const timestamp = new Date().toISOString();
-                logStream.write(`[${timestamp}] ${JSON.stringify(marketdata.runners[0].backPrices)}\n`);
+                logStream.write(`Logs 1 [${timestamp}] ${JSON.stringify(marketdata.runners[0].backPrices)}\n`);
                 // console.log(marketdata.runners[0].backPrices,'backpriceeeeee1111111111')
 
             
