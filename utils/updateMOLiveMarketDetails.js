@@ -10,10 +10,12 @@ client.on('error', (err) => {
 client.on('connect', () => {
     // console.log('Connected to Redis1');
 });
-const updateLiveMarketDetails = async(marketIds) => {
+const updateLiveMarketDetails = async(marketIds,k) => {
     let runner
     try{
         let date = Date.now()
+        console.log(Date.now() -date, k,'datedatedatedate1111111111' );
+
         let fetchMarketData = await fetch(` http://13.42.165.216:8443/api/betfair/${marketIds}`,{
             method: 'GET',
             headers: {
@@ -34,7 +36,7 @@ const updateLiveMarketDetails = async(marketIds) => {
                 updateMOMarket2(fetchMarketDatajson[i],i)
             }
         }
-        console.log(Date.now() -date, 'datedatedatedate' );
+        console.log(Date.now() -date, k,'datedatedatedate22222222222222' );
 
 
 //         const BATCH_SIZE = 10;
