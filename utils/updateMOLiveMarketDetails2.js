@@ -11,30 +11,29 @@ client.on('error', (err) => {
 client.on('connect', () => {
     // console.log('Connected to Redis1');
 });
-const updateLiveMarketDetails2 = async(bookdata,i) => {
+const updateLiveMarketDetails2 = async(bookdataArray) => {
     let runner
     // console.log(i,'iiiiiii2222222222222')
     try{
-        if(["OPEN","SUSPENDED","BALL_RUNNING"].includes(bookdata.status.trim())){
-            let marketdata = await client.get(`${bookdata.marketId}_diamond`)
-            // console.log(i,'iiiiiiiiii33333333333333')
-            if(marketdata){
-                try{
-                    marketdata = JSON.parse(marketdata)
-                    marketdata.status = bookdata.status
-                    // for(let j = 0;j<bookdata.runners.length;j++){
-                    //     runner = marketdata.runners.find(item => (item && item.runnerId && item.runnerId == bookdata.runners[j].selectionId))
-                    //     if(runner){
-                    //         runner.layPrices = bookdata.runners[j].ex.availableToLay
-                    //         runner.backPrices = bookdata.runners[j].ex.availableToBack
-                    //         // if(bookdata.marketId == "1.244295255"){
-                    //         //     console.log(runner.layPrices, 'runner.layPrices');
-                                
-                    //         // }
-                    //         runner.status = bookdata.runners[j].status
-                    //     }
-                    // }
-                      // Create a map for faster lookup
+        if (!Array.isArray(bookdataArray) || bookdataArray.length === 0) return;
+         // STEP 1: Prepare all Redis keys
+        const redisKeys = bookdataArray.map(b => `${b.marketId}_diamond`);
+        // STEP 2: MGET from Redis
+        let marketDataList = await client.mGet(redisKeys);  // Returns array of strings or nulls
+        // STEP 3: Prepare Redis pipeline for batch update
+        const pipeline = client.multi();      // For Redis SETs
+        const pipelineMe = clientme.multi();  // For mirror storage (if needed)
+        for (let i = 0; i < bookdataArray.length; i++) {
+            const bookdata = bookdataArray[i];
+            let rawData = marketDataList[i];
+            if (!rawData) continue;
+
+            try {
+                if (["OPEN", "SUSPENDED", "BALL_RUNNING"].includes(bookdata.status?.trim())) {
+                    let marketdata = JSON.parse(rawData);
+                    marketdata.status = bookdata.status;
+
+                    // Build runner map
                     const runnerMap = new Map(
                         marketdata.runners.map(r => [r?.runnerId, r])
                     );
@@ -47,18 +46,34 @@ const updateLiveMarketDetails2 = async(bookdata,i) => {
                             runner.status = runnerUpdate.status;
                         }
                     }
+
                     if(bookdata.marketId == "1.244277489"){
-                        console.log(marketdata.runners[0].backPrices,'backpriceeeeee222222222')
+                        console.log(bookdata.runners[0].backPrices,'backpriceeeeee22222222')
                     }
-                    client.set(`${bookdata.marketId}_diamond`,JSON.stringify(marketdata),'EX',24 * 60 * 60)
-                    clientme.set(`${bookdata.marketId}_diamond`,JSON.stringify(marketdata),'EX',24 * 60 * 60)
-                    client.set(`/topic/diamond_match_odds_update/${bookdata.marketId}`,JSON.stringify(marketdata));
-                    Publishclient.publish(`/topic/diamond_match_odds_update/${bookdata.marketId}`,JSON.stringify(marketdata));
-                }catch(error){
-                    console.log(error,'Errorrrrrrrrrrrr')
+
+                    const updatedStr = JSON.stringify(marketdata);
+                    const redisKey = `${bookdata.marketId}_diamond`;
+                    const topicKey = `/topic/diamond_match_odds_update/${bookdata.marketId}`;
+
+                    // Add to pipeline
+                    pipeline.set(redisKey, updatedStr, 'EX', 86400); // 24 hours
+                    pipeline.set(topicKey, updatedStr);
+                    pipelineMe.set(redisKey, updatedStr, 'EX', 86400);
+
+                    // Publish (not part of pipeline in node-redis, do async)
+                    Publishclient.publish(topicKey, updatedStr);
                 }
-                
+            } catch (err) {
+                console.error(`Error processing market ${bookdataArray[i].marketId}:`, err);
             }
+        }
+
+         // STEP 4: Execute batch commands
+        try {
+            await pipeline.exec();
+            await pipelineMe.exec();
+        } catch (execErr) {
+            console.error("Redis pipeline execution error:", execErr);
         }
         
     }catch(error){

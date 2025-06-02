@@ -23,12 +23,13 @@ const updateLiveMarketDetails = async(marketIds,k) => {
             }
         })
         let fetchMarketDatajson = await fetchMarketData.json()
+        updateMOMarket2(fetchMarketDatajson)
 
-        const openMarkets = fetchMarketDatajson.filter(market =>
-            ["OPEN", "SUSPENDED", "BALL_RUNNING"].includes(market.status.trim())
-        );
+        // const openMarkets = fetchMarketDatajson.filter(market =>
+        //     ["OPEN", "SUSPENDED", "BALL_RUNNING"].includes(market.status.trim())
+        // );
 
-        await Promise.all(openMarkets.map((market, i) => updateMOMarket2(market, i)));
+        // await Promise.all(openMarkets.map((market, i) => updateMOMarket2(market, i)));
         // for(let i = 0;i<fetchMarketDatajson.length;i++){ 
         //     if(["OPEN","SUSPENDED","BALL_RUNNING"].includes(fetchMarketDatajson[i].status.trim())){
         //         // console.log(i,'iiiiiii111111111111111')
