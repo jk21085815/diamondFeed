@@ -23,6 +23,12 @@ const updateLiveMarketDetails = async(marketIds,k) => {
             }
         })
         let fetchMarketDatajson = await fetchMarketData.json()
+
+        const openMarkets = fetchMarketDatajson.filter(market =>
+            ["OPEN", "SUSPENDED", "BALL_RUNNING"].includes(market.status.trim())
+        );
+
+        await Promise.all(openMarkets.map((market, i) => updateMOMarket2(market, i)));
         // for(let i = 0;i<fetchMarketDatajson.length;i++){ 
         //     if(["OPEN","SUSPENDED","BALL_RUNNING"].includes(fetchMarketDatajson[i].status.trim())){
         //         // console.log(i,'iiiiiii111111111111111')
@@ -32,17 +38,17 @@ const updateLiveMarketDetails = async(marketIds,k) => {
         // console.log(Date.now() -date, k,'datedatedatedate22222222222222' );
 
 
-//         const BATCH_SIZE = 10;
-// const validStatuses = new Set(["OPEN", "SUSPENDED", "BALL_RUNNING"]);
+        //         const BATCH_SIZE = 10;
+        // const validStatuses = new Set(["OPEN", "SUSPENDED", "BALL_RUNNING"]);
 
-// const toUpdate = fetchMarketDatajson.filter(
-//     market => market.status && validStatuses.has(market.status.trim())
-// );
+        // const toUpdate = fetchMarketDatajson.filter(
+        //     market => market.status && validStatuses.has(market.status.trim())
+        // );
 
-// for (let i = 0; i < toUpdate.length; i += BATCH_SIZE) {
-//     const batch = toUpdate.slice(i, i + BATCH_SIZE);
-//     await Promise.all(batch.map(updateMOMarket2));
-// }
+        // for (let i = 0; i < toUpdate.length; i += BATCH_SIZE) {
+        //     const batch = toUpdate.slice(i, i + BATCH_SIZE);
+        //     await Promise.all(batch.map(updateMOMarket2));
+        // }
 
 
         // const filteredMarkets = fetchMarketDatajson.filter(market => 
@@ -51,11 +57,7 @@ const updateLiveMarketDetails = async(marketIds,k) => {
 
         // Promise.all(filteredMarkets.map(updateMOMarket2));
 
-        const openMarkets = fetchMarketDatajson.filter(market =>
-            ["OPEN", "SUSPENDED", "BALL_RUNNING"].includes(market.status.trim())
-        );
 
-        await Promise.all(openMarkets.map((market, i) => updateMOMarket2(market, i)));
         
     }catch(error){
         console.log(error,"marketIds",'Errorrr updateLiveMarketDetailss')
