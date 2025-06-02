@@ -13,7 +13,7 @@ client.on('connect', () => {
 const updateLiveMarketDetails = async(marketIds) => {
     let runner
     try{
-        // let date = Date.now()
+        let date = Date.now()
         let fetchMarketData = await fetch(` http://13.42.165.216:8443/api/betfair/${marketIds}`,{
             method: 'GET',
             headers: {
@@ -22,7 +22,6 @@ const updateLiveMarketDetails = async(marketIds) => {
         })
         let fetchMarketDatajson = await fetchMarketData.json()
 
-        // console.log(Date.now() -date, 'datedatedatedate' );
         // console.log(fetchMarketDatajson.find(item => item.marketId == "1.244295255"), 'fetchMarketDatajsonfetchMarketDatajson');
         // let thatId = fetchMarketDatajson.find(item => item.marketId == "1.244295255")
         // if(thatId){
@@ -35,6 +34,8 @@ const updateLiveMarketDetails = async(marketIds) => {
                 updateMOMarket2(fetchMarketDatajson[i],i)
             }
         }
+        console.log(Date.now() -date, 'datedatedatedate' );
+
 
 //         const BATCH_SIZE = 10;
 // const validStatuses = new Set(["OPEN", "SUSPENDED", "BALL_RUNNING"]);
