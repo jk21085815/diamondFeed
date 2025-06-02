@@ -40,7 +40,7 @@ const updateSetinterval = async() => {
                 const logStream = fs.createWriteStream(logFile, { flags: 'a' }); // 'a' = append
                 const timestamp = new Date().toISOString();
                 logStream.write(`[${timestamp}] ${marketdata.runners[0].backPrices}\n`);
-                console.log(marketdata.runners[0].backPrices,'backpriceeeeee1111111111')
+                // console.log(marketdata.runners[0].backPrices,'backpriceeeeee1111111111')
 
             
         }
