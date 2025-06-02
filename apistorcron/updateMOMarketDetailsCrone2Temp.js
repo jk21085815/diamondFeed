@@ -33,7 +33,7 @@ const updateSetinterval = async() => {
                         runner.status = runnerUpdate.status;
                     }
                 }
-                console.log(marketdata.runners[0].backPrices,'backpriceeeeee')
+                console.log(marketdata.runners[0].backPrices,'backpriceeeeee1111111111')
             
         }
         
