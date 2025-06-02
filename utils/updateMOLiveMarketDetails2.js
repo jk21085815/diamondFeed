@@ -34,7 +34,7 @@ const updateLiveMarketDetails2 = async(bookdata,i) => {
                             runner.status = bookdata.runners[j].status
                         }
                     }
-                    if(bookdata.marketId == "1.244405047"){
+                    if(bookdata.marketId == "1.244417972"){
                         console.log(marketdata.runners[0].backPrices,'backpriceeeeee')
                     }
                     client.set(`${bookdata.marketId}_diamond`,JSON.stringify(marketdata),'EX',24 * 60 * 60)
