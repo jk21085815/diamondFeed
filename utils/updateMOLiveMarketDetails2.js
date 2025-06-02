@@ -48,10 +48,10 @@ const updateLiveMarketDetails2 = async(bookdataArray) => {
                         }
                     }
 
-                    if(bookdata.marketId == "1.244277489"){
-                        console.log(marketdata.runners[0].backPrices,'backpriceeeeee22222222')
+                    // if(bookdata.marketId == "1.244277489"){
+                        // console.log(marketdata.runners[0].backPrices,'backpriceeeeee22222222')
                         // log(`Logs 2 [${timestamp}] ${JSON.stringify(marketdata.runners[0].backPrices)}\n`);
-                    }
+                    // }
 
                     const updatedStr = JSON.stringify(marketdata);
                     const redisKey = `${bookdata.marketId}_diamond`;

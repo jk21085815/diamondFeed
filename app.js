@@ -58,7 +58,7 @@ updateLiveFanctCron3()
 exchangePageCron()
 liveexchangePageCron()
 
-updateMODetailTemp()
+// updateMODetailTemp()
 
 // updateLiveFanctCron3Temp()
 // updateLiveFanctCron2()
