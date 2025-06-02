@@ -12,12 +12,14 @@ client.on('connect', () => {
 
 const updateSetinterval = async() => {
     setInterval(async()=>{
+        let starttime = Date.now()
         let count = await client.get('marketidCounts_MO')
         count = JSON.parse(count)        
         for(let k = 0;k<count;k++){
             let marketIds = await client.get(`marketidkcount_MO_${k}`)
             updateMOMarketDetails(marketIds)
         }
+        console.log((Date.now()-starttime)/1000,count,'timeeeeeeeeeeeeeeeee')
 
         // const promises = [];
 // console.log(count, 123456);
