@@ -80,15 +80,21 @@ const getEventList = async(sportId,sportName) => {
         let eventData = await client.get(`${item}_diamondEventData`)
         if(eventData){
             eventData = JSON.parse(eventData)
-            console.log(eventData.openDate,eventData.eventId,'opendataaaaaaaaaa')
+            if(isTodaysEvent(eventData.openDate)){
+                otherEventIds.push(eventData.eventId)
+            }
         }
     })
     otherotherEvents.forEach(async(item) => {
         let eventData = await client.get(`${item}_diamondEventData`)
         if(eventData){
             eventData = JSON.parse(eventData)
+            if(isTodaysEvent(eventData.openDate)){
+                otherotherEventIds.push(eventData.eventId)
+            }
         }
     })
+    console.log(otherEventIds,otherotherEventIds,'other event idsssss')
 
     cron.schedule('*/30 * * * *', async() => {
         let starttime = new Date();
