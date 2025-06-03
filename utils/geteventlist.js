@@ -95,6 +95,8 @@ const getEventList = async(sportId,sportName) => {
         }
     })
     console.log(otherEventIds,otherotherEventIds,'other event idsssss')
+    await client.set('crone_getEventIds_Other_diamond',JSON.stringify(otherEventIds))
+    await client.set('crone_getEventIds_Other_Other_diamond',JSON.stringify(otherotherEventIds))
 
     cron.schedule('*/30 * * * *', async() => {
         let starttime = new Date();
