@@ -79,13 +79,14 @@ const getEventList = async(sportId,sportName) => {
     otherEvents.forEach(async(item) => {
         let eventData = await client.get(`${item}_diamondEventData`)
         if(eventData){
+            eventData = JSON.parse(eventData)
             console.log(eventData.openDate,eventData.eventId,'opendataaaaaaaaaa')
         }
     })
     otherotherEvents.forEach(async(item) => {
         let eventData = await client.get(`${item}_diamondEventData`)
         if(eventData){
-
+            eventData = JSON.parse(eventData)
         }
     })
 
