@@ -28,7 +28,6 @@ client.on('connect', () => {
                 const logStream = fs.createWriteStream(logFilePath, { flags: 'a' });
                 let OtherSportLiveMarketIdsMO = [];
                 let OtherSportLiveEventIds = [];
-                let newEventIdsArray = []
                 let showEvent = []
                 let tennisLiveEventIds = []
                 let forcefullyLiveEvents = await client2.get('InPlayEventdata')
@@ -121,18 +120,20 @@ client.on('connect', () => {
                                 liveMatchCheckMarket = fetchMarketData2.find(item => (item && item.status !== "CLOSED"))
                             }
                             if(!issportHRGH){
-                                if(liveMatchCheckMarket || forcefullyLiveEvents.includes(eventData.eventId)){
+                                if(liveMatchCheckMarket){
                                     if((liveMatchCheckMarket.inplay == true && liveMatchCheckMarket.status !== 'CLOSED') || forcefullyLiveEvents.includes(eventData.eventId)){
-                                        if(!liveEventIds.includes(eventIds[i])){
-                                            newEventAdded = true
-                                            newEventIdsArray.push(eventIds[i])
-                                        }
                                         if(eventData.sportId == "2"){
                                             tennisLiveEventIds.push(eventIds[i])
                                         }
                                         OtherSportLiveEventIds.push(eventIds[i])
                                         isLiveStatus = true
                                     }
+                                }else if(forcefullyLiveEvents.includes(eventData.eventId)){
+                                    if(eventData.sportId == "2"){
+                                        tennisLiveEventIds.push(eventIds[i])
+                                    }
+                                    OtherSportLiveEventIds.push(eventIds[i])
+                                    isLiveStatus = true
                                 }
                                 let eventStatus = isLiveStatus?'IN_PLAY':'UPCOMING'
                                 eventData.status = eventStatus

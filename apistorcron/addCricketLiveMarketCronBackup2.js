@@ -29,7 +29,6 @@ client.on('connect', () => {
                 let chunkSize = 30
                 let marketIdsArrMO = [];
                 let liveEventInCricket = [];
-                let newEventIdsArray = []
                 let showEvent = []
                 let eventIds = await client.get('crone_getEventIds_Cricket_diamond');
                 let CricketLiveEventIds = await client.get('crone_CricketliveEventIds_diamond_UPD');
@@ -119,35 +118,26 @@ client.on('connect', () => {
                                 }
                                 liveMatchCheckMarket = fetchMarketData2.find(item => (item && item.status !== "CLOSED"))
                             }
-                            if(liveMatchCheckMarket || forcefullyLiveEvents.includes(eventData.eventId)){
+                            if(liveMatchCheckMarket){
                                 if((liveMatchCheckMarket.inplay == true && liveMatchCheckMarket.status !== 'CLOSED') || forcefullyLiveEvents.includes(eventData.eventId)){
-                                    if(!CricketLiveEventIds.includes(eventIds[i])){
-                                        newEventAdded = true
-                                        newEventIdsArray.push(eventIds[i])
-                                    }
                                     liveEventInCricket.push(eventIds[i])
                                     isLiveStatus = true
                                 }else{
                                     if(liveMatchCheckMarket.status !== 'CLOSED'){
                                         if(isTest){
                                             if(new Date(eventData.openDate).getTime() + (1000 * 60 * 60 * 24 * 5) >= Date.now()){
-                                                if(!CricketLiveEventIds.includes(eventIds[i])){
-                                                    newEventAdded = true
-                                                    newEventIdsArray.push(eventIds[i])
-                                                }
                                                 liveEventInCricket.push(eventIds[i])
                                             }
                                         }else{
                                             if(new Date(eventData.openDate).getTime() - (1000 * 60 * 60 * 2) <= Date.now()){
-                                                if(!CricketLiveEventIds.includes(eventIds[i])){
-                                                    newEventAdded = true
-                                                    newEventIdsArray.push(eventIds[i])
-                                                }
                                                 liveEventInCricket.push(eventIds[i])
                                             }
                                         }
                                     }
                                 }
+                            }else if(forcefullyLiveEvents.includes(eventData.eventId)){
+                                liveEventInCricket.push(eventIds[i])
+                                isLiveStatus = true
                             }
                             let eventStatus = isLiveStatus?'IN_PLAY':'UPCOMING'
                             eventData.status = eventStatus
