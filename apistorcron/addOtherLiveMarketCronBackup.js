@@ -121,7 +121,7 @@ client.on('connect', () => {
                                 liveMatchCheckMarket = fetchMarketData2.find(item => (item && item.status !== "CLOSED"))
                             }
                             if(!issportHRGH){
-                                if(liveMatchCheckMarket){
+                                if(liveMatchCheckMarket || forcefullyLiveEvents.includes(eventData.eventId)){
                                     if((liveMatchCheckMarket.inplay == true && liveMatchCheckMarket.status !== 'CLOSED') || forcefullyLiveEvents.includes(eventData.eventId)){
                                         if(!liveEventIds.includes(eventIds[i])){
                                             newEventAdded = true

@@ -119,7 +119,7 @@ client.on('connect', () => {
                                 }
                                 liveMatchCheckMarket = fetchMarketData2.find(item => (item && item.status !== "CLOSED"))
                             }
-                            if(liveMatchCheckMarket){
+                            if(liveMatchCheckMarket || forcefullyLiveEvents.includes(eventData.eventId)){
                                 if((liveMatchCheckMarket.inplay == true && liveMatchCheckMarket.status !== 'CLOSED') || forcefullyLiveEvents.includes(eventData.eventId)){
                                     if(!CricketLiveEventIds.includes(eventIds[i])){
                                         newEventAdded = true
