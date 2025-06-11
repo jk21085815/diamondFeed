@@ -176,7 +176,7 @@ const getEventList = async(sportId,sportName) => {
                                     eventlist.push(eventdata)
                                 }
                             }
-                            else if(isUpcomingEvent(eventdata.event.openDate)){
+                            else if(isUpcomingEvent(eventdata.event.openDate) && (eventdata.competition && eventdata.competition.name && eventdata.competition.name !== "")){
                                 if(["7","4339"].includes(eventdata.eventType.id)){
                                     let tempObj = {
                                         marketId:eventdata.marketId,
