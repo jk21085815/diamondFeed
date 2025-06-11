@@ -70,12 +70,13 @@ const setThisSportData = async(eventlist,SportName) => {
             }
             for(let k = 0;k<eventlist.length;k++){
                 console.log(eventlist[k].event.id,k,new Date(),'kkk')
-                let previouseventdata = await client.get(`${eventlist[k].event.id}_diamondEventData`)
+                let previouseventdata = await client.get(`${eventlist[k].event.id}_diamondEventData`)  // event check krvi chi redis ma save che k nai
                 if(!previouseventdata){
                     let matchOddsArr = [];
                     let matchOddsArr2 = [];
                     let bookMakerMarketArr = [];
                     let fanctMarketArr = [];
+                    // event nu structure change krvi chi
                     eventlist[k].openDate = eventlist[k].event.openDate
                     eventlist[k].providerName = eventlist[k].competition?eventlist[k].competition.provider:""
                     eventlist[k].sportId = eventlist[k].eventType.id
@@ -96,6 +97,7 @@ const setThisSportData = async(eventlist,SportName) => {
                     delete eventlist[k]['totalMatched']
                     thisSportEventId.push(eventlist[k].eventId)
                     let marketIds = []
+                    // jo sport HR or GH ni hoi to MO markets multiple hoi ane aene comma seperated krva mateno code che
                     if(["7","4339"].includes(eventlist[k].sportId)){
                         eventlist[k].catalogues.forEach(item => {
                             marketIds.push(item.marketId)
@@ -109,11 +111,12 @@ const setThisSportData = async(eventlist,SportName) => {
                     }
                     let matchodddata = []
                     if(!eventlist[k].isvirtual){
-                        matchodddata = await fetchMOBook(marketIds)
+                        matchodddata = await fetchMOBook(marketIds)  // ahiya markets comma-seperated pass kri che ne market no data get thase
                     }
                     // let bookmakerdata = await fetchBMBook(eventlist[k].eventId)
                     
                     delete eventlist[k]['marketId']
+                    // matchodd no data mle to aenu structure change krine redis ma set kravi chi
                     for(let d = 0;d<matchodddata.length;d++){
                         if(matchodddata[d]){
                             let tempObj
@@ -169,6 +172,8 @@ const setThisSportData = async(eventlist,SportName) => {
     
                         }
                     }
+
+                    // other marchodds ne get kri set krva mateno code ae khali cricket maj hoi
                     if(!eventlist[k].isvirtual && eventlist[k].sportId == 4){
                         let matchoddmarketdata = await fetchOtherMOMarketData(eventlist[k].eventId)
                         for(let d = 0;d<matchoddmarketdata.length;d++){
@@ -213,6 +218,8 @@ const setThisSportData = async(eventlist,SportName) => {
                         }
     
                     }
+
+                    // under over ni market get and set krva mateno code ae khali soccer(football) ni sport maj hoi
                     if(eventlist[k].sportId == 1){
                         let matchoddmarketdata = await fetchUOMarketData(eventlist[k].eventId)
                         for(let d = 0;d<matchoddmarketdata.length;d++){
@@ -316,6 +323,8 @@ const setThisSportData = async(eventlist,SportName) => {
     
                     //     }
                     // }
+
+                    // fancy no data get krine structure change krine market wise and event wise set kravi chi redis ma
                     if(["4"].includes(eventlist[k].sportId)){
                         let fancydata = await fetchFancyBook(eventlist[k].eventId)
                         let fancyMarketIdArray = Object.keys(fancydata)
@@ -439,9 +448,9 @@ const setThisSportData = async(eventlist,SportName) => {
                     for(let j = 0;j<OnlyMOMarketId.length;j++){
                         OnlyMOMarketIdArr.push(OnlyMOMarketId[j].marketId)
                     }
-                    await client.set(`${eventlist[k].eventId}_OnlyOtherMOMarketIdsArr_diamond`,JSON.stringify(OnlyOtherMOMarketIdsArr),'EX',2 * 24 * 60 * 60)
-                    await client.set(`${eventlist[k].eventId}_OnlyMOMarketIdsArr_diamond`,JSON.stringify(OnlyMOMarketIdArr),'EX',2 * 24 * 60 * 60)
-                    await client.set(`${eventlist[k].eventId}_diamondEventData`,JSON.stringify(eventlist[k]),'EX',2 * 24 * 60 * 60)
+                    await client.set(`${eventlist[k].eventId}_OnlyOtherMOMarketIdsArr_diamond`,JSON.stringify(OnlyOtherMOMarketIdsArr),'EX',2 * 24 * 60 * 60) // other MO marketids
+                    await client.set(`${eventlist[k].eventId}_OnlyMOMarketIdsArr_diamond`,JSON.stringify(OnlyMOMarketIdArr),'EX',2 * 24 * 60 * 60) // only MO marketIds
+                    await client.set(`${eventlist[k].eventId}_diamondEventData`,JSON.stringify(eventlist[k]),'EX',2 * 24 * 60 * 60)  // event no data set thay che
                     await clientme.set(`${eventlist[k].eventId}_diamondEventData`,JSON.stringify(eventlist[k]),'EX',2 * 24 * 60 * 60)
                 }else{
                     let matchOddsArr = [];

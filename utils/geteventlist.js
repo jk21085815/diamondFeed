@@ -79,31 +79,34 @@ const getEventList = async(sportId,sportName) => {
                     let eventlist = []
                     let parsedata2 = []
                     let virtualCricket
+                    // Fetch Betfair Event List By Passing SportId
                     let fetchEventList = await fetch(`http://13.42.165.216/betfair/get_latest_event_list/${sportId}`,{
                         method:'GET',
                         headers:{
                             'Content-type' : 'application/json'
                         }
                     })
+                    // Fetch Winner Event Like IPL, Big Bash from sportId
                     let fetchTouranamaentevents = await fetch(`http://13.42.165.216/betfair/tournament_winner/${sportId}`,{
                         method:'GET',
                         headers:{
                             'Content-type' : 'application/json'
                         }
                     })
-                    fetchTouranamaentevents = await fetchTouranamaentevents.text()
-                    if (typeof fetchTouranamaentevents === "string" && fetchTouranamaentevents.trim() !== "") {
-                        parsedata2 = JSON.parse(fetchTouranamaentevents)
+                    fetchTouranamaentevents = await fetchTouranamaentevents.text()   // convert data into text
+                    if (typeof fetchTouranamaentevents === "string" && fetchTouranamaentevents.trim() !== "") { // condition for check data is string or not empty
+                        parsedata2 = JSON.parse(fetchTouranamaentevents) // if data is string then convert into JSON
                     } else {
                         console.error("Invalid JSON data:", fetchTouranamaentevents);
                     }
                     fetchEventList = await fetchEventList.text()
                     let parsedata = JSON.parse(fetchEventList)
-                    parsedata = parsedata.concat(parsedata2)
+                    parsedata = parsedata.concat(parsedata2)  // merge winner and betfair events
+                    // if sportid is 4(Cricket) then fetch Virtual event(which contain in event name T10)
                     if(sportId == "4"){
-                        let activeevent = await fetchactiveevent()
-                        virtualCricket = activeevent.data.filter(item => item.name.indexOf('T10') !== -1)
-                        parsedata = parsedata.concat(virtualCricket)
+                        let activeevent = await fetchactiveevent() // fetch active-event list
+                        virtualCricket = activeevent.data.filter(item => item.name.indexOf('T10') !== -1)  // filter T10 only virtual events
+                        parsedata = parsedata.concat(virtualCricket)  // then merge with main parsedata array
                     }
                     // console.log(parsedata, 'parsedataparsedata');
                     // if(sportName=== 'Cricket'){
@@ -117,11 +120,14 @@ const getEventList = async(sportId,sportName) => {
 
                     // }
                     
+
+                    // Badhi event ne loop ma lidhi 
                     for(let j = 0;j<parsedata.length;j++){
                         let isTestMatch = false
                         let isElection = false
                         let eventdata = parsedata[j]
                         // console.log(parsedata[j], parsedata.length, 'parsedata');
+                        // aa logs mate che ae ingnore krje
                         try{
                             fs.appendFile('eventData.txt', JSON.stringify(eventdata) + '\n', (err) => {
                             if (err) throw err;
@@ -131,15 +137,16 @@ const getEventList = async(sportId,sportName) => {
                             console.log(err, 'errerrerrerrerr');
                             
                         }
-                        if(eventdata.competition && (eventdata.competition.name.toLowerCase().indexOf("test") !== -1 || eventdata.competition.name.toLowerCase().indexOf("ranji trophy") !== -1 || eventdata.competition.name.toLowerCase().indexOf("west indies championship") !== -1)){
+
+                        if(eventdata.competition && (eventdata.competition.name.toLowerCase().indexOf("test") !== -1 || eventdata.competition.name.toLowerCase().indexOf("ranji trophy") !== -1 || eventdata.competition.name.toLowerCase().indexOf("west indies championship") !== -1)){  // test competition mateni condition che
                             isTestMatch = true
                         }else{
-                            if(eventdata.eventType && eventdata.eventType.id == 500){
+                            if(eventdata.eventType && eventdata.eventType.id == 500){  // election sport mateni condition che
                                 isElection = true
                             }
                         }
-                        if(eventdata.event_type_name || (eventdata.event_type_id && eventdata.event_type_id == 4)){
-                            if(isTodaysEvent(new Date(new Date(eventdata.open_date).getTime() + (1000 * 60 * 60 * 5.5)).toISOString())){
+                        if(eventdata.event_type_name || (eventdata.event_type_id && eventdata.event_type_id == 4)){  // active-event mathi je T10 vali event lidhi aeni condition che
+                            if(isTodaysEvent(new Date(new Date(eventdata.open_date).getTime() + (1000 * 60 * 60 * 5.5)).toISOString())){  // only today ni j event filter kri
                                 let tempObj = {
                                     eventType:{
                                         id:"4",
@@ -165,7 +172,7 @@ const getEventList = async(sportId,sportName) => {
                             }
 
                         }
-                        if(eventdata.event){
+                        if(eventdata.event){    // betfair ni event ni condition che
                             if(isTestMatch){
                                 if(isDateWithinLast5Days(eventdata.event.openDate)){
                                     let fetchMarketData = await fetchMOBook(eventdata.marketId)
@@ -176,7 +183,7 @@ const getEventList = async(sportId,sportName) => {
                                 }
                             }else if(isElection){
                                 eventlist.push(eventdata)
-                            }else if(eventdata.competition && (eventdata.event.name.trim() == eventdata.competition.name.trim())){
+                            }else if(eventdata.competition && (eventdata.event.name.trim() == eventdata.competition.name.trim())){  // jo competition name and event name same hoi to aene lay j levani
                                 let fetchMarketData = await fetchMOBook(eventdata.marketId)
                                 let winner = fetchMarketData[0]
                                 // console.log(winner,'winnner markettttttttt')
@@ -184,8 +191,8 @@ const getEventList = async(sportId,sportName) => {
                                     eventlist.push(eventdata)
                                 }
                             }
-                            else if(isUpcomingEvent(eventdata.event.openDate) && (eventdata.competition && eventdata.competition.name && eventdata.competition.name !== "")){
-                                if(["7","4339"].includes(eventdata.eventType.id)){
+                            else if(isUpcomingEvent(eventdata.event.openDate) && (eventdata.competition && eventdata.competition.name && eventdata.competition.name !== "")){ // gai kal thi aagal ni badhi event filter krvi chi
+                                if(["7","4339"].includes(eventdata.eventType.id)){  // jo event HR or GH sport ni hoi to aapde eventlist mathi same event ma jetli MO(Match odds che) aene catalog field ma push kri devi chi
                                     let tempObj = {
                                         marketId:eventdata.marketId,
                                         marketName:eventdata.marketName,
