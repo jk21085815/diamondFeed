@@ -49,13 +49,13 @@ app.use(cookieParser());
 maincron()  // Main Cron Run Every 30 min. fetch all event data and market data
 updateMOBMData() // Update MO and BM markets and eventStatus of Cricket 
 updateMOBMDataOtherSport() // Update MO and BM markets and eventStatus of Other Sports 
-// savemarketBetches()  // 200 ni bach ma MO marketIds save krva mate
-// getmarketBetches()  // ae baches ne get kri ne MO market detail update krva matena Function ma pass krie chie 
-// updateBMLiveMarketDetails() // BM ne 505ms update
-// updateUCFency() // Upcoming Fency detail update in evenry 10 min
-// updateLiveFanctCron() //Live Fency dtail update in 505ms
-// exchangePageCron()  // upcoming event na exchange no data udpate thay che
-// liveexchangePageCron() // live event na exchange no data udpate thay che
+savemarketBetches()  // 200 ni bach ma MO marketIds save krva mate
+getmarketBetches()  // ae baches ne get kri ne MO market detail update krva matena Function ma pass krie chie 
+updateBMLiveMarketDetails() // BM ne 505ms update
+updateUCFency() // Upcoming Fency detail update in evenry 10 min
+updateLiveFanctCron() //Live Fency dtail update in 505ms
+exchangePageCron()  // upcoming event na exchange no data udpate thay che
+liveexchangePageCron() // live event na exchange no data udpate thay che
 
 
 // updateLiveFanctCronTemp()
