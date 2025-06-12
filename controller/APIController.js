@@ -569,6 +569,20 @@ exports.getbookdatabymarketid = catchAsync(async(req, res, next) => {
     })
 })
 
+exports.geteventBySportId = catchAsync(async(req, res, next)=>{
+    let fetchMarketData = await fetch(`http://13.42.165.216:8443/api/betfair/${marketIds}`,{
+            method: 'GET',
+            headers: {
+                'Content-type': 'application/json',
+            }
+        })
+        let fetchMarketDatajson = await fetchMarketData.json()
+        res.status(200).json({
+            status:'success',
+            data:fetchMarketDatajson
+        })
+})
+
 // exports.thatperticularMatch = catchAsync(async(req, res, next) => {
 //     try{
 //         console.log(req.query, 'ghothkjhkjhkjhkj')

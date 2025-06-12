@@ -20,6 +20,7 @@ router.post('/addmarket', APIController.addmarket)
 router.post('/updateOrAddEventDmd',APIController.addOtherEvent)
 router.post('/getVirtualCricketData',APIController.getcvirtualcricketdata)
 router.post('/getbookdatabymarketid', APIController.getbookdatabymarketid)
+router.post('/geteventBySportId', APIController.geteventBySportId)
 
 router.get('/API', APIController.APIcall);
 router.get('/API2', APIController.APIcall2);
