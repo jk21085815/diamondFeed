@@ -570,7 +570,7 @@ exports.getbookdatabymarketid = catchAsync(async(req, res, next) => {
 })
 
 exports.geteventBySportId = catchAsync(async(req, res, next)=>{
-    let fetchMarketData = await fetch(`http://13.42.165.216:8443/api/betfair/${marketIds}`,{
+    let fetchMarketData = await fetch(`http://13.42.165.216/betfair/get_latest_event_list/${req.body.sportId}`,{
             method: 'GET',
             headers: {
                 'Content-type': 'application/json',
