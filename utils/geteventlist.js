@@ -69,8 +69,8 @@ const getEventList = async(sportId,sportName) => {
         let fetchMarketDatajson = await fetchMarketData.json()
         return fetchMarketDatajson
     }
-    cron.schedule('32 * * * *', async() => {
-    // cron.schedule('*/30 * * * *', async() => {
+    // cron.schedule('32 * * * *', async() => {
+    cron.schedule('*/30 * * * *', async() => {
         let starttime = new Date();
         console.log(starttime,`Set ${sportName} CompId Cron Started.....111111111111111111111111111111111111111111111111`)
         try{
@@ -236,30 +236,30 @@ const getEventList = async(sportId,sportName) => {
                 
             } 
             geteventListBySportId()
-            // let otherEventIds = []
-            // let otherotherEventIds = []
-            // let otherEvents = await client.get('crone_getEventIds_Other_diamond')
-            // otherEvents = JSON.parse(otherEvents)
-            // let otherotherEvents = await client.get('crone_getEventIds_Other_Other_diamond')
-            // otherotherEvents = JSON.parse(otherotherEvents)
-            // otherEvents.forEach(async(item) => {
-            //     let eventData = await client.get(`${item}_diamondEventData`)
-            //     if(eventData){
-            //         eventData = JSON.parse(eventData)
-            //         if(isTodaysEvent(eventData.openDate)){
-            //             otherEventIds.push(eventData.eventId)
-            //         }
-            //     }
-            // })
-            // otherotherEvents.forEach(async(item) => {
-            //     let eventData = await client.get(`${item}_diamondEventData`)
-            //     if(eventData){
-            //         eventData = JSON.parse(eventData)
-            //         if(isTodaysEvent(eventData.openDate)){
-            //             otherotherEventIds.push(eventData.eventId)
-            //         }
-            //     }
-            // })
+            let otherEventIds = []
+            let otherotherEventIds = []
+            let otherEvents = await client.get('crone_getEventIds_Other_diamond')
+            otherEvents = JSON.parse(otherEvents)
+            let otherotherEvents = await client.get('crone_getEventIds_Other_Other_diamond')
+            otherotherEvents = JSON.parse(otherotherEvents)
+            otherEvents.forEach(async(item) => {
+                let eventData = await client.get(`${item}_diamondEventData`)
+                if(eventData){
+                    eventData = JSON.parse(eventData)
+                    if(isTodaysEvent(eventData.openDate)){
+                        otherEventIds.push(eventData.eventId)
+                    }
+                }
+            })
+            otherotherEvents.forEach(async(item) => {
+                let eventData = await client.get(`${item}_diamondEventData`)
+                if(eventData){
+                    eventData = JSON.parse(eventData)
+                    if(isTodaysEvent(eventData.openDate)){
+                        otherotherEventIds.push(eventData.eventId)
+                    }
+                }
+            })
             await client.set('crone_getEventIds_Other_diamond',JSON.stringify(otherEventIds))
             await client.set('crone_getEventIds_Other_Other_diamond',JSON.stringify(otherotherEventIds))
         }catch(error){
