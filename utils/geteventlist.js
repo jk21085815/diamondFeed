@@ -35,7 +35,7 @@ const getEventList = async(sportId,sportName) => {
         let eventDate = new Date(new Date(date).getTime() + (5.5 * 60 * 60 * 1000));
         eventDate.setUTCHours(0, 0, 0, 0);
         eventDate.toISOString()
-        console.log(date,eventDate.getTime() <= today.getTime() && eventDate.getTime() >= yesterday.getTime(),'dateeeeeeeeeeeee')
+        // console.log(date,eventDate.getTime() <= today.getTime() && eventDate.getTime() >= yesterday.getTime(),'dateeeeeeeeeeeee')
         return eventDate.getTime() <= today.getTime() && eventDate.getTime() >= yesterday.getTime();
     }
     function isDateWithinLast5Days(inputDate) {
@@ -243,7 +243,7 @@ const getEventList = async(sportId,sportName) => {
             let otherotherEvents = await client.get('crone_getEventIds_Other_Other_diamond')
             otherotherEvents = JSON.parse(otherotherEvents)
             for(let i = 0;i<otherEvents.length;i++){
-                console.log(item,'eventId')
+                console.log(otherEvents[i],'eventId')
                 let eventData = await client.get(`${otherEvents[i]}_diamondEventData`)
                 if(eventData){
                     eventData = JSON.parse(eventData)
@@ -253,7 +253,7 @@ const getEventList = async(sportId,sportName) => {
                 }
             }
             for(let i = 0;i<otherotherEventIds.length;i++){
-                console.log(item,'eventId')
+                console.log(otherotherEventIds[i],'eventId')
                 let eventData = await client.get(`${otherotherEventIds[i]}_diamondEventData`)
                 if(eventData){
                     eventData = JSON.parse(eventData)
