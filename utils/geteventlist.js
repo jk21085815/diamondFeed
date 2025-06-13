@@ -69,7 +69,7 @@ const getEventList = async(sportId,sportName) => {
         let fetchMarketDatajson = await fetchMarketData.json()
         return fetchMarketDatajson
     }
-    cron.schedule('12 * * * *', async() => {
+    cron.schedule('18 * * * *', async() => {
     // cron.schedule('*/30 * * * *', async() => {
         let starttime = new Date();
         console.log(starttime,`Set ${sportName} CompId Cron Started.....111111111111111111111111111111111111111111111111`)
@@ -242,26 +242,27 @@ const getEventList = async(sportId,sportName) => {
             otherEvents = JSON.parse(otherEvents)
             let otherotherEvents = await client.get('crone_getEventIds_Other_Other_diamond')
             otherotherEvents = JSON.parse(otherotherEvents)
-            otherEvents.forEach(async(item) => {
+            for(let i = 0;i<otherEvents.length;i++){
                 console.log(item,'eventId')
-                let eventData = await client.get(`${item}_diamondEventData`)
+                let eventData = await client.get(`${otherEvents[i]}_diamondEventData`)
                 if(eventData){
                     eventData = JSON.parse(eventData)
                     if(isTodaysEvent(eventData.openDate)){
                         otherEventIds.push(eventData.eventId)
                     }
                 }
-            })
-            otherotherEvents.forEach(async(item) => {
+            }
+            for(let i = 0;i<otherotherEventIds.length;i++){
                 console.log(item,'eventId')
-                let eventData = await client.get(`${item}_diamondEventData`)
+                let eventData = await client.get(`${otherotherEventIds[i]}_diamondEventData`)
                 if(eventData){
                     eventData = JSON.parse(eventData)
                     if(isTodaysEvent(eventData.openDate)){
                         otherotherEventIds.push(eventData.eventId)
                     }
                 }
-            })
+            }
+            console.log(otherEventIds,otherotherEventIds,'other event idsssssssssss')
             await client.set('crone_getEventIds_Other_diamond',JSON.stringify(otherEventIds))
             await client.set('crone_getEventIds_Other_Other_diamond',JSON.stringify(otherotherEventIds))
         }catch(error){
