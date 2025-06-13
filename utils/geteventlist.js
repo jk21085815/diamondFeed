@@ -242,7 +242,6 @@ const getEventList = async(sportId,sportName) => {
             otherEvents = JSON.parse(otherEvents)
             let otherotherEvents = await client.get('crone_getEventIds_Other_Other_diamond')
             otherotherEvents = JSON.parse(otherotherEvents)
-            console.log(otherEvents,otherotherEvents,'other event idsssssssssss1111111')
 
             for(let i = 0;i<otherEvents.length;i++){
                 console.log(otherEvents[i],'eventId')
@@ -264,7 +263,7 @@ const getEventList = async(sportId,sportName) => {
                     }
                 }
             }
-            console.log(otherEventIds,otherotherEventIds,'other event idsssssssssss')
+            // console.log(otherEventIds,otherotherEventIds,'other event idsssssssssss')
             await client.set('crone_getEventIds_Other_diamond',JSON.stringify(otherEventIds))
             await client.set('crone_getEventIds_Other_Other_diamond',JSON.stringify(otherotherEventIds))
         }catch(error){
