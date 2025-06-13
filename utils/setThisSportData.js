@@ -68,20 +68,6 @@ const setThisSportData = async(eventlist,SportName) => {
                 let fetchMarketDatajson = await fetchMarketData.json()
                 return fetchMarketDatajson.data
             }
-              function isTodaysEvent(date) {
-                let today = new Date(new Date().getTime() + (5.5 * 60 * 60 * 1000));
-                today.setUTCHours(0, 0, 0, 0);
-                today.toISOString() 
-                let yesterday = new Date(new Date().getTime() + (5.5 * 60 * 60 * 1000));
-                yesterday.setUTCDate(yesterday.getUTCDate() - 1);
-                yesterday.setUTCHours(0, 0, 0, 0);
-                yesterday.toISOString() 
-                let eventDate = new Date(new Date(date).getTime() + (5.5 * 60 * 60 * 1000));
-                eventDate.setUTCHours(0, 0, 0, 0);
-                eventDate.toISOString()
-                console.log(date,eventDate.getTime() <= today.getTime() && eventDate.getTime() >= yesterday.getTime(),'dateeeeeeeeeeeee')
-                return eventDate.getTime() <= today.getTime() && eventDate.getTime() >= yesterday.getTime();
-            }
             for(let k = 0;k<eventlist.length;k++){
                 console.log(eventlist[k].event.id,k,new Date(),'kkk')
                 let previouseventdata = await client.get(`${eventlist[k].event.id}_diamondEventData`)  // event check krvi chi redis ma save che k nai
@@ -471,7 +457,6 @@ const setThisSportData = async(eventlist,SportName) => {
                     let matchOddsArr2 = [];
                     previouseventdata = JSON.parse(previouseventdata)
                     previouseventdata.openDate = eventlist[k].event.openDate
-                    isTodaysEvent(previouseventdata.openDate)
                     thisSportEventId.push(previouseventdata.eventId)
                     let marketIds = []
                     if(["7","4339"].includes(previouseventdata.sportId)){

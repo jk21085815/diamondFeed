@@ -153,8 +153,6 @@ client.on('connect', () => {
                             let showvirtual = false
                             let thatMO = liveMatchCheckMarket
                             if(thatMO){
-                                const timestamp = new Date().toISOString();
-                                logStream.write(`[${timestamp}]  ${eventData.eventId} ${thatMO.marketId} ${thatMO.status}\n`);
                                 if(['OPEN','SUSPENDED',"BALL_RUNNING"].includes(thatMO.status)){
                                     pushstatus = true
                                 }
@@ -302,6 +300,8 @@ client.on('connect', () => {
                                     showEvent.push(eventIds[i])
                                 }
                             }
+                            const timestamp = new Date().toISOString();
+                            logStream.write(`[${timestamp}]  ${JSON.stringify(eventData)}\n`);
                             await client.set(`${eventIds[i]}_diamondEventData`,JSON.stringify(eventData))
                             await clientme.set(`${eventIds[i]}_diamondEventData`,JSON.stringify(eventData))
                         }else{
