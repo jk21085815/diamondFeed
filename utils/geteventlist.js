@@ -35,7 +35,7 @@ const getEventList = async(sportId,sportName) => {
         let eventDate = new Date(new Date(date).getTime() + (5.5 * 60 * 60 * 1000));
         eventDate.setUTCHours(0, 0, 0, 0);
         eventDate.toISOString()
-        // console.log(date,eventDate.getTime() <= today.getTime() && eventDate.getTime() >= yesterday.getTime(),'dateeeeeeeeeeeee')
+        console.log(date,eventDate.getTime() <= today.getTime() && eventDate.getTime() >= yesterday.getTime(),'dateeeeeeeeeeeee')
         return eventDate.getTime() <= today.getTime() && eventDate.getTime() >= yesterday.getTime();
     }
     function isDateWithinLast5Days(inputDate) {
