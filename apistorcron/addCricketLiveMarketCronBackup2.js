@@ -18,13 +18,6 @@ client.on('error', (err) => {
 client.on('connect', () => {
     // console.log('Connected to Redis1');
 });
-client2.on('connect', () => {
-    console.log('Connected to Redis2');
-});
-
-client2.on('error', (err) => {
-    console.log(`Error2(In setMarketIdsCron.js):${err}`);
-});
 
 
 // module.exports = () => {
