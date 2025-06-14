@@ -217,7 +217,7 @@ const updateFancyDetailsFunc = async (eventId) => {
             eventData = JSON.parse(eventData);
             eventData.markets.fancyMarkets = fancyArr;
              if(eventId == "34404063"){
-                console.log(fancyArr,'fancyArrrrrrrrr')
+                console.log(fancyArr.find(item => item.marketId == "106398"),'fancyArrrrrrrrr')
             }
             await client.set(`${eventId}_diamondEventData`, JSON.stringify(eventData), 'EX', 24 * 60 * 60);
             await clientme.set(`${eventId}_diamondEventData`, JSON.stringify(eventData), 'EX', 24 * 60 * 60);
