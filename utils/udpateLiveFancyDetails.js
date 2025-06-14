@@ -56,7 +56,7 @@ const updateFancyDetailsFunc = async (eventId) => {
                     try {
                         const cachedData = await client.get(`${key}_diamond`);
                         marketData = cachedData ? JSON.parse(cachedData) : null;
-                        if (marketData) {
+                        if (marketData && false) {
                             marketData.status = market.status1 == "ACTIVE" ?"OPEN":market.status1,
                             marketData.inPlay = market.in_play;
                             marketData.noValue = market.l1;
