@@ -47,8 +47,8 @@ app.use(express.urlencoded({ extended: true, limit: '50mb' }));
 app.use(cookieParser());
 
 maincron()  // Main Cron Run Every 30 min. fetch all event data and market data
-updateMOBMData() // Update MO and BM markets and eventStatus of Cricket 
-updateMOBMDataOtherSport() // Update MO and BM markets and eventStatus of Other Sports 
+// updateMOBMData() // Update MO and BM markets and eventStatus of Cricket 
+// updateMOBMDataOtherSport() // Update MO and BM markets and eventStatus of Other Sports 
 savemarketBetches()  // 200 ni bach ma MO marketIds save krva mate
 getmarketBetches()  // ae baches ne get kri ne MO market detail update krva matena Function ma pass krie chie 
 updateBMLiveMarketDetails() // BM ne 505ms update
