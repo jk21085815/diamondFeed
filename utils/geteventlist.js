@@ -191,7 +191,7 @@ const getEventList = async(sportId,sportName) => {
                                     eventlist.push(eventdata)
                                 }
                             }
-                            else if(isUpcomingEvent(eventdata.event.openDate) && (eventdata.competition && eventdata.competition.name && eventdata.competition.name !== "")){ // gai kal thi aagal ni badhi event filter krvi chi
+                            else if(isUpcomingEvent(eventdata.event.openDate) && ((eventdata.competition && eventdata.competition.name && eventdata.competition.name !== "") || ["7","4339"].includes(eventdata.eventType.id))){ // gai kal thi aagal ni badhi event filter krvi chi
                                 if(["7","4339"].includes(eventdata.eventType.id)){  // jo event HR or GH sport ni hoi to aapde eventlist mathi same event ma jetli MO(Match odds che) aene catalog field ma push kri devi chi
                                     let tempObj = {
                                         marketId:eventdata.marketId,
