@@ -60,6 +60,7 @@ client.on('connect', () => {
                     liveEventIds = []
                 }
                 console.log(eventIds.length,'otherSportEventIdssssssss')
+                console.log(eventIds3.eventIds4,'eventIdssssssssssss')
                 function delay(ms) {
                     return new Promise(resolve => setTimeout(resolve, ms));
                 }
