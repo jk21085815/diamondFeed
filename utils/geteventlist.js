@@ -69,7 +69,7 @@ const getEventList = async(sportId,sportName) => {
         let fetchMarketDatajson = await fetchMarketData.json()
         return fetchMarketDatajson
     }
-    cron.schedule('20 * * * *', async() => {
+    cron.schedule('30 * * * *', async() => {
     // cron.schedule('*/30 * * * *', async() => {
         let starttime = new Date();
         console.log(starttime,`Set ${sportName} CompId Cron Started.....111111111111111111111111111111111111111111111111`)
@@ -225,6 +225,7 @@ const getEventList = async(sportId,sportName) => {
                             }
                         }
                     }
+                    console.log(eventlist.length,'eventlist lenghtttt')
                     client.set(`crone_getEvent_list_${sportName}_diamond`,JSON.stringify(eventlist))  
                     console.log(starttime,new Date(),(Date.now()-(starttime.getTime()))/1000,`Set ${sportName} CompititionId Cron Ended...`) 
                     await setFinalResult(sportName)
