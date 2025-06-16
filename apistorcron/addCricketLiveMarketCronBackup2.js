@@ -33,7 +33,7 @@ client.on('connect', () => {
                 let eventIds = await client.get('crone_getEventIds_Cricket_diamond');
                 let CricketLiveEventIds = await client.get('crone_CricketliveEventIds_diamond_UPD');
                 let otherEvents = await client.get('crone_getEventIds_Other_diamond')
-                let forcefullyLiveEvents = await client2.get('InPlayEventdata')
+                let forcefullyLiveEvents = await client2.get('InPlayEventdata')  // get forcefully live event from redis of admin panel
                 if(!forcefullyLiveEvents){
                     forcefullyLiveEvents = []
                 }else{
@@ -95,13 +95,15 @@ client.on('connect', () => {
                             if(eventData.competitionName == "Test Matches"){
                                 isTest = true
                             }
-                            OtherMOMarketArr = await client.get(`${eventIds[i]}_OnlyOtherMOMarketIdsArr_diamond`)
+                            OtherMOMarketArr = await client.get(`${eventIds[i]}_OnlyOtherMOMarketIdsArr_diamond`) // get other MO marketIds
                             OtherMOMarketArr = JSON.parse(OtherMOMarketArr)
-                            OnlyMOMarketIdsArr = await client.get(`${eventIds[i]}_OnlyMOMarketIdsArr_diamond`)
+                            OnlyMOMarketIdsArr = await client.get(`${eventIds[i]}_OnlyMOMarketIdsArr_diamond`) // get MO marketIds
                             OnlyMOMarketIdsArr = JSON.parse(OnlyMOMarketIdsArr)
                             // if(eventData.eventId == "34316669"){
                                 // console.log(OnlyMOMarketIdsArr,OtherMOMarketArr,"OnlyMOMarketIdsArr")
                             // }
+
+                            // get MO market detail
                             if(OnlyMOMarketIdsArr.length !== 0){
                                 let count = Math.ceil(OnlyMOMarketIdsArr.length/chunkSize)
                                 for(let k = 0;k<count;k++){
@@ -118,11 +120,12 @@ client.on('connect', () => {
                                 }
                                 liveMatchCheckMarket = fetchMarketData2.find(item => (item && item.status !== "CLOSED"))
                             }
-                            if(liveMatchCheckMarket){
+                            if(liveMatchCheckMarket){  // if MO exist and its status is not CLOSED
                                 if((liveMatchCheckMarket.inplay == true && liveMatchCheckMarket.status !== 'CLOSED') || forcefullyLiveEvents.includes(eventData.eventId)){
-                                    liveEventInCricket.push(eventIds[i])
+                                    liveEventInCricket.push(eventIds[i])  // push in liveevent Array
                                     isLiveStatus = true
                                 }else{
+                                    // jo MO closed no hoi and inplay ma pn no hoi to test match mate last 5 day and biji event mate 2.5 kalak pela aene live event list ma nakhi devi chu but status UPCOMING j rakhvi chi jethi 2.5 kalak pela ae event na market update thay
                                     if(liveMatchCheckMarket.status !== 'CLOSED'){
                                         if(isTest){
                                             if(new Date(eventData.openDate).getTime() + (1000 * 60 * 60 * 24 * 5) >= Date.now()){
@@ -135,13 +138,13 @@ client.on('connect', () => {
                                         }
                                     }
                                 }
-                            }else if(forcefullyLiveEvents.includes(eventData.eventId)){
+                            }else if(forcefullyLiveEvents.includes(eventData.eventId)){ // jo event ne admin panel thi forcefully inplay ma nakhie to 
                                 liveEventInCricket.push(eventIds[i])
                                 isLiveStatus = true
                             }
                             let eventStatus = isLiveStatus?'IN_PLAY':'UPCOMING'
                             eventData.status = eventStatus
-                            if(eventData.isother){
+                            if(eventData.isother){  // jo event other ni hoi to date > currentdate hoi tyare ae inplay ma aave
                                 if(new Date(eventData.openDate).getTime() <= Date.now()){
                                     liveEventInCricket.push(eventIds[i])
                                     eventData.status = "IN_PLAY"
@@ -152,19 +155,20 @@ client.on('connect', () => {
                             let pushstatus = false 
                             let showvirtual = false
                             let thatMO = liveMatchCheckMarket
-                            if(thatMO){
+                            if(thatMO){ // jo eventma MO hoi and  CLOSED no hoi to aene FE ma show kravani
                                 if(['OPEN','SUSPENDED',"BALL_RUNNING"].includes(thatMO.status)){
                                     pushstatus = true
                                 }
-                            }else{
-                                if(eventData.competitionName.trim() == eventData.eventName.trim()){
+                            }else{ 
+                                if(eventData.competitionName.trim() == eventData.eventName.trim()){  // jo competition name and eventname same hoi to ae event FE ma show kravani
                                     pushstatus = true
-                                }else if(eventData.isother){
+                                }else if(eventData.isother){  // jo event other ni hoi to pn FE ma show kravani
                                     pushstatus = true
                                 }
                             }
                             if(pushstatus){
-                                let bookmakerdata = await fetchBMBook(eventIds[i])
+                                let bookmakerdata = await fetchBMBook(eventIds[i])  // get bookmaker book data from eventId
+                                // MO ni market get and push in MOmarketArray variable
                                 if(liveMatchCheckMarket){
                                     let matchoddmarketRedis = await client.get(`${liveMatchCheckMarket.marketId}_diamond`)
                                     if(matchoddmarketRedis){
@@ -193,6 +197,8 @@ client.on('connect', () => {
                                         }
                                     }
                                 }
+
+                                // BM na market data get krine BMmarketArray variable ma push krie chie
                                 if(bookmakerdata){
                                     for(let a = 0; a<bookmakerdata.length; a++){
                                         if(Object.keys(bookmakerdata[a].data).length !== 0){
@@ -254,6 +260,7 @@ client.on('connect', () => {
                                 }
                                 let liveMatchCheckMarket2 = []
                                 let fetchMarketData3
+                                // other MO ni market fetch krine MOmarketArray variable ma push krie chie
                                 if(OtherMOMarketArr.length !== 0){
                                     let momarketIds = OtherMOMarketArr.join(",")
                                     try{
@@ -287,6 +294,7 @@ client.on('connect', () => {
                                 }
                                 eventData.markets.matchOdds = matchOddMarketArr
                                 eventData.markets.bookmakers = bookmakersMarketArr
+                                // jo event other ni hoi to aema MO no hoi BM & Fancy j hoi to ae banne aek sathe empty no hova joie aej other event show kravani FE ma
                                 if(eventData.isother){
                                     if(!showvirtual){
                                         if(eventData.markets.fancyMarkets.length > 0){
