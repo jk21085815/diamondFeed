@@ -312,7 +312,6 @@ client.on('connect', () => {
                         console.log("Error:",error)
                     }
                 }       
-                console.log(liveEventInCricket,'liveEventInCricketliveEventInCricket')
                 await client.set('crone_CricketliveEventIds_diamond_UPD',JSON.stringify(liveEventInCricket));
                 await client.set('crone_getEventIds_Cricket_diamond_UPD',JSON.stringify(showEvent));
                 await client.set('crone_CricketliveMarketIds_MO_diamond_UPD',JSON.stringify(marketIdsArrMO));
