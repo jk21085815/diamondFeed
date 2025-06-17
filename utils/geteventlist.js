@@ -47,7 +47,7 @@ const getEventList = async(sportId,sportName) => {
         const dateToCheck = new Date(new Date(inputDate).getTime() + (5.5 * 60 * 60 * 1000));
         dateToCheck.setUTCHours(0, 0, 0, 0);
         dateToCheck.toISOString()
-        console.log(inputDate,dateToCheck,currentDate,fiveDaysAgo,dateToCheck >= fiveDaysAgo,'dateeeeee')
+        // console.log(inputDate,dateToCheck,currentDate,fiveDaysAgo,dateToCheck >= fiveDaysAgo,'dateeeeee')
         return dateToCheck >= fiveDaysAgo;
     }
     async function fetchMOBook(marketIds) {
@@ -175,9 +175,7 @@ const getEventList = async(sportId,sportName) => {
                         }
                         if(eventdata.event){    // betfair ni event ni condition che
                             if(isTestMatch){
-                                console.log(eventdata.event.name,eventdata.event.id,eventdata.competition.name,'test match1111111')
                                 if(isDateWithinLast5Days(eventdata.event.openDate)){
-                                    console.log(eventdata.event.name,eventdata.event.id,eventdata.competition.name,'test match2222')
                                     let fetchMarketData = await fetchMOBook(eventdata.marketId)
                                     let matchodds = fetchMarketData[0]
                                     if(matchodds && (matchodds.status !== 'CLOSED')){
