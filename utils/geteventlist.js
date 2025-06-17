@@ -47,6 +47,7 @@ const getEventList = async(sportId,sportName) => {
         const dateToCheck = new Date(new Date(inputDate).getTime() + (5.5 * 60 * 60 * 1000));
         dateToCheck.setUTCHours(0, 0, 0, 0);
         dateToCheck.toISOString()
+        console.log(inputDate,dateToCheck,currentDate,fiveDaysAgo,dateToCheck >= fiveDaysAgo && dateToCheck <= currentDate,'dateeeeee')
         return dateToCheck >= fiveDaysAgo && dateToCheck <= currentDate;
     }
     async function fetchMOBook(marketIds) {
@@ -69,7 +70,7 @@ const getEventList = async(sportId,sportName) => {
         let fetchMarketDatajson = await fetchMarketData.json()
         return fetchMarketDatajson
     }
-    cron.schedule('32 * * * *', async() => {
+    cron.schedule('36 * * * *', async() => {
     // cron.schedule('*/30 * * * *', async() => {
         let starttime = new Date();
         console.log(starttime,`Set ${sportName} CompId Cron Started.....111111111111111111111111111111111111111111111111`)
