@@ -174,6 +174,7 @@ const getEventList = async(sportId,sportName) => {
                         }
                         if(eventdata.event){    // betfair ni event ni condition che
                             if(isTestMatch){
+                                console.log(eventdata.event.name,eventdata.event.id,eventdata.competition.name,'test match')
                                 if(isDateWithinLast5Days(eventdata.event.openDate)){
                                     let fetchMarketData = await fetchMOBook(eventdata.marketId)
                                     let matchodds = fetchMarketData[0]
