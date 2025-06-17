@@ -47,6 +47,7 @@ const getEventList = async(sportId,sportName) => {
         const dateToCheck = new Date(new Date(inputDate).getTime() + (5.5 * 60 * 60 * 1000));
         dateToCheck.setUTCHours(0, 0, 0, 0);
         dateToCheck.toISOString()
+        console.log(inputDate,dateToCheck,currentDate,fiveDaysAgo,dateToCheck >= fiveDaysAgo,'dateeeeee')
         return dateToCheck >= fiveDaysAgo;
     }
     async function fetchMOBook(marketIds) {
@@ -69,7 +70,7 @@ const getEventList = async(sportId,sportName) => {
         let fetchMarketDatajson = await fetchMarketData.json()
         return fetchMarketDatajson
     }
-    cron.schedule('47 * * * *', async() => {
+    cron.schedule('51 * * * *', async() => {
     // cron.schedule('*/30 * * * *', async() => {
         let starttime = new Date();
         console.log(starttime,`Set ${sportName} CompId Cron Started.....111111111111111111111111111111111111111111111111`)
@@ -174,7 +175,9 @@ const getEventList = async(sportId,sportName) => {
                         }
                         if(eventdata.event){    // betfair ni event ni condition che
                             if(isTestMatch){
+                                console.log(eventdata.event.name,eventdata.event.id,eventdata.competition.name,'test match1111111')
                                 if(isDateWithinLast5Days(eventdata.event.openDate)){
+                                    console.log(eventdata.event.name,eventdata.event.id,eventdata.competition.name,'test match2222')
                                     let fetchMarketData = await fetchMOBook(eventdata.marketId)
                                     let matchodds = fetchMarketData[0]
                                     if(matchodds && (matchodds.status !== 'CLOSED')){
