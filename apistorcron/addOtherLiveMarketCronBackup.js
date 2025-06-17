@@ -52,7 +52,7 @@ client.on('connect', () => {
                 eventIds3 = JSON.parse(eventIds3)
                 eventIds4 = JSON.parse(eventIds4)
                 let eventIds = eventIds1.concat(eventIds2,eventIds3,eventIds4,otherEvents)
-                await client.set('crone_getEventIds_OtherSport_diamond',JSON.stringify(eventIds))
+                await client.set('crone_getEventIds_OtherSport_diamond',JSON.stringify(eventIds)) // concat sport cricket sivay ni and set to this redis key
                 let liveEventIds = await client.get('crone_OtherSportLiveEventIds_diamond_UPD');
                 if(liveEventIds){
                     liveEventIds = JSON.parse(liveEventIds)
@@ -100,7 +100,7 @@ client.on('connect', () => {
                         if(eventData){
                             eventData = JSON.parse(eventData)
                             if(["7","4339"].includes(eventData.sportId)){
-                                issportHRGH = true
+                                issportHRGH = true  // set GH & HR flag to true
                             }
                             OtherMOMarketArr = await client.get(`${eventIds[i]}_OnlyOtherMOMarketIdsArr_diamond`)
                             OtherMOMarketArr = JSON.parse(OtherMOMarketArr)
@@ -307,6 +307,7 @@ client.on('connect', () => {
                                 await client.set(`${eventIds[i]}_diamondEventData`,JSON.stringify(eventData))
                                 await clientme.set(`${eventIds[i]}_diamondEventData`,JSON.stringify(eventData))
                             }else{
+                                // In HR & GH condition
                                 let liveMatchCheckMarket = []
                                 let fetchMarketData3
                                 if(OtherMOMarketArr.length !== 0){
@@ -319,6 +320,7 @@ client.on('connect', () => {
                                     }
                                     liveMatchCheckMarket = fetchMarketData3.filter(item => (item && ["OPEN","SUSPENDED","BALL_RUNNING"].includes(item.status)))
                                 }
+                                // get other MO and save it to redis event object
                                 if(liveMatchCheckMarket.length > 0){
                                     for(let a = 0;a<liveMatchCheckMarket.length;a++){
                                         let thismarketdetail = await client.get(`${liveMatchCheckMarket[a].marketId}_diamond`)

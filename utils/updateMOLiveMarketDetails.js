@@ -23,7 +23,7 @@ const updateLiveMarketDetails = async(marketIds,k) => {
             }
         })
         let fetchMarketDatajson = await fetchMarketData.json()
-        updateMOMarket2(fetchMarketDatajson)
+        updateMOMarket2(fetchMarketDatajson) // 200 markets no data aek sathe get krine aa func ma pass kryo
 
         // const openMarkets = fetchMarketDatajson.filter(market =>
         //     ["OPEN", "SUSPENDED", "BALL_RUNNING"].includes(market.status.trim())

@@ -200,18 +200,18 @@ const updateFancyDetailsFunc = async (eventId) => {
         }
         async function processMarketArray() {
             // const apiStartDate = Date.now()
-            const response = await fetchData();
+            const response = await fetchData(); // get fancy market data from eventid
                 
             // const apiEndDate =  Date.now() - apiStartDate
             if (response) {
-                await processResponse(response);
+                await processResponse(response); // fancy data get krine aenu status and yesvalue ne ae badha field update krine redis save and fancy array ma push krie chie
             }
             const apiResponses = response;
             return apiResponses;
         }
         processMarketArray().then(async(responses) => {
             // console.log('API Responses:', responses);
-            await client.set(`/topic/diamond_fancy_update/${eventId}`, JSON.stringify(fancyArr), 'EX', 24 * 60 * 60);
+            await client.set(`/topic/diamond_fancy_update/${eventId}`, JSON.stringify(fancyArr), 'EX', 24 * 60 * 60);  // fancyarray ne event id parthi redis ma save and publish krie chie
             await Publishclient.publish(`/topic/diamond_fancy_update/${eventId}`, JSON.stringify(fancyArr));
             let eventData = await client.get(`${eventId}_diamondEventData`);
             eventData = JSON.parse(eventData);
@@ -219,7 +219,7 @@ const updateFancyDetailsFunc = async (eventId) => {
             //  if(eventId == "34404063"){
             //     console.log(fancyArr.find(item => item.marketId == "106398"),'fancyArrrrrrrrr')
             // }
-            await client.set(`${eventId}_diamondEventData`, JSON.stringify(eventData), 'EX', 24 * 60 * 60);
+            await client.set(`${eventId}_diamondEventData`, JSON.stringify(eventData), 'EX', 24 * 60 * 60); // event no data redis mathi get krine fancy udpate krine pacho redis ma save krie chie
             await clientme.set(`${eventId}_diamondEventData`, JSON.stringify(eventData), 'EX', 24 * 60 * 60);
         });        
     } catch (error) {

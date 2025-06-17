@@ -14,19 +14,20 @@ client.on('connect', () => {
 module.exports = () => {
     cron.schedule('*/10 * * * *', async() => {
         try{
-                let cricketEventIdsLive
-                cricketEventIdsLive = await client.get('crone_CricketliveEventIds_diamond_UPD'); 
-                cricketEventIdsLive = JSON.parse(cricketEventIdsLive)
-                let cricketEventIdsAll = await client.get('crone_getEventIds_Cricket_diamond_UPD'); 
-                cricketEventIdsAll = JSON.parse(cricketEventIdsAll)
-                let cricketEventIds = cricketEventIdsAll.filter(item => !cricketEventIdsLive.includes(item))
-                if(cricketEventIds){
-                    for(let i = 0;i<cricketEventIds.length;i++){
-                        updateFanctDetails(cricketEventIds[i])
-                    }
+
+            let cricketEventIdsLive
+            cricketEventIdsLive = await client.get('crone_CricketliveEventIds_diamond_UPD'); 
+            cricketEventIdsLive = JSON.parse(cricketEventIdsLive)
+            let cricketEventIdsAll = await client.get('crone_getEventIds_Cricket_diamond_UPD'); 
+            cricketEventIdsAll = JSON.parse(cricketEventIdsAll)
+            let cricketEventIds = cricketEventIdsAll.filter(item => !cricketEventIdsLive.includes(item))
+            if(cricketEventIds){
+                for(let i = 0;i<cricketEventIds.length;i++){
+                    updateFanctDetails(cricketEventIds[i])
                 }
-            }catch(error){
-                console.log(error,'Errorrr updateFenctDetailsCrone')
             }
+        }catch(error){
+            console.log(error,'Errorrr updateFenctDetailsCrone')
+        }
     })
 }

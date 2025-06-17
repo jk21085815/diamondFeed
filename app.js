@@ -54,8 +54,8 @@ getmarketBetches()  // ae baches ne get kri ne MO market detail update krva mate
 updateBMLiveMarketDetails() // BM ne 505ms update
 updateUCFency() // Upcoming Fency detail update in evenry 10 min
 updateLiveFanctCron() //Live Fency dtail update in 505ms
-exchangePageCron()  // upcoming event na exchange no data udpate thay che
-liveexchangePageCron() // live event na exchange no data udpate thay che
+exchangePageCron()  // upcoming event na exchange no data udpate thay che jema khali MO market j send krie chie
+liveexchangePageCron() // live event na exchange no data udpate thay che jema khali MO market j send krie chie
 
 
 // updateLiveFanctCronTemp()

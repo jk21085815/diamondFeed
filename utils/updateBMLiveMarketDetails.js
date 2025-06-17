@@ -14,8 +14,9 @@ client.on('connect', () => {
 const updateLiveMarketDetails = async(bookmakerdata) => {
     try{
         for(let a = 0; a<bookmakerdata.length; a++){
+            // bookmakers market nu loop feravi ne aek aek market ne redis mathi get krine tenu status and runners data update krine pachu redis ma save and publish krie chie
             if(Object.keys(bookmakerdata[a].data).length !== 0){
-                let marketdata = await client.get(`${bookmakerdata[a].bookmaker_id}_diamond`)
+                let marketdata = await client.get(`${bookmakerdata[a].bookmaker_id}_diamond`) 
                 if(marketdata){
                     try{
                         marketdata = JSON.parse(marketdata)

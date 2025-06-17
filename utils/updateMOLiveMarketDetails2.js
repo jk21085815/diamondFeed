@@ -16,11 +16,11 @@ const updateLiveMarketDetails2 = async(bookdataArray) => {
     let runner
     // console.log(i,'iiiiiii2222222222222')
     try{
-        if (!Array.isArray(bookdataArray) || bookdataArray.length === 0) return;
+        if (!Array.isArray(bookdataArray) || bookdataArray.length === 0) return;  // jo bookdataArray array no hoi to return kri devanu
          // STEP 1: Prepare all Redis keys
-        const redisKeys = bookdataArray.map(b => `${b.marketId}_diamond`);
+        const redisKeys = bookdataArray.map(b => `${b.marketId}_diamond`);  // 200 marketna data mathi marketid no array banavyo like [marketId1_diamond,marketId2_diamond]
         // STEP 2: MGET from Redis
-        let marketDataList = await client.mGet(redisKeys);  // Returns array of strings or nulls
+        let marketDataList = await client.mGet(redisKeys);  // aek sathe 200 market na data ne redis mathi get kryo
         // STEP 3: Prepare Redis pipeline for batch update
         const pipeline = client.multi();      // For Redis SETs
         const pipelineMe = clientme.multi();  // For mirror storage (if needed)
@@ -30,6 +30,7 @@ const updateLiveMarketDetails2 = async(bookdataArray) => {
             if (!rawData) continue;
 
             try {
+                // market na status and runner no data update kryo che ahiya
                 if (["OPEN", "SUSPENDED", "BALL_RUNNING"].includes(bookdata.status?.trim())) {
                     let marketdata = JSON.parse(rawData);
                     marketdata.status = bookdata.status;

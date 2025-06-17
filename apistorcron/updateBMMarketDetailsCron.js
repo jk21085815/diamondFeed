@@ -47,7 +47,7 @@ module.exports = () => {
                         }
                         if(fetchMarketData){
                             // await client.set(`bookmakerlist_${eventIds[i]}`,JSON.stringify(fetchMarketData))
-                            updateBMMarketDetails(fetchMarketData)
+                            updateBMMarketDetails(fetchMarketData) // bookmaker martket data get from event id and pass it to this Func
                         }
                     }
                 }

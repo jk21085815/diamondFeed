@@ -17,7 +17,7 @@ const updateSetinterval = async() => {
         count = JSON.parse(count)        
         for(let k = 0;k<count;k++){
             let marketIds = await client.get(`marketidkcount_MO_${k}`)
-            updateMOMarketDetails(marketIds,k)
+            updateMOMarketDetails(marketIds,k) // aa Func ma 200 betch ni markets comma seperated pass kri
         }
         // console.log((Date.now()-starttime),count,'timeeeeeeeeeeeeeeeee')
 
