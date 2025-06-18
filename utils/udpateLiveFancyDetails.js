@@ -30,27 +30,27 @@ const updateFancyDetailsFunc = async (eventId) => {
                 })
                 result = await response.json();
                 result = result.data
+                return result;
 
             } catch (error) {
-                try{
-                    response = await fetch(url,{
-                    method: 'GET',
-                    headers: {
-                        'Content-type': 'application/json',
-                    }
-                })
-                result = await response.json();
-                result = result.data
+                // try{
+                //     response = await fetch(url,{
+                //     method: 'GET',
+                //     headers: {
+                //         'Content-type': 'application/json',
+                //     }
+                // })
+                // result = await response.json();
+                // result = result.data
 
-                }catch(error){
-                    console.error('Error fetching data:', error);
-                    return null
-                }
+                // }catch(error){
+                //     console.error('Error fetching data:', error);
+                // }
                 console.error('Error fetching data:', error);
+                return null
             }
             // console.log(Date.now()-startForAPi,eventId, 'APICALLTIME');
             
-            return result;
         }
         async function processResponse(response) {
             for (const key in response) {
