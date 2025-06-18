@@ -216,7 +216,7 @@ const updateFancyDetailsFunc = async (eventId) => {
             let eventData = await client.get(`${eventId}_diamondEventData`);
             eventData = JSON.parse(eventData);
             eventData.markets.fancyMarkets = fancyArr;
-            if(eventId == "34410861"){
+            if(eventId == "34429696"){
                 console.log(fancyArr[1]?.marketName,fancyArr[1]?.yesValue,fancyArr[1]?.status,'fancyArrrrrrrrr')
             }
             await client.set(`${eventId}_diamondEventData`, JSON.stringify(eventData), 'EX', 24 * 60 * 60); // event no data redis mathi get krine fancy udpate krine pacho redis ma save krie chie
