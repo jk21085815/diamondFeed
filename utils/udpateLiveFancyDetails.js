@@ -197,7 +197,7 @@ const updateFancyDetailsFunc = async (eventId) => {
                             fancyArr.push(tempObj)
                         }
                     } catch (error) {
-                        console.log(error, eventId, ":Errorrrrrr");
+                        console.log(error, eventId, ":Errorrrrrr in procesing");
                     }
                 }
             }
@@ -213,7 +213,8 @@ const updateFancyDetailsFunc = async (eventId) => {
             const apiResponses = response;
             return apiResponses;
         }
-        processMarketArray().then(async(responses) => {
+        await processMarketArray();
+        try{
             // console.log('API Responses:', responses);
             await client.set(`/topic/diamond_fancy_update/${eventId}`, JSON.stringify(fancyArr), 'EX', 24 * 60 * 60);  // fancyarray ne event id parthi redis ma save and publish krie chie
             await Publishclient.publish(`/topic/diamond_fancy_update/${eventId}`, JSON.stringify(fancyArr));
@@ -226,8 +227,25 @@ const updateFancyDetailsFunc = async (eventId) => {
             await client.set(`${eventId}_diamondEventData`, JSON.stringify(eventData), 'EX', 24 * 60 * 60); // event no data redis mathi get krine fancy udpate krine pacho redis ma save krie chie
             await clientme.set(`${eventId}_diamondEventData`, JSON.stringify(eventData), 'EX', 24 * 60 * 60);
             // console.log(Date.now()-startDate,eventId, 'timeTaken');
+        }catch(error){
+            console.log(error,'Error222222')
+        }
+
+        // processMarketArray().then(async(responses) => {
+        //     // console.log('API Responses:', responses);
+        //     await client.set(`/topic/diamond_fancy_update/${eventId}`, JSON.stringify(fancyArr), 'EX', 24 * 60 * 60);  // fancyarray ne event id parthi redis ma save and publish krie chie
+        //     await Publishclient.publish(`/topic/diamond_fancy_update/${eventId}`, JSON.stringify(fancyArr));
+        //     let eventData = await client.get(`${eventId}_diamondEventData`);
+        //     eventData = JSON.parse(eventData);
+        //     eventData.markets.fancyMarkets = fancyArr;
+        //     if(eventId == "34423812"){
+        //         console.log(new Date(Date.now() + (5.5 * 60 *60 *1000)),fancyArr[0]?.marketName,fancyArr[0]?.yesValue,fancyArr[0]?.status)
+        //     }
+        //     await client.set(`${eventId}_diamondEventData`, JSON.stringify(eventData), 'EX', 24 * 60 * 60); // event no data redis mathi get krine fancy udpate krine pacho redis ma save krie chie
+        //     await clientme.set(`${eventId}_diamondEventData`, JSON.stringify(eventData), 'EX', 24 * 60 * 60);
+        //     // console.log(Date.now()-startDate,eventId, 'timeTaken');
             
-        });        
+        // }) 
     } catch (error) {
         console.error('Error:', error);
     }
