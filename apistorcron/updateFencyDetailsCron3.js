@@ -19,9 +19,12 @@ module.exports = () => {
                 cricketEventIds = JSON.parse(cricketEventIds)
                 // console.log(cricketEventIds.length,'cricketEvent Idsssssss')
                 if(cricketEventIds){
-                    for(let i = 0;i<cricketEventIds.length;i++){
-                        updateFanctDetails(cricketEventIds[i])
-                    }
+                    // for(let i = 0;i<cricketEventIds.length;i++){
+                    //     updateFanctDetails(cricketEventIds[i])
+                    // }
+                    await Promise.all(
+                        cricketEventIds.map(id => updateFanctDetails(id))
+                    );
                 }
             }catch(error){
                 console.log(error,'Errorrr updateFenctDetailsCrone3333')
