@@ -17,6 +17,7 @@ const updateFancyDetailsFunc = async (eventId) => {
         let startDate = Date.now()
         let fancyArr = [];
           async function fetchData() {
+            let startForAPi = Date.now()
             let response
             let result
             const url = ` https://odds.datafeed365.com/api/active-fancy/${eventId}`;
@@ -47,6 +48,8 @@ const updateFancyDetailsFunc = async (eventId) => {
                 }
                 console.error('Error fetching data:', error);
             }
+            console.log(Date.now()-startForAPi,eventId, 'APICALLTIME');
+            
             return result;
         }
         async function processResponse(response) {
