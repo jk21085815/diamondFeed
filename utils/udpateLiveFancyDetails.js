@@ -222,9 +222,7 @@ const updateFancyDetailsFunc = async (eventId) => {
             }
             await client.set(`${eventId}_diamondEventData`, JSON.stringify(eventData), 'EX', 24 * 60 * 60); // event no data redis mathi get krine fancy udpate krine pacho redis ma save krie chie
             await clientme.set(`${eventId}_diamondEventData`, JSON.stringify(eventData), 'EX', 24 * 60 * 60);
-            if(eventId == "34429696"){
-                console.log(Date.now()-startDate, '344296963442969634429696');
-            }
+            console.log(Date.now()-startDate, '344296963442969634429696');
             
         });        
     } catch (error) {
