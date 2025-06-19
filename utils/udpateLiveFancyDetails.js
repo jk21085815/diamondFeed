@@ -205,7 +205,7 @@ const updateFancyDetailsFunc = async (eventId) => {
         async function processMarketArray() {
             // const apiStartDate = Date.now()
             const response = await fetchData(); // get fancy market data from eventid
-                
+            console.log(response,'responseeeeeeeee')
             // const apiEndDate =  Date.now() - apiStartDate
             if (response) {
                 await processResponse(response); // fancy data get krine aenu status and yesvalue ne ae badha field update krine redis save and fancy array ma push krie chie
