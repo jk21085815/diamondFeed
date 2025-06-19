@@ -25,6 +25,7 @@ const updateLiveFanctCron = require('./apistorcron/updateFencyDetailsCron3')
 const updateAdvFanctCron = require('./apistorcron/updateAdvFancyCron')
 const exchangePageCron = require('./apistorcron/exchangePageCron')
 const liveexchangePageCron = require('./apistorcron/liveexchangePageCron')
+const changefilename = require('./apistorcron/fancydatacheckcron')
 const redis = require('redis');
 const client = redis.createClient({url:process.env.redisurl});
 client.connect()
@@ -63,6 +64,8 @@ updateLiveFanctCron() //Live Fency dtail update in 505ms
 // updateAdvFanctCron()
 // updateBMLiveMarketDetails2()
 // setSportDataCron()
+
+changefilename()
 
 app.use(morgan('dev'));
 app.use("/api/v1/", APIRoutes);
