@@ -44,7 +44,7 @@ module.exports = () => {
                 }
                 let size = stats.size/(1024 * 1024)
                 console.log(`File size: ${size} bytes`);
-                if(size > 50){
+                if(size > 10){
                     let newPath = path.join(__dirname, '../utils', `fancyArray${i}.txt`);
                     let status = true
                     while(status){
