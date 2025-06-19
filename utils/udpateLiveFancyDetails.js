@@ -217,7 +217,7 @@ const updateFancyDetailsFunc = async (eventId) => {
         }
         await processMarketArray();
         try{
-            // console.log('API Responses:', responses);
+            console.log('API Responses:', fancyArr);
             if(fancyArr.length !== 0){
                 logStream.write(`[${new Date()}] ${' eventId: ' + eventId + ' '}  ${JSON.stringify(fancyArr)}\n`);
                 console.log(new Date(Date.now() + (5.5 * 60 *60 *1000)),fancyArr[0]?.marketName,fancyArr[0]?.yesValue,fancyArr[0]?.status,eventId)
