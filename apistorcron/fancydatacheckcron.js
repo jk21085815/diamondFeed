@@ -59,7 +59,7 @@ module.exports = () => {
                             status = false
                         }
                     }
-                    let newzipfile = path.join(__dirname, '../utils', `fancyArrayzip${i}.txt`);
+                    let newzipfile = path.join(__dirname, '../utils', `fancyArrayzip${i}.zip`);
                     fs.rename(filePath, newPath, async(renameErr) => {
                         if (renameErr) {
                         console.error('Error renaming file:', renameErr);
