@@ -81,7 +81,7 @@ module.exports = () => {
                        
 
                         // Usage
-                        await createZip(newzipfile, path.join(__dirname, '../utils/fancyzip',newPath));
+                        await createZip(newzipfile, path.join(__dirname, '../utils/fancyzip'),newPath);
                         i++
                         console.log('Zip created & original file deleted successfully');
 
