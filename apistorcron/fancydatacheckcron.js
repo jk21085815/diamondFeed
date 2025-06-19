@@ -57,7 +57,7 @@ module.exports = () => {
                 }
                 let size = stats.size/(1024 * 1024)
                 console.log(`File size: ${size} bytes`);
-                if(size > 10){
+                if(size > 10 || true){
                     let newzipfile = path.join(__dirname, '../utils/fancydata', `fancyArrayzip${i}.zip`)
                     let status = true
                     while(status){
