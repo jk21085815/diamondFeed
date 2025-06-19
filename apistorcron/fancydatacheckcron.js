@@ -45,7 +45,6 @@ module.exports = () => {
                 // archive.file('file2.jpg', { name: 'images/file2.jpg' });
 
                 archive.finalize();
-                fs.unlinkSync(newPath);
             }
             // Check file size and rename
             const filePath = path.join(__dirname, '../utils', 'fancyArray.txt');
@@ -59,19 +58,20 @@ module.exports = () => {
                 let size = stats.size/(1024 * 1024)
                 console.log(`File size: ${size} bytes`);
                 if(size > 10 || true){
-                    let newzipfile = path.join(__dirname, '../utils/fancydata', `fancyArrayzip${i}.zip`)
+                    let newPath = path.join(__dirname, '../utils/fancyzip', `fancyArray${i}.zip`)
                     let status = true
                     while(status){
-                        if (fs.existsSync(newzipfile)) {
+                        if (fs.existsSync(newPath)) {
                             i++
-                            newzipfile = path.join(__dirname, '../utils/fancydata', `fancyArrayzip${i}.zip`)
+                            newPath = path.join(__dirname, '../utils/fancyzip', `fancyArray${i}.zip`)
+                            // newzipfile = path.join(__dirname, '../utils/fancydata', `fancyArrayzip${i}.zip`)
                             console.log('File exists');
                         } else {
                             console.log('File does not exist');
                             status = false
                         }
                     }
-                    let newPath = path.join(__dirname, '../utils/fancyzip', `fancyArray${i}.txt`);
+                    // let newzipfile = path.join(__dirname, '../utils/fancydata', `fancyArrayzip${i}.txt`);
                     fs.rename(filePath, newPath, async(renameErr) => {
                         if (renameErr) {
                         console.error('Error renaming file:', renameErr);
@@ -81,7 +81,7 @@ module.exports = () => {
                        
 
                         // Usage
-                        await createZip(newzipfile, path.join(__dirname, '../utils/fancyzip'),newPath);
+                        // await createZip(newzipfile, path.join(__dirname, '../utils/fancyzip'),newPath);
                         i++
                         console.log('Zip created & original file deleted successfully');
 
