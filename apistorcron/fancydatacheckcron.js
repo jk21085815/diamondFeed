@@ -18,8 +18,8 @@ module.exports = () => {
                     throw err;
                 }
             }
-            ensureDirSync(path.join(__dirname, '../utils/fancydata'));
-            ensureDirSync(path.join(__dirname, '../utils/fancyzip'));
+            // ensureDirSync(path.join(__dirname, '../utils/fancydata'));
+            // ensureDirSync(path.join(__dirname, '../utils/fancyzip'));
             async function createZip(outputFilePath, sourceDir) {
                 const output = fs.createWriteStream(outputFilePath);
                 const archive = archiver('zip', {
@@ -70,7 +70,7 @@ module.exports = () => {
                             status = false
                         }
                     }
-                    let newzipfile = path.join(__dirname, '../utils/fancydata', `fancyArrayzip${i}.zip`);
+                    // let newzipfile = path.join(__dirname, '../utils/fancydata', `fancyArrayzip${i}.zip`);
                     fs.rename(filePath, newPath, async(renameErr) => {
                         if (renameErr) {
                         console.error('Error renaming file:', renameErr);
