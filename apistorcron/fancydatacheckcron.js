@@ -7,7 +7,7 @@ const archiver = require('archiver');
 
 module.exports = () => {
     let i = 1
-    cron.schedule('*/10 * * * *', async() => {
+    cron.schedule('*/1 * * * *', async() => {
         try{
             function ensureDirSync(dirPath) {
                 try {
@@ -57,7 +57,7 @@ module.exports = () => {
                 }
                 let size = stats.size/(1024 * 1024)
                 console.log(`File size: ${size} bytes`);
-                if(size > 100){
+                if(size > 10){
                     let newPath = path.join(__dirname, '../utils/fancyzip', `fancyArray${i}.txt`);
                     let status = true
                     while(status){
