@@ -19,7 +19,7 @@ module.exports = () => {
                 }
             }
             ensureDirSync(path.join(__dirname, '../utils/fancydata'));
-            ensureDirSync(path.join(__dirname, '../utils/fancyzip'));
+            // ensureDirSync(path.join(__dirname, '../utils/fancyzip'));
             async function createZip(outputFilePath, sourceDir,newPath) {
                 const output = fs.createWriteStream(outputFilePath);
                 const archive = archiver('zip', {
@@ -58,12 +58,12 @@ module.exports = () => {
                 let size = stats.size/(1024 * 1024)
                 console.log(`File size: ${size} bytes`);
                 if(size > 100){
-                    let newPath = path.join(__dirname, '../utils/fancyzip', `fancyArray${i}.txt`)
+                    let newPath = path.join(__dirname, '../utils/fancydata', `fancyArray${i}.txt`)
                     let status = true
                     while(status){
                         if (fs.existsSync(newPath)) {
                             i++
-                            newPath = path.join(__dirname, '../utils/fancyzip', `fancyArray${i}.txt`)
+                            newPath = path.join(__dirname, '../utils/fancydata', `fancyArray${i}.txt`)
                             console.log('File exists');
                         } else {
                             console.log('File does not exist');
