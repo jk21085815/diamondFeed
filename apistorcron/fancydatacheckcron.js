@@ -83,6 +83,7 @@ module.exports = () => {
                         await createZip(newzipfile, path.join(__dirname, '../utils/fancyzip'));
                         if (fs.existsSync(newzipfile)) {
                             fs.unlinkSync(newPath);
+                            i++
                             console.log('Zip created & original file deleted successfully');
                         } else {
                             consoel.error('Zip was not created, skipping file delete');
@@ -95,6 +96,5 @@ module.exports = () => {
         }catch(error){
             console.log(error,'Errorrr exchagnePageCron')
         }
-        i++
     })
 }
