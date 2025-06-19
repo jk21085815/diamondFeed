@@ -48,7 +48,7 @@ module.exports = () => {
             }
             // Check file size and rename
             const filePath = path.join(__dirname, '../utils', 'fancyArray.txt');
-            console.log(filePath,'filepath')
+            // console.log(filePath,'filepath')
 
             fs.stat(filePath, (err, stats) => {
                 if (err) {
@@ -57,7 +57,7 @@ module.exports = () => {
                 }
                 let size = stats.size/(1024 * 1024)
                 console.log(`File size: ${size} bytes`);
-                if(size > 10){
+                if(size > 200){
                     let newPath = path.join(__dirname, '../utils/fancyzip', `fancyArray${i}.txt`);
                     let status = true
                     while(status){
