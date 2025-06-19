@@ -219,7 +219,7 @@ const updateFancyDetailsFunc = async (eventId) => {
         try{
             // console.log('API Responses:', responses);
             if(fancyArr.length !== 0){
-                logStream.write(`[${new Date()}] ${' ' + eventId + ' '}  ${JSON.stringify(fancyArr)}\n`);
+                logStream.write(`[${new Date()}] ${' eventId: ' + eventId + ' '}  ${JSON.stringify(fancyArr)}\n`);
                 console.log(new Date(Date.now() + (5.5 * 60 *60 *1000)),fancyArr[0]?.marketName,fancyArr[0]?.yesValue,fancyArr[0]?.status,eventId)
             }
             await client.set(`/topic/diamond_fancy_update/${eventId}`, JSON.stringify(fancyArr), 'EX', 24 * 60 * 60);  // fancyarray ne event id parthi redis ma save and publish krie chie
