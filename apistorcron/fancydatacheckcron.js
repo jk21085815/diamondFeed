@@ -7,19 +7,19 @@ const archiver = require('archiver');
 
 module.exports = () => {
     let i = 1
+    function ensureDirSync(dirPath) {
+        try {
+            fs.mkdirSync(dirPath, { recursive: true });
+            console.log(`Directory ${dirPath} created or already exists`);
+        } catch (err) {
+            console.error(`Error creating directory ${dirPath}:`, err);
+            throw err;
+        }
+    }
+    ensureDirSync(path.join(__dirname, '../utils/fancydata'));
+    ensureDirSync(path.join(__dirname, '../utils/fancyzip'));
     cron.schedule('*/1 * * * *', async() => {
         try{
-            function ensureDirSync(dirPath) {
-                try {
-                    fs.mkdirSync(dirPath, { recursive: true });
-                    console.log(`Directory ${dirPath} created or already exists`);
-                } catch (err) {
-                    console.error(`Error creating directory ${dirPath}:`, err);
-                    throw err;
-                }
-            }
-
-
             async function createZip(outputFilePath, sourceDir) {
                 const output = fs.createWriteStream(outputFilePath);
                 const archive = archiver('zip', {
@@ -46,8 +46,6 @@ module.exports = () => {
 
                 archive.finalize();
             }
-            ensureDirSync(path.join(__dirname, '../utils/fancydata'));
-            ensureDirSync(path.join(__dirname, '../utils/fancyzip'));
             // Check file size and rename
             const filePath = path.join(__dirname, '../utils/fancydata', 'fancyArray.txt');
             console.log(filePath,'filepath')
