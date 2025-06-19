@@ -45,8 +45,8 @@ module.exports = () => {
 
                 archive.finalize();
             }
-            ensureDir(path.join(__dirname, '../utils/fancydata'));
-            ensureDir(path.join(__dirname, '../utils/fancyzip'));
+            await ensureDir(path.join(__dirname, '../utils/fancydata'));
+            await ensureDir(path.join(__dirname, '../utils/fancyzip'));
             // Check file size and rename
             const filePath = path.join(__dirname, '../utils/fancydata', 'fancyArray.txt');
             console.log(filePath,'filepath')
