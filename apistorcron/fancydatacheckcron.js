@@ -80,12 +80,12 @@ module.exports = () => {
                        
 
                         // Usage
-                        try {
-                            await createZip(newzipfile, path.join(__dirname, '../utils/fancyzip'));
+                        await createZip(newzipfile, path.join(__dirname, '../utils/fancyzip'));
+                        if (fs.existsSync(newzipfile)) {
                             fs.unlinkSync(newPath);
-                            console.log('File deleted successfully');
-                        } catch (err) {
-                            console.error('Error deleting file:', err);
+                            console.log('Zip created & original file deleted successfully');
+                        } else {
+                            consoel.error('Zip was not created, skipping file delete');
                         }
 
                     });
