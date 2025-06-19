@@ -82,7 +82,7 @@ module.exports = () => {
                         // Usage
                         try {
                             await createZip(newzipfile, path.join(__dirname, '../utils/fancyzip'));
-                            fs.unlinkSync(newPath);
+                            // fs.unlinkSync(newPath);
                             console.log('File deleted successfully');
                         } catch (err) {
                             console.error('Error deleting file:', err);
