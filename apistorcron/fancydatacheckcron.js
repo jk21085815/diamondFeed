@@ -69,13 +69,13 @@ module.exports = () => {
                        
 
                         // Usage
-                        await createZip(newzipfile, newPath);
-                        // try {
-                        //     fs.unlinkSync(newPath);
-                        //     console.log('File deleted successfully');
-                        // } catch (err) {
-                        //     console.error('Error deleting file:', err);
-                        // }
+                        try {
+                            await createZip(newzipfile, newPath);
+                            // fs.unlinkSync(newPath);
+                            // console.log('File deleted successfully');
+                        } catch (err) {
+                            console.error('Error deleting file:', err);
+                        }
 
                     });
 
