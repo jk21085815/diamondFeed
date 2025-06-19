@@ -9,12 +9,13 @@ module.exports = () => {
     let i = 1
     cron.schedule('*/1 * * * *', async() => {
         try{
-            async function ensureDir(dirPath) {
+            function ensureDirSync(dirPath) {
                 try {
-                    await fs.mkdir(dirPath, { recursive: true });
+                    fs.mkdirSync(dirPath, { recursive: true });
                     console.log(`Directory ${dirPath} created or already exists`);
                 } catch (err) {
                     console.error(`Error creating directory ${dirPath}:`, err);
+                    throw err;
                 }
             }
 
@@ -45,54 +46,54 @@ module.exports = () => {
 
                 archive.finalize();
             }
-            await ensureDir(path.join(__dirname, '../utils/fancydata'));
-            await ensureDir(path.join(__dirname, '../utils/fancyzip'));
+            ensureDirSync(path.join(__dirname, '../utils/fancydata'));
+            ensureDirSync(path.join(__dirname, '../utils/fancyzip'));
             // Check file size and rename
             const filePath = path.join(__dirname, '../utils/fancydata', 'fancyArray.txt');
             console.log(filePath,'filepath')
 
-            fs.stat(filePath, (err, stats) => {
-                if (err) {
-                    console.error('Error getting file stats:', err);
-                    return;
-                }
-                let size = stats.size/(1024 * 1024)
-                console.log(`File size: ${size} bytes`);
-                if(size > 10){
-                    let newPath = path.join(__dirname, '../utils/fancyzip', `fancyArray${i}.txt`);
-                    let status = true
-                    while(status){
-                        if (fs.existsSync(newPath)) {
-                            i++
-                            newPath = path.join(__dirname, '../utils/fancyzip', `fancyArray${i}.txt`);
-                            console.log('File exists');
-                        } else {
-                            console.log('File does not exist');
-                            status = false
-                        }
-                    }
-                    let newzipfile = path.join(__dirname, '../utils/fancydata', `fancyArrayzip${i}.zip`);
-                    fs.rename(filePath, newPath, async(renameErr) => {
-                        if (renameErr) {
-                        console.error('Error renaming file:', renameErr);
-                        return;
-                        }
-                        console.log('File renamed successfully');
+            // fs.stat(filePath, (err, stats) => {
+            //     if (err) {
+            //         console.error('Error getting file stats:', err);
+            //         return;
+            //     }
+            //     let size = stats.size/(1024 * 1024)
+            //     console.log(`File size: ${size} bytes`);
+            //     if(size > 10){
+            //         let newPath = path.join(__dirname, '../utils/fancyzip', `fancyArray${i}.txt`);
+            //         let status = true
+            //         while(status){
+            //             if (fs.existsSync(newPath)) {
+            //                 i++
+            //                 newPath = path.join(__dirname, '../utils/fancyzip', `fancyArray${i}.txt`);
+            //                 console.log('File exists');
+            //             } else {
+            //                 console.log('File does not exist');
+            //                 status = false
+            //             }
+            //         }
+            //         let newzipfile = path.join(__dirname, '../utils/fancydata', `fancyArrayzip${i}.zip`);
+            //         fs.rename(filePath, newPath, async(renameErr) => {
+            //             if (renameErr) {
+            //             console.error('Error renaming file:', renameErr);
+            //             return;
+            //             }
+            //             console.log('File renamed successfully');
                        
 
-                        // Usage
-                        try {
-                            await createZip(newzipfile, path.join(__dirname, '../utils/fancyzip'));
-                            // fs.unlinkSync(newPath);
-                            // console.log('File deleted successfully');
-                        } catch (err) {
-                            console.error('Error deleting file:', err);
-                        }
+            //             // Usage
+            //             try {
+            //                 await createZip(newzipfile, path.join(__dirname, '../utils/fancyzip'));
+            //                 // fs.unlinkSync(newPath);
+            //                 // console.log('File deleted successfully');
+            //             } catch (err) {
+            //                 console.error('Error deleting file:', err);
+            //             }
 
-                    });
+            //         });
 
-                }
-            });
+            //     }
+            // });
         }catch(error){
             console.log(error,'Errorrr exchagnePageCron')
         }
