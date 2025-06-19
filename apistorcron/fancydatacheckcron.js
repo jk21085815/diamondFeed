@@ -9,6 +9,16 @@ module.exports = () => {
     let i = 1
     cron.schedule('*/1 * * * *', async() => {
         try{
+            async function ensureDir(dirPath) {
+                try {
+                    await fs.mkdir(dirPath, { recursive: true });
+                    console.log(`Directory ${dirPath} created or already exists`);
+                } catch (err) {
+                    console.error(`Error creating directory ${dirPath}:`, err);
+                }
+            }
+
+
             async function createZip(outputFilePath, sourceDir) {
                 const output = fs.createWriteStream(outputFilePath);
                 const archive = archiver('zip', {
@@ -35,8 +45,10 @@ module.exports = () => {
 
                 archive.finalize();
             }
+            ensureDir(path.join(__dirname, '../utils/fancydata'));
+            ensureDir(path.join(__dirname, '../utils/fancyzip'));
             // Check file size and rename
-            const filePath = path.join(__dirname, '../utils', 'fancyArray.txt');
+            const filePath = path.join(__dirname, '../utils/fancydata', 'fancyArray.txt');
             console.log(filePath,'filepath')
 
             fs.stat(filePath, (err, stats) => {
@@ -47,19 +59,19 @@ module.exports = () => {
                 let size = stats.size/(1024 * 1024)
                 console.log(`File size: ${size} bytes`);
                 if(size > 10){
-                    let newPath = path.join(__dirname, '../utils', `fancyArray${i}.txt`);
+                    let newPath = path.join(__dirname, '../utils/fancyzip', `fancyArray${i}.txt`);
                     let status = true
                     while(status){
                         if (fs.existsSync(newPath)) {
                             i++
-                            newPath = path.join(__dirname, '../utils', `fancyArray${i}.txt`);
+                            newPath = path.join(__dirname, '../utils/fancyzip', `fancyArray${i}.txt`);
                             console.log('File exists');
                         } else {
                             console.log('File does not exist');
                             status = false
                         }
                     }
-                    let newzipfile = path.join(__dirname, '../utils', `fancyArrayzip${i}.zip`);
+                    let newzipfile = path.join(__dirname, '../utils/fancydata', `fancyArrayzip${i}.zip`);
                     fs.rename(filePath, newPath, async(renameErr) => {
                         if (renameErr) {
                         console.error('Error renaming file:', renameErr);
@@ -70,7 +82,7 @@ module.exports = () => {
 
                         // Usage
                         try {
-                            await createZip(newzipfile, newPath);
+                            await createZip(newzipfile, path.join(__dirname, '../utils/fancyzip'));
                             // fs.unlinkSync(newPath);
                             // console.log('File deleted successfully');
                         } catch (err) {
