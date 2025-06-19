@@ -7,7 +7,7 @@ const archiver = require('archiver');
 
 module.exports = () => {
     let i = 1
-    cron.schedule('*/1 * * * *', async() => {
+    cron.schedule('*/10 * * * *', async() => {
         try{
             function ensureDirSync(dirPath) {
                 try {
