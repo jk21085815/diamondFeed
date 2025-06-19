@@ -76,7 +76,7 @@ client.on('connect', () => {
                     return fetchMarketDatajson.data
                 }
                 console.log(eventIds.length,'cricket eventIdssssssssssssssssss')
-                console.log(eventIds.find(item => item == "34410861"),'3441086134410861344108613441086134410861')
+                // console.log(eventIds.find(item => item == "34410861"),'3441086134410861344108613441086134410861')
                 for(let i = 0;i<eventIds.length;i++){
                     try{
                         // console.log(new Date(),i,eventIds[i],'Add Cricket eventIds and Market iiiiiiiii')
@@ -88,13 +88,13 @@ client.on('connect', () => {
                         let eventData
                         let fetchMarketData2 = []
                         let OnlyMOMarketIdsArr = []
-                        let isTest = false
+                        // let isTest = false
                         eventData = await client.get(`${eventIds[i]}_diamondEventData`)
                         if(eventData){
                             eventData = JSON.parse(eventData)
-                            if(eventData.competitionName == "Test Matches"){
-                                isTest = true
-                            }
+                            // if(eventData.competitionName == "Test Matches"){
+                            //     isTest = true
+                            // }
                             OtherMOMarketArr = await client.get(`${eventIds[i]}_OnlyOtherMOMarketIdsArr_diamond`) // get other MO marketIds
                             OtherMOMarketArr = JSON.parse(OtherMOMarketArr)
                             OnlyMOMarketIdsArr = await client.get(`${eventIds[i]}_OnlyMOMarketIdsArr_diamond`) // get MO marketIds
@@ -127,14 +127,14 @@ client.on('connect', () => {
                                 }else{
                                     // jo MO closed no hoi and inplay ma pn no hoi to test match mate last 5 day and biji event mate 2.5 kalak pela aene live event list ma nakhi devi chu but status UPCOMING j rakhvi chi jethi 2.5 kalak pela ae event na market update thay
                                     if(liveMatchCheckMarket.status !== 'CLOSED'){
-                                        if(isTest){
-                                            if(new Date(eventData.openDate).getTime() + (1000 * 60 * 60 * 24 * 5) >= Date.now()){
-                                                liveEventInCricket.push(eventIds[i])
-                                            }
-                                        }else{
-                                            if(new Date(eventData.openDate).getTime() - (1000 * 60 * 60 * 2) <= Date.now()){
-                                                liveEventInCricket.push(eventIds[i])
-                                            }
+                                        // if(isTest){
+                                        //     if(new Date(eventData.openDate).getTime() + (1000 * 60 * 60 * 24 * 5) >= Date.now()){
+                                        //         liveEventInCricket.push(eventIds[i])
+                                        //     }
+                                        // }else{
+                                        // }
+                                        if(new Date(eventData.openDate).getTime() - (1000 * 60 * 60 * 2) <= Date.now()){
+                                            liveEventInCricket.push(eventIds[i])
                                         }
                                     }
                                 }
