@@ -47,7 +47,7 @@ module.exports = () => {
                 archive.finalize();
             }
             // Check file size and rename
-            const filePath = path.join(__dirname, '../utils/fancydata', 'fancyArray.txt');
+            const filePath = path.join(__dirname, '../utils', 'fancyArray.txt');
             console.log(filePath,'filepath')
 
             fs.stat(filePath, (err, stats) => {
