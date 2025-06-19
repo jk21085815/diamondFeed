@@ -16,17 +16,19 @@ module.exports = () => {
                     console.error('Error getting file stats:', err);
                     return;
                 }
+                let size = stats.size/(1024 * 1024)
+                console.log(`File size: ${size} bytes`);
+                if(size > 100){
+                    const newPath = path.join(__dirname, '../utils', `fancyArray${i}.txt`);
+                    fs.rename(filePath, newPath, (renameErr) => {
+                        if (renameErr) {
+                        console.error('Error renaming file:', renameErr);
+                        return;
+                        }
+                        console.log('File renamed successfully');
+                    });
 
-                console.log(`File size: ${stats.size} bytes`);
-                // const newPath = path.join(__dirname, '../utils', `fancyArray${i}.txt`);
-
-                // fs.rename(filePath, newPath, (renameErr) => {
-                //     if (renameErr) {
-                //     console.error('Error renaming file:', renameErr);
-                //     return;
-                //     }
-                //     console.log('File renamed successfully');
-                // });
+                }
             });
         }catch(error){
             console.log(error,'Errorrr exchagnePageCron')
