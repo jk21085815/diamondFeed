@@ -5,28 +5,29 @@ const path = require('path')
 
 module.exports = () => {
     let i = 1
-    const filePath = path.join(__dirname, '../utils', 'input.txt');
-    console.log(filePath,'filepath')
     cron.schedule('*/1 * * * *', async() => {
         try{
             // Check file size and rename
+            const filePath = path.join(__dirname, '../utils', 'fancyArray.txt');
+            console.log(filePath,'filepath')
 
-            // fs.stat('../utils/fancyArray.txt', (err, stats) => {
-            //     if (err) {
-            //         console.error('Error getting file stats:', err);
-            //         return;
-            //     }
+            fs.stat(filePath, (err, stats) => {
+                if (err) {
+                    console.error('Error getting file stats:', err);
+                    return;
+                }
 
-            //     console.log(`File size: ${stats.size} bytes`);
-                
-            //     fs.rename('../utils/fancyArray.txt', `../utils/fancyArray${i}.txt`, (renameErr) => {
-            //         if (renameErr) {
-            //         console.error('Error renaming file:', renameErr);
-            //         return;
-            //         }
-            //         console.log('File renamed successfully');
-            //     });
-            // });
+                console.log(`File size: ${stats.size} bytes`);
+                // const newPath = path.join(__dirname, '../utils', `fancyArray${i}.txt`);
+
+                // fs.rename(filePath, newPath, (renameErr) => {
+                //     if (renameErr) {
+                //     console.error('Error renaming file:', renameErr);
+                //     return;
+                //     }
+                //     console.log('File renamed successfully');
+                // });
+            });
         }catch(error){
             console.log(error,'Errorrr exchagnePageCron')
         }
