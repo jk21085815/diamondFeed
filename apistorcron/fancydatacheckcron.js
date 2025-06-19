@@ -18,8 +18,8 @@ module.exports = () => {
                     throw err;
                 }
             }
-            // ensureDirSync(path.join(__dirname, '../utils/fancydata'));
-            // ensureDirSync(path.join(__dirname, '../utils/fancyzip'));
+            ensureDirSync(path.join(__dirname, '../utils/fancydata'));
+            ensureDirSync(path.join(__dirname, '../utils/fancyzip'));
             async function createZip(outputFilePath, sourceDir) {
                 const output = fs.createWriteStream(outputFilePath);
                 const archive = archiver('zip', {
@@ -57,7 +57,7 @@ module.exports = () => {
                 }
                 let size = stats.size/(1024 * 1024)
                 console.log(`File size: ${size} bytes`);
-                if(size > 10 || true){
+                if(size > 10){
                     let newPath = path.join(__dirname, '../utils/fancyzip', `fancyArray${i}.txt`);
                     let status = true
                     while(status){
@@ -70,7 +70,7 @@ module.exports = () => {
                             status = false
                         }
                     }
-                    // let newzipfile = path.join(__dirname, '../utils/fancydata', `fancyArrayzip${i}.zip`);
+                    let newzipfile = path.join(__dirname, '../utils/fancydata', `fancyArrayzip${i}.zip`);
                     fs.rename(filePath, newPath, async(renameErr) => {
                         if (renameErr) {
                         console.error('Error renaming file:', renameErr);
@@ -81,9 +81,9 @@ module.exports = () => {
 
                         // Usage
                         try {
-                            // await createZip(newzipfile, path.join(__dirname, '../utils/fancyzip'));
-                            // fs.unlinkSync(newPath);
-                            // console.log('File deleted successfully');
+                            await createZip(newzipfile, path.join(__dirname, '../utils/fancyzip'));
+                            fs.unlinkSync(newPath);
+                            console.log('File deleted successfully');
                         } catch (err) {
                             console.error('Error deleting file:', err);
                         }
