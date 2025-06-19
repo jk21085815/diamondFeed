@@ -20,7 +20,7 @@ module.exports = () => {
             }
             ensureDirSync(path.join(__dirname, '../utils/fancydata'));
             ensureDirSync(path.join(__dirname, '../utils/fancyzip'));
-            async function createZip(outputFilePath, sourceDir) {
+            async function createZip(outputFilePath, sourceDir,newPath) {
                 const output = fs.createWriteStream(outputFilePath);
                 const archive = archiver('zip', {
                     zlib: { level: 9 } // Sets the compression level
@@ -45,6 +45,7 @@ module.exports = () => {
                 // archive.file('file2.jpg', { name: 'images/file2.jpg' });
 
                 archive.finalize();
+                fs.unlinkSync(newPath);
             }
             // Check file size and rename
             const filePath = path.join(__dirname, '../utils', 'fancyArray.txt');
@@ -80,14 +81,9 @@ module.exports = () => {
                        
 
                         // Usage
-                        await createZip(newzipfile, path.join(__dirname, '../utils/fancyzip'));
-                        if (fs.existsSync(newzipfile)) {
-                            fs.unlinkSync(newPath);
-                            i++
-                            console.log('Zip created & original file deleted successfully');
-                        } else {
-                            consoel.error('Zip was not created, skipping file delete');
-                        }
+                        await createZip(newzipfile, path.join(__dirname, '../utils/fancyzip',newPath));
+                        i++
+                        console.log('Zip created & original file deleted successfully');
 
                     });
 
