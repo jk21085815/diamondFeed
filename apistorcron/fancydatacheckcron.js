@@ -2,12 +2,14 @@ const cron = require('node-cron');
 const fs = require('fs')
 const path = require('path')
 const archiver = require('archiver');
+const AdmZip = require('adm-zip');
+
 
 
 
 module.exports = () => {
     let i = 1
-    cron.schedule('*/10 * * * *', async() => {
+    cron.schedule('*/1 * * * *', async() => {
         try{
             function ensureDirSync(dirPath) {
                 try {
@@ -18,33 +20,28 @@ module.exports = () => {
                     throw err;
                 }
             }
-            ensureDirSync(path.join(__dirname, '../utils/fancydata'));
-            // ensureDirSync(path.join(__dirname, '../utils/fancyzip'));
-            async function createZip(outputFilePath, sourceDir,newPath) {
-                const output = fs.createWriteStream(outputFilePath);
-                const archive = archiver('zip', {
-                    zlib: { level: 9 } // Sets the compression level
-                });
-
-                output.on('close', () => {
-                    console.log(`${archive.pointer()} total bytes`);
-                    console.log('Zip file created successfully');
-                });
-
-                archive.on('error', (err) => {
-                    throw err;
-                });
-
-                archive.pipe(output);
-                
-                // Add entire directory
-                archive.directory(sourceDir, false);
-                
-                // Or add specific files
-                // archive.file('file1.txt', { name: 'file1.txt' });
-                // archive.file('file2.jpg', { name: 'images/file2.jpg' });
-
-                archive.finalize();
+            ensureDirSync(path.join(__dirname, '../utils/fancydata2'));
+            ensureDirSync(path.join(__dirname, '../utils/fancydatazip'));
+                // ensureDirSync(path.join(__dirname, '../utils/fancyzip'));
+            function createZipWithAdmZip(inputFile, outputZip) {
+                try {
+                    const zip = new AdmZip();
+                    
+                    // Add file to zip
+                    zip.addLocalFile(inputFile);
+                    
+                    // Write zip to file
+                    zip.writeZip(outputZip);
+                    
+                    console.log(`Created ${outputZip} successfully`);
+                    // Remove original
+                    fs.unlinkSync(inputFile);
+                    console.log(`Removed ${inputFile} successfully`);
+                    return true;
+                } catch (err) {
+                    console.error('Error creating ZIP:', err);
+                    return false;
+                }
             }
             // Check file size and rename
             const filePath = path.join(__dirname, '../utils', 'fancyArray.txt');
@@ -57,33 +54,29 @@ module.exports = () => {
                 }
                 let size = stats.size/(1024 * 1024)
                 console.log(`File size: ${size} bytes`);
-                if(size > 100){
-                    let newPath = path.join(__dirname, '../utils/fancydata', `fancyArray${i}.txt`)
+                if(size > 100 || true){
+                    let newzipfile = path.join(__dirname, '../utils/fancydatazip', `fancyArrayzip${i}.zip`)
                     let status = true
                     while(status){
-                        if (fs.existsSync(newPath)) {
+                        if (fs.existsSync(newzipfile)) {
                             i++
-                            newPath = path.join(__dirname, '../utils/fancydata', `fancyArray${i}.txt`)
+                            newzipfile = path.join(__dirname, '../utils/fancydatazip', `fancyArrayzip${i}.zip`)
                             console.log('File exists');
                         } else {
                             console.log('File does not exist');
                             status = false
                         }
                     }
-                    // let newzipfile = path.join(__dirname, '../utils/fancydata', `fancyArrayzip${i}.zip`);
+                    let newPath = path.join(__dirname, '../utils/fancydata2', `fancyArray${i}.txt`);
                     fs.rename(filePath, newPath, async(renameErr) => {
                         if (renameErr) {
                         console.error('Error renaming file:', renameErr);
                         return;
                         }
                         console.log('File renamed successfully');
-                       
-
-                        // Usage
-                        // await createZip(newzipfile, path.join(__dirname, '../utils/fancyzip'),newPath);
+                        const success = createZipWithAdmZip(newPath, newzipfile);
+                        if (success) console.log('Process completed');
                         i++
-                        console.log('Zip created & original file deleted successfully');
-
                     });
 
                 }
