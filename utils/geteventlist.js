@@ -129,15 +129,15 @@ const getEventList = async(sportId,sportName) => {
                         let eventdata = parsedata[j]
                         // console.log(parsedata[j], parsedata.length, 'parsedata');
                         // aa logs mate che ae ingnore krje
-                        try{
-                            fs.appendFile('eventData.txt', JSON.stringify(eventdata) + '\n', (err) => {
-                            if (err) throw err;
-                            console.log('Data appended to eventData.txt');
-                            });
-                        }catch(err){
-                            console.log(err, 'errerrerrerrerr');
+                        // try{
+                        //     fs.appendFile('eventData.txt', JSON.stringify(eventdata) + '\n', (err) => {
+                        //     if (err) throw err;
+                        //     console.log('Data appended to eventData.txt');
+                        //     });
+                        // }catch(err){
+                        //     console.log(err, 'errerrerrerrerr');
                             
-                        }
+                        // }
 
                         if(eventdata.competition && (eventdata.competition.name.toLowerCase().indexOf("test") !== -1 || eventdata.competition.name.toLowerCase().indexOf("ranji trophy") !== -1 || eventdata.competition.name.toLowerCase().indexOf("west indies championship") !== -1)){  // test competition mateni condition che
                             isTestMatch = true
