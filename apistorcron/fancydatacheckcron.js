@@ -9,7 +9,7 @@ const AdmZip = require('adm-zip');
 
 module.exports = () => {
     let i = 1
-    cron.schedule('*/1 * * * *', async() => {
+    cron.schedule('*/5 * * * *', async() => {
         try{
             function ensureDirSync(dirPath) {
                 try {
@@ -54,7 +54,7 @@ module.exports = () => {
                 }
                 let size = stats.size/(1024 * 1024)
                 console.log(`File size: ${size} bytes`);
-                if(size > 100 || true){
+                if(size > 100){
                     let newzipfile = path.join(__dirname, '../utils/fancydatazip', `fancyArrayzip${i}.zip`)
                     let status = true
                     while(status){
