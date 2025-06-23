@@ -582,6 +582,59 @@ exports.geteventBySportId = catchAsync(async(req, res, next)=>{
             data:fetchMarketDatajson
         })
 })
+exports.getallbm = catchAsync(async(req, res, next)=>{
+    let fetchMarketData = await fetch(`https://odds.datafeed365.com/api/all-bm/${req.body.eventId}`,{
+            method: 'GET',
+            headers: {
+                'Content-type': 'application/json',
+            }
+        })
+        let fetchMarketDatajson = await fetchMarketData.json()
+        res.status(200).json({
+            status:'success',
+            data:fetchMarketDatajson
+        })
+})
+exports.getactivebm = catchAsync(async(req, res, next)=>{
+    let fetchMarketData = await fetch(`https://odds.datafeed365.com/api/active-bm/${req.body.eventId}`,{
+            method: 'GET',
+            headers: {
+                'Content-type': 'application/json',
+            }
+        })
+        let fetchMarketDatajson = await fetchMarketData.json()
+        res.status(200).json({
+            status:'success',
+            data:fetchMarketDatajson
+        })
+})
+exports.getallfancy = catchAsync(async(req, res, next)=>{
+    let fetchMarketData = await fetch(`https://odds.datafeed365.com/api/fancy-list/${req.body.eventId}`,{
+            method: 'GET',
+            headers: {
+                'Content-type': 'application/json',
+            }
+        })
+        let fetchMarketDatajson = await fetchMarketData.json()
+        res.status(200).json({
+            status:'success',
+            data:fetchMarketDatajson
+        })
+})
+exports.getactivefancy = catchAsync(async(req, res, next)=>{
+    let fetchMarketData = await fetch(`https://odds.datafeed365.com/api/active-fancy/${req.body.eventId}`,{
+            method: 'GET',
+            headers: {
+                'Content-type': 'application/json',
+            }
+        })
+        let fetchMarketDatajson = await fetchMarketData.json()
+        res.status(200).json({
+            status:'success',
+            data:fetchMarketDatajson
+        })
+})
+
 
 // exports.thatperticularMatch = catchAsync(async(req, res, next) => {
 //     try{

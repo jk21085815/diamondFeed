@@ -21,6 +21,10 @@ router.post('/updateOrAddEventDmd',APIController.addOtherEvent)
 router.post('/getVirtualCricketData',APIController.getcvirtualcricketdata)
 router.post('/getbookdatabymarketid', APIController.getbookdatabymarketid)
 router.post('/geteventBySportId', APIController.geteventBySportId)
+router.post('/getallbm', APIController.getallbm)
+router.post('/getactivebm', APIController.getactivebm)
+router.post('/getallfancyt', APIController.getallfancy)
+router.post('/getactivefancy', APIController.getactivefancy)
 
 router.get('/API', APIController.APIcall);
 router.get('/API2', APIController.APIcall2);
