@@ -217,9 +217,9 @@ client.on('connect', () => {
                                             }
                                             if(bookmakerdata[a].data.name == "BOOKMAKER"){
                                                 marketName = "Bookmaker"
-                                            }else if(bookmakerdata[a].data.type == "MINI_BOOKMAKER"){
+                                            }else if(bookmakerdata[a].data.name == "MINI BOOKMAKER"){
                                                 marketName = "Bookmaker 0 Commission"
-                                            }else if(bookmakerdata[a].data.type == "TO_WIN_THE_TOSS"){
+                                            }else if(bookmakerdata[a].data.name == "TOSS"){
                                                 marketName = "To Win The Toss"
                                             }else{
                                                 marketName = bookmakerdata[a].data.name
