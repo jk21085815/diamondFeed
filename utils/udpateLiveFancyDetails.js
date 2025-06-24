@@ -336,8 +336,8 @@ const updateFancyDetailsFunc = async (eventId) => {
         }
         await processMarketArray();
         try{
-            console.log('API Responses:', fancyArr);
             if(fancyArr.length !== 0){
+                console.log('API Responses:', fancyArr);
                  try{
                     fs.appendFile(logFilePath, `[${new Date()}] ${' eventId: ' + eventId + ' '}  ${JSON.stringify(fancyArr)}\n` + '\n', (err) => {
                     if (err) throw err;
