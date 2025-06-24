@@ -108,15 +108,15 @@ client.on('connect', () => {
                             OnlyMOMarketIdsArr = JSON.parse(OnlyMOMarketIdsArr)
                             console.log(eventData.eventId,OnlyMOMarketIdsArr,"OnlyMOMarketIdsArrOnlyMOMarketIdsArr")
                             if(OnlyMOMarketIdsArr.length !== 0 && !issportHRGH){
-                                let MOMarketId = OnlyMOMarketIdsArr.join(",")
-                                try{
-                                    fetchMarketData2 = await fetchMOBook(MOMarketId)
-                                }catch(error){
-                                    // await delay(1000 * 10)
-                                    fetchMarketData2 = await fetchMOBook(MOMarketId)
-                                }
+                                // try{
+                                //     fetchMarketData2 = await fetchMOBook(MOMarketId)
+                                // }catch(error){
+                                //     // await delay(1000 * 10)
+                                //     fetchMarketData2 = await fetchMOBook(MOMarketId)
+                                // }
                                 // console.log(fetchMarketData2, 'fetchMarketData2fetchMarketData2fetchMarketData2');
-                                
+                                let MOMarketId = OnlyMOMarketIdsArr.join(",")
+                                fetchMarketData2 = await fetchMOBook(MOMarketId)
                                 liveMatchCheckMarket = fetchMarketData2.find(item => (item && item.status !== "CLOSED"))
                             }
                             if(!issportHRGH){

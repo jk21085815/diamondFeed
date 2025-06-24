@@ -105,19 +105,21 @@ client.on('connect', () => {
 
                             // get MO market detail
                             if(OnlyMOMarketIdsArr.length !== 0){
-                                let count = Math.ceil(OnlyMOMarketIdsArr.length/chunkSize)
-                                for(let k = 0;k<count;k++){
-                                    let marketchunks = OnlyMOMarketIdsArr.slice((k*chunkSize),(chunkSize * (1+k)))
-                                    marketchunks = marketchunks.join(',')
-                                    let fetchMarketDatachunk
-                                    try{
-                                        fetchMarketDatachunk = await fetchMOBook(marketchunks)
-                                    }catch(error){
-                                        // await delay(1000 * 30)
-                                        fetchMarketDatachunk = await fetchMOBook(marketchunks)
-                                    }
-                                    fetchMarketData2 = fetchMarketData2.concat(fetchMarketDatachunk)
-                                }
+                                // let count = Math.ceil(OnlyMOMarketIdsArr.length/chunkSize)
+                                // for(let k = 0;k<count;k++){
+                                //     let marketchunks = OnlyMOMarketIdsArr.slice((k*chunkSize),(chunkSize * (1+k)))
+                                //     marketchunks = marketchunks.join(',')
+                                //     let fetchMarketDatachunk
+                                //     try{
+                                //         fetchMarketDatachunk = await fetchMOBook(marketchunks)
+                                //     }catch(error){
+                                //         // await delay(1000 * 30)
+                                //         fetchMarketDatachunk = await fetchMOBook(marketchunks)
+                                //     }
+                                //     fetchMarketData2 = fetchMarketData2.concat(fetchMarketDatachunk)
+                                // }
+                                let MOMarketId = OnlyMOMarketIdsArr.join(",")
+                                let fetchMarketData2 = await fetchMOBook(MOMarketId)
                                 liveMatchCheckMarket = fetchMarketData2.find(item => (item && item.status !== "CLOSED"))
                             }
                             if(liveMatchCheckMarket){  // if MO exist and its status is not CLOSED
@@ -125,14 +127,8 @@ client.on('connect', () => {
                                     liveEventInCricket.push(eventIds[i])  // push in liveevent Array
                                     isLiveStatus = true
                                 }else{
-                                    // jo MO closed no hoi and inplay ma pn no hoi to test match mate last 5 day and biji event mate 2.5 kalak pela aene live event list ma nakhi devi chu but status UPCOMING j rakhvi chi jethi 2.5 kalak pela ae event na market update thay
+                                    // jo MO closed no hoi and inplay ma pn no hoi to 2.5 kalak pela aene live event list ma nakhi devi chu but status UPCOMING j rakhvi chi jethi 2.5 kalak pela ae event na market update thay
                                     if(liveMatchCheckMarket.status !== 'CLOSED'){
-                                        // if(isTest){
-                                        //     if(new Date(eventData.openDate).getTime() + (1000 * 60 * 60 * 24 * 5) >= Date.now()){
-                                        //         liveEventInCricket.push(eventIds[i])
-                                        //     }
-                                        // }else{
-                                        // }
                                         if(new Date(eventData.openDate).getTime() - (1000 * 60 * 60 * 2) <= Date.now()){
                                             liveEventInCricket.push(eventIds[i])
                                         }
