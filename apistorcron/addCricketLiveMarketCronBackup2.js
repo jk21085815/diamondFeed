@@ -100,7 +100,7 @@ client.on('connect', () => {
                             OnlyMOMarketIdsArr = await client.get(`${eventIds[i]}_OnlyMOMarketIdsArr_diamond`) // get MO marketIds
                             OnlyMOMarketIdsArr = JSON.parse(OnlyMOMarketIdsArr)
                             // if(eventData.eventId == "34316669"){
-                                // console.log(OnlyMOMarketIdsArr,OtherMOMarketArr,"OnlyMOMarketIdsArr")
+                                console.log(OnlyMOMarketIdsArr,"OnlyMOMarketIdsArr")
                             // }
 
                             // get MO market detail
