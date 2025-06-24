@@ -335,7 +335,7 @@ const updateFancyDetailsFunc = async (eventId) => {
             return apiResponses;
         }
         await processMarketArray();
-        console.log('API Responses:', eventId,fancyArr);
+        // console.log('API Responses:', eventId,fancyArr);
         try{
             if(fancyArr.length !== 0){
                  try{
