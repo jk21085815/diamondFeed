@@ -13,8 +13,8 @@ const APIRoutes = require('./routes/APIRoutes')
 const maincron = require('./apistorcron/seteventlistCron')
 const updateMOBMData = require('./apistorcron/addCricketLiveMarketCronBackup2')
 const updateMOBMDataOtherSport = require('./apistorcron/addOtherLiveMarketCronBackup')
-const savemarketBetches = require('./apistorcron/updateMOMarketDetailsCron')
-const getmarketBetches = require('./apistorcron/updateMOMarketDetailsCrone2')
+const savemarketBatches = require('./apistorcron/updateMOMarketDetailsCron')
+const getmarketBatches = require('./apistorcron/updateMOMarketDetailsCrone2')
 const updateBMLiveMarketDetails = require('./apistorcron/updateBMMarketDetailsCron')
 const updateBMLiveMarketDetails2 = require('./apistorcron/updateBMMarketDetailsCron2')
 const setSportDataCron = require('./apistorcron/setsportdataCron')
@@ -50,8 +50,8 @@ app.use(cookieParser());
 maincron()  // Main Cron Run Every 30 min. fetch all event data and market data
 updateMOBMData() // Update MO and BM markets and eventStatus of Cricket 
 updateMOBMDataOtherSport() // Update MO and BM markets and eventStatus of Other Sports 
-savemarketBetches()  // 200 ni bach ma MO marketIds save krva mate
-getmarketBetches()  // ae baches ne get kri ne MO market detail update krva matena Function ma pass krie chie 
+savemarketBatches()  // 200 ni bach ma MO marketIds save krva mate
+getmarketBatches()  // ae baches ne get kri ne MO market detail update krva matena Function ma pass krie chie 
 updateBMLiveMarketDetails() // BM ne 505ms update
 exchangePageCron()  // upcoming event na exchange no data udpate thay che jema khali MO market j send krie chie
 liveexchangePageCron() // live event na exchange no data udpate thay che jema khali MO market j send krie chie
