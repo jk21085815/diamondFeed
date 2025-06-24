@@ -108,13 +108,6 @@ client.on('connect', () => {
                             OnlyMOMarketIdsArr = JSON.parse(OnlyMOMarketIdsArr)
                             // console.log(eventData.eventId,OnlyMOMarketIdsArr,"OnlyMOMarketIdsArrOnlyMOMarketIdsArr")
                             if(OnlyMOMarketIdsArr.length !== 0 && !issportHRGH){
-                                // try{
-                                //     fetchMarketData2 = await fetchMOBook(MOMarketId)
-                                // }catch(error){
-                                //     // await delay(1000 * 10)
-                                //     fetchMarketData2 = await fetchMOBook(MOMarketId)
-                                // }
-                                // console.log(fetchMarketData2, 'fetchMarketData2fetchMarketData2fetchMarketData2');
                                 let MOMarketId = OnlyMOMarketIdsArr.join(",")
                                 fetchMarketData2 = await fetchMOBook(MOMarketId)
                                 liveMatchCheckMarket = fetchMarketData2.find(item => (item && item.status !== "CLOSED"))
@@ -244,9 +237,6 @@ client.on('connect', () => {
                                                     await clientme.set(`${tempObj.marketId}_diamond`, JSON.stringify(tempObj), 'EX', 24 * 60 * 60);
                                                     await client.set(`/topic/diamond_bm_update/${tempObj.marketId}`,JSON.stringify(tempObj));
                                                     Publishclient.publish(`/topic/diamond_bm_update/${tempObj.marketId}`,JSON.stringify(tempObj));
-                                                    // if(!OtherSportLiveMarketIdsBM.includes(tempObj.marketId)){
-                                                    //     OtherSportLiveMarketIdsBM.push(tempObj.marketId)
-                                                    // }
                                                 }
                                             }
                                         }
@@ -255,12 +245,7 @@ client.on('connect', () => {
                                     let fetchMarketData3
                                     if(OtherMOMarketArr.length !== 0){
                                         let momarketIds = OtherMOMarketArr.join(",")
-                                        try{
-                                            fetchMarketData3 = await fetchMOBook(momarketIds)
-                                        }catch(error){
-                                            // await delay(1000 * 10)
-                                            fetchMarketData3 = await fetchMOBook(momarketIds)
-                                        }
+                                        fetchMarketData3 = await fetchMOBook(momarketIds)
                                         liveMatchCheckMarket2 = fetchMarketData3.filter(item => (item && ["OPEN","SUSPENDED","BALL_RUNNING"].includes(item.status)))
                                     }
                                     if(liveMatchCheckMarket2.length > 0){
@@ -312,12 +297,7 @@ client.on('connect', () => {
                                 let fetchMarketData3
                                 if(OtherMOMarketArr.length !== 0){
                                     let momarketIds = OtherMOMarketArr.join(",")
-                                    try{
-                                        fetchMarketData3 = await fetchMOBook(momarketIds)
-                                    }catch(error){
-                                        // await delay(1000 * 10)
-                                        fetchMarketData3 = await fetchMOBook(momarketIds)
-                                    }
+                                    fetchMarketData3 = await fetchMOBook(momarketIds)
                                     liveMatchCheckMarket = fetchMarketData3.filter(item => (item && ["OPEN","SUSPENDED","BALL_RUNNING"].includes(item.status)))
                                 }
                                 // get other MO and save it to redis event object

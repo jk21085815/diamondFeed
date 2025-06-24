@@ -259,11 +259,7 @@ client.on('connect', () => {
                                 // other MO ni market fetch krine MOmarketArray variable ma push krie chie
                                 if(OtherMOMarketArr.length !== 0){
                                     let momarketIds = OtherMOMarketArr.join(",")
-                                    try{
-                                        fetchMarketData3 = await fetchMOBook(momarketIds)
-                                    }catch(error){
-                                        fetchMarketData3 = await fetchMOBook(momarketIds)
-                                    }
+                                    fetchMarketData3 = await fetchMOBook(momarketIds)
                                     liveMatchCheckMarket2 = fetchMarketData3.filter(item => (item && ["OPEN","SUSPENDED","BALL_RUNNING"].includes(item.status)))
                                 }
                                 if(liveMatchCheckMarket2.length > 0){
