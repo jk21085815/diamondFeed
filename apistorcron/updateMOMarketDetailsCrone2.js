@@ -12,30 +12,12 @@ client.on('connect', () => {
 
 const updateSetinterval = async() => {
     setInterval(async()=>{
-        // let starttime = Date.now()
         let count = await client.get('marketidCounts_MO')
         count = JSON.parse(count)        
         for(let k = 0;k<count;k++){
             let marketIds = await client.get(`marketidkcount_MO_${k}`)
             updateMOMarketDetails(marketIds,k) // aa Func ma 200 betch ni markets comma seperated pass kri
         }
-        // console.log((Date.now()-starttime),count,'timeeeeeeeeeeeeeeeee')
-
-        // const promises = [];
-// console.log(count, 123456);
-
-// for (let k = 0; k < count; k++) {
-//     promises.push(
-//         client.get(`marketidkcount_MO_${k}`).then((marketIds) => {
-//             return updateMOMarketDetails(marketIds);
-//         })
-//     );
-// }
-
-// await Promise.all(promises);
-
-// console.log('woegfgfgf');
-
         
     },505)
 }

@@ -13,8 +13,6 @@ client.on('connect', () => {
     // console.log('Connected to Redis1');
 });
 const updateLiveMarketDetails2 = async(bookdataArray) => {
-    let runner
-    // console.log(i,'iiiiiii2222222222222')
     try{
         if (!Array.isArray(bookdataArray) || bookdataArray.length === 0) return;  // jo bookdataArray array no hoi to return kri devanu
          // STEP 1: Prepare all Redis keys
