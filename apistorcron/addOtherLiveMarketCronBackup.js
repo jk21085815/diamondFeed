@@ -190,6 +190,7 @@ client.on('connect', () => {
                                                 }
                                                 let tempRunner = []
                                                 let marketName
+                                                let marketType
                                                 let tempObj = {
                                                     "marketId": bookmakerdata[a].bookmaker_id,
                                                     "marketTime": new Date(),
@@ -207,7 +208,13 @@ client.on('connect', () => {
                                                 }else{
                                                     marketName = bookmakerdata[a].data.name
                                                 }
+                                                 if(bookmakerdata[a].data.type == "EXTRA_BOOKMAKER"){
+                                                    marketType = "EXTRA_BOOKMAKER"
+                                                }else{
+                                                    marketType = "BOOKMAKER"
+                                                }
                                                 tempObj["marketName"] = marketName
+                                                tempObj["marketType"] = marketType
                             
                                                 let bookmakerrunner = JSON.parse(bookmakerdata[a].data.runners)
                                                 let runnerIds = Object.keys(bookmakerrunner)
