@@ -63,7 +63,7 @@ updateLiveFanctCron() //Live Fency dtail update in 505ms
 // updateLiveFanctCron2()
 // updateAdvFanctCron()
 // updateBMLiveMarketDetails2()
-// setSportDataCron()
+setSportDataCron()
 
 changefilename()
 
