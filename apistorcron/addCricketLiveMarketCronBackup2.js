@@ -222,7 +222,7 @@ client.on('connect', () => {
                                                 marketName = bookmakerdata[a].data.name
                                             }
                                             if(bookmakerdata[a].data.type == "EXTRA_BOOKMAKER"){
-                                                marketType = "EXTRA_BOOKMAKER"
+                                                marketType = "LAST_DIGIT"
                                             }else{
                                                 marketType = "BOOKMAKER"
                                             }
