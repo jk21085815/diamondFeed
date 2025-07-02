@@ -254,6 +254,10 @@ const updateFancyDetailsFunc = async (eventId) => {
                                 category = "ODD_EVEN";
                             } else if (typeCode === "6") {
                                 category = "BALL_BY_BALL";
+                            }else if(typeCode == "32"){
+                                category = "METER"
+                            }else if(typeCode == "30"){
+                                category = "KHADO"
                             } else {
                                 category = "OTHER";
                             }
