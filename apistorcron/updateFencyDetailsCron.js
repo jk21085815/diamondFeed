@@ -12,7 +12,7 @@ client.on('connect', () => {
 
 
 module.exports = () => {
-    cron.schedule('34 * * * *', async() => {
+    cron.schedule('*/10 * * * *', async() => {
         try{
 
             let cricketEventIdsLive
