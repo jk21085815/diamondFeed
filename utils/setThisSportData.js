@@ -359,6 +359,10 @@ const setThisSportData = async(eventlist,SportName) => {
                                     category = "ODD_EVEN"
                                 }else if(tempObjfancy.type_code.toString() == "6"){
                                     category = "BALL_BY_BALL"
+                                }else if(tempObjfancy.type_code.toString() == "32"){
+                                    category = "METER"
+                                }else if(tempObjfancy.type_code.toString() == "30"){
+                                    category = "KHADO"
                                 }else{
                                     category = "OTHER"
                                 }
