@@ -209,6 +209,7 @@ client.on('connect', () => {
                                                     marketName = bookmakerdata[a].data.name
                                                 }
                                                  if(bookmakerdata[a].data.type == "EXTRA_BOOKMAKER"){
+                                                console.log(bookmakerdata[a].data, "bookmakerdata[a].databookmakerdata[a].data")
                                                     marketType = "LAST_DIGIT"
                                                 }else{
                                                     marketType = "BOOKMAKER"
