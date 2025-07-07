@@ -221,7 +221,7 @@ client.on('connect', () => {
                                             }else{
                                                 marketName = bookmakerdata[a].data.name
                                             }
-                                            if(bookmakerdata[a].data.type == "EXTRA_BOOKMAKER"){
+                                            if(bookmakerdata[a].data.name.toLowerCase().includes('last digit')){
                                                 console.log(bookmakerdata[a].data, "bookmakerdata[a].databookmakerdata[a].data")
                                                 marketType = "LAST_DIGIT"
                                             }else{
