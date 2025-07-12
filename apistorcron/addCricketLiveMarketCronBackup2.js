@@ -19,7 +19,6 @@ client.on('connect', () => {
     // console.log('Connected to Redis1');
 });
 
-
 // module.exports = () => {
     // cron.schedule('*/02 * * * *', async() => {
         const addcricketlivemarketcronFunc = async() => {
@@ -49,7 +48,7 @@ client.on('connect', () => {
                 }else{
                     otherEvents = []
                 }
-                // console.log(otherEvents,'other eventssssssssssss')
+                console.log(otherEvents,'other eventssssssssssss')
                 eventIds = JSON.parse(eventIds)
                 eventIds = eventIds.concat(otherEvents)
                 function delay(ms) {
