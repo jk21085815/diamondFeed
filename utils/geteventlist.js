@@ -250,7 +250,7 @@ const getEventList = async(sportId,sportName) => {
                     let eventData = await client.get(`${otherEvents[i]}_diamondEventData`)
                     if(eventData){
                         eventData = JSON.parse(eventData)
-                        if(isTodaysEvent(eventData.openDate)){
+                        if(isDateWithinLast5Days(eventData.openDate)){
                             otherEventIds.push(eventData.eventId)
                         }
                     }
@@ -260,7 +260,7 @@ const getEventList = async(sportId,sportName) => {
                     let eventData = await client.get(`${otherotherEventIds[i]}_diamondEventData`)
                     if(eventData){
                         eventData = JSON.parse(eventData)
-                        if(isTodaysEvent(eventData.openDate)){
+                        if(isDateWithinLast5Days(eventData.openDate)){
                             otherotherEventIds.push(eventData.eventId)
                         }
                     }
