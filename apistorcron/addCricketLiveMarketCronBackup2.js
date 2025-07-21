@@ -134,7 +134,7 @@ client.on('connect', () => {
                                     eventData.status = "UPCOMING"
                                 }
                             }
-                            let pushstatus = true 
+                            let pushstatus = false 
                             let showvirtual = false
                             let thatMO = liveMatchCheckMarket
                             if(thatMO){ // jo eventma MO hoi and  CLOSED no hoi to aene FE ma show kravani
@@ -280,7 +280,7 @@ client.on('connect', () => {
                                 eventData.markets.matchOdds = matchOddMarketArr
                                 eventData.markets.bookmakers = bookmakersMarketArr
                                 // jo event other ni hoi to aema MO no hoi BM & Fancy j hoi to ae banne aek sathe empty no hova joie aej other event show kravani FE ma
-                                if(eventData.isother || true){
+                                if(eventData.isother){
                                     if(!showvirtual){
                                         if(eventData.markets.fancyMarkets.length > 0){
                                             showvirtual = true
