@@ -138,16 +138,18 @@ client.on('connect', () => {
                                         eventData.status = "UPCOMING"
                                     }
                                 }
-                                let pushstatus = false 
+                                let pushstatus = true 
                                 let showvirtual = false
                                 let thatMO = liveMatchCheckMarket
                                 if(thatMO){
                                     if(['OPEN','SUSPENDED','BALL_RUNNING'].includes(thatMO.status)){
                                         pushstatus = true
+                                        showvirtual = true
                                     }
                                 }else{
                                     if(eventData.competitionName.trim() == eventData.eventName.trim()){
                                         pushstatus = true
+                                        showvirtual = true
                                     }else if(eventData.isother){
                                         pushstatus = true
                                     }
@@ -280,18 +282,19 @@ client.on('connect', () => {
                                     eventData.markets.matchOdds = matchOddMarketArr
                                     eventData.markets.bookmakers = bookmakersMarketArr
 
-                                    if(eventData.isother){
-                                        if(!showvirtual){
-                                            if(eventData.markets.fancyMarkets.length > 0){
-                                                showvirtual = true
-                                            }
+                                    if(!showvirtual){
+                                        if(eventData.markets.fancyMarkets.length > 0){
+                                            showvirtual = true
                                         }
-                                        if(showvirtual){
-                                            showEvent.push(eventIds[i])
-                                        }
-                                    }else{
+                                    }
+                                    if(showvirtual){
+                                        console.log(eventData.eventName,showvirtual,'show virtual')
                                         showEvent.push(eventIds[i])
                                     }
+                                    // if(eventData.isother){
+                                    // }else{
+                                    //     showEvent.push(eventIds[i])
+                                    // }
                                                 
                                 }
                                 const timestamp = new Date().toISOString();

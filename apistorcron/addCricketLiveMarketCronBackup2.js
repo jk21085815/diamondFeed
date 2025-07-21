@@ -288,7 +288,7 @@ client.on('connect', () => {
                                     }
                                 }
                                 if(showvirtual){
-                                    console.log(eventData.eventName,showvirtual,'show virtual')
+                                    // console.log(eventData.eventName,showvirtual,'show virtual')
                                     showEvent.push(eventIds[i])
                                 }
                                 // if(eventData.isother || true){
