@@ -238,13 +238,13 @@ const getEventList = async(sportId,sportName) => {
                 
             } 
             geteventListBySportId()
-            let otherEventIds = []
-            let otherotherEventIds = []
-            let otherEvents = await client.get('crone_getEventIds_Other_diamond')
-            otherEvents = JSON.parse(otherEvents)
-            let otherotherEvents = await client.get('crone_getEventIds_Other_Other_diamond')
-            otherotherEvents = JSON.parse(otherotherEvents)
             if(sportId == "4"){
+                let otherEventIds = []
+                let otherotherEventIds = []
+                let otherEvents = await client.get('crone_getEventIds_Other_diamond')
+                otherEvents = JSON.parse(otherEvents)
+                let otherotherEvents = await client.get('crone_getEventIds_Other_Other_diamond')
+                otherotherEvents = JSON.parse(otherotherEvents)
                 for(let i = 0;i<otherEvents.length;i++){
                     console.log(otherEvents[i],'eventId')
                     let eventData = await client.get(`${otherEvents[i]}_diamondEventData`)
@@ -255,9 +255,8 @@ const getEventList = async(sportId,sportName) => {
                         }
                     }
                 }
-                for(let i = 0;i<otherotherEventIds.length;i++){
-                    console.log(otherotherEventIds[i],'eventId')
-                    let eventData = await client.get(`${otherotherEventIds[i]}_diamondEventData`)
+                for(let i = 0;i<otherotherEvents.length;i++){
+                    let eventData = await client.get(`${otherotherEvents[i]}_diamondEventData`)
                     if(eventData){
                         eventData = JSON.parse(eventData)
                         if(isDateWithinLast5Days(eventData.openDate)){
