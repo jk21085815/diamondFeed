@@ -470,14 +470,14 @@ const setThisSportData = async(eventlist,SportName) => {
                     let findEvent2 = otherEvents.findIndex(item => item == previouseventdata.eventId)
                     if(findEvent1 != -1){
                         otherEvents.splice(findEvent1, 1)
-                        // await client.set('crone_getEventIds_Other_diamond',JSON.stringify(otherEvents))
+                        await client.set('crone_getEventIds_Other_diamond',JSON.stringify(otherEvents))
                     }
                     if(findEvent2 != -1){
                         otherotherEvents.splice(findEvent2, 1)
-                        // await client.set('crone_getEventIds_Other_Other_diamond',JSON.stringify(otherotherEvents))
+                        await client.set('crone_getEventIds_Other_Other_diamond',JSON.stringify(otherotherEvents))
 
                     }
-                    console.log(otherEvents,otherotherEvents,'other event idsssssssssss222222222')
+                    // console.log(otherEvents,otherotherEvents,'other event idsssssssssss222222222')
                     
                     previouseventdata.openDate = eventlist[k].event.openDate
                     thisSportEventId.push(previouseventdata.eventId)
