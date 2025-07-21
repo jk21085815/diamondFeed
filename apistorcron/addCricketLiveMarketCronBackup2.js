@@ -104,19 +104,6 @@ client.on('connect', () => {
 
                             // get MO market detail
                             if(OnlyMOMarketIdsArr.length !== 0){
-                                // let count = Math.ceil(OnlyMOMarketIdsArr.length/chunkSize)
-                                // for(let k = 0;k<count;k++){
-                                //     let marketchunks = OnlyMOMarketIdsArr.slice((k*chunkSize),(chunkSize * (1+k)))
-                                //     marketchunks = marketchunks.join(',')
-                                //     let fetchMarketDatachunk
-                                //     try{
-                                //         fetchMarketDatachunk = await fetchMOBook(marketchunks)
-                                //     }catch(error){
-                                //         // await delay(1000 * 30)
-                                //         fetchMarketDatachunk = await fetchMOBook(marketchunks)
-                                //     }
-                                //     fetchMarketData2 = fetchMarketData2.concat(fetchMarketDatachunk)
-                                // }
                                 let MOMarketId = OnlyMOMarketIdsArr.join(",")
                                 let fetchMarketData2 = await fetchMOBook(MOMarketId)
                                 liveMatchCheckMarket = fetchMarketData2.find(item => (item && item.status !== "CLOSED"))
@@ -147,7 +134,7 @@ client.on('connect', () => {
                                     eventData.status = "UPCOMING"
                                 }
                             }
-                            let pushstatus = false 
+                            let pushstatus = true 
                             let showvirtual = false
                             let thatMO = liveMatchCheckMarket
                             if(thatMO){ // jo eventma MO hoi and  CLOSED no hoi to aene FE ma show kravani
@@ -293,7 +280,7 @@ client.on('connect', () => {
                                 eventData.markets.matchOdds = matchOddMarketArr
                                 eventData.markets.bookmakers = bookmakersMarketArr
                                 // jo event other ni hoi to aema MO no hoi BM & Fancy j hoi to ae banne aek sathe empty no hova joie aej other event show kravani FE ma
-                                if(eventData.isother){
+                                if(eventData.isother || true){
                                     if(!showvirtual){
                                         if(eventData.markets.fancyMarkets.length > 0){
                                             showvirtual = true
