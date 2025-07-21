@@ -87,6 +87,8 @@ client.on('connect', () => {
                         let eventData
                         let fetchMarketData2 = []
                         let OnlyMOMarketIdsArr = []
+                        let showvirtual = false
+
                         // let isTest = false
                         eventData = await client.get(`${eventIds[i]}_diamondEventData`)
                         if(eventData){
@@ -109,6 +111,7 @@ client.on('connect', () => {
                                 liveMatchCheckMarket = fetchMarketData2.find(item => (item && item.status !== "CLOSED"))
                             }
                             if(liveMatchCheckMarket){  // if MO exist and its status is not CLOSED
+                                showvirtual = true
                                 if((liveMatchCheckMarket.inplay == true && liveMatchCheckMarket.status !== 'CLOSED') || forcefullyLiveEvents.includes(eventData.eventId)){
                                     liveEventInCricket.push(eventIds[i])  // push in liveevent Array
                                     isLiveStatus = true
@@ -121,6 +124,7 @@ client.on('connect', () => {
                                     }
                                 }
                             }else if(forcefullyLiveEvents.includes(eventData.eventId)){ // jo event ne admin panel thi forcefully inplay ma nakhie to 
+                                showvirtual = true
                                 liveEventInCricket.push(eventIds[i])
                                 isLiveStatus = true
                             }
@@ -134,8 +138,7 @@ client.on('connect', () => {
                                     eventData.status = "UPCOMING"
                                 }
                             }
-                            let pushstatus = false 
-                            let showvirtual = false
+                            let pushstatus = true 
                             let thatMO = liveMatchCheckMarket
                             if(thatMO){ // jo eventma MO hoi and  CLOSED no hoi to aene FE ma show kravani
                                 if(['OPEN','SUSPENDED',"BALL_RUNNING"].includes(thatMO.status)){
@@ -280,13 +283,14 @@ client.on('connect', () => {
                                 eventData.markets.matchOdds = matchOddMarketArr
                                 eventData.markets.bookmakers = bookmakersMarketArr
                                 // jo event other ni hoi to aema MO no hoi BM & Fancy j hoi to ae banne aek sathe empty no hova joie aej other event show kravani FE ma
-                                if(eventData.isother){
+                                if(eventData.isother || true){
                                     if(!showvirtual){
                                         if(eventData.markets.fancyMarkets.length > 0){
                                             showvirtual = true
                                         }
                                     }
                                     if(showvirtual){
+                                        console.log(eventData.eventName)
                                         showEvent.push(eventIds[i])
                                     }
                                 }else{
