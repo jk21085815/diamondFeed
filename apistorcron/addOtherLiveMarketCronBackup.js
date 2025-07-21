@@ -138,7 +138,7 @@ client.on('connect', () => {
                                         eventData.status = "UPCOMING"
                                     }
                                 }
-                                let pushstatus = false 
+                                let pushstatus = true 
                                 let showvirtual = false
                                 let thatMO = liveMatchCheckMarket
                                 if(thatMO){
@@ -280,7 +280,7 @@ client.on('connect', () => {
                                     eventData.markets.matchOdds = matchOddMarketArr
                                     eventData.markets.bookmakers = bookmakersMarketArr
 
-                                    if(eventData.isother){
+                                    if(eventData.isother || true){
                                         if(!showvirtual){
                                             if(eventData.markets.fancyMarkets.length > 0){
                                                 showvirtual = true
