@@ -290,7 +290,7 @@ client.on('connect', () => {
                                         }
                                     }
                                     if(showvirtual){
-                                        console.log(eventData.eventName)
+                                        console.log(eventData.eventName,thatMO?thatMO.status:showvirtual)
                                         showEvent.push(eventIds[i])
                                     }
                                 }else{
