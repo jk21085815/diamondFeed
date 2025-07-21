@@ -476,7 +476,7 @@ const setThisSportData = async(eventlist,SportName) => {
                         await client.set('crone_getEventIds_Other_Other_diamond',JSON.stringify(otherotherEvents))
 
                     }
-                    // console.log(otherEventIds,otherotherEventIds,'other event idsssssssssss')
+                    console.log(otherEvents,otherotherEvents,'other event idsssssssssss')
                     
                     previouseventdata.openDate = eventlist[k].event.openDate
                     thisSportEventId.push(previouseventdata.eventId)
