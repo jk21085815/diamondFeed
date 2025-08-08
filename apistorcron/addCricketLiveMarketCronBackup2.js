@@ -28,8 +28,8 @@ client.on('connect', () => {
                 let chunkSize = 30
                 let marketIdsArrMO = [];
                 let liveEventInCricket = [];
-                let showEvent = []
                 let eventIds = await client.get('crone_getEventIds_Cricket_diamond');
+                let showEvent = []
                 let CricketLiveEventIds = await client.get('crone_CricketliveEventIds_diamond_UPD');
                 let otherEvents = await client.get('crone_getEventIds_Other_diamond')
                 let forcefullyLiveEvents = await client2.get('InPlayEventdata')  // get forcefully live event from redis of admin panel
@@ -48,9 +48,9 @@ client.on('connect', () => {
                 }else{
                     otherEvents = []
                 }
-                console.log(eventIds.find(item => item == "29510526"),'other eventssssssssssss')
                 eventIds = JSON.parse(eventIds)
                 eventIds = eventIds.concat(otherEvents)
+                console.log(eventIds.find(item => item == "29510526"),'other eventssssssssssss')
 
                 function delay(ms) {
                     return new Promise(resolve => setTimeout(resolve, ms));
