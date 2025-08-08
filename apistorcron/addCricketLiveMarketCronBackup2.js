@@ -51,6 +51,8 @@ client.on('connect', () => {
                 // console.log(otherEvents,'other eventssssssssssss')
                 eventIds = JSON.parse(eventIds)
                 eventIds = eventIds.concat(otherEvents)
+                console.log(eventIds.find(item => item == "29510526"),"29510526295105262951052629510526 in cricket")
+
                 function delay(ms) {
                     return new Promise(resolve => setTimeout(resolve, ms));
                 }
