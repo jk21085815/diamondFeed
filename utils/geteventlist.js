@@ -70,8 +70,8 @@ const getEventList = async(sportId,sportName) => {
         let fetchMarketDatajson = await fetchMarketData.json()
         return fetchMarketDatajson
     }
-    // cron.schedule('45 * * * *', async() => {
-    cron.schedule('0 */3 * * *', async() => {
+    cron.schedule('32 * * * *', async() => {
+    // cron.schedule('0 */3 * * *', async() => {
         let starttime = new Date();
         console.log(starttime,`Set ${sportName} CompId Cron Started.....111111111111111111111111111111111111111111111111`)
         try{
@@ -245,6 +245,8 @@ const getEventList = async(sportId,sportName) => {
                 otherEvents = JSON.parse(otherEvents)
                 let otherotherEvents = await client.get('crone_getEventIds_Other_Other_diamond')
                 otherotherEvents = JSON.parse(otherotherEvents)
+                console.log(otherEvents,otherotherEvents,'other event idsssssssssss11111111')
+
                 for(let i = 0;i<otherEvents.length;i++){
                     console.log(otherEvents[i],'eventId')
                     let eventData = await client.get(`${otherEvents[i]}_diamondEventData`)
@@ -264,7 +266,7 @@ const getEventList = async(sportId,sportName) => {
                         }
                     }
                 }
-                // console.log(otherEventIds,otherotherEventIds,'other event idsssssssssss')
+                console.log(otherEventIds,otherotherEventIds,'other event idsssssssssss2222222')
                 await client.set('crone_getEventIds_Other_diamond',JSON.stringify(otherEventIds))
                 await client.set('crone_getEventIds_Other_Other_diamond',JSON.stringify(otherotherEventIds))
             }
