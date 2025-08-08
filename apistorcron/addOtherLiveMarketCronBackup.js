@@ -61,7 +61,7 @@ client.on('connect', () => {
                     liveEventIds = []
                 }
                 console.log(eventIds.length,'otherSportEventIdssssssss')
-                console.log(eventIds.find(item => item == "29510526"),"295105262951052629510526")
+                console.log(eventIds.find(item => item == "29510526"),"29510526295105262951052629510526")
                 function delay(ms) {
                     return new Promise(resolve => setTimeout(resolve, ms));
                 }
