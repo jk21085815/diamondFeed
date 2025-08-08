@@ -48,10 +48,9 @@ client.on('connect', () => {
                 }else{
                     otherEvents = []
                 }
-                // console.log(otherEvents,'other eventssssssssssss')
+                console.log(otherEvents,'other eventssssssssssss')
                 eventIds = JSON.parse(eventIds)
                 eventIds = eventIds.concat(otherEvents)
-                console.log(otherEvents,"29510526295105262951052629510526 in cricket")
 
                 function delay(ms) {
                     return new Promise(resolve => setTimeout(resolve, ms));
