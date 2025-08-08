@@ -47,7 +47,7 @@ client.on('connect', () => {
                 }else{
                     otherEvents = []
                 }
-                console.log(otherEvents,'other event idsssssssssss33333333')
+                // console.log(otherEvents,'other event idsssssssssss33333333')
                 eventIds1 = JSON.parse(eventIds1)
                 eventIds2 = JSON.parse(eventIds2)
                 eventIds3 = JSON.parse(eventIds3)
