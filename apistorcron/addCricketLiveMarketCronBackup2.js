@@ -48,7 +48,7 @@ client.on('connect', () => {
                 }else{
                     otherEvents = []
                 }
-                console.log(otherEvents,'other eventssssssssssss')
+                console.log(CricketLiveEventIds.find(item => item == "29510526"),'other eventssssssssssss')
                 eventIds = JSON.parse(eventIds)
                 eventIds = eventIds.concat(otherEvents)
 
