@@ -87,6 +87,9 @@ client.on('connect', () => {
                     return fetchMarketDatajson.data
                 }
                 for(let i = 0;i<eventIds.length;i++){
+                    if(eventIds[i] == "29510526"){
+                        console.log("29510526 29510526 29510526 29510526")
+                    }
                     try{
                         let matchOddMarketArr = []
                         let bookmakersMarketArr = []
