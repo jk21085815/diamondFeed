@@ -226,7 +226,7 @@ const getEventList = async(sportId,sportName) => {
                             }
                         }
                     }
-                    console.log(eventlist.find(item => item == "29510526"),"29510526295105262951052629510526")
+                    // console.log(eventlist.find(item => item == "29510526"),"29510526295105262951052629510526")
                     client.set(`crone_getEvent_list_${sportName}_diamond`,JSON.stringify(eventlist))  
                     console.log(starttime,new Date(),(Date.now()-(starttime.getTime()))/1000,`Set ${sportName} CompititionId Cron Ended...`) 
                     await setFinalResult(sportName)
