@@ -465,7 +465,7 @@ const setThisSportData = async(eventlist,SportName) => {
                     otherEvents = JSON.parse(otherEvents)
                     let otherotherEvents = await client.get('crone_getEventIds_Other_Other_diamond')
                     otherotherEvents = JSON.parse(otherotherEvents)
-                    console.log(otherEvents,otherotherEvents,'other event idsssssssssss222222222')
+                    // console.log(otherEvents,otherotherEvents,'other event idsssssssssss222222222')
                     let findEvent1 = otherEvents.findIndex(item => item == previouseventdata.eventId)
                     let findEvent2 = otherEvents.findIndex(item => item == previouseventdata.eventId)
                     if(findEvent1 != -1){
