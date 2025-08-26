@@ -95,11 +95,11 @@ const getEventList = async(sportId,sportName) => {
                         }
                     })
                     fetchTouranamaentevents = await fetchTouranamaentevents.text()   // convert data into text
-                    if (typeof fetchTouranamaentevents === "string" && fetchTouranamaentevents.trim() !== "") { // condition for check data is string or not empty
-                        parsedata2 = JSON.parse(fetchTouranamaentevents) // if data is string then convert into JSON
-                    } else {
-                        console.error("Invalid JSON data:", fetchTouranamaentevents);
-                    }
+                    parsedata2 = JSON.parse(fetchTouranamaentevents) // if data is string then convert into JSON
+                    // if (typeof fetchTouranamaentevents === "string" && fetchTouranamaentevents.trim() !== "") { // condition for check data is string or not empty
+                    // } else {
+                    //     console.error("Invalid JSON data:", fetchTouranamaentevents);
+                    // }
                     fetchEventList = await fetchEventList.text()
                     let parsedata = JSON.parse(fetchEventList)
                     parsedata = parsedata.concat(parsedata2)  // merge winner and betfair events
