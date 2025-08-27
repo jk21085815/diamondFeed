@@ -41,6 +41,7 @@ client.on('connect', () => {
                 let eventIds1 = await client.get(`crone_getEventIds_Soccer_diamond`);
                 let eventIds3 = await client.get(`crone_getEventIds_GreyHound_diamond`);
                 let eventIds4 = await client.get(`crone_getEventIds_HorseRacing_diamond`);
+                let eventIds5 = await client.get(`crone_getEventIds_Kabaddi_diamond`);
                 let otherEvents = await client.get('crone_getEventIds_Other_Other_diamond')
                 if(otherEvents){
                     otherEvents = JSON.parse(otherEvents)
@@ -51,8 +52,8 @@ client.on('connect', () => {
                 eventIds2 = JSON.parse(eventIds2)
                 eventIds3 = JSON.parse(eventIds3)
                 eventIds4 = JSON.parse(eventIds4)
-                console.log(eventIds2,otherEvents,'eventIds2eventIds2eventIds2eventIds2')
-                let eventIds = eventIds1.concat(eventIds2,eventIds3,eventIds4,otherEvents)
+                console.log(eventIds5,otherEvents,'eventIds2eventIds2eventIds2eventIds2')
+                let eventIds = eventIds1.concat(eventIds2,eventIds3,eventIds4,eventIds5,otherEvents)
                 await client.set('crone_getEventIds_OtherSport_diamond',JSON.stringify(eventIds)) // concat sport cricket sivay ni and set to this redis key
                 let liveEventIds = await client.get('crone_OtherSportLiveEventIds_diamond_UPD');
                 if(liveEventIds){
