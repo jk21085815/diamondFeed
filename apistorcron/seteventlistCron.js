@@ -17,8 +17,8 @@ module.exports = () => {
             getEventListFunc('2','Tennis')
             getEventListFunc('4339','GreyHound')
             getEventListFunc('7','HorseRacing')
+            getEventListFunc('99994','Kabaddi')
             // getEventListFunc('500','Election')
-            // getEventListFunc('400','Kabaddi')
         }catch(error){
             console.log(error,'Errorrr setCompIdCrone')
         }

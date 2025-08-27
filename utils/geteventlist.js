@@ -108,6 +108,10 @@ const getEventList = async(sportId,sportName) => {
                         let activeevent = await fetchactiveevent() // fetch active-event list
                         virtualCricket = activeevent.data.filter(item => item.name.indexOf('T10') !== -1)  // filter T10 only virtual events
                         parsedata = parsedata.concat(virtualCricket)  // then merge with main parsedata array
+                    }else if(sportId == "99994"){
+                        let activeevent = await fetchactiveevent() // fetch active-event list
+                        virtualCricket = activeevent.data.filter(item => item.event_type_id == sportId)  // filter T10 only virtual events
+                        parsedata = parsedata.concat(virtualCricket)  // then merge with main parsedata array
                     }
                     // console.log(parsedata, 'parsedataparsedata');
                     // if(sportName=== 'Cricket'){
