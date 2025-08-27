@@ -104,13 +104,13 @@ const setThisSportData = async(eventlist,SportName) => {
                         })
                         marketIds = marketIds.join(",")
                     }else{
-                        if(!eventlist[k].isvirtual){
+                        if(!eventlist[k].isvirtual || eventlist[k].sportId == 99994){
                             marketIds = [eventlist[k].marketId]
                             marketIds = marketIds.join(",")
                         }
                     }
                     let matchodddata = []
-                    if(!eventlist[k].isvirtual){
+                    if(!eventlist[k].isvirtual || eventlist[k].sportId == 99994){
                         matchodddata = await fetchMOBook(marketIds)  // ahiya markets comma-seperated pass kri che ne market no data get thase
                     }
                     // let bookmakerdata = await fetchBMBook(eventlist[k].eventId)
@@ -488,13 +488,13 @@ const setThisSportData = async(eventlist,SportName) => {
                         })
                         marketIds = marketIds.join(",")
                     }else{
-                        if(!previouseventdata.isvirtual){
+                        if(!previouseventdata.isvirtual || previouseventdata.sportId == 99994){
                             marketIds = [eventlist[k].marketId]
                             marketIds = marketIds.join(",")
                         }
                     }
                     let matchodddata = []
-                    if(!previouseventdata.isvirtual){
+                    if(!previouseventdata.isvirtual || previouseventdata.sportId == 99994){
                         matchodddata = await fetchMOBook(marketIds)
                     }
                     delete eventlist[k]['marketId']

@@ -47,11 +47,11 @@ client.on('connect', () => {
                 }else{
                     otherEvents = []
                 }
-                // console.log(otherEvents,'other event idsssssssssss33333333')
                 eventIds1 = JSON.parse(eventIds1)
                 eventIds2 = JSON.parse(eventIds2)
                 eventIds3 = JSON.parse(eventIds3)
                 eventIds4 = JSON.parse(eventIds4)
+                console.log(eventIds2,otherEvents,'eventIds2eventIds2eventIds2eventIds2')
                 let eventIds = eventIds1.concat(eventIds2,eventIds3,eventIds4,otherEvents)
                 await client.set('crone_getEventIds_OtherSport_diamond',JSON.stringify(eventIds)) // concat sport cricket sivay ni and set to this redis key
                 let liveEventIds = await client.get('crone_OtherSportLiveEventIds_diamond_UPD');

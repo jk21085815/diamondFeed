@@ -70,7 +70,7 @@ const getEventList = async(sportId,sportName) => {
         let fetchMarketDatajson = await fetchMarketData.json()
         return fetchMarketDatajson
     }
-    cron.schedule('53 * * * *', async() => {
+    cron.schedule('09 * * * *', async() => {
     // cron.schedule('0 */3 * * *', async() => {
         let starttime = new Date();
         console.log(starttime,`Set ${sportName} CompId Cron Started.....111111111111111111111111111111111111111111111111`)
@@ -183,7 +183,32 @@ const getEventList = async(sportId,sportName) => {
                                 }
                                 eventlist.push(tempObj)
                             }
+                        }
+                        if(eventdata.event_type_id && eventdata.event_type_id == 99994){  // active-event mathi je T10 vali event lidhi aeni condition che
+                            if(isUpcomingEvent(new Date(new Date(eventdata.open_date).getTime() + (1000 * 60 * 60 * 5.5)).toISOString())){  // only today ni j event filter kri
+                                let tempObj = {
+                                    eventType:{
+                                        id:"99994",
+                                        name:'Kabaddi'
+                                    },
+                                    event:{
+                                        id:eventdata.id.toString(),
+                                        name:eventdata.name,
+                                        openDate:new Date(new Date(eventdata.open_date).getTime() + (1000 * 60 * 60 * 5.5)).toISOString(),
+                                        countryCode:"",
+                                        venue:""
+                                    },
+                                    competition: {
+                                        id: "354807777",
+                                        name: "Other"
+                                    },
+                                    runners:eventdata.runners,
+                                    isvirtual:false,
+                                    isother:true
 
+                                }
+                                eventlist.push(tempObj)
+                            }
                         }
                         if(eventdata.event){    // betfair ni event ni condition che
                             if(isTestMatch){
@@ -220,16 +245,12 @@ const getEventList = async(sportId,sportName) => {
                                         if(index !== -1){
                                             eventlist.splice(index,1,thatEvent)
                                         }
-                                        if(eventdata.event.id == "34066937"){
-                                        }
                                     }else{
                                         eventdata.catalogues = [tempObj]
                                         delete eventdata.marketId
                                         delete eventdata.marketName
                                         delete eventdata.runners
                                         delete eventdata.description
-                                        if(eventdata.event.id == "34066937"){
-                                        }
                                         eventlist.push(eventdata)
                                     }
                                 }else{
@@ -239,6 +260,9 @@ const getEventList = async(sportId,sportName) => {
                         }
                     }
                     // console.log(eventlist.find(item => item == "29510526"),"29510526295105262951052629510526")
+                    if(sportName == "Kabaddi"){
+                        console.log(eventlist,'kabaddieventlistkabaddieventlistkabaddieventlistkabaddieventlistkabaddieventlist')
+                    }
                     client.set(`crone_getEvent_list_${sportName}_diamond`,JSON.stringify(eventlist))  
                     console.log(starttime,new Date(),(Date.now()-(starttime.getTime()))/1000,`Set ${sportName} CompititionId Cron Ended...`) 
                     await setFinalResult(sportName)
