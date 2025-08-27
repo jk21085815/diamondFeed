@@ -158,7 +158,7 @@ const getEventList = async(sportId,sportName) => {
                                 isElection = true
                             }
                         }
-                        if(eventdata.event_type_name || (eventdata.event_type_id && eventdata.event_type_id == 4)){  // active-event mathi je T10 vali event lidhi aeni condition che
+                        if(eventdata.event_type_id && eventdata.event_type_id == 4){  // active-event mathi je T10 vali event lidhi aeni condition che
                             if(isTodaysEvent(new Date(new Date(eventdata.open_date).getTime() + (1000 * 60 * 60 * 5.5)).toISOString())){  // only today ni j event filter kri
                                 let tempObj = {
                                     eventType:{
