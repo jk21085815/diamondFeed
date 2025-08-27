@@ -23,8 +23,8 @@ client.on('connect', () => {
     // cron.schedule('*/02 * * * *', async() => {
         const addcricketlivemarketcronFunc = async() => {
             try{
-                const logFilePath = path.join(__dirname, `logs_Cricket.txt`);
-                const logStream = fs.createWriteStream(logFilePath, { flags: 'a' });
+                // const logFilePath = path.join(__dirname, `logs_Cricket.txt`);
+                // const logStream = fs.createWriteStream(logFilePath, { flags: 'a' });
                 let chunkSize = 30
                 let marketIdsArrMO = [];
                 let liveEventInCricket = [];
@@ -297,8 +297,8 @@ client.on('connect', () => {
                                 //     showEvent.push(eventIds[i])
                                 // }
                             }
-                            const timestamp = new Date().toISOString();
-                            logStream.write(`[${timestamp}]  ${eventData.eventId + ' ' + eventData.eventName + ' ' + eventData.status + ' '}${thatMO?thatMO.status:showvirtual}\n`);
+                            // const timestamp = new Date().toISOString();
+                            // logStream.write(`[${timestamp}]  ${eventData.eventId + ' ' + eventData.eventName + ' ' + eventData.status + ' '}${thatMO?thatMO.status:showvirtual}\n`);
                             await client.set(`${eventIds[i]}_diamondEventData`,JSON.stringify(eventData))
                             await clientme.set(`${eventIds[i]}_diamondEventData`,JSON.stringify(eventData))
                         }else{
