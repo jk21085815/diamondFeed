@@ -70,7 +70,7 @@ const getEventList = async(sportId,sportName) => {
         let fetchMarketDatajson = await fetchMarketData.json()
         return fetchMarketDatajson
     }
-    cron.schedule('41 * * * *', async() => {
+    cron.schedule('44 * * * *', async() => {
     // cron.schedule('0 */3 * * *', async() => {
         let starttime = new Date();
         console.log(starttime,`Set ${sportName} CompId Cron Started.....111111111111111111111111111111111111111111111111`)
@@ -80,29 +80,37 @@ const getEventList = async(sportId,sportName) => {
                     let eventlist = []
                     let parsedata2 = []
                     let virtualCricket
+                    let fetchEventList
+                    let fetchTouranamaentevents
+                    let parsedata = []
                     // Fetch Betfair Event List By Passing SportId
-                    let fetchEventList = await fetch(`http://13.42.165.216/betfair/get_latest_event_list/${sportId}`,{
-                        method:'GET',
-                        headers:{
-                            'Content-type' : 'application/json'
-                        }
-                    })
-                    // Fetch Winner Event Like IPL, Big Bash from sportId
-                    let fetchTouranamaentevents = await fetch(`http://13.42.165.216/betfair/tournament_winner/${sportId}`,{
-                        method:'GET',
-                        headers:{
-                            'Content-type' : 'application/json'
-                        }
-                    })
-                    fetchTouranamaentevents = await fetchTouranamaentevents.text()   // convert data into text
-                    parsedata2 = JSON.parse(fetchTouranamaentevents) // if data is string then convert into JSON
+                    if(sportId !== "99994"){
+                        fetchEventList = await fetch(`http://13.42.165.216/betfair/get_latest_event_list/${sportId}`,{
+                            method:'GET',
+                            headers:{
+                                'Content-type' : 'application/json'
+                            }
+                        })
+                        fetchEventList = await fetchEventList.text()
+                        parsedata = JSON.parse(fetchEventList)
+
+                        // Fetch Winner Event Like IPL, Big Bash from sportId
+                        fetchTouranamaentevents = await fetch(`http://13.42.165.216/betfair/tournament_winner/${sportId}`,{
+                            method:'GET',
+                            headers:{
+                                'Content-type' : 'application/json'
+                            }
+                        })
+                        fetchTouranamaentevents = await fetchTouranamaentevents.text()   // convert data into text
+                        parsedata2 = JSON.parse(fetchTouranamaentevents) // if data is string then convert into JSON
+                        parsedata = parsedata.concat(parsedata2)  // merge winner and betfair events
+
+                    }
+                    
                     // if (typeof fetchTouranamaentevents === "string" && fetchTouranamaentevents.trim() !== "") { // condition for check data is string or not empty
                     // } else {
                     //     console.error("Invalid JSON data:", fetchTouranamaentevents);
                     // }
-                    fetchEventList = await fetchEventList.text()
-                    let parsedata = JSON.parse(fetchEventList)
-                    parsedata = parsedata.concat(parsedata2)  // merge winner and betfair events
                     // if sportid is 4(Cricket) then fetch Virtual event(which contain in event name T10)
                     if(sportId == "4"){
                         let activeevent = await fetchactiveevent() // fetch active-event list
@@ -110,8 +118,8 @@ const getEventList = async(sportId,sportName) => {
                         parsedata = parsedata.concat(virtualCricket)  // then merge with main parsedata array
                     }else if(sportId == "99994"){
                         let activeevent = await fetchactiveevent() // fetch active-event list
-                        virtualCricket = activeevent.data.filter(item => item.event_type_id == sportId)  // filter T10 only virtual events
-                        parsedata = parsedata.concat(virtualCricket)  // then merge with main parsedata array
+                        kabaddievents = activeevent.data.filter(item => item.event_type_id == sportId)  // filter T10 only virtual events
+                        parsedata = parsedata.concat(kabaddievents)  // then merge with main parsedata array
                     }
                     // console.log(parsedata, 'parsedataparsedata');
                     // if(sportName=== 'Cricket'){
