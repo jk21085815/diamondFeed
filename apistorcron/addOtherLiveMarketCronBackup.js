@@ -24,8 +24,8 @@ client.on('connect', () => {
     // cron.schedule('*/03 * * * *', async() => {
         const addotherlivemarketcronFunc = async() => {
             try{
-                // const logFilePath = path.join(__dirname, `logs_Other.txt`);
-                // const logStream = fs.createWriteStream(logFilePath, { flags: 'a' });
+                const logFilePath = path.join(__dirname, `logs_Other.txt`);
+                const logStream = fs.createWriteStream(logFilePath, { flags: 'a' });
                 let OtherSportLiveMarketIdsMO = [];
                 let OtherSportLiveEventIds = [];
                 let showEvent = []
@@ -300,8 +300,8 @@ client.on('connect', () => {
                                     // }
                                                 
                                 }
-                                // const timestamp = new Date().toISOString();
-                                // logStream.write(`[${timestamp}]  ${eventData.eventId + ' ' + eventData.eventName + ' ' + eventData.status + ' '}${thatMO?thatMO.status:showvirtual}\n`);
+                                const timestamp = new Date().toISOString();
+                                logStream.write(`[${timestamp}]  ${eventData.eventId + ' ' + eventData.eventName + ' ' + eventData.status + ' '}${thatMO?thatMO.status:showvirtual}\n`);
                                 await client.set(`${eventIds[i]}_diamondEventData`,JSON.stringify(eventData))
                                 await clientme.set(`${eventIds[i]}_diamondEventData`,JSON.stringify(eventData))
                             }else{
