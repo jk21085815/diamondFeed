@@ -28,6 +28,7 @@ client.on('connect', () => {
                 const logStream = fs.createWriteStream(logFilePath, { flags: 'a' });
                 let OtherSportLiveMarketIdsMO = [];
                 let OtherSportLiveEventIds = [];
+                let kabaddiSportLiveEventIds = [];
                 let showEvent = []
                 let tennisLiveEventIds = []
                 let forcefullyLiveEvents = await client2.get('InPlayEventdata')
@@ -137,6 +138,9 @@ client.on('connect', () => {
                                     if(new Date(eventData.openDate).getTime() <= Date.now()){
                                         OtherSportLiveEventIds.push(eventIds[i])
                                         eventData.status = "IN_PLAY"
+                                        if(eventData.sportId == "99994"){
+                                            kabaddiSportLiveEventIds.push(eventIds[i])
+                                        }
                                     }else{
                                         eventData.status = "UPCOMING"
                                     }
@@ -365,6 +369,7 @@ client.on('connect', () => {
                 await client.set('crone_liveMarketIds_MO_diamond_UPD',JSON.stringify(OtherSportLiveMarketIdsMO));
                 await client.set('crone_OtherSportLiveEventIds_diamond_UPD',JSON.stringify(OtherSportLiveEventIds));
                 await client.set('crone_TennisLiveEventIds_diamond_UPD',JSON.stringify(tennisLiveEventIds));
+                await client.set('crone_KabaddiLiveEventIds_diamond_UPD',JSON.stringify(kabaddiSportLiveEventIds));
                 await client.set(`crone_getEventIds_OtherSport_diamond_UPD`,JSON.stringify(showEvent))
                 addotherlivemarketcronFunc()
             }catch(error){

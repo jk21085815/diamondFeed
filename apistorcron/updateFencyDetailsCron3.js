@@ -14,14 +14,13 @@ client.on('connect', () => {
 module.exports = () => {
     setInterval(async () => {
         try{
-                let cricketEventIds
-                cricketEventIds = await client.get('crone_CricketliveEventIds_diamond_UPD'); 
+                
+                let cricketEventIds = await client.get('crone_CricketliveEventIds_diamond_UPD'); 
                 cricketEventIds = JSON.parse(cricketEventIds)
-                // console.log(cricketEventIds.length,'cricketEvent Idsssssss')
+                let kabaddiEventIds = await client.get('crone_KabaddiLiveEventIds_diamond_UPD'); 
+                kabaddiEventIds = JSON.parse(kabaddiEventIds)
+                cricketEventIds = cricketEventIds.concat(kabaddiEventIds)
                 if(cricketEventIds){
-                    // for(let i = 0;i<cricketEventIds.length;i++){
-                    //     updateFanctDetails(cricketEventIds[i])
-                    // }
                     await Promise.all(
                         cricketEventIds.map(id => updateFanctDetails(id))
                     );

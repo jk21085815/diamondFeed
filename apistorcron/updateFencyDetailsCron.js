@@ -15,12 +15,19 @@ module.exports = () => {
     cron.schedule('*/10 * * * *', async() => {
         try{
 
-            let cricketEventIdsLive
-            cricketEventIdsLive = await client.get('crone_CricketliveEventIds_diamond_UPD'); 
+            
+            let cricketEventIdsLive = await client.get('crone_CricketliveEventIds_diamond_UPD'); 
             cricketEventIdsLive = JSON.parse(cricketEventIdsLive)
             let cricketEventIdsAll = await client.get('crone_getEventIds_Cricket_diamond_UPD'); 
             cricketEventIdsAll = JSON.parse(cricketEventIdsAll)
             let cricketEventIds = cricketEventIdsAll.filter(item => !cricketEventIdsLive.includes(item))
+            
+            let kabaddiEventIdsLive = await client.get('crone_KabaddiLiveEventIds_diamond_UPD'); 
+            kabaddiEventIdsLive = JSON.parse(kabaddiEventIdsLive)
+            let kabaddiEventIdsAll = await client.get('crone_getEventIds_Kabaddi_diamond'); 
+            kabaddiEventIdsAll = JSON.parse(kabaddiEventIdsAll)
+            let kabaddiEventIds = kabaddiEventIdsAll.filter(item => !kabaddiEventIdsLive.includes(item))
+            cricketEventIds = cricketEventIds.concat(kabaddiEventIds)
             if(cricketEventIds){
                 for(let i = 0;i<cricketEventIds.length;i++){
                     updateFanctDetails(cricketEventIds[i])

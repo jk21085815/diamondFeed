@@ -325,7 +325,7 @@ const setThisSportData = async(eventlist,SportName) => {
                     // }
 
                     // fancy no data get krine structure change krine market wise and event wise set kravi chi redis ma
-                    if(["4"].includes(eventlist[k].sportId)){
+                    if(["4","99994"].includes(eventlist[k].sportId)){
                         let fancydata = await fetchFancyBook(eventlist[k].eventId)
                         let fancyMarketIdArray = Object.keys(fancydata)
                         if(Object.keys(fancyMarketIdArray).length > 0){
