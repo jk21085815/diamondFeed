@@ -18,7 +18,11 @@ module.exports = () => {
                 let cricketEventIds = await client.get('crone_CricketliveEventIds_diamond_UPD'); 
                 cricketEventIds = JSON.parse(cricketEventIds)
                 let kabaddiEventIds = await client.get('crone_KabaddiLiveEventIds_diamond_UPD'); 
-                kabaddiEventIds = JSON.parse(kabaddiEventIds)
+                 if(kabaddiEventIds){
+                    kabaddiEventIds = JSON.parse(kabaddiEventIds)
+                }else{
+                    kabaddiEventIds = []
+                }
                 cricketEventIds = cricketEventIds.concat(kabaddiEventIds)
                 if(cricketEventIds){
                     await Promise.all(

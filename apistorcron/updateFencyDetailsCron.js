@@ -23,7 +23,11 @@ module.exports = () => {
             let cricketEventIds = cricketEventIdsAll.filter(item => !cricketEventIdsLive.includes(item))
             
             let kabaddiEventIdsLive = await client.get('crone_KabaddiLiveEventIds_diamond_UPD'); 
-            kabaddiEventIdsLive = JSON.parse(kabaddiEventIdsLive)
+            if(kabaddiEventIdsLive){
+                kabaddiEventIdsLive = JSON.parse(kabaddiEventIdsLive)
+            }else{
+                kabaddiEventIdsLive = []
+            }
             let kabaddiEventIdsAll = await client.get('crone_getEventIds_Kabaddi_diamond'); 
             kabaddiEventIdsAll = JSON.parse(kabaddiEventIdsAll)
             let kabaddiEventIds = kabaddiEventIdsAll.filter(item => !kabaddiEventIdsLive.includes(item))
