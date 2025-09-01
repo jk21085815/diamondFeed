@@ -196,7 +196,7 @@ const updateFancyDetailsFunc = async (eventId) => {
                         const cachedData = cachedDataArray[index];
                         marketData = cachedData ? JSON.parse(cachedData) : null;
                         
-                        if (marketData && false) {
+                        if (marketData) {
                             // Update existing market data
                             marketData.status = market.status1 === "ACTIVE" ? "OPEN" : market.status1;
                             marketData.inPlay = market.in_play;
