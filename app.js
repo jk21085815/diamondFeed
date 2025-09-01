@@ -65,7 +65,7 @@ updateLiveFanctCron() //Live Fency dtail update in 505ms
 // updateBMLiveMarketDetails2()
 setSportDataCron()
 
-// changefilename()
+changefilename()
 
 app.use(morgan('dev'));
 app.use("/api/v1/", APIRoutes);
