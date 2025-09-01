@@ -15,7 +15,7 @@ client.on('connect', () => {
 });
 const updateFancyDetailsFunc = async (eventId) => {
     try {
-        // const logFilePath = path.join(__dirname, `fancyArray.txt`);
+        const logFilePath = path.join(__dirname, `fancyArray.txt`);
         let fancyArr = [];
           async function fetchData() {
             let response
@@ -341,17 +341,17 @@ const updateFancyDetailsFunc = async (eventId) => {
         await processMarketArray();
         // console.log('API Responses:', eventId,fancyArr);
         try{
-            // if(fancyArr.length !== 0){
-                //  try{
-                    // fs.appendFile(logFilePath, `[${new Date()}] ${' eventId: ' + eventId + ' '}  ${JSON.stringify(fancyArr)}\n` + '\n', (err) => {
-                    // if (err) throw err;
-                    // // console.log('Data appended to fancyArraywss.txt');
-                    // });
-                // }catch(err){
-                //     console.log(err, 'errerrerrerrerr');
+            if(fancyArr.length !== 0){
+                 try{
+                    fs.appendFile(logFilePath, `[${new Date()}] ${' eventId: ' + eventId + ' '}  ${JSON.stringify(fancyArr)}\n` + '\n', (err) => {
+                    if (err) throw err;
+                    // console.log('Data appended to fancyArraywss.txt');
+                    });
+                }catch(err){
+                    console.log(err, 'errerrerrerrerr');
                     
-                // }
-            // }
+                }
+            }
             await client.set(`/topic/diamond_fancy_update/${eventId}`, JSON.stringify(fancyArr), 'EX', 24 * 60 * 60);  // fancyarray ne event id parthi redis ma save and publish krie chie
             await Publishclient.publish(`/topic/diamond_fancy_update/${eventId}`, JSON.stringify(fancyArr));
             let eventData = await client.get(`${eventId}_diamondEventData`);
