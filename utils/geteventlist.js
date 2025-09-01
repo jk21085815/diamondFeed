@@ -185,7 +185,7 @@ const getEventList = async(sportId,sportName) => {
                             }
                         }
                         if(eventdata.event_type_id && eventdata.event_type_id == 99994){  // active-event mathi je T10 vali event lidhi aeni condition che
-                            if(isUpcomingEvent(new Date(new Date(eventdata.open_date).getTime() + (1000 * 60 * 60 * 5.5)).toISOString())){  // only today ni j event filter kri
+                            if(isUpcomingEvent(new Date(new Date(eventdata.open_date).getTime() + (1000 * 60 * 60 * 5.5)).toISOString()) || eventdata.name == "Pro Kabaddi League v Pro Kabaddi League"){  // only today ni j event filter kri
                                 let tempObj = {
                                     eventType:{
                                         id:"99994",
