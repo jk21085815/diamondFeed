@@ -120,11 +120,11 @@ module.exports = () => {
             const filePathother = path.join(__dirname, './', 'logs_Other.txt');
             fs.stat(filePathother, (err, stats) => {
                 if (err) {
-                    console.error('Error getting file stats(cricket):', err);
+                    console.error('Error getting file stats(other):', err);
                     return;
                 }
                 let size = stats.size/(1024 * 1024)
-                console.log(`File size: ${size} bytes(cricket)`)
+                console.log(`File size: ${size} bytes(other)`)
                 if(size > 100){
                     let newzipfile = path.join(__dirname, './', `logs_Other${k}.zip`)
                     let status = true
