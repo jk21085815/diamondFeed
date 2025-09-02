@@ -9,6 +9,8 @@ const AdmZip = require('adm-zip');
 
 module.exports = () => {
     let i = 1
+    let j= 1
+    let k= 1
     cron.schedule('*/5 * * * *', async() => {
         try{
             function ensureDirSync(dirPath) {
@@ -22,7 +24,6 @@ module.exports = () => {
             }
             ensureDirSync(path.join(__dirname, '../utils/fancydata2'));
             ensureDirSync(path.join(__dirname, '../utils/fancydatazip'));
-                // ensureDirSync(path.join(__dirname, '../utils/fancyzip'));
             function createZipWithAdmZip(inputFile, outputZip) {
                 try {
                     const zip = new AdmZip();
@@ -45,8 +46,6 @@ module.exports = () => {
             }
             // Check file size and rename
             const filePath = path.join(__dirname, '../utils', 'fancyArray.txt');
-            // console.log(filePath,'filepath')
-
             fs.stat(filePath, (err, stats) => {
                 if (err) {
                     console.error('Error getting file stats:', err);
@@ -76,6 +75,76 @@ module.exports = () => {
                         console.log('File renamed successfully');
                         const success = createZipWithAdmZip(newPath, newzipfile);
                         if (success) console.log('Process completed');
+                        i++
+                    });
+
+                }
+            });
+
+            /* For Cricket*/ 
+            const filePathcricket = path.join(__dirname, './', 'logs_Cricket.txt');
+            fs.stat(filePathcricket, (err, stats) => {
+                if (err) {
+                    console.error('Error getting file stats(cricket):', err);
+                    return;
+                }
+                let size = stats.size/(1024 * 1024)
+                console.log(`File size: ${size} bytes(cricket)`)
+                if(size > 100){
+                    let newzipfile = path.join(__dirname, './', `logs_Cricket${j}.zip`)
+                    let status = true
+                    while(status){
+                        if (fs.existsSync(newzipfile)) {
+                            j++
+                            newzipfile = path.join(__dirname, './', `logs_Cricket${j}.zip`)
+                            console.log('File exists');
+                        } else {
+                            console.log('File does not exist');
+                            status = false
+                        }
+                    }
+                    let newPathcricket = path.join(__dirname, './', `logs_Cricket${j}.txt`);
+                    fs.rename(filePathcricket, newPathcricket, async(renameErr) => {
+                        if (renameErr) {
+                        console.error('Error renaming file:', renameErr);
+                        return;
+                        }
+                        console.log('File renamed successfully(cricket)');
+                        i++
+                    });
+
+                }
+            });
+
+            /* For Other*/ 
+            const filePathother = path.join(__dirname, './', 'logs_Other.txt');
+            fs.stat(filePathother, (err, stats) => {
+                if (err) {
+                    console.error('Error getting file stats(cricket):', err);
+                    return;
+                }
+                let size = stats.size/(1024 * 1024)
+                console.log(`File size: ${size} bytes(cricket)`)
+                if(size > 100){
+                    let newzipfile = path.join(__dirname, './', `logs_Other${k}.zip`)
+                    let status = true
+                    while(status){
+                        if (fs.existsSync(newzipfile)) {
+                            k++
+                            newzipfile = path.join(__dirname, './', `logs_Other${k}.zip`)
+                            console.log('File exists');
+                        } else {
+                            console.log('File does not exist');
+                            status = false
+                        }
+                    }
+                    let newPathother = path.join(__dirname, './', `logs_Other${k}.txt`);
+                    fs.rename(filePathother, newPathother, async(renameErr) => {
+                        if (renameErr) {
+                        console.error('Error renaming file:', renameErr);
+                        return;
+                        }
+                        console.log('File renamed successfully(other)');
                         i++
                     });
 
