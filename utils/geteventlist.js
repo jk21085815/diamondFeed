@@ -282,23 +282,29 @@ const getEventList = async(sportId,sportName) => {
                 let otherotherEvents = await client.get('crone_getEventIds_Other_Other_diamond')
                 otherotherEvents = JSON.parse(otherotherEvents)
                 console.log(otherEvents,otherotherEvents,'other event idsssssssssss11111111')
-
+                let uniqueOtherEvents = []
                 for(let i = 0;i<otherEvents.length;i++){
-                    console.log(otherEvents[i],'eventId')
-                    let eventData = await client.get(`${otherEvents[i]}_diamondEventData`)
-                    if(eventData){
-                        eventData = JSON.parse(eventData)
-                        if(isDateWithinLast5Days(eventData.openDate) || eventData.eventName.toLowerCase().indexOf('winner') !== -1){
-                            otherEventIds.push(eventData.eventId)
+                    if(!uniqueOtherEvents.includes(otherEvents[i])){
+                        uniqueOtherEvents.push(otherEvents[i])
+                        console.log(otherEvents[i],'eventId')
+                        let eventData = await client.get(`${otherEvents[i]}_diamondEventData`)
+                        if(eventData){
+                            eventData = JSON.parse(eventData)
+                            if(isDateWithinLast5Days(eventData.openDate) || eventData.eventName.toLowerCase().indexOf('winner') !== -1){
+                                otherEventIds.push(eventData.eventId)
+                            }
                         }
                     }
                 }
                 for(let i = 0;i<otherotherEvents.length;i++){
-                    let eventData = await client.get(`${otherotherEvents[i]}_diamondEventData`)
-                    if(eventData){
-                        eventData = JSON.parse(eventData)
-                        if(isDateWithinLast5Days(eventData.openDate) || eventData.eventName.toLowerCase().indexOf('winner') !== -1){
-                            otherotherEventIds.push(eventData.eventId)
+                    if(!uniqueOtherEvents.includes(otherotherEvents[i])){
+                        uniqueOtherEvents.push(otherotherEvents[i])
+                        let eventData = await client.get(`${otherotherEvents[i]}_diamondEventData`)
+                        if(eventData){
+                            eventData = JSON.parse(eventData)
+                            if(isDateWithinLast5Days(eventData.openDate) || eventData.eventName.toLowerCase().indexOf('winner') !== -1){
+                                otherotherEventIds.push(eventData.eventId)
+                            }
                         }
                     }
                 }
