@@ -317,6 +317,9 @@ client.on('connect', () => {
                                     fetchMarketData3 = await fetchMOBook(momarketIds)
                                     liveMatchCheckMarket = fetchMarketData3.filter(item => (item && ["OPEN","SUSPENDED","BALL_RUNNING"].includes(item.status)))
                                 }
+                                if(eventIds[i] == "34705811"){
+                                    console.log(liveMatchCheckMarket,'liveMatchCheckMarketliveMatchCheckMarketliveMatchCheckMarket')
+                                }
                                 // get other MO and save it to redis event object
                                 if(liveMatchCheckMarket.length > 0){
                                     for(let a = 0;a<liveMatchCheckMarket.length;a++){
