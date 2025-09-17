@@ -259,18 +259,18 @@ const setThisSportData = async(eventlist,SportName) => {
                                             "layPrices": matchodddata[e].runners[c].ex.availableToLay,
                                             "backPrices": matchodddata[e].runners[c].ex.availableToBack
                                         }
-                                        if(matchoddmarketdata[d].marketName.toLowerCase().indexOf('line') != -1){
+                                        if(tempObj.marketName.toLowerCase().indexOf('line') != -1){
                                             let layPrices = []
                                             let backPrices = []
-                                            for(let i = 0;i<matchodddata[e].runners[c].ex?.availableToLay.length;i++){
-                                                layPrices.push({price:matchodddata[e].runners[c].ex?.availableToLay[i].price + 0.5,size:matchodddata[e].runners[c].ex?.availableToLay[i].size})
+                                            for(let i = 0;i<tempObjrunner.layPrices.length;i++){
+                                                layPrices.push({price:tempObjrunner.layPrices[i].price + 0.5,size:tempObjrunner.layPrices[i].size})
                                             }
-                                            for(let i = 0;i<matchodddata[e].runners[c].ex?.availableToBack.length;i++){
-                                                backPrices.push({price:matchodddata[e].runners[c].ex?.availableToBack[i].price + 0.5,size:matchodddata[e].runners[c].ex?.availableToBack[i].size})
+                                            for(let i = 0;i<tempObjrunner.backPrices.length;i++){
+                                                backPrices.push({price:tempObjrunner.backPrices[i].price + 0.5,size:tempObjrunner.backPrices[i].size})
                                             }
                                             tempObjrunner.layPrices = backPrices
                                             tempObjrunner.backPrices = layPrices
-                                        }
+                                        }                                        
                                         tempRunner.push(tempObjrunner)
                                     }
                                     tempObj.runners = tempRunner
@@ -695,14 +695,14 @@ const setThisSportData = async(eventlist,SportName) => {
                                             "layPrices": matchodddata[e].runners[c].ex.availableToLay,
                                             "backPrices": matchodddata[e].runners[c].ex.availableToBack
                                         }
-                                        if(matchoddmarketdata[d].marketName.toLowerCase().indexOf('line') != -1){
+                                        if(tempObj.marketName.toLowerCase().indexOf('line') != -1){
                                             let layPrices = []
                                             let backPrices = []
-                                            for(let i = 0;i<matchodddata[e].runners[c].ex?.availableToLay.length;i++){
-                                                layPrices.push({price:matchodddata[e].runners[c].ex?.availableToLay[i].price + 0.5,size:matchodddata[e].runners[c].ex?.availableToLay[i].size})
+                                            for(let i = 0;i<tempObjrunner.layPrices.length;i++){
+                                                layPrices.push({price:tempObjrunner.layPrices[i].price + 0.5,size:tempObjrunner.layPrices[i].size})
                                             }
-                                            for(let i = 0;i<matchodddata[e].runners[c].ex?.availableToBack.length;i++){
-                                                backPrices.push({price:matchodddata[e].runners[c].ex?.availableToBack[i].price + 0.5,size:matchodddata[e].runners[c].ex?.availableToBack[i].size})
+                                            for(let i = 0;i<tempObjrunner.backPrices.length;i++){
+                                                backPrices.push({price:tempObjrunner.backPrices[i].price + 0.5,size:tempObjrunner.backPrices[i].size})
                                             }
                                             tempObjrunner.layPrices = backPrices
                                             tempObjrunner.backPrices = layPrices

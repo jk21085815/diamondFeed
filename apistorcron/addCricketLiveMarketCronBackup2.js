@@ -270,6 +270,18 @@ client.on('connect', () => {
                                                     thisrunner.status = liveMatchCheckMarket2[a].runners[c].status
                                                     thisrunner.layPrices = liveMatchCheckMarket2[a].runners[c].ex.availableToLay,
                                                     thisrunner.backPrices = liveMatchCheckMarket2[a].runners[c].ex.availableToBack
+                                                    if(thismarketdetail.marketName.toLowerCase().indexOf('line') != -1){
+                                                        let layPrices = []
+                                                        let backPrices = []
+                                                        for(let i = 0;i<matchodddata[e].runners[c].ex?.availableToLay.length;i++){
+                                                            layPrices.push({price:matchodddata[e].runners[c].ex?.availableToLay[i].price + 0.5,size:matchodddata[e].runners[c].ex?.availableToLay[i].size})
+                                                        }
+                                                        for(let i = 0;i<matchodddata[e].runners[c].ex?.availableToBack.length;i++){
+                                                            backPrices.push({price:matchodddata[e].runners[c].ex?.availableToBack[i].price + 0.5,size:matchodddata[e].runners[c].ex?.availableToBack[i].size})
+                                                        }
+                                                        tempObjrunner.layPrices = backPrices
+                                                        tempObjrunner.backPrices = layPrices
+                                                    }
                                                 }
                                             }
                                             matchOddMarketArr.push(thismarketdetail)
