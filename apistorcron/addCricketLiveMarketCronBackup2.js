@@ -273,15 +273,16 @@ client.on('connect', () => {
                                                     if(thismarketdetail.marketName.toLowerCase().indexOf('line') != -1){
                                                         let layPrices = []
                                                         let backPrices = []
-                                                        for(let i = 0;i<matchodddata[e].runners[c].ex?.availableToLay.length;i++){
-                                                            layPrices.push({price:matchodddata[e].runners[c].ex?.availableToLay[i].price + 0.5,size:matchodddata[e].runners[c].ex?.availableToLay[i].size})
+                                                        for(let i = 0;i<thisrunner.layPrices.length;i++){
+                                                            layPrices.push({price:thisrunner.layPrices[i].price + 0.5,size:thisrunner.layPrices[i].size})
                                                         }
-                                                        for(let i = 0;i<matchodddata[e].runners[c].ex?.availableToBack.length;i++){
-                                                            backPrices.push({price:matchodddata[e].runners[c].ex?.availableToBack[i].price + 0.5,size:matchodddata[e].runners[c].ex?.availableToBack[i].size})
+                                                        for(let i = 0;i<thisrunner.backPrices.length;i++){
+                                                            backPrices.push({price:thisrunner.backPrices[i].price + 0.5,size:thisrunner.backPrices[i].size})
                                                         }
-                                                        tempObjrunner.layPrices = backPrices
-                                                        tempObjrunner.backPrices = layPrices
-                                                    }
+                                                        thisrunner.layPrices = backPrices
+                                                        thisrunner.backPrices = layPrices
+                                                    }      
+
                                                 }
                                             }
                                             matchOddMarketArr.push(thismarketdetail)

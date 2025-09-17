@@ -276,6 +276,18 @@ client.on('connect', () => {
                                                         thisrunner.status = liveMatchCheckMarket2[a].runners[c].status
                                                         thisrunner.layPrices = liveMatchCheckMarket2[a].runners[c].ex.availableToLay,
                                                         thisrunner.backPrices = liveMatchCheckMarket2[a].runners[c].ex.availableToBack
+                                                        if(thismarketdetail.marketName.toLowerCase().indexOf('line') != -1){
+                                                            let layPrices = []
+                                                            let backPrices = []
+                                                            for(let i = 0;i<thisrunner.layPrices.length;i++){
+                                                                layPrices.push({price:thisrunner.layPrices[i].price + 0.5,size:thisrunner.layPrices[i].size})
+                                                            }
+                                                            for(let i = 0;i<thisrunner.backPrices.length;i++){
+                                                                backPrices.push({price:thisrunner.backPrices[i].price + 0.5,size:thisrunner.backPrices[i].size})
+                                                            }
+                                                            thisrunner.layPrices = backPrices
+                                                            thisrunner.backPrices = layPrices
+                                                        }     
                                                     }
                                                 }
                                                 matchOddMarketArr.push(thismarketdetail)
