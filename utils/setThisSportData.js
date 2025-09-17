@@ -259,6 +259,18 @@ const setThisSportData = async(eventlist,SportName) => {
                                             "layPrices": matchodddata[e].runners[c].ex.availableToLay,
                                             "backPrices": matchodddata[e].runners[c].ex.availableToBack
                                         }
+                                        if(matchoddmarketdata[d].marketName.toLowerCase().indexOf('line') != -1){
+                                            let layPrices = []
+                                            let backPrices = []
+                                            for(let i = 0;i<matchodddata[e].runners[c].ex?.availableToLay.length;i++){
+                                                layPrices.push({price:matchodddata[e].runners[c].ex?.availableToLay[i].price + 0.5,size:matchodddata[e].runners[c].ex?.availableToLay[i].size})
+                                            }
+                                            for(let i = 0;i<matchodddata[e].runners[c].ex?.availableToBack.length;i++){
+                                                backPrices.push({price:matchodddata[e].runners[c].ex?.availableToBack[i].price + 0.5,size:matchodddata[e].runners[c].ex?.availableToBack[i].size})
+                                            }
+                                            tempObjrunner.layPrices = backPrices
+                                            tempObjrunner.backPrices = layPrices
+                                        }
                                         tempRunner.push(tempObjrunner)
                                     }
                                     tempObj.runners = tempRunner
@@ -682,6 +694,18 @@ const setThisSportData = async(eventlist,SportName) => {
                                             "runnerId": matchodddata[e].runners[c].selectionId,
                                             "layPrices": matchodddata[e].runners[c].ex.availableToLay,
                                             "backPrices": matchodddata[e].runners[c].ex.availableToBack
+                                        }
+                                        if(matchoddmarketdata[d].marketName.toLowerCase().indexOf('line') != -1){
+                                            let layPrices = []
+                                            let backPrices = []
+                                            for(let i = 0;i<matchodddata[e].runners[c].ex?.availableToLay.length;i++){
+                                                layPrices.push({price:matchodddata[e].runners[c].ex?.availableToLay[i].price + 0.5,size:matchodddata[e].runners[c].ex?.availableToLay[i].size})
+                                            }
+                                            for(let i = 0;i<matchodddata[e].runners[c].ex?.availableToBack.length;i++){
+                                                backPrices.push({price:matchodddata[e].runners[c].ex?.availableToBack[i].price + 0.5,size:matchodddata[e].runners[c].ex?.availableToBack[i].size})
+                                            }
+                                            tempObjrunner.layPrices = backPrices
+                                            tempObjrunner.backPrices = layPrices
                                         }
                                         tempRunner.push(tempObjrunner)
                                     }
