@@ -38,6 +38,16 @@ const setThisSportData = async(eventlist,SportName) => {
                 let fetchMarketDatajson = await fetchMarketData.json()
                 return fetchMarketDatajson
             }
+            async function fetchLineMarketData(eventId) {
+                let fetchMarketData = await fetch(`http://13.42.165.216/betfair/line_market_list/${eventId}`,{
+                    method: 'GET',
+                    headers: {
+                        'Content-type': 'application/json',
+                    }
+                })
+                let fetchMarketDatajson = await fetchMarketData.json()
+                return fetchMarketDatajson
+            }
             async function fetchUOMarketData(eventId) {
                 let fetchMarketData = await fetch(`http://13.42.165.216/betfair/under_over_goal_market_list/${eventId}`,{
                     method: 'GET',
@@ -180,6 +190,52 @@ const setThisSportData = async(eventlist,SportName) => {
                             let matchodddata = await fetchMOBook(matchoddmarketdata[d].marketId)
                             for(let e = 0;e<matchodddata.length;e++){
                                 if(matchodddata[e] && matchoddmarketdata[d].marketName !== "Match Odds"){
+                                    let tempObj
+                                    let tempRunner = []
+                                    tempObj = {
+                                        "marketId": matchodddata[e].marketId,
+                                        "marketTime": matchoddmarketdata[d].description.marketTime,
+                                        "marketType": matchoddmarketdata[d].description.marketType,
+                                        "bettingType": matchoddmarketdata[d].description.bettingType,
+                                        "marketName": matchoddmarketdata[d].marketName,
+                                        "provider": "DIAMOND",
+                                        "status": matchodddata[e].status
+                                    }
+                                    for(let c = 0;c<matchodddata[e].runners.length;c++){
+                                        let runner
+                                        runner = matchoddmarketdata[d].runners.find(item => item.selectionId == matchodddata[e].runners[c].selectionId)
+                                        let tempObjrunner = 
+                                        {
+                                            "status": matchodddata[e].runners[c].status,
+                                            "metadata": runner.metadata,
+                                            "runnerName": runner.runnerName,
+                                            "runnerId": matchodddata[e].runners[c].selectionId,
+                                            "layPrices": matchodddata[e].runners[c].ex.availableToLay,
+                                            "backPrices": matchodddata[e].runners[c].ex.availableToBack
+                                        }
+                                        tempRunner.push(tempObjrunner)
+                                    }
+                                    tempObj.runners = tempRunner
+                                    matchOddsArr2.push(tempObj)
+                                    if(["OPEN","SUSPENDED","BALL_RUNNING"].includes(tempObj.status)){
+                                        matchOddsArr.push(tempObj)
+                                    }
+                                    await client.set(`${tempObj.marketId}_diamond`, JSON.stringify(tempObj), 'EX', 24 * 60 * 60);
+                                    await clientme.set(`${tempObj.marketId}_diamond`, JSON.stringify(tempObj), 'EX', 24 * 60 * 60);
+    
+                                }
+                            }
+                        }
+    
+                    }
+
+                    // Line Market ne get kri set krva mateno code ae khali cricket maj hoi
+                    if(!eventlist[k].isvirtual && eventlist[k].sportId == 4){
+                        let matchoddmarketdata = await fetchLineMarketData(eventlist[k].eventId)
+                        for(let d = 0;d<matchoddmarketdata.length;d++){
+                            let matchodddata = await fetchMOBook(matchoddmarketdata[d].marketId)
+                            for(let e = 0;e<matchodddata.length;e++){
+                                if(matchodddata[e]){
                                     let tempObj
                                     let tempRunner = []
                                     tempObj = {
@@ -444,7 +500,7 @@ const setThisSportData = async(eventlist,SportName) => {
                     let OnlyOtherMOMarketIdsArr = [];
                     let OnlyMOMarketIdArr = []
                     let MOMarketDetailsArr = matchOddsArr2
-                    let OnlyOtherMOMarketDetails = MOMarketDetailsArr.filter(item => ((item.marketType == "COMPLETED_MATCH" || item.marketType == "TIED_MATCH" || item.marketType == "WINNING_ODDS" || item.marketType == "WIN" || item.marketType == "TOURNAMENT_WINNER"  || item.marketName.trim().toLowerCase().startsWith('over/under') && ["OPEN","SUSPENDED","BALL_RUNNING"].includes(item.status))))
+                    let OnlyOtherMOMarketDetails = MOMarketDetailsArr.filter(item => ((item.marketType == "COMPLETED_MATCH" || item.marketType == "TIED_MATCH" || item.marketType == "WINNING_ODDS" || item.marketType == "WIN" || item.marketType == "TOURNAMENT_WINNER" || item.marketName.trim().toLowerCase().indexOf('line')  !== -1  || item.marketName.trim().toLowerCase().startsWith('over/under') && ["OPEN","SUSPENDED","BALL_RUNNING"].includes(item.status))))
                     let OnlyMOMarketId = MOMarketDetailsArr.filter(item => (item.marketType == "MATCH_ODDS"))
                     for(let j = 0;j<OnlyOtherMOMarketDetails.length;j++){
                         OnlyOtherMOMarketIdsArr.push(OnlyOtherMOMarketDetails[j].marketId)
@@ -597,6 +653,52 @@ const setThisSportData = async(eventlist,SportName) => {
                         }
     
                     }
+                     // Line Market ne get kri set krva mateno code ae khali cricket maj hoi
+                    if(!previouseventdata.isvirtual && previouseventdata.sportId == 4){
+                        let matchoddmarketdata = await fetchLineMarketData(previouseventdata.eventId)
+                        for(let d = 0;d<matchoddmarketdata.length;d++){
+                            let matchodddata = await fetchMOBook(matchoddmarketdata[d].marketId)
+                            for(let e = 0;e<matchodddata.length;e++){
+                                if(matchodddata[e]){
+                                    let tempObj
+                                    let tempRunner = []
+                                    tempObj = {
+                                        "marketId": matchodddata[e].marketId,
+                                        "marketTime": matchoddmarketdata[d].description.marketTime,
+                                        "marketType": matchoddmarketdata[d].description.marketType,
+                                        "bettingType": matchoddmarketdata[d].description.bettingType,
+                                        "marketName": matchoddmarketdata[d].marketName,
+                                        "provider": "DIAMOND",
+                                        "status": matchodddata[e].status
+                                    }
+                                    for(let c = 0;c<matchodddata[e].runners.length;c++){
+                                        let runner
+                                        runner = matchoddmarketdata[d].runners.find(item => item.selectionId == matchodddata[e].runners[c].selectionId)
+                                        let tempObjrunner = 
+                                        {
+                                            "status": matchodddata[e].runners[c].status,
+                                            "metadata": runner.metadata,
+                                            "runnerName": runner.runnerName,
+                                            "runnerId": matchodddata[e].runners[c].selectionId,
+                                            "layPrices": matchodddata[e].runners[c].ex.availableToLay,
+                                            "backPrices": matchodddata[e].runners[c].ex.availableToBack
+                                        }
+                                        tempRunner.push(tempObjrunner)
+                                    }
+                                    tempObj.runners = tempRunner
+                                    matchOddsArr2.push(tempObj)
+                                    if(["OPEN","SUSPENDED","BALL_RUNNING"].includes(tempObj.status)){
+                                        matchOddsArr.push(tempObj)
+                                    }
+                                    await client.set(`${tempObj.marketId}_diamond`, JSON.stringify(tempObj), 'EX', 24 * 60 * 60);
+                                    await clientme.set(`${tempObj.marketId}_diamond`, JSON.stringify(tempObj), 'EX', 24 * 60 * 60);
+    
+                                }
+                            }
+                        }
+    
+                    }
+
                     if(previouseventdata.sportId == 1){
                         let matchoddmarketdata = await fetchUOMarketData(previouseventdata.eventId)
                         for(let d = 0;d<matchoddmarketdata.length;d++){
@@ -648,7 +750,7 @@ const setThisSportData = async(eventlist,SportName) => {
                     let OnlyOtherMOMarketIdsArr = [];
                     let OnlyMOMarketIdArr = []
                     let MOMarketDetailsArr = matchOddsArr2
-                    let OnlyOtherMOMarketDetails = MOMarketDetailsArr.filter(item => ((item.marketType == "COMPLETED_MATCH" || item.marketType == "TIED_MATCH" || item.marketType == "WINNING_ODDS" || item.marketType == "WIN" || item.marketType == "TOURNAMENT_WINNER"  || item.marketName.trim().toLowerCase().startsWith('over/under') && ["OPEN","SUSPENDED","BALL_RUNNING"].includes(item.status))))
+                    let OnlyOtherMOMarketDetails = MOMarketDetailsArr.filter(item => ((item.marketType == "COMPLETED_MATCH" || item.marketType == "TIED_MATCH" || item.marketType == "WINNING_ODDS" || item.marketType == "WIN" || item.marketType == "TOURNAMENT_WINNER" || item.marketName.trim().toLowerCase().indexOf('line')  !== -1  || item.marketName.trim().toLowerCase().startsWith('over/under') && ["OPEN","SUSPENDED","BALL_RUNNING"].includes(item.status))))
                     let OnlyMOMarketId = MOMarketDetailsArr.filter(item => (item.marketType == "MATCH_ODDS"))
                     for(let j = 0;j<OnlyOtherMOMarketDetails.length;j++){
                         OnlyOtherMOMarketIdsArr.push(OnlyOtherMOMarketDetails[j].marketId)
