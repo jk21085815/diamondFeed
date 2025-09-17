@@ -500,7 +500,7 @@ const setThisSportData = async(eventlist,SportName) => {
                     let OnlyOtherMOMarketIdsArr = [];
                     let OnlyMOMarketIdArr = []
                     let MOMarketDetailsArr = matchOddsArr2
-                    let OnlyOtherMOMarketDetails = MOMarketDetailsArr.filter(item => ((item.marketType == "COMPLETED_MATCH" || item.marketType == "TIED_MATCH" || item.marketType == "WINNING_ODDS" || item.marketType == "WIN" || item.marketType == "TOURNAMENT_WINNER" || item.marketName.trim().toLowerCase().indexOf('line')  !== -1  || item.marketName.trim().toLowerCase().startsWith('over/under') && ["OPEN","SUSPENDED","BALL_RUNNING"].includes(item.status))))
+                    let OnlyOtherMOMarketDetails = MOMarketDetailsArr.filter(item => ((item.marketType == "COMPLETED_MATCH" || item.marketType == "TIED_MATCH" || item.marketType == "WINNING_ODDS" || item.marketType == "WIN" || item.marketType == "TOURNAMENT_WINNER" || item.marketName.trim().toLowerCase().indexOf('_ovr_line')  !== -1  || item.marketName.trim().toLowerCase().startsWith('over/under') && ["OPEN","SUSPENDED","BALL_RUNNING"].includes(item.status))))
                     let OnlyMOMarketId = MOMarketDetailsArr.filter(item => (item.marketType == "MATCH_ODDS"))
                     for(let j = 0;j<OnlyOtherMOMarketDetails.length;j++){
                         OnlyOtherMOMarketIdsArr.push(OnlyOtherMOMarketDetails[j].marketId)
@@ -750,7 +750,7 @@ const setThisSportData = async(eventlist,SportName) => {
                     let OnlyOtherMOMarketIdsArr = [];
                     let OnlyMOMarketIdArr = []
                     let MOMarketDetailsArr = matchOddsArr2
-                    let OnlyOtherMOMarketDetails = MOMarketDetailsArr.filter(item => ((item.marketType == "COMPLETED_MATCH" || item.marketType == "TIED_MATCH" || item.marketType == "WINNING_ODDS" || item.marketType == "WIN" || item.marketType == "TOURNAMENT_WINNER" || item.marketName.trim().toLowerCase().indexOf('line')  !== -1  || item.marketName.trim().toLowerCase().startsWith('over/under') && ["OPEN","SUSPENDED","BALL_RUNNING"].includes(item.status))))
+                    let OnlyOtherMOMarketDetails = MOMarketDetailsArr.filter(item => ((item.marketType == "COMPLETED_MATCH" || item.marketType == "TIED_MATCH" || item.marketType == "WINNING_ODDS" || item.marketType == "WIN" || item.marketType == "TOURNAMENT_WINNER" || item.marketType.trim().toLowerCase().indexOf('_ovr_line')  !== -1  || item.marketName.trim().toLowerCase().startsWith('over/under') && ["OPEN","SUSPENDED","BALL_RUNNING"].includes(item.status))))
                     let OnlyMOMarketId = MOMarketDetailsArr.filter(item => (item.marketType == "MATCH_ODDS"))
                     for(let j = 0;j<OnlyOtherMOMarketDetails.length;j++){
                         OnlyOtherMOMarketIdsArr.push(OnlyOtherMOMarketDetails[j].marketId)
