@@ -41,9 +41,25 @@ const updateLiveMarketDetails2 = async(bookdataArray) => {
                     for (const runnerUpdate of bookdata.runners) {
                         const runner = runnerMap.get(runnerUpdate.selectionId);
                         if (runner) {
-                            runner.layPrices = runnerUpdate.ex?.availableToLay || [];
-                            runner.backPrices = runnerUpdate.ex?.availableToBack || [];
-                            runner.status = runnerUpdate.status;
+                            if(marketdata.marketName.toLowerCase().indexOf('line') != -1){
+                                let layPrices = []
+                                let backPrices = []
+                                for(let i = 0;i<runnerUpdate.ex?.availableToLay.length;i++){
+                                    layPrices.push({price:runnerUpdate.ex?.availableToLay[i].price + 0.5,size:runnerUpdate.ex?.availableToLay[i].size})
+                                }
+                                for(let i = 0;i<runnerUpdate.ex?.availableToBack.length;i++){
+                                    backPrices.push({price:runnerUpdate.ex?.availableToBack[i].price + 0.5,size:runnerUpdate.ex?.availableToBack[i].size})
+                                }
+                                runner.layPrices = backPrices
+                                runner.backPrices = layPrices
+                                // if(marketdata.marketId == "1.247583588"){
+                                //     console.log(runner,'runnerrrrrrrrrrrrr')
+                                // }
+                            }else{
+                                runner.layPrices = runnerUpdate.ex?.availableToLay || [];
+                                runner.backPrices = runnerUpdate.ex?.availableToBack || [];
+                                runner.status = runnerUpdate.status;
+                            }
                         }
                     }
 
