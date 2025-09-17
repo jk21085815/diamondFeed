@@ -70,7 +70,7 @@ const getEventList = async(sportId,sportName) => {
         let fetchMarketDatajson = await fetchMarketData.json()
         return fetchMarketDatajson
     }
-    cron.schedule('58 * * * *', async() => {
+    cron.schedule('59 * * * *', async() => {
     // cron.schedule("0 1,4,7,10,13,16,19,22 * * *", async() => {
         let starttime = new Date();
         console.log(starttime,`Set ${sportName} CompId Cron Started.....111111111111111111111111111111111111111111111111`)
